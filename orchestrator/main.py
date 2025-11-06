@@ -226,7 +226,7 @@ async def handle_chat_message(user_input: str) -> str:
     context_manager.set("long_term.config.qdrant_url", os.getenv("QDRANT_URL", "http://127.0.0.1:6333"), reason="Qdrant URL config")
 
     try:
-        ai_response = await feedback_loop.run_feedback_loop(user_input) # Use the existing feedback loop
+        ai_response = feedback_loop.run_feedback_loop(user_input) # Use the existing feedback loop
         context_manager.set("mid_term.final_answer", ai_response, reason="AI response for chat")
         log_manager.info(f"[ChatHandler] AI Response: {ai_response[:100]}...")
         return ai_response
