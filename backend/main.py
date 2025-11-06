@@ -2,6 +2,7 @@
 # version: v0.30
 from fastapi import FastAPI
 from backend.api import persona_state, logs_recent, evaluate, context, analyze_sessions, post_session, chat, get_context
+from backend.api.logs import recent
 
 app = FastAPI(title="Shiroi System Platform", version="0.1.0")
 
@@ -14,6 +15,7 @@ app.include_router(analyze_sessions.router)
 app.include_router(post_session.router)
 app.include_router(chat.router)
 app.include_router(get_context.router)
+app.include_router(recent.router)
 
 @app.get("/")
 def read_root():
