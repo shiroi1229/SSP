@@ -26,7 +26,18 @@ from modules.cognitive_graph_engine import CognitiveGraphEngine
 from modules.self_reasoning_loop import SelfReasoningLoop
 from modules.distributed_persona_fabric import DistributedPersonaFabric
 from modules.collective_intelligence_core import CollectiveIntelligenceCore
+from modules.evolution_mirror import EvolutionMirror
 import argparse
+
+def run_evolution_mirror(mode: str = "reflect", event: str = None, data: dict = None):
+    mirror = EvolutionMirror()
+    if mode == "observe" and event:
+        mirror.observe(event, data or {})
+        print(f"👁️ Logged event: {event}")
+    elif mode == "reflect":
+        result = mirror.reflect()
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+
 
 def run_collective_intelligence(personas: int = 3, cycles: int = 2):
     core = CollectiveIntelligenceCore(personas=personas, cycles=cycles)
@@ -247,6 +258,7 @@ if __name__ == "__main__":
     parser.add_argument("--reason", type=int, help="Run self-reasoning loop for a number of cycles.")
     parser.add_argument("--fabric", nargs=2, type=int, help="Run persona fabric simulation. Usage: --fabric [cycles] [personas]")
     parser.add_argument("--collective", nargs=2, type=int, help="Run collective intelligence simulation. Usage: --collective [personas] [cycles]")
+    parser.add_argument("--mirror", nargs='+', help="Run Evolution Mirror operations. Usage: --mirror [observe|reflect] [event_name] [data_json]")
     args = parser.parse_args()
 
     if args.analyze:
@@ -283,5 +295,19 @@ if __name__ == "__main__":
         run_persona_fabric(cycles=args.fabric[0], personas=args.fabric[1])
     elif args.collective:
         run_collective_intelligence(personas=args.collective[0], cycles=args.collective[1])
+    elif args.mirror:
+        mode = args.mirror[0]
+        event = args.mirror[1] if len(args.mirror) > 1 else None
+        data_str = args.mirror[2] if len(args.mirror) > 2 else None
+        
+        data = None
+        if data_str:
+            try:
+                data = json.loads(data_str)
+            except json.JSONDecodeError:
+                print("Error: Invalid JSON format for data.")
+                sys.exit(1)
+
+        run_evolution_mirror(mode, event, data)
     else:
         run_context_evolution_cycle()
