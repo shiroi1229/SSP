@@ -21,7 +21,18 @@ from orchestrator.auto_repair_engine import AutoRepairEngine
 from modules.log_manager import log_manager
 from qdrant_client import QdrantClient
 from modules.impact_analyzer import analyze_impact, suggest_repair
+from modules.meta_contract_system import generate_contract, negotiate_contract, list_contracts
 import argparse
+
+def run_meta_contract(mode: str, module_name: str, spec: dict = None):
+    if mode == "generate":
+        path = generate_contract(module_name, ["input"], ["output"])
+        print(f"✅ Contract generated: {path}")
+    elif mode == "negotiate":
+        result = negotiate_contract(module_name, spec or {})
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    elif mode == "list":
+        print(list_contracts())
 
 def run_impact_analysis(target_file: str):
     result = analyze_impact(target_file)
@@ -198,9 +209,28 @@ async def get_current_context() -> Dict[str, Any]:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="SSP Orchestrator CLI")
     parser.add_argument("--analyze", type=str, help="Run impact analysis on the specified file.")
+    parser.add_argument("--contract", nargs='+', help="Run meta-contract operations. Usage: --contract [generate|negotiate|list] [module_name] [spec_json]")
     args = parser.parse_args()
 
     if args.analyze:
         run_impact_analysis(args.analyze)
+    elif args.contract:
+        mode = args.contract[0]
+        module_name = args.contract[1] if len(args.contract) > 1 else None
+        spec_str = args.contract[2] if len(args.contract) > 2 else None
+        
+        spec = None
+        if spec_str:
+            try:
+                spec = json.loads(spec_str)
+            except json.JSONDecodeError:
+                print("Error: Invalid JSON format for spec.")
+                sys.exit(1)
+
+        if not module_name and mode != 'list':
+            print("Error: module_name is required for generate/negotiate modes.")
+            sys.exit(1)
+
+        run_meta_contract(mode, module_name, spec)
     else:
         run_context_evolution_cycle()
