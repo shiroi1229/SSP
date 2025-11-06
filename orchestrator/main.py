@@ -24,7 +24,14 @@ from modules.impact_analyzer import analyze_impact, suggest_repair
 from modules.meta_contract_system import generate_contract, negotiate_contract, list_contracts
 from modules.cognitive_graph_engine import CognitiveGraphEngine
 from modules.self_reasoning_loop import SelfReasoningLoop
+from modules.distributed_persona_fabric import DistributedPersonaFabric
 import argparse
+
+def run_persona_fabric(cycles: int = 2, personas: int = 3):
+    fabric = DistributedPersonaFabric(persona_count=personas)
+    for i in range(cycles):
+        consensus = fabric.simulate_collective_thinking()
+        print(f"🧩 Collective Cycle {i+1}:", json.dumps(consensus, ensure_ascii=False, indent=2))
 
 def run_self_reasoning(cycles: int = 3):
     loop = SelfReasoningLoop()
@@ -232,6 +239,7 @@ if __name__ == "__main__":
     parser.add_argument("--contract", nargs='+', help="Run meta-contract operations. Usage: --contract [generate|negotiate|list] [module_name] [spec_json]")
     parser.add_argument("--graph", nargs='+', help="Run cognitive graph operations. Usage: --graph [add|path] [args...]")
     parser.add_argument("--reason", type=int, help="Run self-reasoning loop for a number of cycles.")
+    parser.add_argument("--fabric", nargs=2, type=int, help="Run persona fabric simulation. Usage: --fabric [cycles] [personas]")
     args = parser.parse_args()
 
     if args.analyze:
@@ -264,5 +272,7 @@ if __name__ == "__main__":
             print("Usage: --graph add <src> <rel> <tgt> | --graph path <src> <tgt>")
     elif args.reason:
         run_self_reasoning(args.reason)
+    elif args.fabric:
+        run_persona_fabric(cycles=args.fabric[0], personas=args.fabric[1])
     else:
         run_context_evolution_cycle()
