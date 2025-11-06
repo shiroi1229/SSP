@@ -53,7 +53,7 @@ class FeedbackLoop:
         log_manager.info(f"[FeedbackLoop] Starting feedback loop for session: {session_id}")
         
         # Set initial user input in context
-        self.context_manager.set("short_term.user_input", user_input, reason="User initiated feedback loop")
+        self.context_manager.set("short_term.prompt", user_input, reason="User initiated feedback loop")
         self.context_manager.set("mid_term.session_id", session_id, reason="New session ID")
 
         # stable_snapshot_path = self.insight_monitor.trigger_snapshot("pre_feedback_loop") # Removed as InsightMonitor no longer has trigger_snapshot
