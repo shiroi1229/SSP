@@ -22,7 +22,20 @@ from modules.log_manager import log_manager
 from qdrant_client import QdrantClient
 from modules.impact_analyzer import analyze_impact, suggest_repair
 from modules.meta_contract_system import generate_contract, negotiate_contract, list_contracts
+from modules.cognitive_graph_engine import CognitiveGraphEngine
 import argparse
+
+def run_cognitive_graph(mode: str, src: str = None, rel: str = None, tgt: str = None):
+    engine = CognitiveGraphEngine()
+    if mode == "add":
+        engine.add_relation(src, rel, tgt)
+        path = engine.export()
+        print(f"✅ Relation added and saved to {path}")
+    elif mode == "path":
+        result = engine.find_path(src, tgt)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        print("Usage: --graph add <src> <rel> <tgt> | --graph path <src> <tgt>")
 
 def run_meta_contract(mode: str, module_name: str, spec: dict = None):
     if mode == "generate":
@@ -210,6 +223,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="SSP Orchestrator CLI")
     parser.add_argument("--analyze", type=str, help="Run impact analysis on the specified file.")
     parser.add_argument("--contract", nargs='+', help="Run meta-contract operations. Usage: --contract [generate|negotiate|list] [module_name] [spec_json]")
+    parser.add_argument("--graph", nargs='+', help="Run cognitive graph operations. Usage: --graph [add|path] [args...]")
     args = parser.parse_args()
 
     if args.analyze:
@@ -232,5 +246,13 @@ if __name__ == "__main__":
             sys.exit(1)
 
         run_meta_contract(mode, module_name, spec)
+    elif args.graph:
+        mode = args.graph[0]
+        if mode == 'add' and len(args.graph) == 4:
+            run_cognitive_graph(mode, src=args.graph[1], rel=args.graph[2], tgt=args.graph[3])
+        elif mode == 'path' and len(args.graph) == 3:
+            run_cognitive_graph(mode, src=args.graph[1], tgt=args.graph[2])
+        else:
+            print("Usage: --graph add <src> <rel> <tgt> | --graph path <src> <tgt>")
     else:
         run_context_evolution_cycle()
