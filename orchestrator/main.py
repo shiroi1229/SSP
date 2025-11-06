@@ -25,7 +25,13 @@ from modules.meta_contract_system import generate_contract, negotiate_contract, 
 from modules.cognitive_graph_engine import CognitiveGraphEngine
 from modules.self_reasoning_loop import SelfReasoningLoop
 from modules.distributed_persona_fabric import DistributedPersonaFabric
+from modules.collective_intelligence_core import CollectiveIntelligenceCore
 import argparse
+
+def run_collective_intelligence(personas: int = 3, cycles: int = 2):
+    core = CollectiveIntelligenceCore(personas=personas, cycles=cycles)
+    result = core.aggregate_decisions()
+    print(json.dumps(result, ensure_ascii=False, indent=2))
 
 def run_persona_fabric(cycles: int = 2, personas: int = 3):
     fabric = DistributedPersonaFabric(persona_count=personas)
@@ -240,6 +246,7 @@ if __name__ == "__main__":
     parser.add_argument("--graph", nargs='+', help="Run cognitive graph operations. Usage: --graph [add|path] [args...]")
     parser.add_argument("--reason", type=int, help="Run self-reasoning loop for a number of cycles.")
     parser.add_argument("--fabric", nargs=2, type=int, help="Run persona fabric simulation. Usage: --fabric [cycles] [personas]")
+    parser.add_argument("--collective", nargs=2, type=int, help="Run collective intelligence simulation. Usage: --collective [personas] [cycles]")
     args = parser.parse_args()
 
     if args.analyze:
@@ -274,5 +281,7 @@ if __name__ == "__main__":
         run_self_reasoning(args.reason)
     elif args.fabric:
         run_persona_fabric(cycles=args.fabric[0], personas=args.fabric[1])
+    elif args.collective:
+        run_collective_intelligence(personas=args.collective[0], cycles=args.collective[1])
     else:
         run_context_evolution_cycle()
