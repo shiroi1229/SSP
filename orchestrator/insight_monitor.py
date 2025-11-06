@@ -155,6 +155,10 @@ class InsightMonitor:
 
         return None
 
+    def notify_recovery(self, message: dict):
+        """Logs a recovery action notice."""
+        log_manager.info(f"🩹 [Recovery] {message}")
+
     def _update_metrics(self):
         """Gathers the latest metrics from the context and adds them to the time series buffer."""
         # Get metrics from context, with defaults if not present
