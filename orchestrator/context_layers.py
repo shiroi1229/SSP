@@ -7,8 +7,8 @@ class BaseContextLayer:
         self.history_recorder = history_recorder
         self.layer_name = layer_name
 
-    def get(self, key: str):
-        return self._data.get(key)
+    def get(self, key: str, default=None):
+        return self._data.get(key, default)
 
     def set(self, key: str, value: any, reason: str):
         old_value = self._data.get(key)
