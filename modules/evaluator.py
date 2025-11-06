@@ -14,7 +14,7 @@ def evaluate_output(context_manager: ContextManager):
     log_manager.debug("Starting context-aware evaluation...")
     
     config = load_environment()
-    answer = context_manager.get("short_term.response")
+    answer = context_manager.get("mid_term.generated_output")
     rag_context = context_manager.get("short_term.rag_context")
 
     if not answer:
