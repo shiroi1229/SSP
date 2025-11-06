@@ -5,7 +5,6 @@
 import json, random, time
 from datetime import datetime
 from modules.cognitive_graph_engine import CognitiveGraphEngine
-from modules.evaluator import evaluate_output  # 既存評価関数を利用
 
 LOG_PATH = "logs/self_reasoning_log.json"
 
@@ -21,7 +20,7 @@ class SelfReasoningLoop:
             return "No knowledge yet."
         topic = random.choice(nodes)
         related = list(self.graph.graph.successors(topic))
-        thought = f"Based on {topic}, I hypothesize a link with {related[:2]}.
+        thought = f"Based on {topic}, I hypothesize a link with {related[:2]}."
         return thought
 
     def act(self, thought: str) -> str:
@@ -34,7 +33,6 @@ class SelfReasoningLoop:
         """評価段階: evaluatorを通じてスコアリング（模擬）"""
         score = random.randint(1, 5)
         feedback = f"評価スコア: {score} - {'valid' if score >=3 else 'needs revision'}"
-        evaluate_output("self_reasoning", result)  # 既存評価関数呼び出し
         return score
 
     def reflect(self, thought: str, score: int):
