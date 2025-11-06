@@ -81,6 +81,12 @@ class FeedbackLoop:
                 log_manager.info(f"[FeedbackLoop] Answer: {generated_answer}")
                 log_manager.info("[FeedbackLoop] --- Generator: End ---")
 
+                # Update chat history
+                history = self.context_manager.get("mid_term.chat_history", default=[])
+                history.append({"role": "user", "content": user_input})
+                history.append({"role": "assistant", "content": generated_answer})
+                self.context_manager.set("mid_term.chat_history", history, reason="Appended current turn to chat history")
+
                 # 3. Evaluator
                 log_manager.info("[FeedbackLoop] --- Evaluator: Start ---")
                 context_evaluate_output(self.context_manager) # Evaluator updates context directly

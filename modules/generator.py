@@ -17,6 +17,7 @@ def generate_response(context_manager: ContextManager):
     # Get data from context
     prompt = context_manager.get("short_term.prompt")
     rag_context = context_manager.get("short_term.rag_context") or ""
+    history = context_manager.get("mid_term.chat_history", default=[])
     model_params = context_manager.get("long_term.model_params") or {}
     config = context_manager.get("long_term.config") or {}
 
@@ -38,9 +39,10 @@ def generate_response(context_manager: ContextManager):
 
     system_content = gemini_instruction + "\n出力は日本語で、キャラクター 'シロイ' の一人称口調で回答してください。"
     prompt_messages = [
-        {"role": "system", "content": system_content},
-        {"role": "user", "content": f"質問: {prompt}\n\n参考情報:\n{rag_context}"}
+        {"role": "system", "content": system_content}
     ]
+    prompt_messages.extend(history) # Add history
+    prompt_messages.append({"role": "user", "content": f"質問: {prompt}\n\n参考情報:\n{rag_context}"})
 
     lm_studio_url = config.get("LM_STUDIO_URL", "http://127.0.0.1:1234")
     full_url = f"{lm_studio_url}/v1/chat/completions"
