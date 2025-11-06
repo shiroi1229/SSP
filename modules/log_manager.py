@@ -10,12 +10,16 @@ class LogManager:
         self.human_readable_suffix = human_readable_suffix
         self.json_suffix = json_suffix
 
-        self.logger = logging.getLogger(__name__)
+        self.logger = logging.getLogger("ssp_logger") # Use a dedicated name
         self.logger.setLevel(logging.DEBUG)
+        self.logger.propagate = False # Prevent logs from propagating to the root logger
 
-        # Ensure handlers are not duplicated if LogManager is initialized multiple times
-        if not self.logger.handlers:
-            # Human-readable handler
+        # Clear existing handlers to prevent duplicates during hot-reloads
+        if self.logger.hasHandlers():
+            self.logger.handlers.clear()
+
+        # Re-add handlers every time - this is safer with hot-reloading
+        # Human-readable handler
             human_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
             human_handler = logging.FileHandler(self._get_log_filepath(self.human_readable_suffix))
             human_handler.setFormatter(human_formatter)
