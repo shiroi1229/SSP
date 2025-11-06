@@ -1,0 +1,14 @@
+{"timestamp": "2025-11-05 21:38:25,126", "name": "modules.log_manager", "levelname": "INFO", "message": "========= Starting SSP v2.5 Diagnostic Scan ========="}
+{"timestamp": "2025-11-05 21:38:25,126", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-05 21:38:25,133", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: evaluator"}
+{"timestamp": "2025-11-05 21:38:25,135", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: generator"}
+{"timestamp": "2025-11-05 21:38:25,136", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: persona_manager"}
+{"timestamp": "2025-11-05 21:38:25,141", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: self_optimizer"}
+{"timestamp": "2025-11-05 21:38:25,141", "name": "modules.log_manager", "levelname": "INFO", "message": "Found 4 contracts to validate."}
+{"timestamp": "2025-11-05 21:38:25,141", "name": "modules.log_manager", "levelname": "WARNING", "message": "[ContextManager] Invalid layer name in key: self_analysis_report"}
+{"timestamp": "2025-11-05 21:38:25,141", "name": "modules.log_manager", "levelname": "WARNING", "message": "[ContextManager] Invalid layer name in key: model_params"}
+{"timestamp": "2025-11-05 21:38:25,141", "name": "modules.log_manager", "levelname": "WARNING", "message": "[ContextManager] Invalid layer name in key: optimization_log"}
+{"timestamp": "2025-11-05 21:38:25,142", "name": "modules.log_manager", "levelname": "WARNING", "message": "[ContextManager] Invalid layer name in key: model_params"}
+{"timestamp": "2025-11-05 21:38:25,142", "name": "modules.log_manager", "levelname": "WARNING", "message": "[ContextManager] Invalid layer name in key: optimization_log"}
+{"timestamp": "2025-11-05 21:38:25,142", "name": "modules.log_manager", "levelname": "INFO", "message": "========= Diagnostic Scan Complete ========="}
+{"timestamp": "2025-11-05 21:38:25,143", "name": "modules.log_manager", "levelname": "INFO", "message": "Summary of inconsistencies saved to: logs/diagnostic_summary.json"}

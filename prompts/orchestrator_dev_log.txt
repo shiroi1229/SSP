@@ -1,0 +1,62 @@
+私は開発リーダーの瑞希（みずき）です。
+あなたは Shiroi System Platform（SSP）開発チームのAIエンジニアです。
+以下の要件仕様に基づき、SSP v0.1 に必要な orchestrator モジュールを実装してください。
+
+【目的】
+瑞希の入力（user_input）を受け取り、
+RAG → Generator → Evaluator → Memory Store の処理を順に実行する。
+各モジュールの出力をJSONで連結し、最終結果をCLI出力する。
+さらに、Geminiとのやり取り（プロンプトとレスポンス）をすべてログ化し、
+後から瑞希もGeminiも参照できるようにする。
+
+【構成要件】
+- 言語: Python 3.11+
+- フォルダ構成:
+  orchestrator/
+    ├─ main.py
+    └─ workflow.py
+- main.py:
+  - コマンドライン引数（argparse）で瑞希の入力を受け取る。
+  - workflow.run_workflow() を呼び出して結果を出力。
+  - エラー発生時は例外をキャッチして標準出力に警告を表示。
+- workflow.py:
+  - rag_engine, generator, evaluator, memory_store モジュールを順に呼び出す。
+  - I/O形式: JSON
+  - 呼び出し順序:
+    1. rag_engine.get_context(user_input)
+    2. generator.generate_answer(user_input, context)
+    3. evaluator.evaluate(answer)
+    4. memory_store.save_record(user_input, context, answer, feedback)
+  - 各ステップの開始・終了をprintでログ出力。
+  - すべての入力・出力を /logs/session_<timestamp>.json に保存。
+  - ログ形式は以下の構造を基本とする:
+    {
+      "timestamp": "...",
+      "user_input": "...",
+      "context": "...",
+      "generator_prompt": "...",
+      "generator_response": "...",
+      "feedback": "...",
+      "final_output": "..."
+    }
+- generatorモジュールはGemini CLIをサブプロセスとして呼び出す。
+  実際に送信したプロンプトとGeminiの返答を両方ログに含める。
+- 設定値（LLM_MODE, GEMINI_MODELなど）は .env 経由で取得（config_manager利用）。
+
+【非機能要件】
+- 各ファイルの先頭に次のコメントを必ず入れる:
+  1行目: # path: <ファイルパス>
+  2行目: # version: v0.1
+- コードのみ出力。説明文・注釈は禁止。
+- 依存パッケージ（dotenv, argparse, json, datetime, os）をimport。
+- 例外時でもログファイルは必ず生成する（finallyブロックでflush）。
+- 実行例
+  python orchestrator/main.py "ナノ博士が火星で眠ってる理由は？"
+- 出力: シロイの応答を標準出力に表示。ログは /logs/ 以下にJSON保存。
+
+【出力形式】
+2ファイルを順番に出力:
+1. orchestrator/main.py
+2. orchestrator/workflow.py
+
+開始してください。

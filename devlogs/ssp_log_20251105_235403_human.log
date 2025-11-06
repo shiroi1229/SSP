@@ -1,0 +1,9 @@
+2025-11-05 23:54:09,146 - modules.log_manager - INFO - Qdrant client initialized for localhost:6333
+2025-11-05 23:54:12,556 - modules.log_manager - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-05 23:54:12,572 - modules.log_manager - INFO - PostgreSQL connected to 127.0.0.1:5432/ssp_memory
+2025-11-05 23:54:12,607 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:54:12,607 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:54:12,614 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:54:12,615 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:54:16,799 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:54:16,799 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json

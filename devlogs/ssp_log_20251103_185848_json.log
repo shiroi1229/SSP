@@ -1,0 +1,15 @@
+{"timestamp": "2025-11-03 18:58:53,152", "name": "modules.log_manager", "levelname": "INFO", "message": "Starting diagnostic check..."}
+{"timestamp": "2025-11-03 18:58:53,152", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: POSTGRES_USER is set."}
+{"timestamp": "2025-11-03 18:58:53,153", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: POSTGRES_PASSWORD is set."}
+{"timestamp": "2025-11-03 18:58:53,153", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: LM_STUDIO_URL is set."}
+{"timestamp": "2025-11-03 18:58:53,153", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: Module modules.generator imported successfully."}
+{"timestamp": "2025-11-03 18:58:53,162", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: Module modules.evaluator imported successfully."}
+{"timestamp": "2025-11-03 18:58:53,162", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: Module backend.db.connection imported successfully."}
+{"timestamp": "2025-11-03 18:58:53,163", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: Module modules.rag_engine imported successfully."}
+{"timestamp": "2025-11-03 18:58:53,163", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: Module backend.dev_recorder imported successfully."}
+{"timestamp": "2025-11-03 18:58:53,163", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: Module modules.log_manager imported successfully."}
+{"timestamp": "2025-11-03 18:58:53,163", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: Module modules.config_manager imported successfully."}
+{"timestamp": "2025-11-03 18:58:53,164", "name": "modules.log_manager", "levelname": "INFO", "message": "Diagnostic report saved to D:\\gemini\\diagnostic_report.json"}
+{"timestamp": "2025-11-03 18:58:53,164", "name": "modules.log_manager", "levelname": "INFO", "message": "Diagnostic check complete."}
+{"timestamp": "2025-11-03 18:58:53,165", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Starting run_orchestrator_workflow with user_input: diagnostic_check --summary"}
+{"timestamp": "2025-11-03 18:58:53,165", "name": "modules.log_manager", "levelname": "INFO", "message": "🧭 セッションID: 20251103_185853"}

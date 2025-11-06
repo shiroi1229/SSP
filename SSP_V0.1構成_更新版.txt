@@ -1,0 +1,112 @@
+Shiroi System Platform v0.1（MVP段階・更新版）
+
+本構成は SSP v1.1 の理念（Small Core, Infinite Expansion）に準拠し、
+最小構成で動作しながら将来的な拡張（v0.3〜v2.0）にシームレスに移行できる設計を採用する。
+
+🧩 SSP v0.1 必須モジュール一覧
+
+モジュール名 / 役割 / 技術構成 / 入出力 / 備考
+
+orchestrator
+　各モジュールの実行順序を制御する中心機構。
+　技術構成：Python + LangGraph（JSONベースI/F）
+　入出力：user_input → final_output
+　備考：CLIまたはAPI経由で実行。全体制御・例外ハンドリング・メトリクス対応。
+
+rag_engine
+　世界観・設定・登場人物・技術情報を検索。
+　技術構成：Qdrant + PostgreSQL + Embeddingモデル（nomic-embed）
+　入出力：query → context
+　備考：瑞希の世界観データベースを検索し、生成AIへcontextを返す。
+
+generator
+　GPT-5／Gemini／Local LLM（Ollama）による生成モジュール。
+　技術構成：GPT-5 API + Gemini CLI + Ollama fallback
+　入出力：question, context → answer
+　備考：RAG結果を元にストーリー・会話・台本を生成。model_fallback_policyを実装。
+
+evaluator（簡易版）
+　瑞希のフィードバック（スコア＋コメント）を保存。
+　技術構成：Python + PostgreSQL（SQLite fallback）
+　入出力：answer → rating, feedback
+　備考：LoRA学習・再生成制御への接続をv0.3以降で拡張。
+
+memory_store
+　対話・RAG・生成履歴の永続化。
+　技術構成：JSON + PostgreSQL
+　入出力：record(JSON)
+　備考：全ての出力を構造化保存し、RAG学習および再生成に再利用可能。
+
+cli_interface
+　Gemini CLI または Python CLIによる操作UI。
+　技術構成：CLIスクリプト + argparse + REST
+　入出力：user_input → orchestrator呼び出し
+　備考：MVP段階では主な入出力UI。WebUI移行（v0.5）を前提。
+
+config_manager
+　設定・環境変数・APIキー管理。
+　技術構成：dotenv + JSON config
+　入出力：-
+　備考：開発環境／本番環境切替を容易にし、セキュリティを確保。
+
+🧭 v0.1 の最小データフロー
+
+[Mizuki Input]
+↓
+(1) orchestrator（LangGraphワークフロー制御）
+↓
+(2) rag_engine → context抽出
+↓
+(3) generator → answer生成
+↓
+(4) evaluator → feedback保存
+↓
+(5) memory_store → 全ログ記録
+↓
+[Output to CLI]
+
+🗂 推奨ファイル構成（v0.1）
+
+sspv0/
+├─ orchestrator/
+│  ├─ main.py
+│  ├─ workflow.py
+│  └─ config.json
+├─ modules/
+│  ├─ rag_engine.py
+│  ├─ generator.py
+│  ├─ evaluator.py
+│  ├─ memory_store.py
+│  └─ config_manager.py
+├─ data/
+│  ├─ world_rag.json
+│  ├─ memory_log.json
+│  └─ feedback.db
+├─ cli/
+│  ├─ shiroi_cli.py
+├─ .env
+└─ docker-compose.yml
+
+📁 データ仕様（v0.1準拠）
+
+ファイル名 | 主なキー | 説明
+---|---|---
+record.json | session_id, user_input, answer, rating, context | すべての会話・生成・評価記録
+world_rag.json | term, description, embedding | 世界観用語データ（Qdrant同期）
+feedback.db | session_id, rating, feedback, timestamp | 瑞希評価ログ
+
+✅ MVP達成条件（v0.1 完成の定義）
+
+・CLIから質問を入力すると、RAG＋GPT-5で回答が返る  
+・回答・評価・コンテキストがJSON形式で保存される  
+・統合ログ（record.json）が生成され、履歴を再利用可能  
+・各モジュールを独立してテスト可能（100行以内）  
+・コスト／レスポンス目標：1日あたり300円以内、平均応答5秒以内  
+・LangGraphトレーシングが機能し、処理全体のメトリクス取得可能  
+
+🚀 次期拡張計画（v0.3〜v0.5連携）
+
+- evaluator出力をRAGおよびLoRA調整に反映  
+- WebUI（Next.js）とのAPI連携  
+- memory_storeのPostgreSQL完全移行  
+- emotion_engineの試験導入（感情タグ生成）  

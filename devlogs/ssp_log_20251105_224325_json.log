@@ -1,0 +1,2 @@
+{"timestamp": "2025-11-05 22:43:25,036", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: data/test_context.json"}
+{"timestamp": "2025-11-05 22:43:25,042", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}

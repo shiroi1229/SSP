@@ -1,0 +1,32 @@
+デバッグセッション要約:
+
+このセッションでは、SSP WebUIのローカル開発環境における「Failed to fetch」エラーの解決に焦点を当てました。
+
+発生した主な問題と解決策:
+
+1.  バックエンドの`ModuleNotFoundError`:
+    *   原因: `backend`ディレクトリから`modules`ディレクトリ内のモジュールが見つからない。
+    *   解決策: `backend/main.py`にプロジェクトルートを`sys.path`に追加するコードを挿入。
+
+2.  PostgreSQL認証失敗 (`FATAL: password authentication failed`):
+    *   原因: Pythonスクリプトが`.env`から正しい認証情報を読み込めていない可能性。
+    *   解決策: `migrate_logs_to_db.py`内の冗長な`load_dotenv()`呼び出しを削除し、`config_manager`に一元化。
+
+3.  バックエンドの`PostgreSQL connection failed: Not an executable object: 'SELECT 1'`:
+    *   原因: SQLAlchemy 2.0+での生SQL実行方法の変更。
+    *   解決策: `backend/db/connection.py`で`text`をインポートし、`connection.execute(text("SELECT 1"))`に修正。
+
+4.  バックエンドの`ERR_EMPTY_RESPONSE` (初期段階):
+    *   原因: ライブラリのバージョン非互換性によるバックエンドのサイレントクラッシュ。
+    *   解決策: `backend/requirements.txt`のライブラリバージョンを固定し、Python仮想環境を完全に再構築。
+
+5.  バックエンドの`500 Internal Server Error` (CORSエラーを伴う):
+    *   原因: データベースから取得した`timestamp`が`NULL`のレコードを処理する際に、`log.timestamp.isoformat()`が`AttributeError`を引き起こし、バックエンドがクラッシュ。
+    *   解決策: `backend/api/get_sessions.py`で`log.timestamp`が`None`の場合の処理を追加。
+
+6.  バックエンドの`OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused`:
+    *   原因: PostgreSQLデータベースサーバーが停止している。
+    *   解決策: Docker Composeを使用してPostgreSQLデータベースを起動。
+
+最終結果:
+すべての問題が解決され、フロントエンドとバックエンドが正常に連携し、データベースから取得したセッションログがWebUIに表示されるようになりました。

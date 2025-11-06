@@ -1,0 +1,14 @@
+{"timestamp": "2025-11-05 23:04:37,432", "name": "modules.log_manager", "levelname": "INFO", "message": "========= Starting SSP v2.7 Global Diagnostic Scan ========="}
+{"timestamp": "2025-11-05 23:04:37,432", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-05 23:04:37,433", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: evaluator"}
+{"timestamp": "2025-11-05 23:04:37,434", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: generator"}
+{"timestamp": "2025-11-05 23:04:37,435", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: persona_manager"}
+{"timestamp": "2025-11-05 23:04:37,436", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: self_optimizer"}
+{"timestamp": "2025-11-05 23:04:37,436", "name": "modules.log_manager", "levelname": "INFO", "message": "Found 4 contracts to validate."}
+{"timestamp": "2025-11-05 23:04:37,436", "name": "modules.log_manager", "levelname": "INFO", "message": "Contract validation step skipped for this test."}
+{"timestamp": "2025-11-05 23:04:37,436", "name": "modules.log_manager", "levelname": "INFO", "message": "--- Starting Cross-Context Drift Check ---"}
+{"timestamp": "2025-11-05 23:04:37,436", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: data/test_context.json"}
+{"timestamp": "2025-11-05 23:04:37,437", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-05 23:04:37,438", "name": "modules.log_manager", "levelname": "INFO", "message": "[CrossContextSync] Validation complete. No drift detected."}
+{"timestamp": "2025-11-05 23:04:37,438", "name": "modules.log_manager", "levelname": "INFO", "message": "--- Cross-Context Drift Check Finished ---"}
+{"timestamp": "2025-11-05 23:04:37,438", "name": "modules.log_manager", "levelname": "INFO", "message": "========= Global Diagnostic Scan Complete ========="}

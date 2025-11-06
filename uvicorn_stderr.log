@@ -1,0 +1,64 @@
+2025-11-03 18:14:16,885 - DEBUG - connect_tcp.started host='127.0.0.1' port=6333 local_address=None timeout=5.0 socket_options=None
+2025-11-03 18:14:16,910 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000002788DF5A660>
+2025-11-03 18:14:16,910 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2025-11-03 18:14:16,911 - DEBUG - send_request_headers.complete
+2025-11-03 18:14:16,911 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2025-11-03 18:14:16,911 - DEBUG - send_request_body.complete
+2025-11-03 18:14:16,911 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2025-11-03 18:14:16,912 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'transfer-encoding', b'chunked'), (b'vary', b'accept-encoding, Origin, Access-Control-Request-Method, Access-Control-Request-Headers'), (b'content-type', b'application/json'), (b'content-encoding', b'zstd'), (b'date', b'Mon, 03 Nov 2025 09:14:16 GMT')])
+2025-11-03 18:14:16,913 - INFO - HTTP Request: GET http://127.0.0.1:6333 "HTTP/1.1 200 OK"
+2025-11-03 18:14:16,913 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2025-11-03 18:14:16,913 - DEBUG - receive_response_body.complete
+2025-11-03 18:14:16,913 - DEBUG - response_closed.started
+2025-11-03 18:14:16,914 - DEBUG - response_closed.complete
+2025-11-03 18:14:16,914 - DEBUG - close.started
+2025-11-03 18:14:16,914 - DEBUG - close.complete
+2025-11-03 18:14:17,289 - DEBUG - connect_tcp.started host='localhost' port=6333 local_address=None timeout=5.0 socket_options=None
+2025-11-03 18:14:17,320 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000002788DF87250>
+2025-11-03 18:14:17,320 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2025-11-03 18:14:17,321 - DEBUG - send_request_headers.complete
+2025-11-03 18:14:17,321 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2025-11-03 18:14:17,321 - DEBUG - send_request_body.complete
+2025-11-03 18:14:17,321 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2025-11-03 18:14:17,322 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'transfer-encoding', b'chunked'), (b'content-encoding', b'zstd'), (b'vary', b'accept-encoding, Origin, Access-Control-Request-Method, Access-Control-Request-Headers'), (b'content-type', b'application/json'), (b'date', b'Mon, 03 Nov 2025 09:14:16 GMT')])
+2025-11-03 18:14:17,322 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2025-11-03 18:14:17,323 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2025-11-03 18:14:17,323 - DEBUG - receive_response_body.complete
+2025-11-03 18:14:17,323 - DEBUG - response_closed.started
+2025-11-03 18:14:17,323 - DEBUG - response_closed.complete
+2025-11-03 18:14:17,323 - DEBUG - close.started
+2025-11-03 18:14:17,323 - DEBUG - close.complete
+2025-11-03 18:14:17,335 - INFO - Use pytorch device_name: cuda:0
+2025-11-03 18:14:17,335 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-11-03 18:14:17,338 - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
+2025-11-03 18:14:17,577 - DEBUG - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json HTTP/1.1" 307 0
+2025-11-03 18:14:17,594 - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json HTTP/1.1" 200 0
+2025-11-03 18:14:17,779 - DEBUG - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
+2025-11-03 18:14:17,792 - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json HTTP/1.1" 200 0
+2025-11-03 18:14:17,980 - DEBUG - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json HTTP/1.1" 307 0
+2025-11-03 18:14:17,993 - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json HTTP/1.1" 200 0
+2025-11-03 18:14:18,188 - DEBUG - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md HTTP/1.1" 307 0
+2025-11-03 18:14:18,200 - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md HTTP/1.1" 200 0
+2025-11-03 18:14:18,388 - DEBUG - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json HTTP/1.1" 307 0
+2025-11-03 18:14:18,401 - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json HTTP/1.1" 200 0
+2025-11-03 18:14:18,583 - DEBUG - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json HTTP/1.1" 307 0
+2025-11-03 18:14:18,597 - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json HTTP/1.1" 200 0
+2025-11-03 18:14:18,782 - DEBUG - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json HTTP/1.1" 404 0
+2025-11-03 18:14:18,971 - DEBUG - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json HTTP/1.1" 307 0
+2025-11-03 18:14:18,985 - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json HTTP/1.1" 200 0
+2025-11-03 18:14:19,756 - DEBUG - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json HTTP/1.1" 307 0
+2025-11-03 18:14:19,779 - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json HTTP/1.1" 200 0
+2025-11-03 18:14:19,969 - DEBUG - https://huggingface.co:443 "GET /api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=False&expand=False HTTP/1.1" 404 64
+2025-11-03 18:14:20,169 - DEBUG - https://huggingface.co:443 "HEAD /sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json HTTP/1.1" 307 0
+2025-11-03 18:14:20,184 - DEBUG - https://huggingface.co:443 "HEAD /api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json HTTP/1.1" 200 0
+2025-11-03 18:14:20,370 - DEBUG - https://huggingface.co:443 "GET /api/models/sentence-transformers/all-MiniLM-L6-v2 HTTP/1.1" 200 6876
+C:\Users\shiro\AppData\Roaming\Python\Python313\site-packages\pydantic\_internal\_config.py:373: UserWarning: Valid config keys have changed in V2:
+* 'orm_mode' has been renamed to 'from_attributes'
+  warnings.warn(message, UserWarning)
+INFO:     Started server process [42012]
+INFO:     Waiting for application startup.
+2025-11-03 18:14:20,546 - INFO - Database tables created/ensured.
+INFO:     Application startup complete.
+ERROR:    [Errno 10048] error while attempting to bind on address ('127.0.0.1', 8000): [winerror 10048] 通常、各ソケット アドレスに対してプロトコル、ネットワーク アドレス、またはポートのどれか 1 つのみを使用できます。
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.

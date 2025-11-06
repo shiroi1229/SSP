@@ -1,0 +1,10 @@
+{
+    "evaluator": [
+        "generator"
+    ],
+    "generator": [
+        "evaluator"
+    ],
+    "persona_manager": [],
+    "self_optimizer": []
+}

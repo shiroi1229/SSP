@@ -1,0 +1,4 @@
+{"timestamp": "2025-11-03 20:11:00,453", "name": "modules.log_manager", "levelname": "INFO", "message": "Qdrant client initialized for localhost:6333"}
+{"timestamp": "2025-11-03 20:11:03,792", "name": "modules.log_manager", "levelname": "INFO", "message": "Embedding model all-MiniLM-L6-v2 loaded."}
+{"timestamp": "2025-11-03 20:11:03,798", "name": "modules.log_manager", "levelname": "INFO", "message": "PostgreSQL connected to 127.0.0.1:5432/ssp_memory"}
+{"timestamp": "2025-11-03 20:11:03,859", "name": "modules.log_manager", "levelname": "INFO", "message": "PostgreSQL connection successful!"}

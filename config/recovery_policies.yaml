@@ -1,0 +1,31 @@
+# path: config/recovery_policies.yaml
+# version: v2.6
+
+recovery_policies:
+  # Policies for system-level events, not tied to a specific module
+  system:
+    preemptive_repair:
+      action: "preemptive_repair"
+      description: "Triggered by InsightMonitor when a future anomaly is predicted. Signals the system to take preemptive corrective action."
+      # This policy is simple, but could have conditions, e.g., based on the predicted risk level.
+      # condition: "context.get('mid_term.predicted_anomaly_risk') > 0.6"
+
+  # Policies for the Evaluator module
+  evaluator:
+    evaluation_score_drop:
+      action: "rollback"
+      condition: "mid_term.evaluation_score < 0.4"
+      description: "If the evaluation score drops significantly, roll back to the last stable context state."
+
+    module_error:
+      action: "retry"
+      limit: 2
+      description: "If the evaluator itself throws an error, retry its execution up to 2 times."
+
+  # Policies for the PersonaManager module
+  persona_manager:
+    inconsistent_harmony:
+      action: "recalibrate"
+      condition: "abs(mid_term.persona_state.harmony - previous_harmony) > 0.5"
+      baseline: "cautious"
+      description: "If cognitive harmony shifts too drastically, recalibrate the persona to a more stable baseline."

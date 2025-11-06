@@ -1,0 +1,30 @@
+## Phase 2.1: Self-Optimization Scheduler (自己評価型最適化スケジューラ) - Summary
+
+**Objective:** Implemented a scheduler to automatically run `optimize_rag_memory()` daily at midnight, enabling SSP to continuously update and optimize its RAG knowledge base.
+
+**Key Implementations & Fixes:**
+
+*   **Initial Implementation (`orchestrator/scheduler.py`):**
+    *   A new file `orchestrator/scheduler.py` was created to house the scheduling logic.
+    *   The `schedule` Python library was chosen to manage task scheduling.
+    *   The `job_optimize_rag_memory()` function was defined to encapsulate the RAG memory optimization process, which involves initializing `RAGEngine` and calling `optimize_rag_memory(top_n=50)`.
+    *   The scheduler was configured to run `job_optimize_rag_memory()` daily at "00:00" using `schedule.every().day.at("00:00").do(job_optimize_rag_memory)`.
+    *   Specific Japanese log messages were integrated to provide clear feedback on job start, completion, and errors.
+    *   A `start_scheduler()` function was implemented with an infinite loop (`while True: time.sleep(60)`) to continuously check and run pending scheduled tasks.
+    *   The script was designed to be executable standalone (`python orchestrator/scheduler.py`).
+    *   Comments outlining future extensions (e.g., external triggers, multi-phase optimization) were added as requested.
+    *   File path and version information were included at the top of the file.
+
+*   **First Issue & Fix (`ModuleNotFoundError: No module named 'schedule'`):**
+    *   **Issue:** Upon initial execution, a `ModuleNotFoundError` indicated that the `schedule` library was not installed in the environment.
+    *   **Fix:** The user was instructed to install the `schedule` library via `pip install schedule`, which successfully resolved the dependency.
+
+*   **Second Issue & Fix (`ModuleNotFoundError: No module named 'modules'`):**
+    *   **Issue:** After installing `schedule`, running the scheduler standalone resulted in a `ModuleNotFoundError` for the `modules` package. This occurred because the project's root directory was not automatically added to Python's `sys.path` when the script was executed directly.
+    *   **Fix:** `orchestrator/scheduler.py` was modified to explicitly add the project root to `sys.path` using `sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))`, mirroring the approach used in `orchestrator/main.py`.
+
+*   **Third Issue & Fix (Incorrect `schedule.next_run` output):**
+    *   **Issue:** The scheduler successfully started, but the log message for "次回実行予定" (Next scheduled run) displayed the function object itself (`<function next_run at ...>`) instead of the actual datetime of the next run. This was due to incorrectly accessing `schedule.next_run` as a property rather than calling it as a method.
+    *   **Fix:** `orchestrator/scheduler.py` was updated to correctly call `schedule.next_run()` as a method (`next_run = schedule.next_run()`), ensuring the accurate display of the next scheduled execution time.
+
+**Current Status:** The `orchestrator/scheduler.py` script is now fully implemented, correctly handles its external and internal dependencies, and provides accurate and localized logging for its operations. It is ready to function as a standalone self-optimization scheduler for the RAG memory.

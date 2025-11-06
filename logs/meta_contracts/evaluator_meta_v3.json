@@ -1,0 +1,34 @@
+{
+    "name": "evaluator",
+    "description": "Evaluates the quality of a generated response based on the context.",
+    "version": "3.0",
+    "original_version": "1.0",
+    "evolution_flag": true,
+    "fields": {
+        "inputs": [
+            {
+                "name": "short_term.response",
+                "type": "str",
+                "description": "The generated response to be evaluated."
+            },
+            {
+                "name": "long_term.model_params",
+                "type": "dict",
+                "description": "Current model parameters for reference."
+            }
+        ],
+        "outputs": [
+            {
+                "name": "mid_term.evaluation_score",
+                "type": "float",
+                "description": "The calculated quality score of the response (0.0 to 1.0)."
+            },
+            {
+                "name": "long_term.optimization_log",
+                "type": "list",
+                "description": "A log entry detailing the evaluation, for future optimization."
+            }
+        ]
+    },
+    "missing_fields": []
+}

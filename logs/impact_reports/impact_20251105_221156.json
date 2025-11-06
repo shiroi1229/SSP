@@ -1,0 +1,19 @@
+{
+  "report_id": "impact_20251105_221156",
+  "timestamp": "2025-11-05T22:11:56.333838",
+  "source_module": "modules/llm.py",
+  "impact_score": 0.5,
+  "total_modules_in_system": 16,
+  "affected_modules_count": 8,
+  "affected_modules": [
+    "backend/api/chat.py",
+    "backend/api/evaluate.py",
+    "backend/main.py",
+    "modules/evaluator.py",
+    "modules/generator.py",
+    "modules/llm.py",
+    "orchestrator/feedback_loop_integration.py",
+    "orchestrator/main.py"
+  ],
+  "summary": "An anomaly in 'modules/llm.py' has a potential impact score of 0.50, affecting 8 of 16 modules."
+}

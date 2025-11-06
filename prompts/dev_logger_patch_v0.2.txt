@@ -1,0 +1,22 @@
+あなたは Shiroi System Platform（SSP）開発チームのAIエンジニアです。
+以下の修正仕様に基づき、dev_logger.py の v0.2 パッチを作成してください。
+
+──────────────────────────────
+【目的】
+Gemini CLIのsandbox制限により write_file, run_shell_command が無効化されているため、
+dev_loggerがファイル書き込みをGeminiに任せず、Python側で直接行うよう修正する。
+
+──────────────────────────────
+【修正内容】
+- Gemini CLIはコードテキストのみを出力（stdout）する想定。
+- dev_logger.pyがその出力を受け取り、ファイルに保存する。
+- 出力先: D:\gemini\out\<timestamp>_output.txt
+- JSONログにも "saved_file" フィールドを追加し、保存先パスを記録する。
+- Geminiのツール機能（write_file/run_shell_command）には依存しない。
+──────────────────────────────
+
+【出力形式】
+1ファイルのみ出力:
+- tools/dev_logger.py
+──────────────────────────────
+開始してください。

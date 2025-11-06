@@ -1,0 +1,18 @@
+2025-11-03 19:19:57,930 - modules.log_manager - INFO - Qdrant client initialized for localhost:6333
+2025-11-03 19:20:01,154 - modules.log_manager - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-03 19:20:01,160 - modules.log_manager - ERROR - RAGEngine initialization error: connection to server at "localhost" (::1), port 5432 failed: FATAL:  password authentication failed for user "ssp_user"
+Traceback (most recent call last):
+  File "D:\gemini\modules\rag_engine.py", line 38, in __init__
+    self.pg_conn = psycopg2.connect(
+                   ~~~~~~~~~~~~~~~~^
+        host=self.pg_host,
+        ^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        client_encoding='UTF8' # Explicitly set client encoding to UTF8
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\shiro\AppData\Roaming\Python\Python313\site-packages\psycopg2\__init__.py", line 135, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "localhost" (::1), port 5432 failed: FATAL:  password authentication failed for user "ssp_user"
+

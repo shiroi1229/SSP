@@ -1,0 +1,70 @@
+## 開発状況の詳細な要約 (SSP WebUI v0.30実装 - 現在の状態):
+
+**1. 初期設定と目標:**
+*   **目標**: SSP v0.30向けに、PostgreSQL MemoryStoreへの移行と検索/フィルタリング機能の統合を含むNext.js + FastAPI WebUIを実装する。
+*   **初期ステップ**: Next.jsフロントエンド（`frontend/`）の足場を構築し、FastAPIバックエンド（`backend/`）をセットアップし、初期APIエンドポイントを作成。基本的なNext.jsページを実装し、TailwindCSSを設定。
+
+**2. Docker Compose起動の自動化:**
+*   **課題**: ユーザーは当初、フロントエンドとバックエンドを手動で起動する必要があった。
+*   **解決策**: `docker-compose.yml`を修正し、`backend`と`frontend`サービス、それぞれの`Dockerfile`と`backend/requirements.txt`を含めることで、`docker-compose up -d`コマンド一つですべてのサービスを起動できるようにした。
+
+**3. バックエンドの`ModuleNotFoundError`:**
+*   **課題**: `backend`サービスがDocker内で`ModuleNotFoundError: No module named 'backend'`エラーで起動に失敗。
+*   **解決策**: `backend/main.py`のインポートを`from api import ...`（コンテナ内の`/app`に対する絶対インポート）に変更。
+
+**4. バックエンドの`logs`ディレクトリに対する`FileNotFoundError`:**
+*   **課題**: `backend`サービスは起動したが、`/sessions`エンドポイントにアクセスすると`Internal Server Error`を返し、ログには`FileNotFoundError: [Errno 2] No such file or directory: '/app/api/../../logs'`が表示された。
+*   **解決策**: `backend/api/get_sessions.py`と`get_session_detail.py`を修正し、`LOGS_DIR = "/logs"`を設定。`docker-compose.yml`を更新し、ホストの`./logs`ディレクトリを`backend`コンテナ内の`/logs`にマウント。
+
+**5. フロントエンドの「Error: Failed to fetch」（永続的な`net::ERR_NAME_NOT_RESOLVED`）:**
+*   **課題**: フロントエンドはロードされたが、バックエンドへのAPI呼び出しが`http://backend:8000/sessions`に対して`net::ERR_NAME_NOT_RESOLVED`エラーで失敗。
+*   **根本原因**: フロントエンドコンテナ内のクライアントサイドJavaScriptが、ホストブラウザでは解決できないDockerネットワーク内のホスト名（`backend`）にアクセスしようとしていた。
+*   **解決策**: `docker-compose.yml`の`frontend`サービスに対する`NEXT_PUBLIC_BACKEND_URL`ビルド引数を`http://localhost:8000`に変更。
+
+**6. Ghostfolioとの競合解決:**
+*   **課題**: 以前のGhostfolio Dockerセットアップとの競合が、永続的な問題の原因であると疑われた。
+*   **解決策**: `docker-compose.yml`でDocker Composeプロジェクト名を明示的に`ssp-webui`に設定。古い`ghostfolio-development`プロジェクトをクリーンシャットダウンし、そのネットワーク/ボリュームを削除。`ssp-webui`プロジェクトを再構築して再起動。
+
+**7. PostgreSQLセットアップと移行（現在の課題）:**
+*   **目標**: 既存のJSONログをPostgreSQLデータベース（`ssp_memory`）に移行する。
+*   **現在の状況**: 
+    *   PostgreSQLコンテナ（`ssp-webui-postgres-1`）は実行中。
+    *   `ssp_memory`データベースと`ssp_admin`ユーザー（パスワード「Mizuho0824」）は、`postgres` Dockerイメージのエントリポイントによって正常に作成されたことを確認済み。
+    *   `migrate_logs_to_db.py`スクリプトは、`FATAL: password authentication failed for user "ssp_admin"`エラーで失敗し続けている。
+    *   **`load_dotenv()`のデバッグ**: `modules/config_manager.py`にデバッグプリントを追加したところ、`load_dotenv()`が`.env`ファイルを正しくロードしていないことが判明。
+    *   **修正の試み**: `modules/config_manager.py`の`dotenv_path`の計算を`Path(__file__).parent.parent / '.env'`に修正。
+    *   **永続的なエラー**: 移行スクリプトは`ssp_admin`のパスワード認証で*まだ*失敗している。
+    *   **仮説**: `backend/db/connection.py`に一時的にハードコードしたパスワード「Mizuho0824」が、PostgreSQLサーバーによって拒否されている。これは、`pg_hba.conf`の設定またはパスワード自体に問題がある可能性が高い。
+    *   **次のステップ（保留中）**: PostgreSQLコンテナ内で`ssp_admin`ユーザーのパスワードが正しく設定されているか、そして認証設定が適切かを確認する。
+
+**明日の次のアクション:**
+
+PostgreSQLのパスワード認証の問題のデバッグを続行します。ユーザーに、PostgreSQLコンテナのシェル内で以下のコマンドをインタラクティブに実行して、ユーザー、パスワード、`pg_hba.conf`設定を確認するよう依頼します。
+
+1.  **PostgreSQLコンテナのシェルにアクセス**:
+    ```bash
+    docker exec -it ssp-webui-postgres-1 bash
+    ```
+2.  **`ssp_admin`ユーザーで`psql`に接続**:
+    ```bash
+    psql -U ssp_admin -d ssp_memory
+    ```
+    *   パスワードの入力を求められたら、「**Mizuho0824**」と入力してください。
+    *   接続が成功するか、エラーメッセージが表示されるか、その出力を教えてください。
+
+3.  **ユーザー情報を確認（接続成功の場合）**:
+    *   もし接続が成功したら、`psql`プロンプトで以下のコマンドを実行し、`ssp_admin`ユーザーの属性を確認してください。
+    ```sql
+    \du
+    ```
+    *   その出力を教えてください。
+
+4.  **`pg_hba.conf`を確認**:
+    *   `psql`を終了（`\q`）した後、コンテナのシェルで以下のコマンドを実行し、`pg_hba.conf`ファイルの内容を表示してください。
+    ```bash
+    cat /var/lib/postgresql/data/pg_hba.conf
+    ```
+    *   その出力を教えてください。
+
+5.  **コンテナのシェルを終了**:
+    *   `exit`と入力してコンテナのシェルを終了し、ホストのコマンドプロンプトに戻ってください。

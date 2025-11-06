@@ -1,0 +1,43 @@
+gemini run --task "SSP v0.20 MemoryStore + JSONビューアWebUI構築" --instructions "
+あなたは Shiroi System Platform（SSP）開発チームのフルスタックエンジニアです。
+
+## 目的
+SSPの全セッションログ（logs/*.json）をWebブラウザで閲覧できる
+シンプルなNext.jsベースのビューアを構築します。
+
+## 構成
+- フロントエンド: Next.js 15 + TypeScript
+- バックエンド: FastAPI or Next.js API Routes
+- 表示対象: logsディレクトリにある JSON ログ（session_*, feedback_session_*）
+- 表示情報: timestamp / user_input / final_output / 評価スコア / コメント / retry履歴
+
+## 要件
+### backend/api/get_sessions.py
+- logsディレクトリをスキャンし、最新順で一覧をJSON返却。
+- 各要素には {id, timestamp, user_input, final_output, score} を含める。
+
+### backend/api/get_session_detail.py
+- 特定のログファイルを読み込み、全文(JSON)を返す。
+
+### frontend/pages/index.tsx
+- APIからセッション一覧を取得して一覧表示。
+- クリックで詳細ページへ遷移。
+
+### frontend/pages/session/[id].tsx
+- 指定IDのログを取得し、RAG→Generator→Evaluatorの流れをタイムラインUIで表示。
+- world_context, answer, feedbackなどをカードで整然と表示。
+
+### スタイル要件
+- TailwindCSSを使用。
+- カード表示・スクロール対応。
+- 「シロイシステム」テーマカラー：#f8f9fa（白）＋ #00bcd4（サイアン）。
+
+### 出力形式
+1行目：# path: frontend/pages/index.tsx
+2行目：# version: v0.20
+以降：TypeScript + Reactコード
+
+続けて他ファイルも生成。
+各ファイルはこのフォーマットで出力（backend/api/* と frontend/pages/session/*）。
+
+"

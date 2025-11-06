@@ -1,0 +1,20 @@
+name: persona_manager
+description: "Manages the AI's persona, including emotion, focus, and harmony."
+version: "1.0"
+evolution: true
+
+# This module might not have direct inputs in the same way as others.
+# It observes the context and updates persona state based on various triggers.
+inputs: []
+
+outputs:
+  - name: short_term.persona_state
+    type: dict
+    description: "The current, transient state of the AI's persona."
+    schema:
+      emotion: str
+      harmony: float
+      focus: float
+  - name: long_term.persona_profile
+    type: dict
+    description: "The stable, long-term personality traits of the AI."

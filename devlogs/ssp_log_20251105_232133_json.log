@@ -1,0 +1,12 @@
+{"timestamp": "2025-11-05 23:21:33,924", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-05 23:21:33,925", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: evaluator"}
+{"timestamp": "2025-11-05 23:21:33,926", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: generator"}
+{"timestamp": "2025-11-05 23:21:33,927", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: persona_manager"}
+{"timestamp": "2025-11-05 23:21:33,928", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: self_optimizer"}
+{"timestamp": "2025-11-05 23:21:33,945", "name": "modules.log_manager", "levelname": "ERROR", "message": "[ContractRegistry] Unexpected error loading meta-contract from self_optimizer_meta.json: name 'json' is not defined"}
+{"timestamp": "2025-11-05 23:21:33,945", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Starting meta-contract generation and registration..."}
+{"timestamp": "2025-11-05 23:21:33,949", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Registered meta-contract: evaluator"}
+{"timestamp": "2025-11-05 23:21:33,949", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Registered meta-contract: generator"}
+{"timestamp": "2025-11-05 23:21:33,949", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Registered meta-contract: persona_manager"}
+{"timestamp": "2025-11-05 23:21:33,949", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Registered meta-contract: self_optimizer"}
+{"timestamp": "2025-11-05 23:21:33,950", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Meta-contract generation and registration complete."}

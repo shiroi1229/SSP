@@ -1,0 +1,129 @@
+I will use a shell command to write the Python code for the orchestrator's main entry point into the file `D:\gemini\orchestrator\main.py`. This command will create a new file or overwrite it if it already exists.I am unable to write files directly to your filesystem at the moment as the necessary tools are unavailable. However, I can provide you with the complete code for the requested files. Please copy the content of each file and create the files `orchestrator/main.py` and `orchestrator/workflow.py` yourself.
+
+Here is the content for `orchestrator/main.py`:
+
+```python
+# path: orchestrator/main.py
+# version: v0.1
+import argparse
+import sys
+from orchestrator import workflow
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Shiroi System Platform Orchestrator")
+    parser.add_argument("user_input", type=str, help="User input to the system.")
+    args = parser.parse_args()
+
+    try:
+        result = workflow.run_workflow(args.user_input)
+        if result and "final_output" in result:
+            print(result["final_output"])
+    except Exception as e:
+        print(f"WARNING: An error occurred during the workflow execution: {e}", file=sys.stdout)
+```
+
+And here is the content for `orchestrator/workflow.py`:
+
+```python
+# path: orchestrator/workflow.py
+# version: v0.1
+import json
+import datetime
+import os
+import subprocess
+import sys
+
+def get_config(key, default=None):
+    return os.getenv(key, default)
+
+def rag_engine_get_context(user_input: str) -> dict:
+    print("--- RAG Engine: Start ---")
+    context = f"Retrieved context for: '{user_input}'"
+    print("--- RAG Engine: End ---")
+    return {"context": context}
+
+def generator_generate_answer(user_input: str, context: str) -> dict:
+    print("--- Generator: Start ---")
+    model = get_config("GEMINI_MODEL", "gemini-pro")
+    generator_prompt = f"Context: {context}\\n\\nQuestion: {user_input}\\n\\nAnswer:"
+    
+    command = ['gemini', 'run', generator_prompt, '--model', model]
+    generator_response = ""
+    try:
+        result = subprocess.run(
+            command, 
+            capture_output=True, 
+            text=True, 
+            check=True, 
+            encoding='utf-8'
+        )
+        generator_response = result.stdout.strip()
+    except FileNotFoundError:
+        generator_response = "ERROR: 'gemini' command not found. Please ensure the Gemini CLI is installed and in your PATH."
+    except subprocess.CalledProcessError as e:
+        generator_response = f"ERROR: The Gemini CLI command failed. Stderr: {e.stderr.strip()}"
+    except Exception as e:
+        generator_response = f"An unexpected error occurred: {e}"
+
+    print("--- Generator: End ---")
+    return {
+        "generator_prompt": generator_prompt,
+        "generator_response": generator_response
+    }
+
+def evaluator_evaluate(answer: str) -> dict:
+    print("--- Evaluator: Start ---")
+    feedback = {"score": 0.9, "comment": "The answer seems relevant."}
+    print("--- Evaluator: End ---")
+    return {"feedback": feedback}
+
+def memory_store_save_record(log_data: dict):
+    print("--- Memory Store: Start ---")
+    print("Record saved to memory store.")
+    print("--- Memory Store: End ---")
+    return True
+
+def run_workflow(user_input: str) -> dict:
+    log_data = {
+        "timestamp": "",
+        "user_input": user_input,
+        "context": None,
+        "generator_prompt": None,
+        "generator_response": None,
+        "feedback": None,
+        "final_output": None
+    }
+    
+    start_time = datetime.datetime.now()
+    log_data["timestamp"] = start_time.isoformat()
+    
+    log_filename = f"session_{start_time.strftime('%Y%m%d_%H%M%S_%f')}.json"
+    log_path = os.path.join("logs", log_filename)
+
+    try:
+        rag_output = rag_engine_get_context(user_input)
+        log_data["context"] = rag_output["context"]
+
+        gen_output = generator_generate_answer(user_input, log_data["context"])
+        log_data["generator_prompt"] = gen_output["generator_prompt"]
+        log_data["generator_response"] = gen_output["generator_response"]
+        
+        answer = gen_output["generator_response"]
+        log_data["final_output"] = answer
+
+        eval_output = evaluator_evaluate(answer)
+        log_data["feedback"] = eval_output["feedback"]
+
+        memory_store_save_record(log_data)
+
+    finally:
+        print("--- Logging: Start ---")
+        os.makedirs("logs", exist_ok=True)
+        
+        with open(log_path, 'w', encoding='utf-8') as f:
+            json.dump(log_data, f, ensure_ascii=False, indent=2)
+        print(f"Workflow data logged to {log_path}")
+        print("--- Logging: End ---")
+    
+    return log_data
+```

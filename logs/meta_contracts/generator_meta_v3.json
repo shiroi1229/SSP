@@ -1,0 +1,34 @@
+{
+    "name": "generator",
+    "description": "Generates a response based on a prompt and context.",
+    "version": "3.0",
+    "original_version": "1.0",
+    "evolution_flag": true,
+    "fields": {
+        "inputs": [
+            {
+                "name": "short_term.prompt",
+                "type": "str",
+                "description": "The user prompt or internal instruction for generation."
+            },
+            {
+                "name": "short_term.rag_context",
+                "type": "str",
+                "description": "Context retrieved from the RAG engine."
+            },
+            {
+                "name": "long_term.model_params",
+                "type": "dict",
+                "description": "Dynamic model parameters (e.g., temperature, top_p)."
+            }
+        ],
+        "outputs": [
+            {
+                "name": "mid_term.generated_output",
+                "type": "str",
+                "description": "The raw output from the language model."
+            }
+        ]
+    },
+    "missing_fields": []
+}

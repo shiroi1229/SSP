@@ -1,0 +1,8 @@
+Summary of conversation up to 2025-10-26 20:00:00:
+
+The user clarified the intended SSP v0.1 architecture: `rag_engine` provides `context`, `generator` uses LM Studio to produce `answer`, and `orchestrator` manages the workflow.
+
+-   **`modules/generator.py`**: Modified to `v0.2`, integrating LM Studio API (`requests.post()`) to generate answers based on `model`, `context`, and `user_input`. It now reads `prompts/gemini_instruction.txt` for system instructions.
+-   **`modules/rag_engine.py`**: Reverted to its original role of only returning `context` from Qdrant and PostgreSQL, removing the LM Studio integration.
+-   **`orchestrator/workflow.py`**: Updated to reflect the clarified architecture. `rag_engine_get_context` now calls `RAGEngine.get_context` to get `context`. The `generator_generate_answer` function was re-introduced and now calls `generator.generate_answer` to produce the `answer`. The `run_workflow` function was adjusted to correctly pass data between these modules.
+-   **Previous Issues**: The persistent `404 NOT_FOUND` error from the `gemini` CLI when trying to communicate with the Gemini API remains unresolved. This issue is external to the Python code and requires user action to verify API key, configuration, and network environment.

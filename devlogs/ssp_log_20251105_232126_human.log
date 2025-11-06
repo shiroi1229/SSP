@@ -1,0 +1,11 @@
+2025-11-05 23:21:26,580 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-05 23:21:26,582 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-05 23:21:26,583 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-05 23:21:26,584 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-05 23:21:26,585 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-05 23:21:26,586 - modules.log_manager - INFO - [ContractRegistry] Starting meta-contract generation and registration...
+2025-11-05 23:21:26,588 - modules.log_manager - INFO - [ContractRegistry] Registered meta-contract: self_optimizer
+2025-11-05 23:21:26,589 - modules.log_manager - INFO - [ContractRegistry] Meta-contract generation and registration complete.
+2025-11-05 23:21:33,981 - modules.log_manager - INFO - Qdrant client initialized for localhost:6333
+2025-11-05 23:21:37,322 - modules.log_manager - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-05 23:21:37,327 - modules.log_manager - INFO - PostgreSQL connected to 127.0.0.1:5432/ssp_memory

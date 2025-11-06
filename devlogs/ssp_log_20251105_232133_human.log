@@ -1,0 +1,12 @@
+2025-11-05 23:21:33,924 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-05 23:21:33,925 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-05 23:21:33,926 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-05 23:21:33,927 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-05 23:21:33,928 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-05 23:21:33,945 - modules.log_manager - ERROR - [ContractRegistry] Unexpected error loading meta-contract from self_optimizer_meta.json: name 'json' is not defined
+2025-11-05 23:21:33,945 - modules.log_manager - INFO - [ContractRegistry] Starting meta-contract generation and registration...
+2025-11-05 23:21:33,949 - modules.log_manager - INFO - [ContractRegistry] Registered meta-contract: evaluator
+2025-11-05 23:21:33,949 - modules.log_manager - INFO - [ContractRegistry] Registered meta-contract: generator
+2025-11-05 23:21:33,949 - modules.log_manager - INFO - [ContractRegistry] Registered meta-contract: persona_manager
+2025-11-05 23:21:33,949 - modules.log_manager - INFO - [ContractRegistry] Registered meta-contract: self_optimizer
+2025-11-05 23:21:33,950 - modules.log_manager - INFO - [ContractRegistry] Meta-contract generation and registration complete.

@@ -1,0 +1,78 @@
+# SSP Module Dependency Graph v1.0
+# Defines the upstream/downstream relationships between core modules.
+# This graph is used by the ImpactAnalyzer to trace the potential ripple effects of an anomaly.
+# Format:
+#   <module_path>:
+#     - <dependency1_path>
+#     - <dependency2_path>
+
+dependencies:
+  # --- Core Orchestration ---
+  orchestrator/main.py:
+    - orchestrator/context_manager.py
+    - orchestrator/feedback_loop_integration.py
+    - orchestrator/insight_monitor.py
+    - orchestrator/learner.py
+    - orchestrator/scheduler.py
+
+  orchestrator/feedback_loop_integration.py:
+    - modules/rag_engine.py
+    - modules/generator.py
+    - modules/evaluator.py
+    - modules/memory_store.py
+
+  orchestrator/insight_monitor.py:
+    - orchestrator/recovery_policy_manager.py
+    - orchestrator/context_manager.py
+
+  orchestrator/learner.py:
+    - modules/self_optimizer.py
+    - modules/persona_evolver.py
+    - orchestrator/recovery_policy_manager.py
+
+  orchestrator/scheduler.py:
+    - modules/self_optimizer.py
+    - modules/collective_optimizer.py
+    - modules/persona_evolver.py
+    - modules/metacognition.py
+
+  # --- Core Modules ---
+  modules/generator.py:
+    - modules/llm.py
+    - modules/persona_manager.py
+
+  modules/evaluator.py:
+    - modules/llm.py
+
+  modules/rag_engine.py:
+    - modules/embedding_utils.py
+    - modules/memory_store.py # For fetching context/knowledge
+
+  modules/memory_store.py:
+    - backend/db/connection.py
+
+  modules/persona_manager.py:
+    - config/persona_profile.json
+
+  modules/llm.py:
+    - config/model_params.json
+
+  # --- Backend API ---
+  backend/main.py:
+    - backend/api/chat.py
+    - backend/api/evaluate.py
+    - backend/api/post_session.py
+    - backend/db/connection.py
+
+  backend/api/chat.py:
+    - orchestrator/main.py
+
+  backend/api/evaluate.py:
+    - orchestrator/feedback_loop_integration.py
+
+  backend/api/post_session.py:
+    - backend/db/connection.py
+
+  # --- Database ---
+  backend/db/connection.py:
+    - external:postgresql_service # Represents the external DB service

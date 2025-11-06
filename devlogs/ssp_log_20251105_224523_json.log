@@ -1,0 +1,3 @@
+{"timestamp": "2025-11-05 22:45:23,967", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_drift/history.json"}
+{"timestamp": "2025-11-05 22:45:23,967", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: data/test_context.json"}
+{"timestamp": "2025-11-05 22:45:23,967", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}

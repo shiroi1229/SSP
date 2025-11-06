@@ -1,0 +1,41 @@
+{
+  "id": "dev_log_20251104_232000",
+  "timestamp": "2025-11-04T23:20:00",
+  "type": "debugging_session",
+  "context": {
+    "symptom": "Backend server fails to start with ImportError: cannot import name 'run_orchestrator_workflow'",
+    "root_cause": "Legacy API endpoints (/api/evaluate, /api/chat) were still depending on 'run_orchestrator_workflow', which was removed in the v2.2 refactoring of orchestrator/main.py.",
+    "modules_impacted": [
+      "backend/api/evaluate.py",
+      "backend/api/chat.py",
+      "orchestrator/main.py"
+    ]
+  },
+  "output": {
+    "summary": "Resolved server startup failure by temporarily disabling legacy features in dependent API endpoints. Used the `replace` tool to modify /api/evaluate and /api/chat, commenting out calls to the missing 'run_orchestrator_workflow' and replacing them with placeholder logic. This provides a temporary fix, allowing the server to run while deferring the full migration of these endpoints to the new v2.2 architecture.",
+    "resolution": "Server can now start successfully. The affected API endpoints return placeholder responses for the disabled features."
+  },
+  "system_state": {
+    "commit_hash": null,
+    "env_snapshot": "# ======================
+# SSP (Python Backend)
+# ======================
+POSTGRES_HOST=127.0.0.1
+POSTGRES_PORT=5432
+POSTGRES_DB=ssp_memory
+POSTGRES_USER=ssp_admin
+POSTGRES_PASSWORD=Mizuho0824
+
+# LM Studio連携
+LM_STUDIO_URL=http://127.0.0.1:1234
+LOCAL_LLM_API_URL=http://127.0.0.1:1234/v1
+SSP_LOCAL_LLM_MODEL_NAME=llama3
+
+# ======================
+# CLI保護（Gemini誤動作防止）
+# ======================
+GEMINI_ENV_DISABLE=1
+"
+  },
+  "notes": "This debugging session highlights a dependency conflict between the new v2.2 architecture and legacy API endpoints. The chosen solution prioritizes server stability while creating technical debt (incomplete migration of 'evaluate' and 'chat' APIs) that needs to be addressed in a future task."
+}

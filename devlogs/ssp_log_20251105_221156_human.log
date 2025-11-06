@@ -1,0 +1,16 @@
+2025-11-05 22:11:56,326 - modules.log_manager - INFO - ========= Starting SSP v2.5 Impact Simulation =========
+2025-11-05 22:11:56,326 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-05 22:11:56,327 - modules.log_manager - INFO - [ContractRegistry] Loaded contract: evaluator
+2025-11-05 22:11:56,328 - modules.log_manager - INFO - [ContractRegistry] Loaded contract: generator
+2025-11-05 22:11:56,329 - modules.log_manager - INFO - [ContractRegistry] Loaded contract: persona_manager
+2025-11-05 22:11:56,330 - modules.log_manager - INFO - [ContractRegistry] Loaded contract: self_optimizer
+2025-11-05 22:11:56,332 - modules.log_manager - INFO - [ImpactAnalyzer] Initialized with 16 total modules.
+2025-11-05 22:11:56,333 - modules.log_manager - INFO - [ImpactAnalyzer] Dependency graph saved to logs/impact_reports/impact_graph.json
+2025-11-05 22:11:56,333 - modules.log_manager - INFO - --- Simulating failure in 'modules/llm.py' ---
+2025-11-05 22:11:56,333 - modules.log_manager - INFO - [ImpactAnalyzer] Tracing impact for anomaly in 'modules/llm.py'...
+2025-11-05 22:11:56,334 - modules.log_manager - INFO - [ImpactAnalyzer] Impact report saved to D:\gemini\logs\impact_reports\impact_20251105_221156.json
+2025-11-05 22:11:56,334 - modules.log_manager - INFO - [ImpactAnalyzer] Markdown report saved to D:\gemini\logs\impact_reports\impact_20251105_221156.md
+2025-11-05 22:11:56,334 - modules.log_manager - INFO - [ImpactAnalyzer] Trace complete. Affected modules: 8. Impact score: 0.50
+2025-11-05 22:11:56,334 - modules.log_manager - INFO - ========= Impact Simulation Complete =========
+2025-11-05 22:11:56,334 - modules.log_manager - INFO - Impact graph saved to: logs/impact_reports/impact_graph.json
+2025-11-05 22:11:56,334 - modules.log_manager - INFO - Impact report generated: logs/impact_reports/impact_*.json/md

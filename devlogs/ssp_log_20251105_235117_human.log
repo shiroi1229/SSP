@@ -1,0 +1,55 @@
+2025-11-05 23:51:23,134 - modules.log_manager - INFO - Qdrant client initialized for localhost:6333
+2025-11-05 23:51:26,189 - modules.log_manager - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-05 23:51:26,194 - modules.log_manager - INFO - PostgreSQL connected to 127.0.0.1:5432/ssp_memory
+2025-11-05 23:52:21,946 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:52:26,802 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:52:31,802 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:52:36,795 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:52:37,849 - modules.log_manager - INFO - [ChatHandler] Received user input: ‚±‚ñ‚É‚¿‚Í
+2025-11-05 23:52:37,849 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-05 23:52:37,851 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-05 23:52:37,852 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-05 23:52:37,853 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-05 23:52:37,854 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-05 23:52:37,854 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-05 23:52:37,864 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-05 23:52:37,864 - modules.log_manager - INFO - [PolicyScheduler] Initialized.
+2025-11-05 23:52:37,864 - modules.log_manager - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-05 23:52:38,349 - modules.log_manager - INFO - [Learner] Initialized with v2.4 components.
+2025-11-05 23:52:38,371 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-05 23:52:38,371 - modules.log_manager - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-05 23:52:38,372 - modules.log_manager - INFO - [FeedbackLoop] Starting feedback loop for session: 20251105_235238
+2025-11-05 23:52:41,802 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:52:41,810 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:52:46,796 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:52:46,796 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:52:51,804 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:52:51,804 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:52:56,802 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:52:56,802 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:53:01,800 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:53:01,800 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:53:06,808 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:53:06,808 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:53:11,803 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:53:11,804 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:53:16,802 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:53:16,803 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:53:21,799 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:53:21,799 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:53:26,800 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:53:26,800 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:53:31,799 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:53:31,799 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:53:36,793 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:53:36,793 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:53:41,799 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:53:41,800 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:53:46,805 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:53:46,806 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:53:51,800 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:53:51,800 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:53:56,795 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:53:56,795 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:54:01,794 - modules.log_manager - INFO - [ContextGetter] Retrieving current context.
+2025-11-05 23:54:01,795 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json

@@ -1,0 +1,17 @@
+{
+  "long_term": {
+    "session.state": "active_purchase",
+    "user.feedback_score": 0.95,
+    "user.intent": "purchase_history"
+  },
+  "mid_term": {
+    "session.state": "active_purchase",
+    "user.feedback_score": 0.95,
+    "user.intent": "purchase"
+  },
+  "short_term": {
+    "session.state": "active_purchase",
+    "user.intent": "purchase",
+    "user.feedback_score": 0.95
+  }
+}

@@ -1,0 +1,23 @@
+{
+    "name": "persona_manager",
+    "description": "Manages the AI's persona, including emotion, focus, and harmony.",
+    "version": "3.0",
+    "original_version": "1.0",
+    "evolution_flag": true,
+    "fields": {
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "short_term.persona_state",
+                "type": "dict",
+                "description": "The current, transient state of the AI's persona."
+            },
+            {
+                "name": "long_term.persona_profile",
+                "type": "dict",
+                "description": "The stable, long-term personality traits of the AI."
+            }
+        ]
+    },
+    "missing_fields": []
+}

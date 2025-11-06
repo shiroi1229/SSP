@@ -1,0 +1,26 @@
+{
+  "scan_timestamp": "2025-11-05T22:35:29.075007",
+  "total_contracts_scanned": 4,
+  "contracts_with_issues": 3,
+  "issues": {
+    "evaluator": {
+      "inputs": [
+        "Missing required inputs 'short_term.response' for module evaluator"
+      ],
+      "outputs": []
+    },
+    "generator": {
+      "inputs": [
+        "Missing required inputs 'short_term.prompt' for module generator"
+      ],
+      "outputs": []
+    },
+    "self_optimizer": {
+      "inputs": [
+        "Missing required inputs 'self_analysis_report' for module self_optimizer",
+        "Missing required inputs 'model_params' for module self_optimizer"
+      ],
+      "outputs": []
+    }
+  }
+}

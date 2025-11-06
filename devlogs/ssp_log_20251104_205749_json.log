@@ -1,0 +1,11 @@
+{"timestamp": "2025-11-04 20:57:49,569", "name": "modules.log_manager", "levelname": "INFO", "message": "Starting diagnostic check..."}
+{"timestamp": "2025-11-04 20:57:49,570", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: POSTGRES_USER is set."}
+{"timestamp": "2025-11-04 20:57:49,570", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: POSTGRES_PASSWORD is set."}
+{"timestamp": "2025-11-04 20:57:49,570", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: LM_STUDIO_URL is set."}
+{"timestamp": "2025-11-04 20:57:49,570", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: Module modules.generator imported successfully."}
+{"timestamp": "2025-11-04 20:57:49,580", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: Module modules.evaluator imported successfully."}
+{"timestamp": "2025-11-04 20:57:49,580", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: Module backend.db.connection imported successfully."}
+{"timestamp": "2025-11-04 20:57:54,114", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: Module modules.rag_engine imported successfully."}
+{"timestamp": "2025-11-04 20:57:54,116", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: Module backend.dev_recorder imported successfully."}
+{"timestamp": "2025-11-04 20:57:54,116", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: Module modules.log_manager imported successfully."}
+{"timestamp": "2025-11-04 20:57:54,117", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Diagnostic Check: Module modules.config_manager imported successfully."}

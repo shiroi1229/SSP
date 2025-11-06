@@ -1,0 +1,9 @@
+{"timestamp": "2025-11-05 23:54:09,146", "name": "modules.log_manager", "levelname": "INFO", "message": "Qdrant client initialized for localhost:6333"}
+{"timestamp": "2025-11-05 23:54:12,556", "name": "modules.log_manager", "levelname": "INFO", "message": "Embedding model all-MiniLM-L6-v2 loaded."}
+{"timestamp": "2025-11-05 23:54:12,572", "name": "modules.log_manager", "levelname": "INFO", "message": "PostgreSQL connected to 127.0.0.1:5432/ssp_memory"}
+{"timestamp": "2025-11-05 23:54:12,607", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextGetter] Retrieving current context."}
+{"timestamp": "2025-11-05 23:54:12,607", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-05 23:54:12,614", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextGetter] Retrieving current context."}
+{"timestamp": "2025-11-05 23:54:12,615", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-05 23:54:16,799", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextGetter] Retrieving current context."}
+{"timestamp": "2025-11-05 23:54:16,799", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}

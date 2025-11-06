@@ -1,0 +1,450 @@
+[
+  {
+    "timestamp": "2025-11-05T23:52:38.372109",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": null,
+    "new_value": "こんにちは",
+    "reason": "User input from chat interface"
+  },
+  {
+    "timestamp": "2025-11-05T23:52:38.372498",
+    "layer": "long_term",
+    "key": "config.qdrant_url",
+    "old_value": null,
+    "new_value": "http://127.0.0.1:6333",
+    "reason": "Qdrant URL config"
+  },
+  {
+    "timestamp": "2025-11-05T23:52:38.372970",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": "こんにちは",
+    "new_value": "こんにちは",
+    "reason": "User initiated feedback loop"
+  },
+  {
+    "timestamp": "2025-11-05T23:52:38.373391",
+    "layer": "mid_term",
+    "key": "session_id",
+    "old_value": null,
+    "new_value": "20251105_235238",
+    "reason": "New session ID"
+  },
+  {
+    "timestamp": "2025-11-05T23:54:34.859275",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": null,
+    "new_value": "こんにちは",
+    "reason": "User input from chat interface"
+  },
+  {
+    "timestamp": "2025-11-05T23:54:34.859739",
+    "layer": "long_term",
+    "key": "config.qdrant_url",
+    "old_value": null,
+    "new_value": "http://127.0.0.1:6333",
+    "reason": "Qdrant URL config"
+  },
+  {
+    "timestamp": "2025-11-05T23:54:34.860263",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": "こんにちは",
+    "new_value": "こんにちは",
+    "reason": "User initiated feedback loop"
+  },
+  {
+    "timestamp": "2025-11-05T23:54:34.860571",
+    "layer": "mid_term",
+    "key": "session_id",
+    "old_value": null,
+    "new_value": "20251105_235434",
+    "reason": "New session ID"
+  },
+  {
+    "timestamp": "2025-11-05T23:55:40.551577",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": null,
+    "new_value": "こんにちは",
+    "reason": "User input from chat interface"
+  },
+  {
+    "timestamp": "2025-11-05T23:55:40.552013",
+    "layer": "long_term",
+    "key": "config.qdrant_url",
+    "old_value": null,
+    "new_value": "http://127.0.0.1:6333",
+    "reason": "Qdrant URL config"
+  },
+  {
+    "timestamp": "2025-11-05T23:55:40.552569",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": "こんにちは",
+    "new_value": "こんにちは",
+    "reason": "User initiated feedback loop"
+  },
+  {
+    "timestamp": "2025-11-05T23:55:40.552898",
+    "layer": "mid_term",
+    "key": "session_id",
+    "old_value": null,
+    "new_value": "20251105_235540",
+    "reason": "New session ID"
+  },
+  {
+    "timestamp": "2025-11-05T23:56:29.166552",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": null,
+    "new_value": "こんにちは",
+    "reason": "User input from chat interface"
+  },
+  {
+    "timestamp": "2025-11-05T23:56:29.167016",
+    "layer": "long_term",
+    "key": "config.qdrant_url",
+    "old_value": null,
+    "new_value": "http://127.0.0.1:6333",
+    "reason": "Qdrant URL config"
+  },
+  {
+    "timestamp": "2025-11-05T23:56:29.167511",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": "こんにちは",
+    "new_value": "こんにちは",
+    "reason": "User initiated feedback loop"
+  },
+  {
+    "timestamp": "2025-11-05T23:56:29.167890",
+    "layer": "mid_term",
+    "key": "session_id",
+    "old_value": null,
+    "new_value": "20251105_235629",
+    "reason": "New session ID"
+  },
+  {
+    "timestamp": "2025-11-05T23:57:25.269452",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": null,
+    "new_value": "こんにちは",
+    "reason": "User input from chat interface"
+  },
+  {
+    "timestamp": "2025-11-05T23:57:25.270040",
+    "layer": "long_term",
+    "key": "config.qdrant_url",
+    "old_value": null,
+    "new_value": "http://127.0.0.1:6333",
+    "reason": "Qdrant URL config"
+  },
+  {
+    "timestamp": "2025-11-05T23:57:25.270660",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": "こんにちは",
+    "new_value": "こんにちは",
+    "reason": "User initiated feedback loop"
+  },
+  {
+    "timestamp": "2025-11-05T23:57:25.271158",
+    "layer": "mid_term",
+    "key": "session_id",
+    "old_value": null,
+    "new_value": "20251105_235725",
+    "reason": "New session ID"
+  },
+  {
+    "timestamp": "2025-11-05T23:57:34.047720",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": null,
+    "new_value": "え？",
+    "reason": "User input from chat interface"
+  },
+  {
+    "timestamp": "2025-11-05T23:57:34.048315",
+    "layer": "long_term",
+    "key": "config.qdrant_url",
+    "old_value": null,
+    "new_value": "http://127.0.0.1:6333",
+    "reason": "Qdrant URL config"
+  },
+  {
+    "timestamp": "2025-11-05T23:57:34.048845",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": "え？",
+    "new_value": "え？",
+    "reason": "User initiated feedback loop"
+  },
+  {
+    "timestamp": "2025-11-05T23:57:34.049211",
+    "layer": "mid_term",
+    "key": "session_id",
+    "old_value": null,
+    "new_value": "20251105_235734",
+    "reason": "New session ID"
+  },
+  {
+    "timestamp": "2025-11-05T23:57:37.421687",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": null,
+    "new_value": "おーい",
+    "reason": "User input from chat interface"
+  },
+  {
+    "timestamp": "2025-11-05T23:57:37.422287",
+    "layer": "long_term",
+    "key": "config.qdrant_url",
+    "old_value": null,
+    "new_value": "http://127.0.0.1:6333",
+    "reason": "Qdrant URL config"
+  },
+  {
+    "timestamp": "2025-11-05T23:57:37.422903",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": "おーい",
+    "new_value": "おーい",
+    "reason": "User initiated feedback loop"
+  },
+  {
+    "timestamp": "2025-11-05T23:57:37.423328",
+    "layer": "mid_term",
+    "key": "session_id",
+    "old_value": null,
+    "new_value": "20251105_235737",
+    "reason": "New session ID"
+  },
+  {
+    "timestamp": "2025-11-05T23:58:48.577260",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": null,
+    "new_value": "シロイー",
+    "reason": "User input from chat interface"
+  },
+  {
+    "timestamp": "2025-11-05T23:58:48.577835",
+    "layer": "long_term",
+    "key": "config.qdrant_url",
+    "old_value": null,
+    "new_value": "http://127.0.0.1:6333",
+    "reason": "Qdrant URL config"
+  },
+  {
+    "timestamp": "2025-11-05T23:58:48.578410",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": "シロイー",
+    "new_value": "シロイー",
+    "reason": "User initiated feedback loop"
+  },
+  {
+    "timestamp": "2025-11-05T23:58:48.578825",
+    "layer": "mid_term",
+    "key": "session_id",
+    "old_value": null,
+    "new_value": "20251105_235848",
+    "reason": "New session ID"
+  },
+  {
+    "timestamp": "2025-11-06T00:00:53.213133",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": null,
+    "new_value": "シロイー",
+    "reason": "User input from chat interface"
+  },
+  {
+    "timestamp": "2025-11-06T00:00:53.213719",
+    "layer": "long_term",
+    "key": "config.qdrant_url",
+    "old_value": null,
+    "new_value": "http://127.0.0.1:6333",
+    "reason": "Qdrant URL config"
+  },
+  {
+    "timestamp": "2025-11-06T00:00:53.214317",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": "シロイー",
+    "new_value": "シロイー",
+    "reason": "User initiated feedback loop"
+  },
+  {
+    "timestamp": "2025-11-06T00:00:53.214806",
+    "layer": "mid_term",
+    "key": "session_id",
+    "old_value": null,
+    "new_value": "20251106_000053",
+    "reason": "New session ID"
+  },
+  {
+    "timestamp": "2025-11-06T00:02:45.000449",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": null,
+    "new_value": "Current Context",
+    "reason": "User input from chat interface"
+  },
+  {
+    "timestamp": "2025-11-06T00:02:45.001008",
+    "layer": "long_term",
+    "key": "config.qdrant_url",
+    "old_value": null,
+    "new_value": "http://127.0.0.1:6333",
+    "reason": "Qdrant URL config"
+  },
+  {
+    "timestamp": "2025-11-06T00:02:45.001667",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": "Current Context",
+    "new_value": "Current Context",
+    "reason": "User initiated feedback loop"
+  },
+  {
+    "timestamp": "2025-11-06T00:02:45.002095",
+    "layer": "mid_term",
+    "key": "session_id",
+    "old_value": null,
+    "new_value": "20251106_000245",
+    "reason": "New session ID"
+  },
+  {
+    "timestamp": "2025-11-06T00:02:45.200058",
+    "layer": "short_term",
+    "key": "rag_context",
+    "old_value": null,
+    "new_value": "情報不足",
+    "reason": "RAG context retrieved"
+  },
+  {
+    "timestamp": "2025-11-06T00:04:14.003235",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": null,
+    "new_value": "short term Context",
+    "reason": "User input from chat interface"
+  },
+  {
+    "timestamp": "2025-11-06T00:04:14.003916",
+    "layer": "long_term",
+    "key": "config.qdrant_url",
+    "old_value": null,
+    "new_value": "http://127.0.0.1:6333",
+    "reason": "Qdrant URL config"
+  },
+  {
+    "timestamp": "2025-11-06T00:04:14.004671",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": "short term Context",
+    "new_value": "short term Context",
+    "reason": "User initiated feedback loop"
+  },
+  {
+    "timestamp": "2025-11-06T00:04:14.005213",
+    "layer": "mid_term",
+    "key": "session_id",
+    "old_value": null,
+    "new_value": "20251106_000414",
+    "reason": "New session ID"
+  },
+  {
+    "timestamp": "2025-11-06T00:04:14.151239",
+    "layer": "short_term",
+    "key": "rag_context",
+    "old_value": null,
+    "new_value": "シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。",
+    "reason": "RAG context retrieved"
+  },
+  {
+    "timestamp": "2025-11-06T00:05:22.314211",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": null,
+    "new_value": "Current Context",
+    "reason": "User input from chat interface"
+  },
+  {
+    "timestamp": "2025-11-06T00:05:22.314849",
+    "layer": "long_term",
+    "key": "config.qdrant_url",
+    "old_value": null,
+    "new_value": "http://127.0.0.1:6333",
+    "reason": "Qdrant URL config"
+  },
+  {
+    "timestamp": "2025-11-06T00:05:22.315510",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": "Current Context",
+    "new_value": "Current Context",
+    "reason": "User initiated feedback loop"
+  },
+  {
+    "timestamp": "2025-11-06T00:05:22.315980",
+    "layer": "mid_term",
+    "key": "session_id",
+    "old_value": null,
+    "new_value": "20251106_000522",
+    "reason": "New session ID"
+  },
+  {
+    "timestamp": "2025-11-06T00:05:22.473379",
+    "layer": "short_term",
+    "key": "rag_context",
+    "old_value": null,
+    "new_value": "情報不足",
+    "reason": "RAG context retrieved"
+  },
+  {
+    "timestamp": "2025-11-06T00:06:02.012076",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": null,
+    "new_value": "    ai_response = await feedback_loop.run_feedback_loop(user_input) # Use the existing feedback loop   File \"D:\\gemini\\orchestrator\\feedback_loop_integration.py\", line 137, in run_feedback_loop     lo... (truncated)",
+    "reason": "User input from chat interface"
+  },
+  {
+    "timestamp": "2025-11-06T00:06:02.012771",
+    "layer": "long_term",
+    "key": "config.qdrant_url",
+    "old_value": null,
+    "new_value": "http://127.0.0.1:6333",
+    "reason": "Qdrant URL config"
+  },
+  {
+    "timestamp": "2025-11-06T00:06:02.013564",
+    "layer": "short_term",
+    "key": "user_input",
+    "old_value": "    ai_response = await feedback_loop.run_feedback_loop(user_input) # Use the existing feedback loop   File \"D:\\gemini\\orchestrator\\feedback_loop_integration.py\", line 137, in run_feedback_loop     lo... (truncated)",
+    "new_value": "    ai_response = await feedback_loop.run_feedback_loop(user_input) # Use the existing feedback loop   File \"D:\\gemini\\orchestrator\\feedback_loop_integration.py\", line 137, in run_feedback_loop     lo... (truncated)",
+    "reason": "User initiated feedback loop"
+  },
+  {
+    "timestamp": "2025-11-06T00:06:02.014205",
+    "layer": "mid_term",
+    "key": "session_id",
+    "old_value": null,
+    "new_value": "20251106_000602",
+    "reason": "New session ID"
+  },
+  {
+    "timestamp": "2025-11-06T00:06:02.193243",
+    "layer": "short_term",
+    "key": "rag_context",
+    "old_value": null,
+    "new_value": "ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。",
+    "reason": "RAG context retrieved"
+  }
+]
