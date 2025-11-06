@@ -1,0 +1,56 @@
+```mermaid
+graph TD
+    subgraph A[Application Layer]
+        direction LR
+        A1[WebUI]
+        A2[CLI]
+        A3[Live2D Panel]
+    end
+
+    subgraph B[Orchestrator Layer]
+        B1(Shiroi Orchestrator)
+    end
+
+    subgraph C[Intelligence Layer]
+        direction LR
+        C1[Generator]
+        C2[Evaluator]
+        C3[RAG Engine]
+    end
+
+    subgraph D[Knowledge Layer]
+        direction LR
+        D1[PostgreSQL]
+        D2[Qdrant]
+        D3[JSON Logs]
+    end
+
+    subgraph E[Feedback Layer]
+        direction LR
+        E1[Feedback DB]
+        E2[LoRA Manager]
+        E3(評価再生ループ)
+    end
+
+    subgraph F[Extension Layer]
+        direction LR
+        F1[Voicevox]
+        F2[ComfyUI]
+        F3[Suno]
+    end
+
+    subgraph G[Infrastructure Layer]
+        direction LR
+        G1[Docker]
+        G2[GPU]
+        G3[Cloud]
+    end
+
+    A --> B1
+    B1 --> C
+    C --> D
+    B1 --> E
+    E3 --> C1
+    B1 --> F
+    C --> G
+```
