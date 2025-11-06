@@ -20,10 +20,17 @@ from orchestrator.impact_analyzer import ImpactAnalyzer
 from orchestrator.auto_repair_engine import AutoRepairEngine
 from modules.log_manager import log_manager
 from qdrant_client import QdrantClient
+from modules.impact_analyzer import analyze_impact, suggest_repair
+import argparse
+
+def run_impact_analysis(target_file: str):
+    result = analyze_impact(target_file)
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    print(suggest_repair(result))
 
 def run_context_evolution_cycle(user_input: str = "初期の自己評価を開始します。"):
     """Runs the full context evolution cycle with self-healing and learning capabilities."""
-    log_manager.info("========= Starting SSP Workflow v2.5 (Context Evolution Cycle) =========")
+    log_manager.info("========= Starting SSP Workflow v2.5 (Context Evolution Cycle) ==========")")
 
     # 1. Initialization of Core Components
     context_manager = ContextManager(history_path="logs/context_history.json")
@@ -189,4 +196,11 @@ async def get_current_context() -> Dict[str, Any]:
     return context_manager.get_full_context()
 
 if __name__ == "__main__":
-    run_context_evolution_cycle()
+    parser = argparse.ArgumentParser(description="SSP Orchestrator CLI")
+    parser.add_argument("--analyze", type=str, help="Run impact analysis on the specified file.")
+    args = parser.parse_args()
+
+    if args.analyze:
+        run_impact_analysis(args.analyze)
+    else:
+        run_context_evolution_cycle()
