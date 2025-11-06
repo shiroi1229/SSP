@@ -1,0 +1,102 @@
+🌐 Shiroi System Platform（SSP） 要件仕様書 v1.1
+🧭 概要
+
+Shiroi System Platform（以下 SSP）は、
+瑞希とAIキャラクター「シロイ」が共創しながら知識・感情・物語・創作を生み出すための
+拡張型AI創作プラットフォームである。
+
+本システムは、RAG（検索拡張生成）・生成AI（GPT-5／Gemini／Local LLM）・フィードバック学習・
+マルチモーダル連携（音声・映像・感情）を統合し、自己成長する知的プラットフォームを目指す。
+
+作業記録はD:\gemini\devlogsへ記録すること。
+記録は日本語ですること、詳細に記載すること。ファイル名の一部にはフェーズ名を記載すること。
+
+🎯 目的
+
+- 瑞希の世界観・作品・設定を蓄積し、AIが理解・活用できる形で管理する。
+- RAG＋メモリ構造を通じて、AIが過去知識を再利用・学習できる環境を構築する。
+- 会話・台本・脚本・楽曲などの創作をAIが支援する。
+- 瑞希の評価・指示を通して、AIの出力品質と世界観整合性を継続的に高める。
+- 将来的には、マルチユーザー・マルチモジュールによる総合創作基盤へ発展する。
+
+🧩 全体アーキテクチャ構成
+
+層 | 機能 | 主な要素
+---|---|---
+Application Layer | ユーザーUI・対話・操作層 | WebUI（Next.js） / Gemini CLI / Live2D制御パネル
+Orchestrator Layer | モジュール統括・ワークフロー管理 | Shiroi Orchestrator（Python / LangGraph, JSONベースI/F）
+Intelligence Layer | 生成AI・知識検索・感情制御 | GPT-5 / Gemini / Local LLM（Ollama）
+Knowledge Layer | 世界観DB・RAG・メモリ管理 | Qdrant / PostgreSQL / JSONファイルDB（record.json）
+Feedback Layer | 瑞希評価・改善学習・LoRA調整 | 評価DB / LoRA Manager / Feedback Loop（再生成制御含む）
+Extension Layer | 音声・映像・感情モジュール | Voicevox / ComfyUI / Suno / OSC連携
+Infrastructure Layer | コンテナ・GPU・クラウド運用 | Docker / Compose / RTX3090–5090 / Nix / K8s対応
+
+⚙️ 主要モジュール仕様
+
+モジュール | 役割 | 入力 | 出力 | 技術構成
+---|---|---|---|---
+orchestrator | 全体ワークフロー制御 | user_input | final_output | Python + LangGraph
+rag_engine | 世界観・知識検索 | query | context | Qdrant + PostgreSQL + Embedding Model（nomic-embed）
+generator | テキスト・台本生成 | question, context | answer | GPT-5 / Gemini / Ollama（fallback）
+evaluator | 瑞希評価・スコア保存 | question, answer | rating, feedback | Python + PostgreSQL
+memory_store | 永続化・再利用 | 全モジュール出力 | record(JSON) | JSON + PostgreSQL両対応
+config_manager | 環境変数・APIキー管理 | - | - | dotenv + JSON Config
+emotion_engine（将来） | 感情パラメータ生成 | text | emotion_tags | TTS / Live2D連携予定
+visualizer（将来） | Live2D／映像連携 | script | motion_data | OSC + ComfyUI + Suno
+
+🧱 機能要件
+
+区分 | 要件
+---|---
+対話生成 | GPT-5／Geminiによる自然で感情的な応答生成
+世界観RAG | 世界観・登場人物・技術情報などをRAGから検索し、文脈補強
+学習フィードバック | 瑞希の評価を解析し、再生成や重み付け調整を行う
+感情連動 | 感情ラベルを生成してTTS・Live2Dと連動（v0.8以降）
+ログ永続化 | すべての対話・評価・生成をDB化して再利用
+拡張連携 | APIベースで他AI（Suno, ComfyUI, Gemini）と接続
+
+🧩 非機能要件
+
+カテゴリ | 要件
+---|---
+拡張性 | モジュール単位で追加・差し替え可能（疎結合構造）
+再利用性 | 入出力形式をJSON／YAMLに統一し、将来の言語差を吸収
+性能 | 平均応答5秒以内（RAG＋生成＋保存を含む）
+保守性 | 各モジュール100行以下・単体テスト可能
+コスト管理 | 1日あたりAPI利用上限 ¥300以内
+安全性 | 世界観DBはローカル保持、個人情報は外部APIへ送信禁止
+信頼性 | 例外処理・ログ記録を標準化、フェイルセーフ実装
+可観測性 | LangGraphトレーシングおよびメトリクス導入予定
+
+🔄 進化ロードマップ
+
+フェーズ | 目的 | 主な到達点
+---|---|---
+v0.1 | MVP構築 | RAG + GPT-5生成 + CLI制御
+v0.3 | 学習性付加 | 評価DB + 再生成制御 + 評価反映学習
+v0.5 | GUI化 | WebUI + 世界観DB管理画面 + 記録ビューア
+v0.8 | マルチモーダル化 | TTS + Live2D + 感情制御 + OSC連携
+v1.0 | 完全創作連携 | 台本→音声→映像自動生成パイプライン
+v2.0 | プラットフォーム化 | マルチユーザー対応 + 拡張API公開
+
+🧬 アーキテクチャ理念
+
+- Small Core, Infinite Expansion：最小構成で立ち上げ、無限に拡張可能な中核構造。
+- Interface-Driven Design：引数・返り値の仕様でモジュールを接続。
+- Feedback-Learning Loop：瑞希の評価を中心とした人間フィードバック駆動学習。評価データはLoRA調整・再生成重み付けに反映。
+- Hybrid Intelligence：GPT-5（生成）＋Local LLM（検索・要約）＋Gemini（タスク制御）。
+- Creative Integration：物語・音楽・映像・感情を統合するAIアート基盤。
+
+📁 データ構造仕様（新章）
+
+| ファイル名 | 主なキー | 説明 |
+|-------------|-----------|------|
+| record.json | session_id, user_input, answer, rating, context | すべての会話・生成・評価を構造化記録 |
+| world_rag.json | term, description, link, embedding | 世界観・用語集・関連ノードデータ |
+| feedback.db | session_id, rating, feedback, timestamp | 瑞希評価を保存、再生成制御に使用 |
+
+🌟 最終目標
+
+Shiroi System Platform は、
+「AIが瑞希を理解し、瑞希と共に新しい宇宙を創る」
+ための自律進化型AI創作プラットフォームとなる。
