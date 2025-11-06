@@ -54,10 +54,12 @@ def generate_response(context_manager: ContextManager):
     }
 
     # Call LLM and handle response
+    log_manager.debug(f"[Generator] Sending request to LLM: {full_url} with payload: {payload}")
     try:
         data = json.dumps(payload).encode("utf-8")
         req = urllib.request.Request(full_url, data=data, headers=headers, method='POST')
         with urllib.request.urlopen(req, timeout=30) as response:
+            log_manager.debug("[Generator] Received response from LLM.")
             response_body = response.read().decode("utf-8", errors="ignore")
             
             # Extract content from LLM response
