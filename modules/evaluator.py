@@ -39,7 +39,14 @@ JSON形式の出力例:
 }}
 """
 
-    llm_response = generate_response(config=config, model="", context="", prompt=evaluation_prompt, temperature=0.7)
+    # Set the evaluation prompt in the context for the generator to use.
+    # Note: This temporarily overwrites the original user prompt in the short_term context.
+    context_manager.set("short_term.prompt", evaluation_prompt, reason="Internal call for evaluation")
+
+    # Call the generator in a context-aware manner.
+    generate_response(context_manager)
+    llm_response = context_manager.get("mid_term.generated_output")
+
     log_manager.debug(f"[Evaluator] LLM evaluation response: {llm_response[:200]}...")
 
     json_str_match = re.search(r'\{.*\}', llm_response, re.DOTALL)
