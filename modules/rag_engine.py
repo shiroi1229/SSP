@@ -25,9 +25,9 @@ class RAGEngine:
         self.qdrant_port = int(config.get("QDRANT_PORT", 6333))
         self.pg_host = config.get("POSTGRES_HOST", "localhost")
         self.pg_port = int(config.get("POSTGRES_PORT", 5432))
-        self.pg_database = config.get("POSTGRES_DB", "world_knowledge_db")
-        self.pg_user = config.get("POSTGRES_USER", "user")
-        self.pg_password = config.get("POSTGRES_PASSWORD", "password")
+        self.pg_database = config.get("POSTGRES_DB", "ssp_memory")
+        self.pg_user = config.get("POSTGRES_USER", "ssp_admin")
+        self.pg_password = config.get("POSTGRES_PASSWORD", "Mizuho0824")
         self.qdrant_collection_name = config.get("QDRANT_COLLECTION", "world_knowledge")
 
         try:
