@@ -30,7 +30,7 @@ def run_impact_analysis(target_file: str):
 
 def run_context_evolution_cycle(user_input: str = "初期の自己評価を開始します。"):
     """Runs the full context evolution cycle with self-healing and learning capabilities."""
-    log_manager.info("========= Starting SSP Workflow v2.5 (Context Evolution Cycle) ==========")")
+    log_manager.info("========= Starting SSP Workflow v2.5 (Context Evolution Cycle) ==========")
 
     # 1. Initialization of Core Components
     context_manager = ContextManager(history_path="logs/context_history.json")
