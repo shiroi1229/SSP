@@ -12,9 +12,11 @@ class LogManager:
         self.logger = logging.getLogger("ssp_logger")
         self.logger.setLevel(logging.DEBUG)
         
-        # Ensure handlers are not duplicated if LogManager is initialized multiple times
-        if not self.logger.handlers:
-            formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+        # Clear existing handlers to prevent duplicates during hot-reloads
+        if self.logger.hasHandlers():
+            self.logger.handlers.clear()
+
+        formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 
             log_dir = Path("logs")
             log_dir.mkdir(exist_ok=True)
