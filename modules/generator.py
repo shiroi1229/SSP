@@ -46,12 +46,12 @@ def generate_response(context_manager: ContextManager):
         prompt_messages.append({"role": "user", "content": f"質問: {prompt}\n\n参考情報:\n{rag_context}"})
 
         lm_studio_url = config.get("LM_STUDIO_URL", "http://127.0.0.1:1234")
-        full_url = f"{lm_studio_url}/v1/chat/completions"
+        full_url = f"{lm_studio_url}/v1/chat/completions" # Corrected endpoint
         headers = {"Content-Type": "application/json"}
         payload = {
             "model": model_name,
-            "messages": prompt_messages,
-            "temperature": temperature
+            "messages": prompt_messages, # Use the constructed chat messages
+            "temperature": temperature,
         }
 
         # Call LLM and handle response
@@ -65,10 +65,10 @@ def generate_response(context_manager: ContextManager):
             # Extract content from LLM response
             try:
                 response_data = json.loads(response_body)
-                raw_output = response_data['choices'][0]['message']['content']
+                raw_output = response_data['choices'][0]['message']['content'] # Corrected parsing
             except (json.JSONDecodeError, KeyError, IndexError) as e:
-                log_manager.error(f"[Generator] Could not parse LLM response JSON: {e}. Using raw body.")
-                raw_output = response_body
+                log_manager.error(f"[Generator] Could not parse LLM response JSON: {e}. Raw body: {response_body}")
+                raw_output = response_body # Fallback to raw body if parsing fails
 
             # Set output to context
             context_manager.set("mid_term.generated_output", raw_output, reason="LLM response generated")
