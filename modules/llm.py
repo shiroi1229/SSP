@@ -7,7 +7,7 @@ import logging
 from modules.metacognition import log_introspection # Import for metacognition logging
 
 LLM_API_URL = os.getenv("LLM_API_URL", "http://localhost:1234/v1/chat/completions") # Default for LM Studio
-LLM_SIMULATION_MODE = os.getenv("LLM_SIMULATION_MODE", "True").lower() == "true"
+LLM_SIMULATION_MODE = os.getenv("LLM_SIMULATION_MODE", "False").lower() == "true"
 PARAM_FILE = "./config/model_params.json"
 PERSONA_FILE = "./config/persona_profile.json"
 
