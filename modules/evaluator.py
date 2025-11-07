@@ -43,10 +43,7 @@ JSON形式の出力例:
     # Note: This temporarily overwrites the original user prompt in the short_term context.
     context_manager.set("short_term.prompt", evaluation_prompt, reason="Internal call for evaluation")
 
-    # Call the generator in a context-aware manner.
-    generate_response(context_manager)
-    llm_response = context_manager.get("mid_term.generated_output")
-
+    llm_response = context_manager.get("mid_term.generated_output") # Get the generated response from the context
     log_manager.debug(f"[Evaluator] LLM evaluation response: {llm_response[:200]}...")
 
     json_str_match = re.search(r'\{.*\}', llm_response, re.DOTALL)
@@ -54,6 +51,7 @@ JSON形式の出力例:
     if json_str_match:
         try:
             evaluation_data = json.loads(json_str_match.group(0))
+            log_manager.debug(f"[Evaluator] Parsed evaluation JSON: {evaluation_data}")
             
             w_c = evaluation_data.get("worldview_consistency", 0.0)
             spec = evaluation_data.get("specificity", 0.0)
@@ -84,7 +82,7 @@ JSON形式の出力例:
             log_manager.info(f"[Evaluator] Evaluation successful. Score: {overall_rating}")
 
         except (json.JSONDecodeError, KeyError) as e:
-            log_manager.error(f"[Evaluator] Failed to parse LLM evaluation response: {e}", exc_info=True)
+            log_manager.error(f"[Evaluator] Failed to parse LLM evaluation response: {e}. Raw LLM response: {llm_response}", exc_info=True)
             context_manager.set("short_term.error", f"Evaluator failed: {e}", reason="Error during evaluation")
     else:
         log_manager.error(f"[Evaluator] Could not extract JSON from LLM response: {llm_response}")
