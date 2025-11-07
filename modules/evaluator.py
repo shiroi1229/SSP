@@ -4,10 +4,10 @@
 import json
 import re
 import datetime
-from modules.generator import generate_response
 from modules.log_manager import log_manager
 from modules.config_manager import load_environment
 from orchestrator.context_manager import ContextManager
+from modules.llm import analyze_text # Import analyze_text
 
 def evaluate_output(context_manager: ContextManager):
     """Evaluates the quality of a response using an LLM, based on data in the ContextManager."""
@@ -41,11 +41,10 @@ JSON形式の出力例:
 }}
 """
 
-    # Set the evaluation prompt in the context for the generator to use.
-    # Note: This temporarily overwrites the original user prompt in the short_term context.
-    context_manager.set("short_term.prompt", evaluation_prompt, reason="Internal call for evaluation")
-
-    llm_response = context_manager.get("mid_term.generated_output") # Get the generated response from the context
+    # Make the actual LLM call for evaluation
+    # Pass response_format to ensure JSON output, as analyze_text now handles it conditionally
+    model_params = {"response_format": {"type": "json_object"}}
+    llm_response = analyze_text(text=answer, prompt=evaluation_prompt, model_params=model_params)
     log_manager.debug(f"[Evaluator] LLM evaluation response: {llm_response[:200]}...")
 
     json_str_match = re.search(r'\{.*\}', llm_response, re.DOTALL)
