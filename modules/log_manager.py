@@ -28,7 +28,7 @@ class LogManager:
         self.logger.addHandler(fh)
 
         # Console handler
-        ch = logging.StreamHandler(sys.stdout, encoding="utf-8") # Added sys.stdout and encoding
+        ch = logging.StreamHandler(sys.stdout) # Removed encoding argument
         ch.setFormatter(formatter)
         self.logger.addHandler(ch)
 
