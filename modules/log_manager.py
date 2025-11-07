@@ -6,6 +6,7 @@ import logging
 from pathlib import Path
 import json # Added json import for JsonFormatter
 from datetime import datetime # Added datetime import for _get_log_filepath
+import sys # Added import for sys.stdout
 
 class LogManager:
     def __init__(self):
@@ -27,7 +28,7 @@ class LogManager:
         self.logger.addHandler(fh)
 
         # Console handler
-        ch = logging.StreamHandler()
+        ch = logging.StreamHandler(sys.stdout, encoding="utf-8") # Added sys.stdout and encoding
         ch.setFormatter(formatter)
         self.logger.addHandler(ch)
 
