@@ -18,24 +18,24 @@ class LogManager:
 
         formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 
-            log_dir = Path("logs")
-            log_dir.mkdir(exist_ok=True)
-            
-            # File handler for feedback_loop.log
-            fh = logging.FileHandler(log_dir / "feedback_loop.log", encoding="utf-8")
-            fh.setFormatter(formatter)
-            self.logger.addHandler(fh)
+        log_dir = Path("logs")
+        log_dir.mkdir(exist_ok=True)
+        
+        # File handler for feedback_loop.log
+        fh = logging.FileHandler(log_dir / "feedback_loop.log", encoding="utf-8")
+        fh.setFormatter(formatter)
+        self.logger.addHandler(fh)
 
-            # Console handler
-            ch = logging.StreamHandler()
-            ch.setFormatter(formatter)
-            self.logger.addHandler(ch)
+        # Console handler
+        ch = logging.StreamHandler()
+        ch.setFormatter(formatter)
+        self.logger.addHandler(ch)
 
-            # JSON handler (re-added for consistency with previous versions)
-            json_formatter = JsonFormatter()
-            json_handler = logging.FileHandler(self._get_log_filepath("_json.log"))
-            json_handler.setFormatter(json_formatter)
-            self.logger.addHandler(json_handler)
+        # JSON handler (re-added for consistency with previous versions)
+        json_formatter = JsonFormatter()
+        json_handler = logging.FileHandler(self._get_log_filepath("_json.log"))
+        json_handler.setFormatter(json_formatter)
+        self.logger.addHandler(json_handler)
 
     def _get_log_filepath(self, suffix):
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
