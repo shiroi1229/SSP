@@ -140,7 +140,7 @@ class FeedbackLoop:
             return final_answer
 
         except Exception as e:
-            log_manager.exception(f"⚠️ [FeedbackLoop] Error in feedback loop: {e}")
+            log_manager.error(f"⚠️ [FeedbackLoop] Error in feedback loop: {e}", exc_info=True)
             self.context_manager.rollback_to_snapshot(stable_snapshot_path) # Rollback on unexpected exception
             self.insight_monitor.notify_recovery({"action": "rollback", "reason": f"Exception in feedback loop: {e}"})
             return f"⚠️ Error in feedback loop: {e}"
