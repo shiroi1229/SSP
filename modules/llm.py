@@ -92,13 +92,28 @@ def analyze_text(text: str, prompt: str) -> str:
             log_introspection("final_output", f"Simulated LLM response generated. Trend: {simulated_response['trend'][:50]}...")
             return json.dumps(simulated_response, ensure_ascii=False, indent=2)
         else:
-            # Actual LLM call (uncomment and implement when ready)
-            # response = requests.post(url, headers=headers, json=data, timeout=30) # Added timeout
-            # response.raise_for_status() # Raise an exception for HTTP errors
-            # llm_response_content = response.json()["choices"][0]["message"]["content"]
-            # log_introspection("final_output_actual", f"Actual LLM response generated. Content: {llm_response_content[:50]}...")
-            # return llm_response_content # Assuming LLM returns JSON directly
-            raise NotImplementedError("Actual LLM call not implemented yet. Set LLM_SIMULATION_MODE=True to use simulation.")
+            # Actual LLM call
+            try:
+                # Append response_format if present in model_params
+                if "response_format" in model_params:
+                    data["response_format"] = model_params["response_format"]
+
+                response = requests.post(url, headers=headers, json=data, timeout=30)
+                response.raise_for_status() # Raise an exception for HTTP errors
+                llm_response_content = response.json()["choices"][0]["message"]["content"]
+                log_introspection("final_output_actual", f"Actual LLM response generated. Content: {llm_response_content[:50]}...")
+                return llm_response_content
+            except requests.exceptions.RequestException as e:
+                logging.error(f"Error calling local LLM: {e}")
+                log_introspection("llm_call_failed", f"Error: {e}", confidence=0.0)
+                error_response = {
+                    "timestamp": datetime.datetime.now().isoformat(),
+                    "source_model": "Actual LLM",
+                    "confidence": 0.0,
+                    "trend": "LLM analysis failed due to connection error.",
+                    "suggestion": f"Please check LLM service at {LLM_API_URL}. Error: {str(e)}"
+                }
+                return json.dumps(error_response, ensure_ascii=False, indent=2)
 
     except requests.exceptions.RequestException as e:
         logging.error(f"Error calling local LLM: {e}")
