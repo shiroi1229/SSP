@@ -52,6 +52,7 @@ def generate_response(context_manager: ContextManager):
             "model": model_name,
             "messages": prompt_messages, # Use the constructed chat messages
             "temperature": temperature,
+            "max_tokens": 512, # Added max_tokens as per user's patch
         }
 
         # Call LLM and handle response
@@ -65,7 +66,9 @@ def generate_response(context_manager: ContextManager):
             # Extract content from LLM response
             try:
                 response_data = json.loads(response_body)
+                log_manager.debug(f"[Generator] Raw response: {response_body[:400]}") # Log raw response
                 raw_output = response_data['choices'][0]['message']['content'] # Corrected parsing
+                log_manager.info(f"[Generator] Answer generated: {raw_output[:80]}...") # Log generated answer
             except (json.JSONDecodeError, KeyError, IndexError) as e:
                 log_manager.error(f"[Generator] Could not parse LLM response JSON: {e}. Raw body: {response_body}")
                 raw_output = response_body # Fallback to raw body if parsing fails
