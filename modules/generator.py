@@ -53,6 +53,7 @@ def generate_response(context_manager: ContextManager):
             "messages": prompt_messages, # Use the constructed chat messages
             "temperature": temperature,
             "max_tokens": 512, # Added max_tokens as per user's patch
+            "response_format": {"type": "json_object"}, # Force JSON output
         }
 
         # Call LLM and handle response
