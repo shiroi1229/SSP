@@ -10,6 +10,7 @@ import sys # Added import for sys.stdout
 
 class LogManager:
     def __init__(self):
+        sys.stdout.reconfigure(encoding='utf-8') # Explicitly set stdout encoding to UTF-8
         self.logger = logging.getLogger("ssp_logger")
         self.logger.setLevel(logging.DEBUG)
         
@@ -58,6 +59,12 @@ class LogManager:
     def exception(self, message, extra=None):
         """Logs a message with exception information. Automatically sets exc_info=True."""
         self.logger.exception(message, extra=extra)
+
+import sys
+import io
+
+# Force UTF-8 encoding for stdout to handle emojis and Japanese characters
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 class JsonFormatter(logging.Formatter):
     def format(self, record):
