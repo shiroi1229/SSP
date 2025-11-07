@@ -26,36 +26,36 @@ def generate_response(context_manager: ContextManager):
         return
 
     # Prepare LLM call
-    model_name = config.get("SSP_LOCAL_LLM_MODEL_NAME", "Meta-Llama-3-8B-Instruct-Q4_K_M-GGUF")
-    temperature = model_params.get("temperature", 0.7)
-    
     try:
-        instruction_path = Path(__file__).parent.parent / "prompts" / "gemini_instruction.txt"
-        gemini_instruction = instruction_path.read_text(encoding="utf-8")
-    except FileNotFoundError:
-        log_manager.error("[Generator] prompts/gemini_instruction.txt not found.")
-        context_manager.set("mid_term.generated_output", "Error: Instruction file not found.", reason="Generator error: instruction file missing")
-        return
+        model_name = config.get("SSP_LOCAL_LLM_MODEL_NAME", "Meta-Llama-3-8B-Instruct-Q4_K_M-GGUF")
+        temperature = model_params.get("temperature", 0.7)
+        
+        try:
+            instruction_path = Path(__file__).parent.parent / "prompts" / "gemini_instruction.txt"
+            gemini_instruction = instruction_path.read_text(encoding="utf-8")
+        except FileNotFoundError:
+            log_manager.error("[Generator] prompts/gemini_instruction.txt not found.")
+            context_manager.set("mid_term.generated_output", "Error: Instruction file not found.", reason="Generator error: instruction file missing")
+            return
 
-    system_content = gemini_instruction + "\n出力は日本語で、キャラクター 'シロイ' の一人称口調で回答してください。"
-    prompt_messages = [
-        {"role": "system", "content": system_content}
-    ]
-    prompt_messages.extend(history) # Add history
-    prompt_messages.append({"role": "user", "content": f"質問: {prompt}\n\n参考情報:\n{rag_context}"})
+        system_content = gemini_instruction + "\n出力は日本語で、キャラクター 'シロイ' の一人称口調で回答してください。"
+        prompt_messages = [
+            {"role": "system", "content": system_content}
+        ]
+        prompt_messages.extend(history) # Add history
+        prompt_messages.append({"role": "user", "content": f"質問: {prompt}\n\n参考情報:\n{rag_context}"})
 
-    lm_studio_url = config.get("LM_STUDIO_URL", "http://127.0.0.1:1234")
-    full_url = f"{lm_studio_url}/v1/chat/completions"
-    headers = {"Content-Type": "application/json"}
-    payload = {
-        "model": model_name,
-        "messages": prompt_messages,
-        "temperature": temperature
-    }
+        lm_studio_url = config.get("LM_STUDIO_URL", "http://127.0.0.1:1234")
+        full_url = f"{lm_studio_url}/v1/chat/completions"
+        headers = {"Content-Type": "application/json"}
+        payload = {
+            "model": model_name,
+            "messages": prompt_messages,
+            "temperature": temperature
+        }
 
-    # Call LLM and handle response
-    log_manager.debug(f"[Generator] Sending request to LLM: {full_url} with payload: {payload}")
-    try:
+        # Call LLM and handle response
+        log_manager.debug(f"[Generator] Sending request to LLM: {full_url} with payload: {payload}")
         data = json.dumps(payload).encode("utf-8")
         req = urllib.request.Request(full_url, data=data, headers=headers, method='POST')
         with urllib.request.urlopen(req, timeout=30) as response:
