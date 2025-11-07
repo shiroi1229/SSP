@@ -115,7 +115,7 @@ class FeedbackLoop:
 
                 if score is not None and score >= 0.7:
                     final_answer = generated_answer
-                    log_manager.info("✅ [FeedbackLoop] Feedback Loop completed successfully.")
+                    log_manager.info("[FeedbackLoop] Feedback Loop completed successfully.")
                     break
                 elif retry_count >= max_retries: # Check max retries if no specific policy triggered retry
                     log_manager.warning(f"[FeedbackLoop] Max retries ({max_retries}) reached. Halting loop.")
