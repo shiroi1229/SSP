@@ -35,7 +35,7 @@ def apply_persona_to_prompt(prompt: str) -> str:
     personality_desc = ", ".join([f"{k}:{v}" for k, v in traits.items()])
     return f"[Personality traits: {personality_desc}]\n{prompt}"
 
-def analyze_text(text: str, prompt: str) -> str:
+def analyze_text(text: str, prompt: str, model_params_override: dict = None) -> str:
     """
     Simulates calling a local LLM (e.g., LM Studio) or Gemini API to analyze text.
     Returns a JSON structured string.
@@ -51,6 +51,10 @@ def analyze_text(text: str, prompt: str) -> str:
                 model_params.update(loaded_params)
         except json.JSONDecodeError as e:
             logging.error(f"Error loading model parameters from {PARAM_FILE}: {e}. Using default parameters.")
+
+    # Apply override if provided
+    if model_params_override:
+        model_params.update(model_params_override)
 
     # Apply persona to the prompt
     augmented_prompt = apply_persona_to_prompt(prompt)
