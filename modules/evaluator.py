@@ -44,7 +44,7 @@ JSON形式の出力例:
     # Make the actual LLM call for evaluation
     # Pass response_format to ensure JSON output, as analyze_text now handles it conditionally
     model_params = {"response_format": {"type": "json_object"}}
-    llm_response = analyze_text(text=answer, prompt=evaluation_prompt, model_params=model_params)
+    llm_response = analyze_text(text=answer, prompt=evaluation_prompt, model_params_override=model_params)
     log_manager.debug(f"[Evaluator] LLM evaluation response: {llm_response[:200]}...")
 
     json_str_match = re.search(r'\{.*\}', llm_response, re.DOTALL)
