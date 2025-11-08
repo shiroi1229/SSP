@@ -508,7 +508,192 @@
     "summary": "Get Current Roadmap",
     "tags": [],
     "input_schema": null,
-    "output_schema": null
+    "output_schema": {
+      "properties": {
+        "backend": {
+          "items": {
+            "$ref": "#/components/schemas/RoadmapItem"
+          },
+          "type": "array",
+          "title": "Backend"
+        },
+        "frontend": {
+          "items": {
+            "$ref": "#/components/schemas/RoadmapItem"
+          },
+          "type": "array",
+          "title": "Frontend"
+        },
+        "robustness": {
+          "items": {
+            "$ref": "#/components/schemas/RoadmapItem"
+          },
+          "type": "array",
+          "title": "Robustness"
+        }
+      },
+      "type": "object",
+      "required": [
+        "backend",
+        "frontend",
+        "robustness"
+      ],
+      "title": "RoadmapData"
+    }
+  },
+  {
+    "id": "get_roadmap_item_by_version_api_roadmap__version__get",
+    "path": "/api/roadmap/{version}",
+    "method": "GET",
+    "summary": "Get Roadmap Item By Version",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": {
+      "properties": {
+        "version": {
+          "type": "string",
+          "title": "Version"
+        },
+        "codename": {
+          "type": "string",
+          "title": "Codename"
+        },
+        "goal": {
+          "type": "string",
+          "title": "Goal"
+        },
+        "status": {
+          "type": "string",
+          "title": "Status"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
+        "startDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Startdate"
+        },
+        "endDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Enddate"
+        },
+        "progress": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Progress"
+        },
+        "keyFeatures": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Keyfeatures"
+        },
+        "dependencies": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dependencies"
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Metrics"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Owner"
+        },
+        "documentationLink": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Documentationlink"
+        },
+        "prLink": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Prlink"
+        },
+        "id": {
+          "type": "integer",
+          "title": "Id"
+        }
+      },
+      "type": "object",
+      "required": [
+        "version",
+        "codename",
+        "goal",
+        "status",
+        "description",
+        "id"
+      ],
+      "title": "RoadmapItem"
+    }
   },
   {
     "id": "read_root__get",
