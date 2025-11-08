@@ -1,0 +1,15 @@
+{
+  "id": "evaluation_20251107_141132",
+  "timestamp": "2025-11-07T14:11:32.135337",
+  "type": "evaluation_feedback",
+  "context": {
+    "session_id": "20251103_011605"
+  },
+  "output": {
+    "score": 5.0,
+    "comment": "世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。"
+  },
+  "commit_hash": "13273b327ce610b28e84c8156bc811b283ee32d7",
+  "env_snapshot": "# ======================\n# SSP (Python Backend)\n# ======================\nPOSTGRES_HOST=172.25.208.1\nPOSTGRES_PORT=5432\nPOSTGRES_DB=ssp_memory\nPOSTGRES_USER=ssp_admin\nPOSTGRES_PASSWORD=Mizuho0824\n\n# LM Studio連携\nLM_STUDIO_URL=http://172.25.208.1:1234\nLOCAL_LLM_API_URL=http://172.25.208.1:1234/v1\nSSP_LOCAL_LLM_MODEL_NAME=meta-llama-3-8b-instruct\n\n# ======================\n# CLI保護（Gemini誤動作防止）\n# ======================\nGEMINI_ENV_DISABLE=1\n",
+  "ai_comment": "Feedback received."
+}

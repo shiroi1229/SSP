@@ -1,23 +1,9 @@
-name: generator
-description: "Generates a response based on a prompt and context."
-version: "1.0"
-evolution: true
-
 inputs:
-  - name: short_term.prompt
-    type: str
-    description: "The user prompt or internal instruction for generation."
-    required: true
-  - name: short_term.rag_context
-    type: str
-    description: "Context retrieved from the RAG engine."
-    required: false
-  - name: long_term.model_params
-    type: dict
-    description: "Dynamic model parameters (e.g., temperature, top_p)."
-    required: false
-
+- input
+module: generator
+name: generator
 outputs:
-  - name: mid_term.generated_output
-    type: str
-    description: "The raw output from the language model."
+- output
+status: active
+timestamp: '2025-11-06T22:09:52.475202'
+version: v1

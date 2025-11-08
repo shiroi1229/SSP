@@ -1,0 +1,21 @@
+{
+  "long_term": {
+    "session.state": "active_purchase",
+    "user.feedback_score": 0.95,
+    "user.intent": "purchase_history",
+    "config.qdrant_url": "http://127.0.0.1:6333"
+  },
+  "mid_term": {
+    "session.state": "active_purchase",
+    "user.feedback_score": 0.95,
+    "user.intent": "purchase",
+    "session_id": "20251107_214251"
+  },
+  "short_term": {
+    "session.state": "active_purchase",
+    "user.intent": "purchase",
+    "user.feedback_score": 0.95,
+    "user_input": "ねえ",
+    "prompt": "ねえ"
+  }
+}

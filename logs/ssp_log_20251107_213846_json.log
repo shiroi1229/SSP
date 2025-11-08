@@ -1,0 +1,3 @@
+{"timestamp": "2025-11-07 21:38:52,629", "name": "ssp_logger", "levelname": "INFO", "message": "Qdrant client initialized for localhost:6333"}
+{"timestamp": "2025-11-07 21:38:56,657", "name": "ssp_logger", "levelname": "INFO", "message": "Embedding model all-MiniLM-L6-v2 loaded."}
+{"timestamp": "2025-11-07 21:38:56,663", "name": "ssp_logger", "levelname": "INFO", "message": "PostgreSQL connected to 172.25.208.1:5432/ssp_memory"}

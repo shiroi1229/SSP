@@ -1,0 +1,86 @@
+{
+  "nodes": [
+    "evaluator",
+    "emotion_engine",
+    "reflection",
+    "Based on emotion_eng",
+    "insight",
+    "Based on evaluator, ",
+    "Based on insight, I ",
+    "Based on Based on em",
+    "Based on Based on ev",
+    "Based on Based on Ba"
+  ],
+  "edges": [
+    [
+      "evaluator",
+      "emotion_engine",
+      {
+        "relation": "relates_to"
+      }
+    ],
+    [
+      "reflection",
+      "Based on emotion_eng",
+      {
+        "relation": "corrects"
+      }
+    ],
+    [
+      "reflection",
+      "Based on insight, I ",
+      {
+        "relation": "corrects"
+      }
+    ],
+    [
+      "reflection",
+      "Based on Based on ev",
+      {
+        "relation": "corrects"
+      }
+    ],
+    [
+      "insight",
+      "Based on evaluator, ",
+      {
+        "relation": "supports"
+      }
+    ],
+    [
+      "insight",
+      "Based on Based on em",
+      {
+        "relation": "supports"
+      }
+    ],
+    [
+      "insight",
+      "Based on insight, I ",
+      {
+        "relation": "supports"
+      }
+    ],
+    [
+      "insight",
+      "Based on Based on ev",
+      {
+        "relation": "supports"
+      }
+    ],
+    [
+      "insight",
+      "Based on Based on Ba",
+      {
+        "relation": "supports"
+      }
+    ],
+    [
+      "insight",
+      "Based on emotion_eng",
+      {
+        "relation": "supports"
+      }
+    ]
+  ]
+}

@@ -51,6 +51,7 @@ def load_environment():
         "QDRANT_PORT": os.getenv("QDRANT_PORT", "6333"),
         "QDRANT_COLLECTION": os.getenv("QDRANT_COLLECTION", "world_knowledge"),
         "EMBEDDING_MODEL": os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2"),
+        "LOCAL_LLM_API_URL": os.getenv("LOCAL_LLM_API_URL", "http://172.25.208.1:1234/v1"),
         **active_llm_config, # Merge active LLM config
         "PYTHONUTF8": os.environ.get("PYTHONUTF8"),
         "PYTHONIOENCODING": os.environ.get("PYTHONIOENCODING"),

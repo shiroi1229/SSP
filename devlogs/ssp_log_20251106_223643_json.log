@@ -1,0 +1,291 @@
+{"timestamp": "2025-11-06 22:36:49,527", "name": "modules.log_manager", "levelname": "INFO", "message": "Qdrant client initialized for localhost:6333"}
+{"timestamp": "2025-11-06 22:36:53,031", "name": "modules.log_manager", "levelname": "INFO", "message": "Embedding model all-MiniLM-L6-v2 loaded."}
+{"timestamp": "2025-11-06 22:36:53,049", "name": "modules.log_manager", "levelname": "INFO", "message": "PostgreSQL connected to 127.0.0.1:5432/ssp_memory"}
+{"timestamp": "2025-11-06 22:36:53,072", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:36:53,073", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:36:53,073", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:36:53,081", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:36:53,081", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:36:53,082", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:36:57,265", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:36:57,265", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:36:57,266", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:37:02,261", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:37:02,262", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:37:02,262", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:37:07,260", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:37:07,261", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:37:07,261", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:37:12,270", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:37:12,270", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:37:12,271", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:37:17,261", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:37:17,261", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:37:17,261", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:37:22,260", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:37:22,260", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:37:22,260", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:37:27,255", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:37:27,255", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:37:27,255", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:37:32,257", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:37:32,257", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:37:32,257", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:37:37,258", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:37:37,258", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:37:37,258", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:37:42,260", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:37:42,260", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:37:42,260", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:37:47,264", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:37:47,264", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:37:47,264", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:37:52,258", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:37:52,258", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:37:52,258", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:37:57,262", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:37:57,262", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:37:57,263", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:38:02,268", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:38:02,268", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:38:02,268", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:38:07,267", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:38:07,267", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:38:07,267", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:38:12,256", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:38:12,257", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:38:12,257", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:38:17,255", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:38:17,255", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:38:17,256", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:38:22,263", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:38:22,264", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:38:22,264", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:38:27,268", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:38:27,269", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:38:27,269", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:38:32,258", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:38:32,258", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:38:32,258", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:38:37,270", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:38:37,270", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:38:37,270", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:38:42,259", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:38:42,259", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:38:42,259", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:38:47,255", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:38:47,255", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:38:47,255", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:38:52,256", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:38:52,256", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:38:52,256", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:38:57,269", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:38:57,269", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:38:57,270", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:38:57,991", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:38:57,991", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:38:57,991", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:38:57,991", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-06 22:38:57,993", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: evaluator"}
+{"timestamp": "2025-11-06 22:38:57,993", "name": "modules.log_manager", "levelname": "WARNING", "message": "[ContractRegistry] Could not load contract from generator.yaml: missing 'name' field."}
+{"timestamp": "2025-11-06 22:38:57,994", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: persona_manager"}
+{"timestamp": "2025-11-06 22:38:57,995", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: self_optimizer"}
+{"timestamp": "2025-11-06 22:38:57,996", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded meta-links graph."}
+{"timestamp": "2025-11-06 22:38:57,997", "name": "modules.log_manager", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-06 22:38:57,997", "name": "modules.log_manager", "levelname": "INFO", "message": "[PolicyScheduler] Initialized."}
+{"timestamp": "2025-11-06 22:38:57,997", "name": "modules.log_manager", "levelname": "INFO", "message": "[TimeSeriesBuffer] Initialized with window size 50"}
+{"timestamp": "2025-11-06 22:38:58,445", "name": "modules.log_manager", "levelname": "INFO", "message": "[Learner] Initialized with v2.4 components."}
+{"timestamp": "2025-11-06 22:38:58,463", "name": "modules.log_manager", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-06 22:38:58,463", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Initialized with v2.4 components."}
+{"timestamp": "2025-11-06 22:38:58,465", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Starting feedback loop for session: 20251106_223858"}
+{"timestamp": "2025-11-06 22:38:58,467", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\\context_snapshot_20251106_223858_467172.json"}
+{"timestamp": "2025-11-06 22:38:58,467", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Attempt 1 --- "}
+{"timestamp": "2025-11-06 22:38:58,467", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: Start ---"}
+{"timestamp": "2025-11-06 22:38:58,467", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Getting context for query: きょうはいいてんきかな？"}
+{"timestamp": "2025-11-06 22:38:58,468", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Vectorizing query: きょうはいいてんきかな？..."}
+{"timestamp": "2025-11-06 22:38:58,604", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Searching Qdrant with vector (first 5 elements): [-0.0073340763337910175, 0.04175981134176254, 0.0680840015411377, 0.008592742495238781, -0.0451793409883976]..."}
+{"timestamp": "2025-11-06 22:38:58,625", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Qdrant search returned 5 hits."}
+{"timestamp": "2025-11-06 22:38:58,626", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]"}
+{"timestamp": "2025-11-06 22:38:58,628", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Retrieved 5 texts from PostgreSQL."}
+{"timestamp": "2025-11-06 22:38:58,628", "name": "modules.log_manager", "levelname": "INFO", "message": "RAG context retrieved."}
+{"timestamp": "2025-11-06 22:38:58,629", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。..."}
+{"timestamp": "2025-11-06 22:38:58,629", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: End ---"}
+{"timestamp": "2025-11-06 22:38:58,630", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: Start ---"}
+{"timestamp": "2025-11-06 22:38:58,630", "name": "modules.log_manager", "levelname": "DEBUG", "message": "[Generator] Starting context-aware generation..."}
+{"timestamp": "2025-11-06 22:38:58,639", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\\context_snapshot_20251106_223858_467172.json"}
+{"timestamp": "2025-11-06 22:38:58,648", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context successfully rolled back."}
+{"timestamp": "2025-11-06 22:38:58,649", "name": "modules.log_manager", "levelname": "ERROR", "message": "[ChatHandler] Error during chat message processing: 'InsightMonitor' object has no attribute 'notify_recovery'"}
+{"timestamp": "2025-11-06 22:39:02,266", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:39:02,266", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:39:02,266", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:39:06,703", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:39:06,703", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:39:06,704", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:39:08,818", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:39:08,818", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:39:08,819", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:39:11,011", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:39:11,011", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:39:11,011", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:39:11,012", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-06 22:39:11,013", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: evaluator"}
+{"timestamp": "2025-11-06 22:39:11,014", "name": "modules.log_manager", "levelname": "WARNING", "message": "[ContractRegistry] Could not load contract from generator.yaml: missing 'name' field."}
+{"timestamp": "2025-11-06 22:39:11,015", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: persona_manager"}
+{"timestamp": "2025-11-06 22:39:11,016", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: self_optimizer"}
+{"timestamp": "2025-11-06 22:39:11,016", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded meta-links graph."}
+{"timestamp": "2025-11-06 22:39:11,017", "name": "modules.log_manager", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-06 22:39:11,017", "name": "modules.log_manager", "levelname": "INFO", "message": "[PolicyScheduler] Initialized."}
+{"timestamp": "2025-11-06 22:39:11,018", "name": "modules.log_manager", "levelname": "INFO", "message": "[TimeSeriesBuffer] Initialized with window size 50"}
+{"timestamp": "2025-11-06 22:39:11,488", "name": "modules.log_manager", "levelname": "INFO", "message": "[Learner] Initialized with v2.4 components."}
+{"timestamp": "2025-11-06 22:39:11,505", "name": "modules.log_manager", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-06 22:39:11,505", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Initialized with v2.4 components."}
+{"timestamp": "2025-11-06 22:39:11,507", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Starting feedback loop for session: 20251106_223911"}
+{"timestamp": "2025-11-06 22:39:11,509", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\\context_snapshot_20251106_223911_508785.json"}
+{"timestamp": "2025-11-06 22:39:11,509", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Attempt 1 --- "}
+{"timestamp": "2025-11-06 22:39:11,509", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: Start ---"}
+{"timestamp": "2025-11-06 22:39:11,509", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Getting context for query: きょうはいいてんきかな？ I'm sorry, but I encountered an error while processing your request."}
+{"timestamp": "2025-11-06 22:39:11,509", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Vectorizing query: きょうはいいてんきかな？ I'm sorry, but I encountered an error..."}
+{"timestamp": "2025-11-06 22:39:11,516", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Searching Qdrant with vector (first 5 elements): [-0.052583079785108566, -0.015712516382336617, 0.03379543125629425, 0.0012835487723350525, -0.010416116565465927]..."}
+{"timestamp": "2025-11-06 22:39:11,540", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Qdrant search returned 5 hits."}
+{"timestamp": "2025-11-06 22:39:11,540", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]"}
+{"timestamp": "2025-11-06 22:39:11,541", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Retrieved 5 texts from PostgreSQL."}
+{"timestamp": "2025-11-06 22:39:11,542", "name": "modules.log_manager", "levelname": "INFO", "message": "RAG context retrieved."}
+{"timestamp": "2025-11-06 22:39:11,543", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。..."}
+{"timestamp": "2025-11-06 22:39:11,543", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: End ---"}
+{"timestamp": "2025-11-06 22:39:11,543", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: Start ---"}
+{"timestamp": "2025-11-06 22:39:11,543", "name": "modules.log_manager", "levelname": "DEBUG", "message": "[Generator] Starting context-aware generation..."}
+{"timestamp": "2025-11-06 22:39:11,550", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\\context_snapshot_20251106_223911_508785.json"}
+{"timestamp": "2025-11-06 22:39:11,557", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context successfully rolled back."}
+{"timestamp": "2025-11-06 22:39:11,558", "name": "modules.log_manager", "levelname": "ERROR", "message": "[ChatHandler] Error during chat message processing: 'InsightMonitor' object has no attribute 'notify_recovery'"}
+{"timestamp": "2025-11-06 22:39:13,827", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:39:13,828", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:39:13,828", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:39:16,592", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:39:16,592", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:39:16,593", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:39:16,593", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-06 22:39:16,594", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: evaluator"}
+{"timestamp": "2025-11-06 22:39:16,594", "name": "modules.log_manager", "levelname": "WARNING", "message": "[ContractRegistry] Could not load contract from generator.yaml: missing 'name' field."}
+{"timestamp": "2025-11-06 22:39:16,595", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: persona_manager"}
+{"timestamp": "2025-11-06 22:39:16,597", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: self_optimizer"}
+{"timestamp": "2025-11-06 22:39:16,597", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded meta-links graph."}
+{"timestamp": "2025-11-06 22:39:16,598", "name": "modules.log_manager", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-06 22:39:16,598", "name": "modules.log_manager", "levelname": "INFO", "message": "[PolicyScheduler] Initialized."}
+{"timestamp": "2025-11-06 22:39:16,599", "name": "modules.log_manager", "levelname": "INFO", "message": "[TimeSeriesBuffer] Initialized with window size 50"}
+{"timestamp": "2025-11-06 22:39:17,021", "name": "modules.log_manager", "levelname": "INFO", "message": "[Learner] Initialized with v2.4 components."}
+{"timestamp": "2025-11-06 22:39:17,037", "name": "modules.log_manager", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-06 22:39:17,037", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Initialized with v2.4 components."}
+{"timestamp": "2025-11-06 22:39:17,039", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Starting feedback loop for session: 20251106_223917"}
+{"timestamp": "2025-11-06 22:39:17,051", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\\context_snapshot_20251106_223917_041256.json"}
+{"timestamp": "2025-11-06 22:39:17,051", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Attempt 1 --- "}
+{"timestamp": "2025-11-06 22:39:17,051", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: Start ---"}
+{"timestamp": "2025-11-06 22:39:17,051", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Getting context for query: きょうはいいてんきかな？"}
+{"timestamp": "2025-11-06 22:39:17,051", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Vectorizing query: きょうはいいてんきかな？..."}
+{"timestamp": "2025-11-06 22:39:17,058", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Searching Qdrant with vector (first 5 elements): [-0.0073340763337910175, 0.04175981134176254, 0.0680840015411377, 0.008592742495238781, -0.0451793409883976]..."}
+{"timestamp": "2025-11-06 22:39:17,067", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Qdrant search returned 5 hits."}
+{"timestamp": "2025-11-06 22:39:17,068", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]"}
+{"timestamp": "2025-11-06 22:39:17,069", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Retrieved 5 texts from PostgreSQL."}
+{"timestamp": "2025-11-06 22:39:17,069", "name": "modules.log_manager", "levelname": "INFO", "message": "RAG context retrieved."}
+{"timestamp": "2025-11-06 22:39:17,070", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。..."}
+{"timestamp": "2025-11-06 22:39:17,070", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: End ---"}
+{"timestamp": "2025-11-06 22:39:17,070", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: Start ---"}
+{"timestamp": "2025-11-06 22:39:17,071", "name": "modules.log_manager", "levelname": "DEBUG", "message": "[Generator] Starting context-aware generation..."}
+{"timestamp": "2025-11-06 22:39:17,077", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\\context_snapshot_20251106_223917_041256.json"}
+{"timestamp": "2025-11-06 22:39:17,085", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context successfully rolled back."}
+{"timestamp": "2025-11-06 22:39:17,085", "name": "modules.log_manager", "levelname": "ERROR", "message": "[ChatHandler] Error during chat message processing: 'InsightMonitor' object has no attribute 'notify_recovery'"}
+{"timestamp": "2025-11-06 22:39:18,839", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:39:18,839", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:39:18,840", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:39:24,695", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:39:24,695", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:39:24,695", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:39:29,693", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:39:29,693", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:39:29,693", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:39:34,683", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:39:34,684", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:39:34,684", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:39:39,685", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:39:39,685", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:39:39,685", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:39:44,693", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:39:44,693", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:39:44,693", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:39:48,821", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:39:48,821", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:39:48,821", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:39:51,842", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:39:51,842", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:39:51,843", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:39:51,843", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-06 22:39:51,844", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: evaluator"}
+{"timestamp": "2025-11-06 22:39:51,845", "name": "modules.log_manager", "levelname": "WARNING", "message": "[ContractRegistry] Could not load contract from generator.yaml: missing 'name' field."}
+{"timestamp": "2025-11-06 22:39:51,845", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: persona_manager"}
+{"timestamp": "2025-11-06 22:39:51,847", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: self_optimizer"}
+{"timestamp": "2025-11-06 22:39:51,847", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded meta-links graph."}
+{"timestamp": "2025-11-06 22:39:51,848", "name": "modules.log_manager", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-06 22:39:51,849", "name": "modules.log_manager", "levelname": "INFO", "message": "[PolicyScheduler] Initialized."}
+{"timestamp": "2025-11-06 22:39:51,849", "name": "modules.log_manager", "levelname": "INFO", "message": "[TimeSeriesBuffer] Initialized with window size 50"}
+{"timestamp": "2025-11-06 22:39:52,318", "name": "modules.log_manager", "levelname": "INFO", "message": "[Learner] Initialized with v2.4 components."}
+{"timestamp": "2025-11-06 22:39:52,335", "name": "modules.log_manager", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-06 22:39:52,335", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Initialized with v2.4 components."}
+{"timestamp": "2025-11-06 22:39:52,337", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Starting feedback loop for session: 20251106_223952"}
+{"timestamp": "2025-11-06 22:39:52,339", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\\context_snapshot_20251106_223952_339062.json"}
+{"timestamp": "2025-11-06 22:39:52,339", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Attempt 1 --- "}
+{"timestamp": "2025-11-06 22:39:52,339", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: Start ---"}
+{"timestamp": "2025-11-06 22:39:52,339", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Getting context for query: きょうはいいてんきかな？"}
+{"timestamp": "2025-11-06 22:39:52,340", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Vectorizing query: きょうはいいてんきかな？..."}
+{"timestamp": "2025-11-06 22:39:52,347", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Searching Qdrant with vector (first 5 elements): [-0.0073340763337910175, 0.04175981134176254, 0.0680840015411377, 0.008592742495238781, -0.0451793409883976]..."}
+{"timestamp": "2025-11-06 22:39:52,371", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Qdrant search returned 5 hits."}
+{"timestamp": "2025-11-06 22:39:52,371", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]"}
+{"timestamp": "2025-11-06 22:39:52,373", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Retrieved 5 texts from PostgreSQL."}
+{"timestamp": "2025-11-06 22:39:52,373", "name": "modules.log_manager", "levelname": "INFO", "message": "RAG context retrieved."}
+{"timestamp": "2025-11-06 22:39:52,374", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。..."}
+{"timestamp": "2025-11-06 22:39:52,374", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: End ---"}
+{"timestamp": "2025-11-06 22:39:52,375", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: Start ---"}
+{"timestamp": "2025-11-06 22:39:52,375", "name": "modules.log_manager", "levelname": "DEBUG", "message": "[Generator] Starting context-aware generation..."}
+{"timestamp": "2025-11-06 22:39:52,382", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\\context_snapshot_20251106_223952_339062.json"}
+{"timestamp": "2025-11-06 22:39:52,390", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context successfully rolled back."}
+{"timestamp": "2025-11-06 22:39:52,390", "name": "modules.log_manager", "levelname": "ERROR", "message": "[ChatHandler] Error during chat message processing: 'InsightMonitor' object has no attribute 'notify_recovery'"}
+{"timestamp": "2025-11-06 22:39:53,836", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:39:53,836", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:39:53,837", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:39:58,820", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:39:58,821", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:39:58,821", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:40:03,829", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:40:03,829", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:40:03,830", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:40:09,685", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:40:09,685", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:40:09,685", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:40:14,696", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:40:14,696", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:40:14,696", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:40:19,694", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:40:19,694", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:40:19,694", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:40:24,693", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:40:24,693", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:40:24,694", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:40:29,681", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:40:29,681", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:40:29,681", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:40:34,684", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:40:34,685", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:40:34,685", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:40:39,689", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:40:39,689", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:40:39,689", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:40:44,693", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:40:44,694", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:40:44,694", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:40:49,695", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:40:49,695", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:40:49,696", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:40:54,687", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:40:54,687", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:40:54,687", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:40:59,696", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:40:59,696", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:40:59,696", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}

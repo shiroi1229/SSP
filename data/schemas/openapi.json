@@ -1,0 +1,504 @@
+[
+  {
+    "id": "get_persona_state_api_persona_state_get",
+    "path": "/api/persona/state",
+    "method": "GET",
+    "summary": "Get Persona State",
+    "tags": [
+      "Persona"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "recent_logs_api_logs_recent_get",
+    "path": "/api/logs/recent",
+    "method": "GET",
+    "summary": "Recent Logs",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "evaluate_session_api_evaluate_post",
+    "path": "/api/evaluate",
+    "method": "POST",
+    "summary": "Evaluate Session",
+    "tags": [
+      "Evaluation"
+    ],
+    "input_schema": {
+      "properties": {
+        "session_id": {
+          "type": "string",
+          "title": "Session Id"
+        },
+        "evaluation_score": {
+          "type": "integer",
+          "maximum": 5.0,
+          "minimum": 1.0,
+          "title": "Evaluation Score"
+        },
+        "evaluation_comment": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 500
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Comment"
+        },
+        "question": {
+          "type": "string",
+          "title": "Question"
+        }
+      },
+      "type": "object",
+      "required": [
+        "session_id",
+        "evaluation_score",
+        "question"
+      ],
+      "title": "EvaluationRequest"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "get_context_state_api_context_state_get",
+    "path": "/api/context/state",
+    "method": "GET",
+    "summary": "Get Context State",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "analyze_sessions_api_analyze_sessions_get",
+    "path": "/api/analyze_sessions",
+    "method": "GET",
+    "summary": "Analyze Sessions",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "generate_report_endpoint_api_generate_self_analysis_report_get",
+    "path": "/api/generate_self_analysis_report",
+    "method": "GET",
+    "summary": "Generate Report Endpoint",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_sessions_api_sessions_get",
+    "path": "/api/sessions",
+    "method": "GET",
+    "summary": "Get Sessions",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "create_session_log_api_sessions_post",
+    "path": "/api/sessions",
+    "method": "POST",
+    "summary": "Create Session Log",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Created At"
+        },
+        "user_input": {
+          "type": "string",
+          "title": "User Input"
+        },
+        "final_output": {
+          "type": "string",
+          "title": "Final Output"
+        },
+        "evaluation_score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Score"
+        },
+        "evaluation_comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Comment"
+        },
+        "workflow_trace": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Workflow Trace"
+        }
+      },
+      "type": "object",
+      "required": [
+        "user_input",
+        "final_output"
+      ],
+      "title": "SessionLogCreate"
+    },
+    "output_schema": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Created At"
+        },
+        "user_input": {
+          "type": "string",
+          "title": "User Input"
+        },
+        "final_output": {
+          "type": "string",
+          "title": "Final Output"
+        },
+        "evaluation_score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Score"
+        },
+        "evaluation_comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Comment"
+        },
+        "workflow_trace": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Workflow Trace"
+        }
+      },
+      "type": "object",
+      "required": [
+        "id",
+        "created_at",
+        "user_input",
+        "final_output"
+      ],
+      "title": "SessionLogResponse"
+    }
+  },
+  {
+    "id": "get_session_api_sessions__session_id__get",
+    "path": "/api/sessions/{session_id}",
+    "method": "GET",
+    "summary": "Get Session",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Created At"
+        },
+        "user_input": {
+          "type": "string",
+          "title": "User Input"
+        },
+        "final_output": {
+          "type": "string",
+          "title": "Final Output"
+        },
+        "evaluation_score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Score"
+        },
+        "evaluation_comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Comment"
+        },
+        "workflow_trace": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Workflow Trace"
+        }
+      },
+      "type": "object",
+      "required": [
+        "id",
+        "created_at",
+        "user_input",
+        "final_output"
+      ],
+      "title": "SessionLogResponse"
+    }
+  },
+  {
+    "id": "update_session_evaluation_api_sessions__session_id__patch",
+    "path": "/api/sessions/{session_id}",
+    "method": "PATCH",
+    "summary": "Update Session Evaluation",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "evaluation_score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Score"
+        },
+        "evaluation_comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Comment"
+        }
+      },
+      "type": "object",
+      "required": [
+        "evaluation_score",
+        "evaluation_comment"
+      ],
+      "title": "SessionEvaluationUpdate"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "chat_endpoint_api_chat_post",
+    "path": "/api/chat",
+    "method": "POST",
+    "summary": "Chat Endpoint",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "user_input": {
+          "type": "string",
+          "title": "User Input"
+        }
+      },
+      "type": "object",
+      "required": [
+        "user_input"
+      ],
+      "title": "ChatRequest"
+    },
+    "output_schema": {
+      "properties": {
+        "ai_response": {
+          "type": "string",
+          "title": "Ai Response"
+        }
+      },
+      "type": "object",
+      "required": [
+        "ai_response"
+      ],
+      "title": "ChatResponse"
+    }
+  },
+  {
+    "id": "context_endpoint_api_context_get",
+    "path": "/api/context",
+    "method": "GET",
+    "summary": "Context Endpoint",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": {
+      "properties": {
+        "short_term": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Short Term"
+        },
+        "mid_term": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Mid Term"
+        },
+        "long_term": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Long Term"
+        }
+      },
+      "type": "object",
+      "required": [
+        "short_term",
+        "mid_term",
+        "long_term"
+      ],
+      "title": "ContextResponse"
+    }
+  },
+  {
+    "id": "get_system_status_api_status_get",
+    "path": "/api/status",
+    "method": "GET",
+    "summary": "Get System Status",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "analyze_emotion_endpoint_api_emotion_post",
+    "path": "/api/emotion",
+    "method": "POST",
+    "summary": "Analyze Emotion Endpoint",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "text": {
+          "type": "string",
+          "title": "Text"
+        }
+      },
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "title": "EmotionRequest"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "generate_tts_endpoint_api_tts_post",
+    "path": "/api/tts",
+    "method": "POST",
+    "summary": "Generate Tts Endpoint",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "text": {
+          "type": "string",
+          "title": "Text"
+        },
+        "speaker_id": {
+          "type": "integer",
+          "title": "Speaker Id",
+          "default": 1
+        }
+      },
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "title": "TTSRequest"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "send_osc_emotion_api_osc_send_post",
+    "path": "/api/osc/send",
+    "method": "POST",
+    "summary": "Send Osc Emotion",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "emotion": {
+          "$ref": "#/components/schemas/EmotionPayload"
+        }
+      },
+      "type": "object",
+      "required": [
+        "emotion"
+      ],
+      "title": "OSCRequest"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "read_root__get",
+    "path": "/",
+    "method": "GET",
+    "summary": "Read Root",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  }
+]

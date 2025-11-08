@@ -1,6 +1,7 @@
 # path: modules/evaluator.py
 # version: v2.2
 
+import os  # ← これが抜けてる！
 import json
 import re
 import datetime
@@ -13,6 +14,10 @@ def evaluate_output(context_manager: ContextManager):
     """Evaluates the quality of a response using an LLM, based on data in the ContextManager."""
     log_manager.debug("Starting context-aware evaluation...")
     
+    # ✅ ここでLLMエンドポイントURLを環境変数から取得
+    llm_url = os.getenv("LOCAL_LLM_API_URL", "http://172.25.208.1:1234/v1")
+    log_manager.info(f"[Evaluator] Using LLM endpoint: {llm_url}")
+
     config = load_environment()
     answer = context_manager.get("mid_term.generated_output")
     rag_context = context_manager.get("short_term.rag_context")
@@ -43,7 +48,7 @@ JSON形式の出力例:
 
     # Make the actual LLM call for evaluation
     # Pass response_format to ensure JSON output, as analyze_text now handles it conditionally
-    model_params = {"response_format": {"type": "json_object"}}
+    model_params = {}
     llm_response = analyze_text(text=answer, prompt=evaluation_prompt, model_params_override=model_params)
     log_manager.debug(f"[Evaluator] LLM evaluation response: {llm_response[:200]}...")
 

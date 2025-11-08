@@ -1,0 +1,90 @@
+2025-11-06 22:44:03,283 - modules.log_manager - INFO - Qdrant client initialized for localhost:6333
+2025-11-06 22:44:06,634 - modules.log_manager - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-06 22:44:06,639 - modules.log_manager - INFO - PostgreSQL connected to 127.0.0.1:5432/ssp_memory
+2025-11-06 22:44:07,381 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:44:07,382 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:44:07,382 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:44:08,548 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:44:08,558 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:44:08,558 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:44:12,032 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:44:12,032 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:44:12,032 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:44:12,033 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-06 22:44:12,034 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-06 22:44:12,035 - modules.log_manager - WARNING - [ContractRegistry] Could not load contract from generator.yaml: missing 'name' field.
+2025-11-06 22:44:12,036 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-06 22:44:12,037 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-06 22:44:12,037 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-06 22:44:12,039 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:44:12,039 - modules.log_manager - INFO - [PolicyScheduler] Initialized.
+2025-11-06 22:44:12,039 - modules.log_manager - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-06 22:44:12,527 - modules.log_manager - INFO - [Learner] Initialized with v2.4 components.
+2025-11-06 22:44:12,544 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:44:12,545 - modules.log_manager - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-06 22:44:12,547 - modules.log_manager - INFO - [FeedbackLoop] Starting feedback loop for session: 20251106_224412
+2025-11-06 22:44:12,549 - modules.log_manager - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251106_224412_549306.json
+2025-11-06 22:44:12,549 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-06 22:44:12,549 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:44:12,550 - modules.log_manager - DEBUG - Getting context for query: こんにちは
+2025-11-06 22:44:12,550 - modules.log_manager - DEBUG - Vectorizing query: こんにちは...
+2025-11-06 22:44:12,680 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [-0.1129828691482544, 0.09404882043600082, -0.023897262290120125, 0.04898381605744362, -0.06167900189757347]...
+2025-11-06 22:44:12,704 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:44:12,704 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]
+2025-11-06 22:44:12,707 - modules.log_manager - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-06 22:44:12,707 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:44:12,708 - modules.log_manager - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-06 22:44:12,709 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:44:12,709 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:44:12,709 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:44:12,709 - modules.log_manager - ERROR - [Generator] No prompt found in context.
+2025-11-06 22:44:12,710 - modules.log_manager - INFO - [FeedbackLoop] Answer: None
+2025-11-06 22:44:12,710 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:44:12,710 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:44:12,710 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:44:12,712 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:44:12,712 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:44:12,712 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:44:12,712 - modules.log_manager - INFO - [FeedbackLoop] Score None < 0.7. Defaulting to retry... (Attempt 1/2)
+2025-11-06 22:44:12,712 - modules.log_manager - INFO - [ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\context_snapshot_20251106_224412_549306.json
+2025-11-06 22:44:12,720 - modules.log_manager - INFO - [ContextManager] Context successfully rolled back.
+2025-11-06 22:44:12,721 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 2 --- 
+2025-11-06 22:44:12,721 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:44:12,721 - modules.log_manager - DEBUG - Getting context for query: こんにちは
+2025-11-06 22:44:12,721 - modules.log_manager - DEBUG - Vectorizing query: こんにちは...
+2025-11-06 22:44:12,729 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [-0.1129828691482544, 0.09404882043600082, -0.023897262290120125, 0.04898381605744362, -0.06167900189757347]...
+2025-11-06 22:44:12,753 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:44:12,753 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]
+2025-11-06 22:44:12,755 - modules.log_manager - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-06 22:44:12,755 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:44:12,756 - modules.log_manager - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-06 22:44:12,756 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:44:12,756 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:44:12,757 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:44:12,757 - modules.log_manager - ERROR - [Generator] No prompt found in context.
+2025-11-06 22:44:12,757 - modules.log_manager - INFO - [FeedbackLoop] Answer: None
+2025-11-06 22:44:12,757 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:44:12,757 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:44:12,757 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:44:12,759 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:44:12,759 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:44:12,759 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:44:12,759 - modules.log_manager - WARNING - [FeedbackLoop] Max retries (1) reached. Halting loop.
+2025-11-06 22:44:12,760 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: Start ---
+2025-11-06 22:44:12,762 - modules.log_manager - INFO - [FeedbackLoop] Final session data saved to context.
+2025-11-06 22:44:12,770 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: End ---
+2025-11-06 22:44:12,771 - modules.log_manager - ERROR - [ChatHandler] Error during chat message processing: 'NoneType' object is not subscriptable
+2025-11-06 22:44:13,555 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:44:13,555 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:44:13,556 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:44:18,557 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:44:18,557 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:44:18,557 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.

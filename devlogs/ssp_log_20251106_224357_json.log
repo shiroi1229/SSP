@@ -1,0 +1,82 @@
+{"timestamp": "2025-11-06 22:44:03,283", "name": "modules.log_manager", "levelname": "INFO", "message": "Qdrant client initialized for localhost:6333"}
+{"timestamp": "2025-11-06 22:44:06,634", "name": "modules.log_manager", "levelname": "INFO", "message": "Embedding model all-MiniLM-L6-v2 loaded."}
+{"timestamp": "2025-11-06 22:44:06,639", "name": "modules.log_manager", "levelname": "INFO", "message": "PostgreSQL connected to 127.0.0.1:5432/ssp_memory"}
+{"timestamp": "2025-11-06 22:44:07,381", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:44:07,382", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:44:07,382", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:44:08,548", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:44:08,558", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:44:08,558", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:44:12,032", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:44:12,032", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:44:12,032", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:44:12,033", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-06 22:44:12,034", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: evaluator"}
+{"timestamp": "2025-11-06 22:44:12,035", "name": "modules.log_manager", "levelname": "WARNING", "message": "[ContractRegistry] Could not load contract from generator.yaml: missing 'name' field."}
+{"timestamp": "2025-11-06 22:44:12,036", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: persona_manager"}
+{"timestamp": "2025-11-06 22:44:12,037", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: self_optimizer"}
+{"timestamp": "2025-11-06 22:44:12,037", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded meta-links graph."}
+{"timestamp": "2025-11-06 22:44:12,039", "name": "modules.log_manager", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-06 22:44:12,039", "name": "modules.log_manager", "levelname": "INFO", "message": "[PolicyScheduler] Initialized."}
+{"timestamp": "2025-11-06 22:44:12,039", "name": "modules.log_manager", "levelname": "INFO", "message": "[TimeSeriesBuffer] Initialized with window size 50"}
+{"timestamp": "2025-11-06 22:44:12,527", "name": "modules.log_manager", "levelname": "INFO", "message": "[Learner] Initialized with v2.4 components."}
+{"timestamp": "2025-11-06 22:44:12,544", "name": "modules.log_manager", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-06 22:44:12,545", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Initialized with v2.4 components."}
+{"timestamp": "2025-11-06 22:44:12,547", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Starting feedback loop for session: 20251106_224412"}
+{"timestamp": "2025-11-06 22:44:12,549", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\\context_snapshot_20251106_224412_549306.json"}
+{"timestamp": "2025-11-06 22:44:12,549", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Attempt 1 --- "}
+{"timestamp": "2025-11-06 22:44:12,549", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: Start ---"}
+{"timestamp": "2025-11-06 22:44:12,550", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Getting context for query: こんにちは"}
+{"timestamp": "2025-11-06 22:44:12,550", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Vectorizing query: こんにちは..."}
+{"timestamp": "2025-11-06 22:44:12,680", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Searching Qdrant with vector (first 5 elements): [-0.1129828691482544, 0.09404882043600082, -0.023897262290120125, 0.04898381605744362, -0.06167900189757347]..."}
+{"timestamp": "2025-11-06 22:44:12,704", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Qdrant search returned 5 hits."}
+{"timestamp": "2025-11-06 22:44:12,704", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]"}
+{"timestamp": "2025-11-06 22:44:12,707", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Retrieved 5 texts from PostgreSQL."}
+{"timestamp": "2025-11-06 22:44:12,707", "name": "modules.log_manager", "levelname": "INFO", "message": "RAG context retrieved."}
+{"timestamp": "2025-11-06 22:44:12,708", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。..."}
+{"timestamp": "2025-11-06 22:44:12,709", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: End ---"}
+{"timestamp": "2025-11-06 22:44:12,709", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: Start ---"}
+{"timestamp": "2025-11-06 22:44:12,709", "name": "modules.log_manager", "levelname": "DEBUG", "message": "[Generator] Starting context-aware generation..."}
+{"timestamp": "2025-11-06 22:44:12,709", "name": "modules.log_manager", "levelname": "ERROR", "message": "[Generator] No prompt found in context."}
+{"timestamp": "2025-11-06 22:44:12,710", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Answer: None"}
+{"timestamp": "2025-11-06 22:44:12,710", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: End ---"}
+{"timestamp": "2025-11-06 22:44:12,710", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Evaluator: Start ---"}
+{"timestamp": "2025-11-06 22:44:12,710", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Starting context-aware evaluation..."}
+{"timestamp": "2025-11-06 22:44:12,712", "name": "modules.log_manager", "levelname": "ERROR", "message": "[Evaluator] No response found in context to evaluate."}
+{"timestamp": "2025-11-06 22:44:12,712", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Rating: None, Feedback: None"}
+{"timestamp": "2025-11-06 22:44:12,712", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Evaluator: End ---"}
+{"timestamp": "2025-11-06 22:44:12,712", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Score None < 0.7. Defaulting to retry... (Attempt 1/2)"}
+{"timestamp": "2025-11-06 22:44:12,712", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\\context_snapshot_20251106_224412_549306.json"}
+{"timestamp": "2025-11-06 22:44:12,720", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context successfully rolled back."}
+{"timestamp": "2025-11-06 22:44:12,721", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Attempt 2 --- "}
+{"timestamp": "2025-11-06 22:44:12,721", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: Start ---"}
+{"timestamp": "2025-11-06 22:44:12,721", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Getting context for query: こんにちは"}
+{"timestamp": "2025-11-06 22:44:12,721", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Vectorizing query: こんにちは..."}
+{"timestamp": "2025-11-06 22:44:12,729", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Searching Qdrant with vector (first 5 elements): [-0.1129828691482544, 0.09404882043600082, -0.023897262290120125, 0.04898381605744362, -0.06167900189757347]..."}
+{"timestamp": "2025-11-06 22:44:12,753", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Qdrant search returned 5 hits."}
+{"timestamp": "2025-11-06 22:44:12,753", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]"}
+{"timestamp": "2025-11-06 22:44:12,755", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Retrieved 5 texts from PostgreSQL."}
+{"timestamp": "2025-11-06 22:44:12,755", "name": "modules.log_manager", "levelname": "INFO", "message": "RAG context retrieved."}
+{"timestamp": "2025-11-06 22:44:12,756", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。..."}
+{"timestamp": "2025-11-06 22:44:12,756", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: End ---"}
+{"timestamp": "2025-11-06 22:44:12,756", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: Start ---"}
+{"timestamp": "2025-11-06 22:44:12,757", "name": "modules.log_manager", "levelname": "DEBUG", "message": "[Generator] Starting context-aware generation..."}
+{"timestamp": "2025-11-06 22:44:12,757", "name": "modules.log_manager", "levelname": "ERROR", "message": "[Generator] No prompt found in context."}
+{"timestamp": "2025-11-06 22:44:12,757", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Answer: None"}
+{"timestamp": "2025-11-06 22:44:12,757", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: End ---"}
+{"timestamp": "2025-11-06 22:44:12,757", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Evaluator: Start ---"}
+{"timestamp": "2025-11-06 22:44:12,757", "name": "modules.log_manager", "levelname": "DEBUG", "message": "Starting context-aware evaluation..."}
+{"timestamp": "2025-11-06 22:44:12,759", "name": "modules.log_manager", "levelname": "ERROR", "message": "[Evaluator] No response found in context to evaluate."}
+{"timestamp": "2025-11-06 22:44:12,759", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Rating: None, Feedback: None"}
+{"timestamp": "2025-11-06 22:44:12,759", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Evaluator: End ---"}
+{"timestamp": "2025-11-06 22:44:12,759", "name": "modules.log_manager", "levelname": "WARNING", "message": "[FeedbackLoop] Max retries (1) reached. Halting loop."}
+{"timestamp": "2025-11-06 22:44:12,760", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Memory Store: Start ---"}
+{"timestamp": "2025-11-06 22:44:12,762", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] Final session data saved to context."}
+{"timestamp": "2025-11-06 22:44:12,770", "name": "modules.log_manager", "levelname": "INFO", "message": "[FeedbackLoop] --- Memory Store: End ---"}
+{"timestamp": "2025-11-06 22:44:12,771", "name": "modules.log_manager", "levelname": "ERROR", "message": "[ChatHandler] Error during chat message processing: 'NoneType' object is not subscriptable"}
+{"timestamp": "2025-11-06 22:44:13,555", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:44:13,555", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:44:13,556", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-06 22:44:18,557", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-06 22:44:18,557", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-06 22:44:18,557", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
