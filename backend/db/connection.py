@@ -12,7 +12,7 @@ from pathlib import Path # Add this import
 import json # Add this import
 from modules.config_manager import load_environment # Import the new function
 from modules.log_manager import log_manager # Import log_manager
-from backend.db.models import SessionLog, Sample, Base, DevLog # Import SessionLog, Sample, Base, and DevLog models
+from backend.db.models import SessionLog, Sample, Base, DevLog, RoadmapItem # Import SessionLog, Sample, Base, DevLog, and RoadmapItem models
 
 # Load environment variables
 config = load_environment()

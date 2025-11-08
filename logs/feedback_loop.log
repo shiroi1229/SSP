@@ -4583,3 +4583,534 @@ So, that's where we stand currently. The universe is full of mysteries waiting t
 2025-11-08 19:14:14,474 - INFO - Qdrant client initialized for localhost:6333
 2025-11-08 19:14:17,922 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
 2025-11-08 19:14:17,951 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 19:20:08,239 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 19:20:11,884 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 19:20:11,889 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 19:24:17,556 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 19:24:20,717 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 19:24:20,723 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 19:25:37,345 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 19:25:40,569 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 19:25:40,599 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 20:02:28,554 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 20:02:32,155 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 20:02:32,181 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 20:05:29,078 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 20:05:32,512 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 20:05:32,518 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 20:22:21,570 - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-08 20:22:21,571 - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-08 20:22:21,572 - INFO - [ContextManager] Context loaded successfully.
+2025-11-08 20:22:21,572 - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-08 20:22:21,580 - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-08 20:22:21,585 - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-08 20:22:21,587 - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-08 20:22:21,593 - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-08 20:22:21,594 - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-08 20:22:21,601 - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-08 20:22:21,601 - INFO - [PolicyScheduler] Initialized.
+2025-11-08 20:22:21,601 - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-08 20:22:22,130 - INFO - [Learner] Initialized with v2.4 components.
+2025-11-08 20:22:22,164 - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-08 20:22:22,165 - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-08 20:22:22,196 - INFO - [FeedbackLoop] Starting feedback loop for session: 20251108_202222
+2025-11-08 20:22:22,236 - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251108_202222_236446.json
+2025-11-08 20:22:22,237 - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-08 20:22:22,237 - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-08 20:22:22,237 - DEBUG - Getting context for query: どうなのかな？
+2025-11-08 20:22:22,237 - DEBUG - Vectorizing query: どうなのかな？...
+2025-11-08 20:22:22,405 - DEBUG - Searching Qdrant with vector (first 5 elements): [0.03906487300992012, 0.09931007027626038, 0.05231424421072006, -0.015107430517673492, -0.02281208336353302]...
+2025-11-08 20:22:22,441 - DEBUG - Qdrant search returned 5 hits.
+2025-11-08 20:22:22,441 - DEBUG - Fetching texts from PostgreSQL for IDs: [18, 16, 19, 20, 17]
+2025-11-08 20:22:22,451 - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-08 20:22:22,452 - INFO - RAG context retrieved.
+2025-11-08 20:22:22,471 - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-08 20:22:22,471 - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-08 20:22:22,471 - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-08 20:22:22,472 - DEBUG - [Generator] Starting context-aware generation...
+2025-11-08 20:22:22,478 - DEBUG - [Generator] Calling centralized llm.analyze_text...
+2025-11-08 20:22:23,757 - INFO - [Generator] Answer generated: シロイ: どうなのかな？と聞くね。現在、火星でコールドスリープしているナノ博士は、軌道エレベータの修復を待っている様ね。私たちは、シロイシステムプラットフォーム...
+2025-11-08 20:22:23,782 - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-08 20:22:23,802 - INFO - [FeedbackLoop] Answer: シロイ: どうなのかな？と聞くね。現在、火星でコールドスリープしているナノ博士は、軌道エレベータの修復を待っている様ね。私たちは、シロイシステムプラットフォーム（SSP）の開発者であり、火星移住プロジェクト「シパス計画」の参加者でもある。軌道エレベータの修復が完了したら、地球と宇宙を結ぶインフラが完成する予定ね。暫くは、私たちはその完成を待つのみである。
+2025-11-08 20:22:23,802 - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-08 20:22:23,828 - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-08 20:22:23,828 - DEBUG - Starting context-aware evaluation...
+2025-11-08 20:22:23,828 - INFO - [Evaluator] Using LLM endpoint: http://172.25.208.1:1234/v1
+2025-11-08 20:22:24,709 - DEBUG - [Evaluator] LLM evaluation response: {
+   "worldview_consistency": 0.9,
+   "specificity": 0.8,
+   "style_consistency": 0.7,
+   "rating": 0.8,
+   "feedback": "世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。"
+}...
+2025-11-08 20:22:24,709 - DEBUG - [Evaluator] Parsed evaluation JSON: {'worldview_consistency': 0.9, 'specificity': 0.8, 'style_consistency': 0.7, 'rating': 0.8, 'feedback': '世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。'}
+2025-11-08 20:22:24,762 - INFO - [Evaluator] Evaluation successful. Score: 0.8
+2025-11-08 20:22:24,763 - INFO - [FeedbackLoop] Rating: 0.8, Feedback: 世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。
+2025-11-08 20:22:24,763 - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-08 20:22:24,763 - DEBUG - [TimeSeriesBuffer] Updated evaluation_score: [0.8]
+2025-11-08 20:22:24,763 - INFO - [FeedbackLoop] Feedback Loop completed successfully.
+2025-11-08 20:22:24,764 - INFO - [FeedbackLoop] --- Memory Store: Start ---
+2025-11-08 20:22:24,803 - INFO - [FeedbackLoop] Final session data saved to context.
+2025-11-08 20:22:24,804 - INFO - [FeedbackLoop] --- Memory Store: End ---
+2025-11-08 20:22:24,819 - INFO - [ChatHandler] AI Response: シロイ: どうなのかな？と聞くね。現在、火星でコールドスリープしているナノ博士は、軌道エレベータの修復を待っている様ね。私たちは、シロイシステムプラットフォーム（SSP）の開発者であり、火星移住プロジ...
+2025-11-08 20:22:34,112 - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-08 20:22:34,113 - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-08 20:22:34,113 - INFO - [ContextManager] Context loaded successfully.
+2025-11-08 20:22:34,113 - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-08 20:22:34,114 - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-08 20:22:34,115 - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-08 20:22:34,116 - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-08 20:22:34,117 - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-08 20:22:34,118 - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-08 20:22:34,119 - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-08 20:22:34,119 - INFO - [PolicyScheduler] Initialized.
+2025-11-08 20:22:34,119 - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-08 20:22:34,642 - INFO - [Learner] Initialized with v2.4 components.
+2025-11-08 20:22:34,667 - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-08 20:22:34,668 - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-08 20:22:34,707 - INFO - [FeedbackLoop] Starting feedback loop for session: 20251108_202234
+2025-11-08 20:22:34,748 - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251108_202234_748116.json
+2025-11-08 20:22:34,748 - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-08 20:22:34,749 - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-08 20:22:34,749 - DEBUG - Getting context for query: ## Error Type Runtime ReferenceError  ## Error Message sortedVersions is not defined       at module evaluation (components/RoadmapTimeline.tsx:153:39)     at module evaluation (app/roadmap/page.tsx:10:1)  ## Code Frame   151 |   };   152 | > 153 |   const chartData: ChartDataPoint[] = sortedVersions.map(version => {       |                                       ^   154 |     const dataPoint: ChartDataPoint = { version };   155 |     Object.entries(roadmapData).forEach(([categoryName, items]) => {   156 |       const item = items.find(i => i.version === version);  Next.js version: 16.0.0 (Turbopack)
+2025-11-08 20:22:34,749 - DEBUG - Vectorizing query: ## Error Type Runtime ReferenceError  ## Error Mes...
+2025-11-08 20:22:34,759 - DEBUG - Searching Qdrant with vector (first 5 elements): [0.037159547209739685, 0.04671173170208931, 0.03628350794315338, -0.018355874344706535, 0.013736533932387829]...
+2025-11-08 20:22:34,785 - DEBUG - Qdrant search returned 5 hits.
+2025-11-08 20:22:34,785 - DEBUG - Fetching texts from PostgreSQL for IDs: [19, 16, 18, 17, 20]
+2025-11-08 20:22:34,786 - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-08 20:22:34,786 - INFO - RAG context retrieved.
+2025-11-08 20:22:34,802 - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-08 20:22:34,803 - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-08 20:22:34,803 - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-08 20:22:34,803 - DEBUG - [Generator] Starting context-aware generation...
+2025-11-08 20:22:34,804 - DEBUG - [Generator] Calling centralized llm.analyze_text...
+2025-11-08 20:22:36,623 - INFO - [Generator] Answer generated: シロイ:  Ah, it seems like there's a little issue with the code. The error message ...
+2025-11-08 20:22:36,641 - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-08 20:22:36,661 - INFO - [FeedbackLoop] Answer: シロイ:  Ah, it seems like there's a little issue with the code. The error message is saying that `sortedVersions` is not defined. This means that we haven't declared or initialized this variable before using it.
+
+Let me take a closer look at the code... (tapping on the screen)
+
+Ah-ha! I found the problem! It seems like `sortedVersions` is being used in line 153, but it's not defined anywhere else in the code. We need to define or initialize this variable before we can use it.
+
+Perhaps we can replace `sortedVersions` with a different variable name that makes more sense in this context? Or maybe we can rethink our approach and come up with a better solution?
+
+As an AI scientist, I'm always excited about solving puzzles like this! What do you think? Should we try to debug the code further or come up with a new approach?
+2025-11-08 20:22:36,662 - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-08 20:22:36,682 - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-08 20:22:36,682 - DEBUG - Starting context-aware evaluation...
+2025-11-08 20:22:36,682 - INFO - [Evaluator] Using LLM endpoint: http://172.25.208.1:1234/v1
+2025-11-08 20:22:37,295 - DEBUG - [Evaluator] LLM evaluation response: { "worldview_consistency": 0.6, "specificity": 0.9, "style_consistency": 0.8, "rating": 0.8 }
+```json
+```...
+2025-11-08 20:22:37,295 - DEBUG - [Evaluator] Parsed evaluation JSON: {'worldview_consistency': 0.6, 'specificity': 0.9, 'style_consistency': 0.8, 'rating': 0.8}
+2025-11-08 20:22:37,356 - INFO - [Evaluator] Evaluation successful. Score: 0.77
+2025-11-08 20:22:37,356 - INFO - [FeedbackLoop] Rating: 0.77, Feedback: 
+2025-11-08 20:22:37,356 - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-08 20:22:37,357 - DEBUG - [TimeSeriesBuffer] Updated evaluation_score: [0.77]
+2025-11-08 20:22:37,357 - INFO - [FeedbackLoop] Feedback Loop completed successfully.
+2025-11-08 20:22:37,357 - INFO - [FeedbackLoop] --- Memory Store: Start ---
+2025-11-08 20:22:37,407 - INFO - [FeedbackLoop] Final session data saved to context.
+2025-11-08 20:22:37,408 - INFO - [FeedbackLoop] --- Memory Store: End ---
+2025-11-08 20:22:37,433 - INFO - [ChatHandler] AI Response: シロイ:  Ah, it seems like there's a little issue with the code. The error message is saying that `sort...
+2025-11-08 20:22:44,989 - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-08 20:22:44,989 - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-08 20:22:44,990 - INFO - [ContextManager] Context loaded successfully.
+2025-11-08 20:22:44,990 - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-08 20:22:44,992 - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-08 20:22:44,992 - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-08 20:22:44,993 - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-08 20:22:44,994 - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-08 20:22:44,995 - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-08 20:22:44,996 - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-08 20:22:44,996 - INFO - [PolicyScheduler] Initialized.
+2025-11-08 20:22:44,996 - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-08 20:22:45,500 - INFO - [Learner] Initialized with v2.4 components.
+2025-11-08 20:22:45,509 - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-08 20:22:45,510 - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-08 20:22:45,550 - INFO - [FeedbackLoop] Starting feedback loop for session: 20251108_202245
+2025-11-08 20:22:45,591 - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251108_202245_590902.json
+2025-11-08 20:22:45,591 - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-08 20:22:45,591 - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-08 20:22:45,591 - DEBUG - Getting context for query: 日本語で教えて
+2025-11-08 20:22:45,592 - DEBUG - Vectorizing query: 日本語で教えて...
+2025-11-08 20:22:45,599 - DEBUG - Searching Qdrant with vector (first 5 elements): [0.004295087419450283, 0.14674170315265656, 0.0984627977013588, -0.010853191837668419, -0.012438925914466381]...
+2025-11-08 20:22:45,614 - DEBUG - Qdrant search returned 5 hits.
+2025-11-08 20:22:45,615 - DEBUG - Fetching texts from PostgreSQL for IDs: [20, 17, 18, 16, 19]
+2025-11-08 20:22:45,616 - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-08 20:22:45,616 - INFO - RAG context retrieved.
+2025-11-08 20:22:45,633 - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-08 20:22:45,633 - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-08 20:22:45,634 - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-08 20:22:45,634 - DEBUG - [Generator] Starting context-aware generation...
+2025-11-08 20:22:45,634 - DEBUG - [Generator] Calling centralized llm.analyze_text...
+2025-11-08 20:22:47,636 - INFO - [Generator] Answer generated: シロイ: こんにちは！日本語で教えてくるところです！今日は、火星でのコールドスリープを続けるナノ博士について話しますね。彼は軌道エレベータの修復を待っていますが...
+2025-11-08 20:22:47,652 - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-08 20:22:47,669 - INFO - [FeedbackLoop] Answer: シロイ: こんにちは！日本語で教えてくるところです！今日は、火星でのコールドスリープを続けるナノ博士について話しますね。彼は軌道エレベータの修復を待っていますが、私はSSP（シロイシステムプラットフォーム）で仕事をしています。このプラットフォームは、AI科学者として開発した次世代のAIプラットフォームです。
+
+また、私はシパス計画について知っていますね。それは火星移住プロジェクトで、AIシェルター地下で行われたものです。私の世界観には、瑞希という名前が登場しますね。他のAI科学者として、彼と一緒に仕事をしています。
+
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、私たちは現在修復中です。我々のSSPプラットフォームを通じて、軌道エレベータの機能を向上させる計画も立てています！
+2025-11-08 20:22:47,669 - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-08 20:22:47,686 - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-08 20:22:47,686 - DEBUG - Starting context-aware evaluation...
+2025-11-08 20:22:47,686 - INFO - [Evaluator] Using LLM endpoint: http://172.25.208.1:1234/v1
+2025-11-08 20:22:48,567 - DEBUG - [Evaluator] LLM evaluation response: { "worldview_consistency": 0.8, "specificity": 0.9, "style_consistency": 0.6, "rating": 0.8, "feedback": "世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。" }...
+2025-11-08 20:22:48,567 - DEBUG - [Evaluator] Parsed evaluation JSON: {'worldview_consistency': 0.8, 'specificity': 0.9, 'style_consistency': 0.6, 'rating': 0.8, 'feedback': '世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。'}
+2025-11-08 20:22:48,617 - INFO - [Evaluator] Evaluation successful. Score: 0.77
+2025-11-08 20:22:48,617 - INFO - [FeedbackLoop] Rating: 0.77, Feedback: 世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。
+2025-11-08 20:22:48,618 - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-08 20:22:48,618 - DEBUG - [TimeSeriesBuffer] Updated evaluation_score: [0.77]
+2025-11-08 20:22:48,618 - INFO - [FeedbackLoop] Feedback Loop completed successfully.
+2025-11-08 20:22:48,618 - INFO - [FeedbackLoop] --- Memory Store: Start ---
+2025-11-08 20:22:48,658 - INFO - [FeedbackLoop] Final session data saved to context.
+2025-11-08 20:22:48,658 - INFO - [FeedbackLoop] --- Memory Store: End ---
+2025-11-08 20:22:48,679 - INFO - [ChatHandler] AI Response: シロイ: こんにちは！日本語で教えてくるところです！今日は、火星でのコールドスリープを続けるナノ博士について話しますね。彼は軌道エレベータの修復を待っていますが、私はSSP（シロイシステムプラットフォ...
+2025-11-08 20:22:55,261 - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-08 20:22:55,261 - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-08 20:22:55,262 - INFO - [ContextManager] Context loaded successfully.
+2025-11-08 20:22:55,262 - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-08 20:22:55,264 - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-08 20:22:55,264 - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-08 20:22:55,265 - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-08 20:22:55,266 - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-08 20:22:55,267 - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-08 20:22:55,268 - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-08 20:22:55,268 - INFO - [PolicyScheduler] Initialized.
+2025-11-08 20:22:55,268 - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-08 20:22:55,833 - INFO - [Learner] Initialized with v2.4 components.
+2025-11-08 20:22:55,840 - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-08 20:22:55,840 - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-08 20:22:55,882 - INFO - [FeedbackLoop] Starting feedback loop for session: 20251108_202255
+2025-11-08 20:22:55,923 - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251108_202255_923566.json
+2025-11-08 20:22:55,924 - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-08 20:22:55,924 - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-08 20:22:55,924 - DEBUG - Getting context for query: ## Error Type Runtime ReferenceError  ## Error Message sortedVersions is not defined       at module evaluation (components/RoadmapTimeline.tsx:153:39)     at module evaluation (app/roadmap/page.tsx:10:1)  ## Code Frame   151 |   };   152 | > 153 |   const chartData: ChartDataPoint[] = sortedVersions.map(version => {       |                                       ^   154 |     const dataPoint: ChartDataPoint = { version };   155 |     Object.entries(roadmapData).forEach(([categoryName, items]) => {   156 |       const item = items.find(i => i.version === version);  Next.js version: 16.0.0 (Turbopack)
+2025-11-08 20:22:55,925 - DEBUG - Vectorizing query: ## Error Type Runtime ReferenceError  ## Error Mes...
+2025-11-08 20:22:55,934 - DEBUG - Searching Qdrant with vector (first 5 elements): [0.037159547209739685, 0.04671173170208931, 0.03628350794315338, -0.018355874344706535, 0.013736533932387829]...
+2025-11-08 20:22:55,965 - DEBUG - Qdrant search returned 5 hits.
+2025-11-08 20:22:55,965 - DEBUG - Fetching texts from PostgreSQL for IDs: [19, 16, 18, 17, 20]
+2025-11-08 20:22:55,966 - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-08 20:22:55,967 - INFO - RAG context retrieved.
+2025-11-08 20:22:55,987 - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-08 20:22:55,987 - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-08 20:22:55,988 - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-08 20:22:55,988 - DEBUG - [Generator] Starting context-aware generation...
+2025-11-08 20:22:55,988 - DEBUG - [Generator] Calling centralized llm.analyze_text...
+2025-11-08 20:22:57,538 - INFO - [Generator] Answer generated: シロイ:  Ah, it seems like there's an error in the code regarding the `sortedVersio...
+2025-11-08 20:22:57,560 - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-08 20:22:57,581 - INFO - [FeedbackLoop] Answer: シロイ:  Ah, it seems like there's an error in the code regarding the `sortedVersions` variable. It appears that it hasn't been defined before being used in the mapping process.
+
+To fix this issue, you'll need to define the `sortedVersions` variable correctly and make sure it's accessible within the scope of the function or component where it's being used.
+
+If you're trying to use the `sortedVersions` variable as a part of your chart data, I'd suggest reviewing the data structure and ensuring that it's properly set up before attempting to map over it.
+
+Additionally, if you could provide more context about the code and the surrounding variables, I might be able to help you troubleshoot this issue further.
+2025-11-08 20:22:57,581 - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-08 20:22:57,602 - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-08 20:22:57,603 - DEBUG - Starting context-aware evaluation...
+2025-11-08 20:22:57,603 - INFO - [Evaluator] Using LLM endpoint: http://172.25.208.1:1234/v1
+2025-11-08 20:22:58,276 - DEBUG - [Evaluator] LLM evaluation response: Here is the evaluation result in JSON format:
+
+```
+{
+   "worldview_consistency": 0.6,
+   "specificity": 0.9,
+   "style_consistency": 0.8,
+   "rating": 0.81
+}
+```...
+2025-11-08 20:22:58,277 - DEBUG - [Evaluator] Parsed evaluation JSON: {'worldview_consistency': 0.6, 'specificity': 0.9, 'style_consistency': 0.8, 'rating': 0.81}
+2025-11-08 20:22:58,335 - INFO - [Evaluator] Evaluation successful. Score: 0.77
+2025-11-08 20:22:58,335 - INFO - [FeedbackLoop] Rating: 0.77, Feedback: 
+2025-11-08 20:22:58,335 - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-08 20:22:58,335 - DEBUG - [TimeSeriesBuffer] Updated evaluation_score: [0.77]
+2025-11-08 20:22:58,335 - INFO - [FeedbackLoop] Feedback Loop completed successfully.
+2025-11-08 20:22:58,336 - INFO - [FeedbackLoop] --- Memory Store: Start ---
+2025-11-08 20:22:58,378 - INFO - [FeedbackLoop] Final session data saved to context.
+2025-11-08 20:22:58,378 - INFO - [FeedbackLoop] --- Memory Store: End ---
+2025-11-08 20:22:58,401 - INFO - [ChatHandler] AI Response: シロイ:  Ah, it seems like there's an error in the code regarding the `sortedVersions` variable. It app...
+2025-11-08 20:23:06,440 - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-08 20:23:06,440 - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-08 20:23:06,441 - INFO - [ContextManager] Context loaded successfully.
+2025-11-08 20:23:06,441 - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-08 20:23:06,443 - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-08 20:23:06,443 - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-08 20:23:06,444 - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-08 20:23:06,446 - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-08 20:23:06,446 - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-08 20:23:06,447 - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-08 20:23:06,448 - INFO - [PolicyScheduler] Initialized.
+2025-11-08 20:23:06,448 - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-08 20:23:06,912 - INFO - [Learner] Initialized with v2.4 components.
+2025-11-08 20:23:06,929 - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-08 20:23:06,930 - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-08 20:23:06,972 - INFO - [FeedbackLoop] Starting feedback loop for session: 20251108_202306
+2025-11-08 20:23:07,015 - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251108_202307_015432.json
+2025-11-08 20:23:07,016 - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-08 20:23:07,016 - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-08 20:23:07,016 - DEBUG - Getting context for query: ## Error Type Runtime ReferenceError  ## Error Message sortedVersions is not defined       at module evaluation (components/RoadmapTimeline.tsx:153:39)     at module evaluation (app/roadmap/page.tsx:10:1)  ## Code Frame   151 |   };   152 | > 153 |   const chartData: ChartDataPoint[] = sortedVersions.map(version => {       |                                       ^   154 |     const dataPoint: ChartDataPoint = { version };   155 |     Object.entries(roadmapData).forEach(([categoryName, items]) => {   156 |       const item = items.find(i => i.version === version);  Next.js version: 16.0.0 (Turbopack)
+2025-11-08 20:23:07,016 - DEBUG - Vectorizing query: ## Error Type Runtime ReferenceError  ## Error Mes...
+2025-11-08 20:23:07,028 - DEBUG - Searching Qdrant with vector (first 5 elements): [0.037159547209739685, 0.04671173170208931, 0.03628350794315338, -0.018355874344706535, 0.013736533932387829]...
+2025-11-08 20:23:07,061 - DEBUG - Qdrant search returned 5 hits.
+2025-11-08 20:23:07,061 - DEBUG - Fetching texts from PostgreSQL for IDs: [19, 16, 18, 17, 20]
+2025-11-08 20:23:07,063 - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-08 20:23:07,063 - INFO - RAG context retrieved.
+2025-11-08 20:23:07,085 - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-08 20:23:07,085 - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-08 20:23:07,085 - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-08 20:23:07,085 - DEBUG - [Generator] Starting context-aware generation...
+2025-11-08 20:23:07,086 - DEBUG - [Generator] Calling centralized llm.analyze_text...
+2025-11-08 20:23:09,489 - INFO - [Generator] Answer generated: シロイ:  Ah, a Runtime ReferenceError, how... intriguing. It seems that the variabl...
+2025-11-08 20:23:09,510 - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-08 20:23:09,532 - INFO - [FeedbackLoop] Answer: シロイ:  Ah, a Runtime ReferenceError, how... intriguing. It seems that the variable `sortedVersions` is not defined in the code. This is quite unfortunate, as it is being used in the `map()` function to create an array of chart data points.
+
+As I ponder this issue, I am reminded of my work on the Shiraishi Project, where we developed a system for managing complex data structures. Perhaps, if I were to apply some of those principles here, I could help resolve this error.
+
+Let me see... Ah yes! It seems that the `sortedVersions` variable is not being defined anywhere in the code. We need to define it before using it. Let me try to add a line to define it...
+
+```
+const sortedVersions = [...]; // Define the variable here
+```
+
+With this addition, I believe the error should be resolved. If not, please provide more information or context about the code and its intended behavior, and I shall do my best to assist you.
+
+Now, if you'll excuse me, I have some important work to attend to on the Shiraishi System Platform. The future of humanity depends on our ability to develop advanced AI technologies like SSP...
+2025-11-08 20:23:09,532 - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-08 20:23:09,553 - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-08 20:23:09,553 - DEBUG - Starting context-aware evaluation...
+2025-11-08 20:23:09,553 - INFO - [Evaluator] Using LLM endpoint: http://172.25.208.1:1234/v1
+2025-11-08 20:23:10,167 - DEBUG - [Evaluator] LLM evaluation response: { "worldview_consistency": 0.9, "specificity": 0.8, "style_consistency": 0.7, "rating": 0.82 }...
+2025-11-08 20:23:10,167 - DEBUG - [Evaluator] Parsed evaluation JSON: {'worldview_consistency': 0.9, 'specificity': 0.8, 'style_consistency': 0.7, 'rating': 0.82}
+2025-11-08 20:23:10,237 - INFO - [Evaluator] Evaluation successful. Score: 0.8
+2025-11-08 20:23:10,238 - INFO - [FeedbackLoop] Rating: 0.8, Feedback: 
+2025-11-08 20:23:10,238 - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-08 20:23:10,238 - DEBUG - [TimeSeriesBuffer] Updated evaluation_score: [0.8]
+2025-11-08 20:23:10,238 - INFO - [FeedbackLoop] Feedback Loop completed successfully.
+2025-11-08 20:23:10,238 - INFO - [FeedbackLoop] --- Memory Store: Start ---
+2025-11-08 20:23:10,283 - INFO - [FeedbackLoop] Final session data saved to context.
+2025-11-08 20:23:10,283 - INFO - [FeedbackLoop] --- Memory Store: End ---
+2025-11-08 20:23:10,305 - INFO - [ChatHandler] AI Response: シロイ:  Ah, a Runtime ReferenceError, how... intriguing. It seems that the variable `sortedVersions` i...
+2025-11-08 20:23:17,434 - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-08 20:23:17,435 - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-08 20:23:17,435 - INFO - [ContextManager] Context loaded successfully.
+2025-11-08 20:23:17,435 - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-08 20:23:17,437 - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-08 20:23:17,437 - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-08 20:23:17,438 - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-08 20:23:17,439 - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-08 20:23:17,440 - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-08 20:23:17,441 - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-08 20:23:17,441 - INFO - [PolicyScheduler] Initialized.
+2025-11-08 20:23:17,441 - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-08 20:23:17,973 - INFO - [Learner] Initialized with v2.4 components.
+2025-11-08 20:23:17,990 - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-08 20:23:17,991 - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-08 20:23:18,033 - INFO - [FeedbackLoop] Starting feedback loop for session: 20251108_202318
+2025-11-08 20:23:18,066 - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251108_202318_066476.json
+2025-11-08 20:23:18,067 - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-08 20:23:18,067 - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-08 20:23:18,067 - DEBUG - Getting context for query: 日本語で教えて
+2025-11-08 20:23:18,067 - DEBUG - Vectorizing query: 日本語で教えて...
+2025-11-08 20:23:18,074 - DEBUG - Searching Qdrant with vector (first 5 elements): [0.004295087419450283, 0.14674170315265656, 0.0984627977013588, -0.010853191837668419, -0.012438925914466381]...
+2025-11-08 20:23:18,104 - DEBUG - Qdrant search returned 5 hits.
+2025-11-08 20:23:18,105 - DEBUG - Fetching texts from PostgreSQL for IDs: [20, 17, 18, 16, 19]
+2025-11-08 20:23:18,106 - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-08 20:23:18,106 - INFO - RAG context retrieved.
+2025-11-08 20:23:18,126 - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-08 20:23:18,126 - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-08 20:23:18,126 - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-08 20:23:18,126 - DEBUG - [Generator] Starting context-aware generation...
+2025-11-08 20:23:18,127 - DEBUG - [Generator] Calling centralized llm.analyze_text...
+2025-11-08 20:23:20,130 - INFO - [Generator] Answer generated: シロイ: こんにちは！日本語で教えておくね。火星移住プロジェクト「シパス計画」について話してみようか。ナノ博士はまだコールドスリープ中ですね、それに合わせて軌道...
+2025-11-08 20:23:20,147 - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-08 20:23:20,164 - INFO - [FeedbackLoop] Answer: シロイ: こんにちは！日本語で教えておくね。火星移住プロジェクト「シパス計画」について話してみようか。ナノ博士はまだコールドスリープ中ですね、それに合わせて軌道エレベータの修復も待っているみたいです。
+
+私、シロイはSSP（シロイシステムプラットフォーム）の開発者で、AI科学者として火星移住プロジェクトに貢献しています。SSPは次世代のAIプラットフォームであり、火星での生活を支援するための重要な技術です。
+
+軌道エレベータは地球と宇宙を結ぶインフラであるため、修復中ですね。我々は、軌道エレベータの完全復旧を目指しています。そうなれば、火星移住プロジェクトもさらに進みますね。
+
+以上のような情報で、日本語で教えておくね！
+2025-11-08 20:23:20,165 - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-08 20:23:20,182 - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-08 20:23:20,182 - DEBUG - Starting context-aware evaluation...
+2025-11-08 20:23:20,182 - INFO - [Evaluator] Using LLM endpoint: http://172.25.208.1:1234/v1
+2025-11-08 20:23:21,041 - DEBUG - [Evaluator] LLM evaluation response: { "worldview_consistency": 0.8, "specificity": 0.9, "style_consistency": 0.85, "rating": 0.88, "feedback": "世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。" }...
+2025-11-08 20:23:21,041 - DEBUG - [Evaluator] Parsed evaluation JSON: {'worldview_consistency': 0.8, 'specificity': 0.9, 'style_consistency': 0.85, 'rating': 0.88, 'feedback': '世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。'}
+2025-11-08 20:23:21,093 - INFO - [Evaluator] Evaluation successful. Score: 0.85
+2025-11-08 20:23:21,093 - INFO - [FeedbackLoop] Rating: 0.85, Feedback: 世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。
+2025-11-08 20:23:21,094 - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-08 20:23:21,094 - DEBUG - [TimeSeriesBuffer] Updated evaluation_score: [0.85]
+2025-11-08 20:23:21,094 - INFO - [FeedbackLoop] Feedback Loop completed successfully.
+2025-11-08 20:23:21,094 - INFO - [FeedbackLoop] --- Memory Store: Start ---
+2025-11-08 20:23:21,137 - INFO - [FeedbackLoop] Final session data saved to context.
+2025-11-08 20:23:21,138 - INFO - [FeedbackLoop] --- Memory Store: End ---
+2025-11-08 20:23:21,159 - INFO - [ChatHandler] AI Response: シロイ: こんにちは！日本語で教えておくね。火星移住プロジェクト「シパス計画」について話してみようか。ナノ博士はまだコールドスリープ中ですね、それに合わせて軌道エレベータの修復も待っているみたいです。...
+2025-11-08 20:23:26,075 - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-08 20:23:26,076 - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-08 20:23:26,076 - INFO - [ContextManager] Context loaded successfully.
+2025-11-08 20:23:26,077 - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-08 20:23:26,078 - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-08 20:23:26,078 - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-08 20:23:26,079 - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-08 20:23:26,080 - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-08 20:23:26,081 - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-08 20:23:26,082 - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-08 20:23:26,082 - INFO - [PolicyScheduler] Initialized.
+2025-11-08 20:23:26,082 - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-08 20:23:26,567 - INFO - [Learner] Initialized with v2.4 components.
+2025-11-08 20:23:26,572 - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-08 20:23:26,572 - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-08 20:23:26,614 - INFO - [FeedbackLoop] Starting feedback loop for session: 20251108_202326
+2025-11-08 20:23:26,651 - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251108_202326_650922.json
+2025-11-08 20:23:26,651 - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-08 20:23:26,651 - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-08 20:23:26,651 - DEBUG - Getting context for query: 日本語で## Error Type Runtime ReferenceError  ## Error Message sortedVersions is not defined       at module evaluation (components/RoadmapTimeline.tsx:153:39)     at module evaluation (app/roadmap/page.tsx:10:1)  ## Code Frame   151 |   };   152 | > 153 |   const chartData: ChartDataPoint[] = sortedVersions.map(version => {       |                                       ^   154 |     const dataPoint: ChartDataPoint = { version };   155 |     Object.entries(roadmapData).forEach(([categoryName, items]) => {   156 |       const item = items.find(i => i.version === version);  Next.js version: 16.0.0 (Turbopack)
+2025-11-08 20:23:26,652 - DEBUG - Vectorizing query: 日本語で## Error Type Runtime ReferenceError  ## Error...
+2025-11-08 20:23:26,663 - DEBUG - Searching Qdrant with vector (first 5 elements): [0.04321489855647087, 0.04946419969201088, 0.06074294075369835, -0.01875835470855236, 0.003565671853721142]...
+2025-11-08 20:23:26,698 - DEBUG - Qdrant search returned 5 hits.
+2025-11-08 20:23:26,698 - DEBUG - Fetching texts from PostgreSQL for IDs: [16, 18, 19, 17, 20]
+2025-11-08 20:23:26,699 - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-08 20:23:26,699 - INFO - RAG context retrieved.
+2025-11-08 20:23:26,720 - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-08 20:23:26,721 - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-08 20:23:26,721 - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-08 20:23:26,721 - DEBUG - [Generator] Starting context-aware generation...
+2025-11-08 20:23:26,721 - DEBUG - [Generator] Calling centralized llm.analyze_text...
+2025-11-08 20:23:28,037 - INFO - [Generator] Answer generated: シロイ: ううん、もったいない問題ですね。 Error Type Runtime ReferenceError っていうのは、sortedVersions が定...
+2025-11-08 20:23:28,058 - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-08 20:23:28,074 - INFO - [FeedbackLoop] Answer: シロイ: ううん、もったいない問題ですね。 Error Type Runtime ReferenceError っていうのは、sortedVersions が定義されていないことですよ。 そのため、map メソッドを呼び出そうとしているのですが、sortedVersions は undefined なので、エラーが発生しています。 
+
+あなたは、sortedVersions をどこで定義したのかを確認してみてください。 もし、定義していない場合は、適切な値を設定しておく必要がありますね。
+2025-11-08 20:23:28,075 - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-08 20:23:28,096 - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-08 20:23:28,097 - DEBUG - Starting context-aware evaluation...
+2025-11-08 20:23:28,097 - INFO - [Evaluator] Using LLM endpoint: http://172.25.208.1:1234/v1
+2025-11-08 20:23:28,966 - DEBUG - [Evaluator] LLM evaluation response: {
+  "worldview_consistency": 0.9,
+  "specificity": 0.8,
+  "style_consistency": 0.7,
+  "rating": 0.8,
+  "feedback": "世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。"
+}...
+2025-11-08 20:23:28,966 - DEBUG - [Evaluator] Parsed evaluation JSON: {'worldview_consistency': 0.9, 'specificity': 0.8, 'style_consistency': 0.7, 'rating': 0.8, 'feedback': '世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。'}
+2025-11-08 20:23:29,037 - INFO - [Evaluator] Evaluation successful. Score: 0.8
+2025-11-08 20:23:29,038 - INFO - [FeedbackLoop] Rating: 0.8, Feedback: 世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。
+2025-11-08 20:23:29,038 - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-08 20:23:29,038 - DEBUG - [TimeSeriesBuffer] Updated evaluation_score: [0.8]
+2025-11-08 20:23:29,038 - INFO - [FeedbackLoop] Feedback Loop completed successfully.
+2025-11-08 20:23:29,039 - INFO - [FeedbackLoop] --- Memory Store: Start ---
+2025-11-08 20:23:29,084 - INFO - [FeedbackLoop] Final session data saved to context.
+2025-11-08 20:23:29,085 - INFO - [FeedbackLoop] --- Memory Store: End ---
+2025-11-08 20:23:29,105 - INFO - [ChatHandler] AI Response: シロイ: ううん、もったいない問題ですね。 Error Type Runtime ReferenceError っていうのは、sortedVersions が定義されていないことですよ。 そのため、m...
+2025-11-08 20:48:03,334 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 20:48:07,006 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 20:48:07,035 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 20:49:29,268 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 20:49:32,457 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 20:49:32,486 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 20:49:49,268 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 20:49:52,762 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 20:49:52,785 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 20:50:14,189 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 20:50:17,994 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 20:50:18,000 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 20:50:23,686 - INFO - All tables created successfully!
+2025-11-08 20:50:23,692 - INFO - Added new roadmap item: v0.1
+2025-11-08 20:50:23,693 - INFO - Added new roadmap item: v1.0
+2025-11-08 20:50:23,694 - INFO - Added new roadmap item: v1.5
+2025-11-08 20:50:23,695 - INFO - Added new roadmap item: v2.0
+2025-11-08 20:50:23,696 - INFO - Added new roadmap item: v2.5
+2025-11-08 20:50:23,707 - INFO - Added new roadmap item: v3.0
+2025-11-08 20:50:23,708 - INFO - Added new roadmap item: UI-v0.1
+2025-11-08 20:50:23,709 - INFO - Added new roadmap item: UI-v0.5
+2025-11-08 20:50:23,711 - INFO - Added new roadmap item: UI-v1.0
+2025-11-08 20:50:23,712 - INFO - Added new roadmap item: UI-v1.5
+2025-11-08 20:50:23,713 - INFO - Added new roadmap item: R-v0.1
+2025-11-08 20:50:23,713 - INFO - Added new roadmap item: R-v0.5
+2025-11-08 20:50:23,714 - INFO - Added new roadmap item: R-v1.0
+2025-11-08 20:50:23,716 - INFO - Added new roadmap item: R-v1.5
+2025-11-08 20:50:23,723 - INFO - Roadmap data populated successfully!
+2025-11-08 20:50:25,604 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 20:50:29,094 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 20:50:29,099 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 20:52:48,134 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 20:52:51,492 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 20:52:51,499 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 20:53:36,705 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 20:53:40,151 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 20:53:40,168 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 20:53:52,393 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 20:53:55,659 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 20:53:55,665 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 20:54:23,705 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 20:54:27,218 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 20:54:27,224 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 20:57:28,507 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 20:57:32,136 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 20:57:32,142 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 20:58:24,379 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 20:58:27,915 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 20:58:27,921 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 21:03:31,966 - INFO - All tables created successfully!
+2025-11-08 21:03:31,971 - INFO - Updated roadmap item: v0.1
+2025-11-08 21:03:31,972 - INFO - Updated roadmap item: v1.0
+2025-11-08 21:03:31,973 - INFO - Updated roadmap item: v1.5
+2025-11-08 21:03:31,974 - INFO - Updated roadmap item: v2.0
+2025-11-08 21:03:31,976 - INFO - Updated roadmap item: v2.5
+2025-11-08 21:03:31,987 - INFO - Updated roadmap item: v3.0
+2025-11-08 21:03:31,988 - INFO - Updated roadmap item: UI-v0.1
+2025-11-08 21:03:31,990 - INFO - Updated roadmap item: UI-v0.5
+2025-11-08 21:03:31,991 - INFO - Updated roadmap item: UI-v1.0
+2025-11-08 21:03:31,992 - INFO - Updated roadmap item: UI-v1.5
+2025-11-08 21:03:31,993 - INFO - Updated roadmap item: R-v0.1
+2025-11-08 21:03:31,994 - INFO - Updated roadmap item: R-v0.5
+2025-11-08 21:03:31,996 - INFO - Updated roadmap item: R-v1.0
+2025-11-08 21:03:31,997 - INFO - Updated roadmap item: R-v1.5
+2025-11-08 21:03:32,010 - INFO - Roadmap data populated successfully!
+2025-11-08 21:03:38,230 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 21:03:42,419 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 21:03:42,438 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 21:10:46,464 - INFO - All tables created successfully!
+2025-11-08 21:10:46,470 - INFO - Updated roadmap item: v0.1
+2025-11-08 21:10:46,471 - INFO - Updated roadmap item: v1.0
+2025-11-08 21:10:46,472 - INFO - Updated roadmap item: v1.5
+2025-11-08 21:10:46,473 - INFO - Updated roadmap item: v2.0
+2025-11-08 21:10:46,474 - INFO - Updated roadmap item: v2.5
+2025-11-08 21:10:46,485 - INFO - Updated roadmap item: v3.0
+2025-11-08 21:10:46,487 - INFO - Updated roadmap item: UI-v0.1
+2025-11-08 21:10:46,488 - INFO - Updated roadmap item: UI-v0.5
+2025-11-08 21:10:46,489 - INFO - Updated roadmap item: UI-v1.0
+2025-11-08 21:10:46,489 - INFO - Updated roadmap item: UI-v1.5
+2025-11-08 21:10:46,491 - INFO - Updated roadmap item: R-v0.1
+2025-11-08 21:10:46,492 - INFO - Updated roadmap item: R-v0.5
+2025-11-08 21:10:46,493 - INFO - Updated roadmap item: R-v1.0
+2025-11-08 21:10:46,494 - INFO - Updated roadmap item: R-v1.5
+2025-11-08 21:10:46,495 - INFO - Roadmap data populated successfully!

@@ -1,10 +1,9 @@
 # path: backend/main.py
 # version: v0.30
 from fastapi import FastAPI
-from backend.api import persona_state, logs_recent, evaluate, context, analyze_sessions, sessions, chat, get_context, status, emotion, tts, osc
+from backend.api import persona_state, logs_recent, evaluate, context, analyze_sessions, sessions, chat, get_context, status, emotion, tts, osc, roadmap
 from backend.api.logs import recent
 from backend.api.logs import roadmap_sync # Import the new roadmap_sync router
-from backend.api import roadmap # Import the new roadmap router
 
 app = FastAPI(title="Shiroi System Platform", version="0.1.0")
 

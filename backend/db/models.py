@@ -3,6 +3,7 @@
 from sqlalchemy import Column, Integer, DateTime, Text, Float, JSON, String # String をインポート
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
+from sqlalchemy.dialects.postgresql import ARRAY # Import ARRAY for PostgreSQL specific types
 
 Base = declarative_base()
 
@@ -54,3 +55,22 @@ class DevLog(Base):
 
     def __repr__(self):
         return f"<DevLog(id={self.id}, type='{self.type}', summary='{self.summary[:50]}...')>"
+
+class RoadmapItem(Base):
+    __tablename__ = "roadmap_items"
+
+    id = Column(Integer, primary_key=True, index=True)
+    version = Column(String, index=True, nullable=False)
+    codename = Column(String, nullable=False)
+    goal = Column(Text, nullable=False)
+    status = Column(String, nullable=False) # "✅" | "🔄" | "⚪"
+    description = Column(Text, nullable=False)
+    startDate = Column(String) # YYYY-MM-DD
+    endDate = Column(String)   # YYYY-MM-DD
+    progress = Column(Integer)  # 0-100 percentage
+    keyFeatures = Column(ARRAY(String))
+    dependencies = Column(ARRAY(String))
+    metrics = Column(ARRAY(String))
+    owner = Column(String)
+    documentationLink = Column(String)
+    prLink = Column(String)
