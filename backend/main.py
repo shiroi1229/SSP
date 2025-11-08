@@ -3,6 +3,8 @@
 from fastapi import FastAPI
 from backend.api import persona_state, logs_recent, evaluate, context, analyze_sessions, sessions, chat, get_context, status, emotion, tts, osc
 from backend.api.logs import recent
+from backend.api.logs import roadmap_sync # Import the new roadmap_sync router
+from backend.api import roadmap # Import the new roadmap router
 
 app = FastAPI(title="Shiroi System Platform", version="0.1.0")
 
@@ -16,10 +18,12 @@ app.include_router(sessions.router)
 app.include_router(chat.router)
 app.include_router(get_context.router)
 app.include_router(recent.router)
+app.include_router(roadmap_sync.router) # Include the new roadmap_sync router
 app.include_router(status.router)
 app.include_router(emotion.router)
 app.include_router(tts.router)
 app.include_router(osc.router)
+app.include_router(roadmap.router) # Include the new roadmap router
 
 # Test comment for ImpactAnalyzer
 @app.get("/")
