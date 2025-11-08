@@ -4559,3 +4559,6 @@ So, that's where we stand currently. The universe is full of mysteries waiting t
 2025-11-08 18:59:56,735 - INFO - Qdrant client initialized for localhost:6333
 2025-11-08 19:00:00,217 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
 2025-11-08 19:00:00,223 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
+2025-11-08 19:02:43,914 - INFO - Qdrant client initialized for localhost:6333
+2025-11-08 19:02:47,204 - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-08 19:02:47,220 - INFO - PostgreSQL connected to 172.25.208.1:5432/ssp_memory
