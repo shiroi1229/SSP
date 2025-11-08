@@ -17,6 +17,7 @@ from modules.collective_optimizer import merge_ai_insights
 from modules.persona_evolver import evolve_persona_profile, EmotionalMemory, log_harmony_score, evaluate_harmony_trend, generate_persona_echo
 from modules.self_intent import evolve_self_intent
 from modules.metacognition import summarize_introspection, compute_cognitive_harmony
+from modules.auto_sync_monitor import monitor_roadmap_sync
 
 log_manager = LogManager()
 
@@ -167,6 +168,7 @@ def start_scheduler():
     schedule.every().day.at("03:05").do(nightly_emotion_sync)
     schedule.every().day.at("03:10").do(nightly_harmony_report)
     schedule.every().saturday.at("04:00").do(run_job, "weekly_persona_echo", generate_persona_echo)
+    schedule.every(10).minutes.do(run_job, "roadmap_sync_monitor", monitor_roadmap_sync)
 
     log_manager.info(f"[Scheduler] Scheduler started. Next run at: {schedule.next_run()}")
 

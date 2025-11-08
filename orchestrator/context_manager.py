@@ -151,6 +151,14 @@ class ContextManager:
             log_manager.error(f"[ContextManager] Failed to rollback context from {snapshot_filepath}: {e}")
             return False
 
+    def update_roadmap(self, new_roadmap_data: dict):
+        """
+        Updates the roadmap data in the long-term context.
+        This is called by the auto_sync_monitor when a new roadmap is fetched from GitHub.
+        """
+        self.set('long_term.roadmap', new_roadmap_data, reason="Roadmap sync from GitHub")
+        log_manager.info("[ContextManager] Long-term roadmap context updated.")
+
 def init_test_context():
     """Initializes a test context file with synthetic drift."""
     log_manager.info(f"Initializing test context with synthetic drift at {CONTEXT_FILE}")
