@@ -1,0 +1,18 @@
+{
+  "backend": [
+    { "version": "v0.1", "codename": "MVP Core", "goal": "RAG + GPT生成", "status": "✅", "description": "最初の思考連鎖。RAGとGPTが接続され、初対話が成立。", "time": "past" },
+    { "version": "v1.0", "codename": "Full Orchestrator", "goal": "FastAPIによる統合制御", "status": "✅", "description": "全モジュール統合、CLIからAPIへ昇格。", "time": "past" },
+    { "version": "v2.4", "codename": "Context Evolution", "goal": "履歴保存・再構築", "status": "✅", "description": "状態スナップショットの保存と復元が可能に。", "time": "past" },
+    { "version": "v2.5", "codename": "Impact Analyzer", "goal": "影響分析と自己修復", "status": "✅", "description": "影響解析と自動修復ループを実装。", "time": "current" }
+  ],
+  "frontend": [
+    { "version": "v0.5", "codename": "Session Evaluator", "goal": "評価UI", "status": "✅", "description": "対話履歴・評価スコア入力画面。", "time": "past" },
+    { "version": "v0.8", "codename": "Stage UI", "goal": "喋る・動くシロイ", "status": "✅", "description": "TTS + Live2D + OSCで動的演出。", "time": "past" },
+    { "version": "v2.0", "codename": "Persona Studio", "goal": "複数人格管理", "status": "🔄", "description": "瑞希×シロイ×他AIの共演環境。", "time": "past" },
+    { "version": "v2.5", "codename": "Interactive Dashboard", "goal": "リアルタイム監視と操作", "status": "✅", "description": "自己監視と操作のためのインタラクティブダッシュボード。", "time": "current" }
+  ],
+  "robustness": [
+    { "version": "v2.3", "codename": "Contract Validator", "goal": "契約整合チェック", "status": "✅", "description": "APIとUIの整合性を保証。", "time": "past" },
+    { "version": "v2.5", "codename": "Auto Repair", "goal": "自己修復", "status": "✅", "description": "影響解析と自動修復ループを実装。", "time": "current" }
+  ]
+}

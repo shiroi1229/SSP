@@ -20,7 +20,6 @@ from orchestrator.impact_analyzer import ImpactAnalyzer
 from orchestrator.auto_repair_engine import AutoRepairEngine
 from modules.log_manager import log_manager
 from qdrant_client import QdrantClient
-from modules.impact_analyzer import analyze_impact, suggest_repair
 from modules.meta_contract_system import generate_contract, negotiate_contract, list_contracts
 from modules.cognitive_graph_engine import CognitiveGraphEngine
 from modules.self_reasoning_loop import SelfReasoningLoop

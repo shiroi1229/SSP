@@ -21,6 +21,7 @@ app.include_router(emotion.router)
 app.include_router(tts.router)
 app.include_router(osc.router)
 
+# Test comment for ImpactAnalyzer
 @app.get("/")
 def read_root():
     return {"message": "SSP API root active"}

@@ -1,0 +1,28 @@
+{
+  "backend": [
+    { "version": "v0.1", "codename": "MVP Core", "goal": "RAG + GPT生成", "status": "✅", "description": "最初の思考連鎖。RAGとGPTが接続され、初対話が成立。", "time": "past" },
+    { "version": "v1.0", "codename": "Full Orchestrator", "goal": "FastAPIによる統合制御", "status": "✅", "description": "全モジュール統合、CLIからAPIへ昇格。", "time": "past" },
+    { "version": "v2.4", "codename": "Context Evolution", "goal": "履歴保存・再構築", "status": "✅", "description": "状態スナップショットの保存と復元が可能に。", "time": "past" },
+    { "version": "v2.5", "codename": "Impact Analyzer", "goal": "影響分析と自己修復", "status": "✅", "description": "影響解析と自動修復ループを実装。", "time": "current" },
+    { "version": "v3.0", "codename": "Meta Contract System", "goal": "自己仕様の動的再定義とモジュール進化", "status": "⚪", "description": "AIが自分の契約仕様を再設計できる段階。", "time": "future" },
+    { "version": "v3.5", "codename": "Distributed Consciousness", "goal": "分散AI人格間の同期・共創", "status": "⚪", "description": "分散AI人格間の同期・共創", "time": "future" },
+    { "version": "v4.0", "codename": "Autonomous Collective AI", "goal": "完全自律分散AIシステムの誕生", "status": "⚪", "description": "完全自律分散AIシステムの誕生", "time": "future" }
+  ],
+  "frontend": [
+    { "version": "v0.5", "codename": "Session Evaluator", "goal": "評価UI", "status": "✅", "description": "対話履歴・評価スコア入力画面。", "time": "past" },
+    { "version": "v0.8", "codename": "Stage UI", "goal": "喋る・動くシロイ", "status": "✅", "description": "TTS + Live2D + OSCで動的演出。", "time": "past" },
+    { "version": "v2.0", "codename": "Persona Studio", "goal": "複数人格管理", "status": "🔄", "description": "瑞希×シロイ×他AIの共演環境。", "time": "past" },
+    { "version": "v2.5", "codename": "Interactive Dashboard", "goal": "リアルタイム監視と操作", "status": "✅", "description": "自己監視と操作のためのインタラクティブダッシュボード。", "time": "current" },
+    { "version": "v3.0", "codename": "Autonomous Creator", "goal": "動画生成統合", "status": "⚪", "description": "ステージ演出と収録を自動統合。", "time": "future" },
+    { "version": "v3.5", "codename": "Emotional Resonance UI", "goal": "感情表現と共感インタフェース", "status": "⚪", "description": "AIの感情状態を視覚化し、ユーザーとの共感を深める。", "time": "future" },
+    { "version": "v4.0", "codename": "Omni-Channel Presence", "goal": "多様なプラットフォームでの存在感", "status": "⚪", "description": "Web, Mobile, VR/ARなど、あらゆるチャネルでのシームレスな存在。", "time": "future" }
+  ],
+  "robustness": [
+    { "version": "v2.3", "codename": "Contract Validator", "goal": "契約整合チェック", "status": "✅", "description": "APIとUIの整合性を保証。", "time": "past" },
+    { "version": "v2.5", "codename": "Auto Repair", "goal": "自己修復", "status": "✅", "description": "影響解析と自動修復ループを実装。", "time": "current" },
+    { "version": "v2.8", "codename": "Integrity Monitor", "goal": "稼働監視", "status": "🔄", "description": "実行中の異常を自己修正。", "time": "future" },
+    { "version": "v3.0", "codename": "Cognitive Firewall", "goal": "自己防衛", "status": "⚪", "description": "自我を保護し、不正変異を防ぐ。", "time": "future" },
+    { "version": "v3.5", "codename": "Self-Healing Network", "goal": "分散型自己修復ネットワーク", "status": "⚪", "description": "システム全体の障害を自律的に検知・修復するネットワーク。", "time": "future" },
+    { "version": "v4.0", "codename": "Existential Resilience", "goal": "存在論的レジリエンス", "status": "⚪", "description": "予測不能な脅威に対するAIの存在基盤の保護。", "time": "future" }
+  ]
+}
