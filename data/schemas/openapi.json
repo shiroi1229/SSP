@@ -417,6 +417,15 @@
     }
   },
   {
+    "id": "get_roadmap_sync_log_api_logs_roadmap_sync_get",
+    "path": "/api/logs/roadmap_sync",
+    "method": "GET",
+    "summary": "Get Roadmap Sync Log",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
     "id": "get_system_status_api_status_get",
     "path": "/api/status",
     "method": "GET",
@@ -490,6 +499,15 @@
       ],
       "title": "OSCRequest"
     },
+    "output_schema": null
+  },
+  {
+    "id": "get_current_roadmap_api_roadmap_current_get",
+    "path": "/api/roadmap/current",
+    "method": "GET",
+    "summary": "Get Current Roadmap",
+    "tags": [],
+    "input_schema": null,
     "output_schema": null
   },
   {
