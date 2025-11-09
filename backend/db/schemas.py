@@ -50,6 +50,8 @@ class RoadmapItemBase(BaseModel):
 class RoadmapItemUpdateByVersion(BaseModel):
     developmentInstruction: Optional[str] = Field(None, alias="development_details")
     parent_id: Optional[int] = None
+    status: Optional[str] = None
+    progress: Optional[int] = None
 
 class RoadmapItemCreate(RoadmapItemBase):
     pass
