@@ -75,3 +75,26 @@ class PersonaManager:
         self._evolve_long_term_profile(context_manager)
 
         log_manager.info("[PersonaManager] Persona update cycle complete.")
+
+# Standalone function to get current persona state for external use (e.g., dashboard)
+async def get_current_persona_state():
+    # This is a simplified approach. In a more robust system, ContextManager
+    # would be passed or retrieved from a global/singleton instance.
+    # For now, we'll create a dummy ContextManager to allow _calculate_current_state to run.
+    class DummyContextManager:
+        def get(self, key):
+            # Simulate fetching optimization_log for harmony calculation
+            if key == "long_term.optimization_log":
+                # Return some dummy data or read from a mock log file
+                return [{"module": "evaluator", "evaluation_result": {"rating": 0.7}},
+                        {"module": "evaluator", "evaluation_result": {"rating": 0.8}}]
+            return None
+        def set(self, key, value, reason):
+            pass # Dummy set
+
+    persona_manager = PersonaManager()
+    dummy_context_manager = DummyContextManager()
+    state = persona_manager._calculate_current_state(dummy_context_manager)
+    # Add harmony_score alias for consistency with dashboard_ws.py
+    state["harmony_score"] = state["harmony"]
+    return state

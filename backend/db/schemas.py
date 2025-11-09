@@ -1,7 +1,7 @@
 # path: backend/db/schemas.py
 # version: v1
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime
 from typing import Optional, List, Dict, Any
 
@@ -44,6 +44,12 @@ class RoadmapItemBase(BaseModel):
     owner: Optional[str] = None
     documentationLink: Optional[str] = None
     prLink: Optional[str] = None
+    developmentInstruction: Optional[str] = Field(None, alias="development_details")
+    parent_id: Optional[int] = None
+
+class RoadmapItemUpdateByVersion(BaseModel):
+    developmentInstruction: Optional[str] = Field(None, alias="development_details")
+    parent_id: Optional[int] = None
 
 class RoadmapItemCreate(RoadmapItemBase):
     pass

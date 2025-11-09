@@ -15,6 +15,7 @@ import statistics
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 LOG_PATH = "./logs/introspection_trace.log"
+PERSONA_PROFILE_PATH = "./config/persona_profile.json" # Moved up for visibility
 MAX_ENTRIES = 5000
 
 # 感情語辞書（暫定）
@@ -122,3 +123,42 @@ def extract_emotional_patterns():
     avg_val = round(statistics.mean(valences), 2)
     dominant = "positive" if avg_val > 0 else "negative" if avg_val < 0 else "neutral"
     return {"average_valence": avg_val, "dominant_emotion": dominant}
+
+def get_latest_introspection_log():
+    """Retrieve the most recent introspection log entry."""
+    if not os.path.exists(LOG_PATH):
+        return {"summary": "No introspection logs yet."}
+
+    with open(LOG_PATH, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+        if not lines:
+            return {"summary": "No introspection logs yet."}
+        
+        last_line = lines[-1]
+        try:
+            return json.loads(last_line)
+        except json.JSONDecodeError as e:
+            logging.warning(f"Could not decode JSON from last introspection log line: {last_line.strip()}. Error: {e}")
+            return {"summary": "Error reading last log entry."}
+
+def get_cognitive_graph_data():
+    """Retrieve cognitive traits from persona_profile.json."""
+    if not os.path.exists(PERSONA_PROFILE_PATH):
+        logging.warning(f"Persona profile not found at {PERSONA_PROFILE_PATH}. Returning default traits.")
+        return {
+            "assertiveness": 0.5,
+            "empathy": 0.5,
+            "curiosity": 0.5,
+            "stability": 0.5,
+            "creativity": 0.5,
+        }
+    try:
+        with open(PERSONA_PROFILE_PATH, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            return data.get("traits", {})
+    except json.JSONDecodeError as e:
+        logging.error(f"Error decoding persona profile JSON: {e}", exc_info=True)
+        return {}
+    except Exception as e:
+        logging.error(f"Error reading persona profile: {e}", exc_info=True)
+        return {}

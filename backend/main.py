@@ -1,7 +1,7 @@
 # path: backend/main.py
 # version: v0.30
 from fastapi import FastAPI
-from backend.api import persona_state, logs_recent, evaluate, context, analyze_sessions, sessions, chat, get_context, status, emotion, tts, osc, roadmap
+from backend.api import persona_state, logs_recent, evaluate, context, analyze_sessions, sessions, chat, get_context, status, emotion, tts, osc, roadmap, roadmap_tree, dashboard_ws
 from backend.api.logs import recent
 from backend.api.logs import roadmap_sync # Import the new roadmap_sync router
 
@@ -22,7 +22,9 @@ app.include_router(status.router)
 app.include_router(emotion.router)
 app.include_router(tts.router)
 app.include_router(osc.router)
+app.include_router(roadmap_tree.router) # Include the new roadmap_tree router
 app.include_router(roadmap.router) # Include the new roadmap router
+app.include_router(dashboard_ws.router) # Include the dashboard_ws router
 
 # Test comment for ImpactAnalyzer
 @app.get("/")

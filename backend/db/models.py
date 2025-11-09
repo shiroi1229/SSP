@@ -74,3 +74,5 @@ class RoadmapItem(Base):
     owner = Column(String)
     documentationLink = Column(String)
     prLink = Column(String)
+    development_details = Column(Text)
+    parent_id = Column(Integer, nullable=True) # New column for hierarchical relationships

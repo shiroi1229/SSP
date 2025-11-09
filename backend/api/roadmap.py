@@ -2,127 +2,27 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List, Dict
 from collections import defaultdict
-import logging # Import logging
+import logging
+import re
 
 from backend.db.connection import get_db
 from backend.db.models import RoadmapItem as DBRoadmapItem
-from backend.db.schemas import RoadmapItem, RoadmapData, RoadmapItemCreate, RoadmapItemBase
+from backend.db.schemas import RoadmapItem, RoadmapData, RoadmapItemCreate, RoadmapItemBase, RoadmapItemUpdateByVersion
 
-router = APIRouter(prefix="/api/roadmap")
+from pydantic import BaseModel # Moved from lower down
+# import re # Already imported above
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-@router.get("/current", response_model=RoadmapData)
-def get_current_roadmap(db: Session = Depends(get_db)):
-    """
-    Retrieve all roadmap items, categorized by type (backend, frontend, robustness).
-    """
-    logger.info("Attempting to retrieve all roadmap items from the database.")
-    try:
-        db_items = db.query(DBRoadmapItem).all()
-        logger.info(f"Retrieved {len(db_items)} roadmap items.")
-    except Exception as e:
-        logger.error(f"Error retrieving roadmap items from DB: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Database error: {e}")
-    
-    categorized_items: Dict[str, List[RoadmapItem]] = defaultdict(list)
-    for item in db_items:
-        try:
-            # Update for Pydantic v2 compatibility: from_orm is deprecated, use model_validate
-            pydantic_item = RoadmapItem.model_validate(item)
-            # Determine category based on version prefix or other logic
-            if pydantic_item.version.startswith("v"):
-                categorized_items["backend"].append(pydantic_item)
-            elif pydantic_item.version.startswith("UI-v"):
-                categorized_items["frontend"].append(pydantic_item)
-            elif pydantic_item.version.startswith("R-v"):
-                categorized_items["robustness"].append(pydantic_item)
-            # Add more categorization logic if needed
-        except Exception as e:
-            logger.error(f"Error processing roadmap item {item.version}: {e}", exc_info=True)
-            # Depending on severity, you might want to skip this item or raise HTTPException
-            continue # Skip problematic item
-
-    logger.info("Roadmap items categorized successfully.")
-    return RoadmapData(
-        backend=categorized_items["backend"],
-        frontend=categorized_items["frontend"],
-        robustness=categorized_items["robustness"]
-    )
-
-@router.get("/{version}", response_model=RoadmapItem)
-def get_roadmap_item_by_version(version: str, db: Session = Depends(get_db)):
-    """
-    Retrieve a single roadmap item by its version.
-    """
-    logger.info(f"Attempting to retrieve roadmap item by version: {version}")
-    db_item = db.query(DBRoadmapItem).filter(DBRoadmapItem.version == version).first()
-    if db_item is None:
-        logger.warning(f"Roadmap item {version} not found.")
-        raise HTTPException(status_code=404, detail="Roadmap item not found")
-    
-    try:
-        # Update for Pydantic v2 compatibility: from_orm is deprecated, use model_validate
-        pydantic_item = RoadmapItem.model_validate(db_item)
-        logger.info(f"Successfully retrieved and validated roadmap item: {version}")
-        return pydantic_item
-    except Exception as e:
-        logger.error(f"Error validating roadmap item {version}: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Error processing roadmap item: {e}")
-
-@router.post("/", response_model=RoadmapItem)
-def create_roadmap_item(item: RoadmapItemCreate, db: Session = Depends(get_db)):
-    """
-    Create a new roadmap item.
-    """
-    logger.info(f"Attempting to create a new roadmap item with version: {item.version}")
-    db_item = DBRoadmapItem(**item.model_dump())
-    try:
-        db.add(db_item)
-        db.commit()
-        db.refresh(db_item)
-        logger.info(f"Successfully created roadmap item: {db_item.version}")
-        return RoadmapItem.model_validate(db_item)
-    except Exception as e:
-        db.rollback()
-        logger.error(f"Error creating roadmap item: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Failed to create roadmap item: {e}")
-
-@router.put("/{item_id}", response_model=RoadmapItem)
-def update_roadmap_item(item_id: int, item: RoadmapItemBase, db: Session = Depends(get_db)):
-    """
-    Update an existing roadmap item by its ID.
-    """
-    logger.info(f"Attempting to update roadmap item with ID: {item_id}")
-    db_item = db.query(DBRoadmapItem).filter(DBRoadmapItem.id == item_id).first()
-    if not db_item:
-        logger.warning(f"Update failed: Roadmap item with ID {item_id} not found.")
-        raise HTTPException(status_code=404, detail="Roadmap item not found")
-
-    update_data = item.model_dump(exclude_unset=True)
-    for key, value in update_data.items():
-        setattr(db_item, key, value)
-
-    try:
-        db.commit()
-        db.refresh(db_item)
-        logger.info(f"Successfully updated roadmap item ID: {item_id}")
-        return RoadmapItem.model_validate(db_item)
-    except Exception as e:
-        db.rollback()
-        logger.error(f"Error updating roadmap item ID {item_id}: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Failed to update roadmap item: {e}")
-
-from pydantic import BaseModel
-import re
-
-class RoadmapImportText(BaseModel):
+class RoadmapImportText(BaseModel): # Moved from lower down
     text: str
 
-def parse_roadmap_text(text: str) -> dict:
+def parse_roadmap_text(text: str) -> dict: # Moved from lower down
     """Parses the structured text block into a dictionary."""
+    
+    # Handle the wrapper if it exists
+    if text.strip().startswith('create_roadmap_entry """'):
+        text = text.strip().replace('create_roadmap_entry """', '', 1)
+        text = text.rsplit('"""', 1)[0]
+
     data = {}
     lines = text.strip().split('\n')
     
@@ -134,10 +34,10 @@ def parse_roadmap_text(text: str) -> dict:
             break
     
     if title_line:
-        title_match = re.search(r'タイトル:\s*(.*)\s*\(v(\d+\.\d+)\)', title_line)
+        title_match = re.search(r'タイトル:\s*(.*)\s*\((.*)\)', title_line)
         if title_match:
             data['codename'] = title_match.group(1).strip()
-            data['version'] = f"v{title_match.group(2).strip()}"
+            data['version'] = title_match.group(2).strip()
 
     # Use a simple state machine to parse key-value and multi-line fields
     current_key = None
@@ -152,7 +52,8 @@ def parse_roadmap_text(text: str) -> dict:
         "ステータス": "status",
         "主要機能": "keyFeatures",
         "依存関係": "dependencies",
-        "評価指標": "metrics"
+        "評価指標": "metrics",
+        "開発詳細指示": "development_details"
     }
 
     # Find where the main content starts
@@ -193,13 +94,172 @@ def parse_roadmap_text(text: str) -> dict:
         data['progress'] = int(data['progress'].replace('%', '').strip())
     
     # Set defaults for missing optional fields
-    optional_fields = ["startDate", "endDate", "progress", "keyFeatures", "dependencies", "metrics", "owner", "documentationLink", "prLink"]
+    optional_fields = ["startDate", "endDate", "progress", "keyFeatures", "dependencies", "metrics", "owner", "documentationLink", "prLink", "development_details"]
     for field in optional_fields:
         if field not in data:
             data[field] = None if field not in ["keyFeatures", "dependencies", "metrics"] else []
 
 
     return data
+
+router = APIRouter(prefix="/api/roadmap")
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def get_version_sort_key(item):
+    """Creates a sort key for version strings like 'v1.0', 'UI-v0.5'."""
+    version_str = item.version
+    # Regex to capture an optional prefix (like 'UI-'), the major, and minor numbers
+    match = re.match(r'([A-Z]+-)?v(\d+)\.(\d+)', version_str) # Fixed re.re.match to re.match
+    
+    if not match:
+        # Fallback for any formats that don't match
+        return (99, version_str)
+
+    prefix, major, minor = match.groups()
+    prefix = prefix or '' # Ensure prefix is a string
+
+    # Define a sort order for known prefixes
+    prefix_order = {
+        '': 0,        # for 'vX.X'
+        'UI-': 1,     # for 'UI-vX.X'
+        'R-': 2,      # for 'R-vX.X'
+    }
+    
+    prefix_num = prefix_order.get(prefix, 99)
+
+    return (prefix_num, int(major), int(minor))
+
+
+@router.get("/current", response_model=RoadmapData)
+def get_current_roadmap(db: Session = Depends(get_db)):
+    """
+    Retrieve all roadmap items, categorized and sorted by version.
+    """
+    logger.info("Attempting to retrieve all roadmap items from the database.")
+    try:
+        db_items = db.query(DBRoadmapItem).all()
+        # Sort items using the custom version sort key
+        db_items.sort(key=get_version_sort_key)
+        logger.info(f"Retrieved and sorted {len(db_items)} roadmap items.")
+    except Exception as e:
+        logger.error(f"Error retrieving roadmap items from DB: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Database error: {e}")
+    
+    categorized_items: Dict[str, List[RoadmapItem]] = defaultdict(list)
+    for item in db_items:
+        try:
+            pydantic_item = RoadmapItem.model_validate(item)
+            if pydantic_item.version.startswith("UI-v"):
+                categorized_items["frontend"].append(pydantic_item)
+            elif pydantic_item.version.startswith("R-v"):
+                categorized_items["robustness"].append(pydantic_item)
+            else: # Default to backend for 'vX.X'
+                categorized_items["backend"].append(pydantic_item)
+        except Exception as e:
+            logger.error(f"Error processing roadmap item {item.version}: {e}", exc_info=True)
+            continue
+
+    logger.info("Roadmap items categorized successfully.")
+    return RoadmapData(
+        backend=categorized_items["backend"],
+        frontend=categorized_items["frontend"],
+        robustness=categorized_items["robustness"]
+    )
+
+@router.get("/{version}", response_model=RoadmapItem)
+def get_roadmap_item_by_version(version: str, db: Session = Depends(get_db)):
+    """
+    Retrieve a single roadmap item by its version.
+    """
+    logger.info(f"Attempting to retrieve roadmap item by version: {version}")
+    db_item = db.query(DBRoadmapItem).filter(DBRoadmapItem.version == version).first()
+    if db_item is None:
+        logger.warning(f"Roadmap item {version} not found.")
+        raise HTTPException(status_code=404, detail="Roadmap item not found")
+    
+    try:
+        # Update for Pydantic v2 compatibility: from_orm is deprecated, use model_validate
+        pydantic_item = RoadmapItem.model_validate(db_item)
+        logger.info(f"Successfully retrieved and validated roadmap item: {version}")
+        return pydantic_item
+    except Exception as e:
+        logger.error(f"Error validating roadmap item {version}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Error processing roadmap item: {e}")
+
+@router.patch("/{version}", response_model=RoadmapItem)
+def update_roadmap_item_by_version(
+    version: str,
+    item_update: RoadmapItemUpdateByVersion,
+    db: Session = Depends(get_db)
+):
+    """
+    Partially update an existing roadmap item by its version.
+    """
+    logger.info(f"Attempting to partially update roadmap item by version: {version}")
+    db_item = db.query(DBRoadmapItem).filter(DBRoadmapItem.version == version).first()
+    if not db_item:
+        logger.warning(f"Update failed: Roadmap item with version {version} not found.")
+        raise HTTPException(status_code=404, detail="Roadmap item not found")
+
+    update_data = item_update.model_dump(exclude_unset=True, by_alias=True)
+    for key, value in update_data.items():
+        setattr(db_item, key, value)
+
+    try:
+        db.commit()
+        db.refresh(db_item)
+        logger.info(f"Successfully updated roadmap item version: {version}")
+        return RoadmapItem.model_validate(db_item)
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Error updating roadmap item version {version}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to update roadmap item: {e}")
+
+@router.post("/", response_model=RoadmapItem)
+def create_roadmap_item(item: RoadmapItemCreate, db: Session = Depends(get_db)):
+    """
+    Create a new roadmap item.
+    """
+    logger.info(f"Attempting to create a new roadmap item with version: {item.version}")
+    db_item = DBRoadmapItem(**item.model_dump())
+    try:
+        db.add(db_item)
+        db.commit()
+        db.refresh(db_item)
+        logger.info(f"Successfully created roadmap item: {db_item.version}")
+        return RoadmapItem.model_validate(db_item)
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Error creating roadmap item: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to create roadmap item: {e}")
+
+@router.put("/{item_id}", response_model=RoadmapItem)
+def update_roadmap_item(item_id: int, item: RoadmapItemBase, db: Session = Depends(get_db)):
+    """
+    Update an existing roadmap item by its ID.
+    """
+    logger.info(f"Attempting to update roadmap item with ID: {item_id}")
+    db_item = db.query(DBRoadmapItem).filter(DBRoadmapItem.id == item_id).first()
+    if not db_item:
+        logger.warning(f"Update failed: Roadmap item with ID {item_id} not found.")
+        raise HTTPException(status_code=404, detail="Roadmap item not found")
+
+    update_data = item.model_dump(exclude_unset=True, by_alias=True)
+    for key, value in update_data.items():
+        setattr(db_item, key, value)
+
+    try:
+        db.commit()
+        db.refresh(db_item)
+        logger.info(f"Successfully updated roadmap item ID: {item_id}")
+        return RoadmapItem.model_validate(db_item)
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Error updating roadmap item ID {item_id}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to update roadmap item: {e}")
 
 @router.post("/import-text", response_model=RoadmapItem)
 def import_roadmap_item_from_text(payload: RoadmapImportText, db: Session = Depends(get_db)):
@@ -234,4 +294,23 @@ def import_roadmap_item_from_text(payload: RoadmapImportText, db: Session = Depe
         logger.error(f"Error importing roadmap item from text: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Failed to import roadmap item from text: {e}")
 
+@router.delete("/{item_id}", response_model=Dict[str, str])
+def delete_roadmap_item(item_id: int, db: Session = Depends(get_db)):
+    """
+    Delete a roadmap item by its ID.
+    """
+    logger.info(f"Attempting to delete roadmap item with ID: {item_id}")
+    db_item = db.query(DBRoadmapItem).filter(DBRoadmapItem.id == item_id).first()
+    if not db_item:
+        logger.warning(f"Delete failed: Roadmap item with ID {item_id} not found.")
+        raise HTTPException(status_code=404, detail="Roadmap item not found")
 
+    try:
+        db.delete(db_item)
+        db.commit()
+        logger.info(f"Successfully deleted roadmap item ID: {item_id}")
+        return {"message": "Roadmap item deleted successfully"}
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Error deleting roadmap item ID {item_id}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to delete roadmap item: {e}")
