@@ -13,7 +13,7 @@ from backend.db.connection import get_db
 from backend.db.models import SessionLog
 from backend.dev_recorder import _get_commit_hash, _get_env_snapshot
 
-router = APIRouter(prefix="/api")
+router = APIRouter()
 
 LOGS_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "logs")
 

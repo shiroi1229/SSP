@@ -8,18 +8,7 @@ from modules.config_manager import load_environment
 from modules.log_manager import log_manager
 
 class RAGEngine:
-    _instance = None
-    _initialized = False
-
-    def __new__(cls, *args, **kwargs):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-        return cls._instance
-
-    def __init__(self):
-        if self._initialized: # Singleton pattern
-            return
-
+    def __init__(self, collection_name: str = None):
         config = load_environment()
         self.qdrant_host = config.get("QDRANT_HOST", "localhost")
         self.qdrant_port = int(config.get("QDRANT_PORT", 6333))
@@ -28,7 +17,11 @@ class RAGEngine:
         self.pg_database = config.get("POSTGRES_DB", "ssp_memory")
         self.pg_user = config.get("POSTGRES_USER", "ssp_admin")
         self.pg_password = config.get("POSTGRES_PASSWORD", "Mizuho0824")
-        self.qdrant_collection_name = config.get("QDRANT_COLLECTION", "world_knowledge")
+        self.qdrant_collection_name = collection_name or config.get("QDRANT_COLLECTION", "world_knowledge")
+
+        self.qdrant_client = None
+        self.embedding_model = None
+        self.pg_conn = None
 
         try:
             self.qdrant_client = QdrantClient(host=self.qdrant_host, port=self.qdrant_port)
@@ -44,16 +37,79 @@ class RAGEngine:
                 client_encoding='UTF8' # Explicitly set client encoding to UTF8
             )
             log_manager.info(f"PostgreSQL connected to {self.pg_host}:{self.pg_port}/{self.pg_database}")
-            self._initialized = True
         except Exception as e:
-            log_manager.exception(f"RAGEngine initialization error: {e}")
-            raise
+            log_manager.exception(f"RAGEngine initialization error: {e}. RAG will be unavailable.")
+            self.qdrant_client = None
+            self.embedding_model = None
+            self.pg_conn = None
 
     def _vectorize_query(self, query: str):
+        if not self.embedding_model:
+            return []
         log_manager.debug(f"Vectorizing query: {query[:50]}...")
         return self.embedding_model.encode(query).tolist()
 
+    def upsert_text(self, doc_id: str, text: str, metadata: dict = None):
+        """Vectorizes and upserts a single text document into the collection."""
+        if not self.qdrant_client:
+            log_manager.error("Cannot upsert text: RAGEngine is not available.")
+            return
+            
+        log_manager.debug(f"Upserting text to collection '{self.qdrant_collection_name}' with ID: {doc_id}")
+        try:
+            vector = self._vectorize_query(text)
+            if not vector:
+                log_manager.error("Cannot upsert text: Vectorization failed.")
+                return
+
+            payload = {"text": text}
+            if metadata:
+                payload.update(metadata)
+            
+            self._ensure_qdrant_collection_exists(len(vector))
+            
+            self.qdrant_client.upsert(
+                collection_name=self.qdrant_collection_name,
+                wait=True,
+                points=[{
+                    "id": doc_id,
+                    "vector": vector,
+                    "payload": payload
+                }]
+            )
+            log_manager.info(f"Successfully upserted text with ID {doc_id} to collection '{self.qdrant_collection_name}'.")
+        except Exception as e:
+            log_manager.exception(f"Error upserting text with ID {doc_id}: {e}")
+
+    def query_text(self, query: str, top_k: int = 3) -> list[dict]:
+        """Queries the collection for similar texts and returns their payloads."""
+        if not self.qdrant_client:
+            log_manager.error("Cannot query text: RAGEngine is not available.")
+            return []
+
+        log_manager.debug(f"Querying collection '{self.qdrant_collection_name}' with query: {query[:50]}...")
+        try:
+            query_vector = self._vectorize_query(query)
+            if not query_vector:
+                log_manager.error("Cannot query text: Vectorization failed.")
+                return []
+
+            search_result = self.qdrant_client.search(
+                collection_name=self.qdrant_collection_name,
+                query_vector=query_vector,
+                limit=top_k,
+                with_payload=True
+            )
+            results = [hit.payload for hit in search_result]
+            log_manager.debug(f"Query returned {len(results)} results from collection '{self.qdrant_collection_name}'.")
+            return results
+        except Exception as e:
+            log_manager.exception(f"Error querying collection '{self.qdrant_collection_name}': {e}")
+            return []
+
     def _search_qdrant(self, query_vector: list):
+        if not self.qdrant_client:
+            return []
         log_manager.debug(f"Searching Qdrant with vector (first 5 elements): {query_vector[:5]}...")
         search_result = self.qdrant_client.search(
             collection_name=self.qdrant_collection_name,
@@ -64,6 +120,8 @@ class RAGEngine:
         return [hit.id for hit in search_result]
 
     def _get_text_from_postgresql(self, ids: list):
+        if not self.pg_conn:
+            return []
         log_manager.debug(f"Fetching texts from PostgreSQL for IDs: {ids}")
         if not ids:
             log_manager.debug("No IDs provided for PostgreSQL text retrieval.")
@@ -78,6 +136,10 @@ class RAGEngine:
         return texts
 
     def get_context(self, query: str) -> str: # Reverted to get_context
+        if not self.qdrant_client or not self.pg_conn or not self.embedding_model:
+            log_manager.error("Cannot get context: RAGEngine is not available.")
+            return "RAG Engine is currently unavailable."
+
         log_manager.debug(f"Getting context for query: {query}")
         context = ""
         log_data = {"query": query, "context": ""}
@@ -100,11 +162,14 @@ class RAGEngine:
             context = f"RAG Engine エラー: {e}"
             log_data["context"] = context
             log_manager.exception("RAG context retrieval failed.", extra=log_data)
-            raise # Re-raise the exception after logging
+            # Do not re-raise, return the error message in the context
 
         return context
 
     def list_embeddings(self, limit: int = 50) -> list:
+        if not self.qdrant_client:
+            log_manager.error("Cannot list embeddings: RAGEngine is not available.")
+            return []
         log_manager.debug(f"Listing {limit} embeddings from Qdrant.")
         try:
             scroll_result, _ = self.qdrant_client.scroll(
@@ -133,6 +198,8 @@ class RAGEngine:
             return []
 
     def _ensure_qdrant_collection_exists(self, vector_size: int):
+        if not self.qdrant_client:
+            return
         from qdrant_client.http.models import Distance, VectorParams
         try:
             self.qdrant_client.get_collection(collection_name=self.qdrant_collection_name)
@@ -146,6 +213,9 @@ class RAGEngine:
             log_manager.info(f"Collection {self.qdrant_collection_name} created with vector size {vector_size}.")
 
     def inject_samples_to_qdrant(self) -> int:
+        if not self.qdrant_client:
+            log_manager.error("Cannot inject samples: RAGEngine is not available.")
+            return 0
         from backend.db.connection import get_latest_samples
         
         log_manager.info("Injecting samples to Qdrant...")
@@ -160,6 +230,7 @@ class RAGEngine:
         for sample in samples:
             try:
                 vector = self._vectorize_query(sample.result)
+                if not vector: continue
                 points.append({
                     "id": sample.id,
                     "vector": vector,
@@ -190,6 +261,8 @@ class RAGEngine:
         return synced_count
 
     def _upsert_single_sample_to_qdrant(self, sample_id: int, vector: list, payload: dict):
+        if not self.qdrant_client:
+            return
         log_manager.debug(f"Upserting single sample {sample_id} to Qdrant.")
         try:
             self._ensure_qdrant_collection_exists(len(vector))
@@ -207,6 +280,9 @@ class RAGEngine:
             log_manager.exception(f"Error upserting single sample {sample_id} to Qdrant: {e}")
 
     def optimize_rag_memory(self, top_n: int = 50):
+        if not self.qdrant_client:
+            log_manager.error("Cannot optimize memory: RAGEngine is not available.")
+            return
         log_manager.info("🧠 RAGメモリ最適化を開始します...")
         try:
             all_points, _ = self.qdrant_client.scroll(
@@ -224,7 +300,8 @@ class RAGEngine:
                 feedback_text = r.payload.get('feedback', '')
                 text = f"{answer_text}\n\n評価: {feedback_text}"
                 new_vector = self._vectorize_query(text)
-                self._upsert_single_sample_to_qdrant(r.id, new_vector, r.payload)
+                if new_vector:
+                    self._upsert_single_sample_to_qdrant(r.id, new_vector, r.payload)
             log_manager.info(f"✅ RAGメモリの最適化が完了しました（{len(records_to_optimize)}件）")
         except Exception as e:
             log_manager.exception(f"❌ RAGメモリ最適化中にエラーが発生しました: {e}")

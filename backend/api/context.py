@@ -4,7 +4,7 @@ from fastapi import APIRouter
 
 # from orchestrator.shared import context_manager # TODO: Implement shared context
 
-router = APIRouter(prefix="/api")
+router = APIRouter()
 
 @router.get("/context/state")
 async def get_context_state():
