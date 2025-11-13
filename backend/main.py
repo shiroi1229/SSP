@@ -51,31 +51,31 @@ async def startup_event():
 
 
 # ✅ router登録（prefix指定）
-app.include_router(persona_state.router, prefix="/api")
+# app.include_router(persona_state.router, prefix="/api")
 app.include_router(logs_recent.router, prefix="/api")
-app.include_router(evaluate.router, prefix="/api") # ✅ evaluate.router を追加
-app.include_router(context.router, prefix="/api") # Add prefix here
-app.include_router(analyze_sessions.router) # No prefix, already in router
-app.include_router(sessions.router, prefix="/api") # Add prefix here
-app.include_router(chat.router) # No prefix, already in router
+app.include_router(evaluate.router, prefix="/api")
+app.include_router(context.router, prefix="/api")
+app.include_router(analyze_sessions.router, prefix="/api")
+app.include_router(sessions.router, prefix="/api")
+app.include_router(chat.router, prefix="/api")
 app.include_router(get_context.router, prefix="/api")
 app.include_router(recent.router, prefix="/api")
-app.include_router(roadmap_sync.router, prefix="/api") # Include the new roadmap_sync router
-app.include_router(predictive_self_correction.router, prefix="/api") # Include the new predictive_self_correction router
+app.include_router(roadmap_sync.router, prefix="/api")
+app.include_router(predictive_self_correction.router, prefix="/api")
 app.include_router(status.router, prefix="/api")
 app.include_router(emotion.router, prefix="/api")
 app.include_router(tts.router, prefix="/api")
 app.include_router(osc.router, prefix="/api")
-app.include_router(roadmap_tree.router) # No prefix, already in router
-app.include_router(roadmap.router) # No prefix, already in router
-app.include_router(dashboard_ws.router, prefix="/api") # Include the dashboard_ws router
+app.include_router(roadmap_tree.router, prefix="/api")
+app.include_router(roadmap.router, prefix="/api")
+app.include_router(dashboard_ws.router, prefix="/api")
 app.include_router(system_health.router, prefix="/api")
 app.include_router(system_forecast.router, prefix="/api")
-app.include_router(ws_forecast_router)
-app.include_router(stage_controller_router)
-app.include_router(stage_replay_router)
-app.include_router(stage_memory_router)
-app.include_router(persona_routes_router)
+app.include_router(ws_forecast_router, prefix="/api") # Assuming this should also be under /api
+app.include_router(stage_controller_router, prefix="/api")
+app.include_router(stage_replay_router, prefix="/api")
+app.include_router(stage_memory_router, prefix="/api")
+app.include_router(persona_routes_router, prefix="/api")
 
 # Test comment for ImpactAnalyzer
 @app.get("/")

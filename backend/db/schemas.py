@@ -3,7 +3,7 @@
 
 from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict, Any, Union
 
 class SessionLogBase(BaseModel):
     id: str
@@ -43,8 +43,7 @@ class RoadmapItemBase(BaseModel):
     metrics: Optional[List[str]] = None
     owner: Optional[str] = None
     documentationLink: Optional[str] = None
-    prLink: Optional[str] = None
-    developmentInstruction: Optional[str] = Field(None, alias="development_details")
+    developmentInstruction: Optional[Any] = Field(None, alias="development_details") # Changed to Any
     parent_id: Optional[int] = None
 
 class RoadmapItemUpdateByVersion(BaseModel):
@@ -52,6 +51,9 @@ class RoadmapItemUpdateByVersion(BaseModel):
     parent_id: Optional[int] = None
     status: Optional[str] = None
     progress: Optional[int] = None
+    keyFeatures: Optional[List[str]] = None
+    dependencies: Optional[List[str]] = None
+    metrics: Optional[List[str]] = None
 
 class RoadmapItemCreate(RoadmapItemBase):
     pass
@@ -66,3 +68,4 @@ class RoadmapData(BaseModel):
     backend: List[RoadmapItem]
     frontend: List[RoadmapItem]
     robustness: List[RoadmapItem]
+    Awareness_Engine: List[RoadmapItem] = []
