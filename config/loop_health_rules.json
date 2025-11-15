@@ -1,0 +1,14 @@
+[
+  {
+    "id": "LH-001",
+    "name": "Max Error Count",
+    "threshold": 5,
+    "autoAction": "rollback"
+  },
+  {
+    "id": "LH-002",
+    "name": "Warning Burst",
+    "threshold": 10,
+    "autoAction": "cooldown"
+  }
+]

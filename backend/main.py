@@ -2,7 +2,7 @@
 # version: v0.30
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.api import persona_state, logs_recent, evaluate, context, analyze_sessions, sessions, chat, get_context, status, emotion, tts, osc, roadmap, roadmap_tree, dashboard_ws, system_health
+from backend.api import persona_state, logs_recent, evaluate, context, analyze_sessions, sessions, chat, get_context, status, emotion, tts, osc, roadmap, roadmap_tree, dashboard_ws, system_health, modules, collective_mind, robustness_firewall, robustness_self_healing, robustness_loop_health, robustness_loop_config
 from backend.api import system_forecast # Import the new forecast router
 from backend.api.logs import recent
 from backend.api.logs import roadmap_sync # Import the new roadmap_sync router
@@ -11,7 +11,9 @@ from backend.api.ws_forecast import router as ws_forecast_router
 from backend.api.stage_controller import router as stage_controller_router # Import the new stage_controller router
 from backend.api.stage_replay import router as stage_replay_router # Import the new stage_replay router
 from backend.api.stage_memory import router as stage_memory_router # Import the new stage_memory router
+from backend.api.stage_runs import router as stage_runs_router
 from backend.api.persona_routes import router as persona_routes_router # Import the new persona_routes router
+from backend.api import meta_contracts
 
 from orchestrator.context_manager import ContextManager
 from orchestrator.recovery_policy_manager import RecoveryPolicyManager
@@ -75,7 +77,15 @@ app.include_router(ws_forecast_router, prefix="/api") # Assuming this should als
 app.include_router(stage_controller_router, prefix="/api")
 app.include_router(stage_replay_router, prefix="/api")
 app.include_router(stage_memory_router, prefix="/api")
+app.include_router(stage_runs_router, prefix="/api")
 app.include_router(persona_routes_router, prefix="/api")
+app.include_router(modules.router, prefix="/api")
+app.include_router(collective_mind.router, prefix="/api")
+app.include_router(robustness_firewall.router, prefix="/api")
+app.include_router(robustness_self_healing.router, prefix="/api")
+app.include_router(robustness_loop_health.router, prefix="/api")
+app.include_router(robustness_loop_config.router, prefix="/api")
+app.include_router(meta_contracts.router, prefix="/api")
 
 # Test comment for ImpactAnalyzer
 @app.get("/")
