@@ -10,21 +10,40 @@ from modules.config_manager import load_environment
 from orchestrator.context_manager import ContextManager
 from modules.llm import analyze_text # Import analyze_text
 
+MAX_EVALUATION_INPUT_CHARS = 4000
+MAX_RAG_CONTEXT_CHARS = 4000
+MAX_OPTIMIZATION_LOG_ENTRIES = 200
+
+
+def _bounded_text(value: str, limit: int) -> str:
+    if not value:
+        return ""
+    if len(value) <= limit:
+        return value
+    return value[:limit]
+
 def evaluate_output(context_manager: ContextManager):
     """Evaluates the quality of a response using an LLM, based on data in the ContextManager."""
     log_manager.debug("Starting context-aware evaluation...")
-    
-    # ✅ ここでLLMエンドポイントURLを環境変数から取得
-    llm_url = os.getenv("LOCAL_LLM_API_URL", "http://172.25.208.1:1234/v1")
-    log_manager.info(f"[Evaluator] Using LLM endpoint: {llm_url}")
 
     config = load_environment()
+    preferred_llm_url = (
+        config.get("LM_STUDIO_URL")
+        or config.get("LOCAL_LLM_API_URL")
+        or os.getenv("LOCAL_LLM_API_URL")
+        or "http://127.0.0.1:1234/v1"
+    )
+    log_manager.info(f"[Evaluator] Using LLM endpoint: {preferred_llm_url}")
+
     answer = context_manager.get("mid_term.generated_output")
     rag_context = context_manager.get("short_term.rag_context")
 
     if not answer:
         log_manager.error("[Evaluator] No response found in context to evaluate.")
         return
+
+    answer = _bounded_text(answer, MAX_EVALUATION_INPUT_CHARS)
+    rag_context = _bounded_text(rag_context, MAX_RAG_CONTEXT_CHARS)
 
     evaluation_prompt = f"""出力は日本語で行ってください。以下の情報を元に、提供された回答を評価し、JSON形式で出力してください。評価基準は「世界観整合性 (0.0-1.0)」「回答の具体性 (0.0-1.0)」「文体の一貫性 (0.0-1.0)」とし、それぞれに点数を付けてください。最終的なratingはこれら3つの平均とします。
 
@@ -47,8 +66,8 @@ JSON形式の出力例:
 """
 
     # Make the actual LLM call for evaluation
-    # Pass response_format to ensure JSON output, as analyze_text now handles it conditionally
-    model_params = {}
+    # Provide endpoint override so evaluator follows central config
+    model_params = {"llm_url": preferred_llm_url.rstrip("/")}
     llm_response = analyze_text(text=answer, prompt=evaluation_prompt, model_params_override=model_params)
     log_manager.debug(f"[Evaluator] LLM evaluation response: {llm_response[:200]}...")
 
@@ -83,6 +102,8 @@ JSON形式の出力例:
                 "evaluated_response": answer
             }
             optimization_log.append(log_entry)
+            if len(optimization_log) > MAX_OPTIMIZATION_LOG_ENTRIES:
+                optimization_log = optimization_log[-MAX_OPTIMIZATION_LOG_ENTRIES:]
             context_manager.set("long_term.optimization_log", optimization_log, reason="Appending evaluation results")
 
             log_manager.info(f"[Evaluator] Evaluation successful. Score: {overall_rating}")

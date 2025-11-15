@@ -1,0 +1,36 @@
+{
+  "name": "generator",
+  "path": "contracts\\generator.yaml",
+  "version": "v1",
+  "schema_version": "v3.0",
+  "status": "active",
+  "description": "",
+  "timestamp": "2025-11-14T17:45:08.905492+00:00",
+  "stats": {
+    "input_count": 1,
+    "output_count": 1,
+    "required_inputs": 0,
+    "required_outputs": 0
+  },
+  "missing_fields": [],
+  "inputs": [
+    {
+      "name": "input",
+      "type": "any",
+      "description": "",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "output",
+      "type": "any",
+      "description": "",
+      "required": false
+    }
+  ],
+  "context_index": {
+    "inputs": {},
+    "outputs": {}
+  }
+}

@@ -5,9 +5,48 @@ import os
 import json
 import datetime
 from pathlib import Path
+from typing import List
 from modules.log_manager import log_manager
 from orchestrator.context_manager import ContextManager
 from modules.llm import analyze_text
+
+MAX_HISTORY_MESSAGES = 20
+MAX_HISTORY_CHARS = 4000
+MAX_PROMPT_CHARS = 2000
+MAX_RAG_CONTEXT_CHARS = 4000
+MAX_USER_CONTENT_CHARS = 8000
+MAX_OPTIMIZATION_LOG_ENTRIES = 200
+
+
+def _prepare_history(history: List[dict]) -> List[str]:
+    """履歴リストを最新順に整形し、メッセージ数と文字数を制限する。"""
+    if not isinstance(history, list):
+        return []
+
+    trimmed_history = history[-MAX_HISTORY_MESSAGES:]
+    prepared_lines: List[str] = []
+    total_chars = 0
+
+    for message in trimmed_history:
+        role = message.get("role", "unknown")
+        content = (message.get("content") or "").strip()
+        if not content:
+            continue
+        line = f"{role}: {content}"
+        if total_chars + len(line) > MAX_HISTORY_CHARS:
+            break
+        prepared_lines.append(line)
+        total_chars += len(line)
+    return prepared_lines
+
+
+def _bounded_text(value: str, limit: int) -> str:
+    """指定した文字数を超える場合は切り詰める。"""
+    if not value:
+        return ""
+    if len(value) <= limit:
+        return value
+    return value[:limit]
 
 def generate_response(context_manager: ContextManager):
     """Generates a response based on data from the ContextManager and updates the context."""
@@ -23,6 +62,8 @@ def generate_response(context_manager: ContextManager):
     if not prompt:
         log_manager.error("[Generator] No prompt found in context.")
         return
+    prompt = _bounded_text(prompt, MAX_PROMPT_CHARS)
+    rag_context = _bounded_text(rag_context, MAX_RAG_CONTEXT_CHARS)
 
     # Prepare and execute LLM call using the centralized llm module
     try:
@@ -38,12 +79,9 @@ def generate_response(context_manager: ContextManager):
         system_prompt = gemini_instruction + "\n出力は日本語で、キャラクター 'シロイ' の一人称口調で回答してください。"
         
         # Combine history and current prompt for the user content
-        user_content_parts = []
-        for message in history:
-            user_content_parts.append(f"{message['role']}: {message['content']}")
-        
+        user_content_parts = _prepare_history(history)
         user_content_parts.append(f"user: 質問: {prompt}\n\n参考情報:\n{rag_context}")
-        full_user_content = "\n".join(user_content_parts)
+        full_user_content = _bounded_text("\n".join(user_content_parts), MAX_USER_CONTENT_CHARS)
 
         # 2. Call the centralized LLM function
         log_manager.debug("[Generator] Calling centralized llm.analyze_text...")
@@ -87,9 +125,10 @@ def generate_response(context_manager: ContextManager):
             }
         }
         optimization_log.append(log_entry)
+        if len(optimization_log) > MAX_OPTIMIZATION_LOG_ENTRIES:
+            optimization_log = optimization_log[-MAX_OPTIMIZATION_LOG_ENTRIES:]
         context_manager.set("long_term.optimization_log", optimization_log, reason="Appending generation results")
 
     except Exception as e:
         log_manager.error(f"[Generator] An unexpected error occurred during generation: {e}", exc_info=True)
         context_manager.set("mid_term.generated_output", "Error: An unexpected error occurred in Generator.", reason=f"Generator error: {e}")
-

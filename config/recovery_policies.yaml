@@ -5,10 +5,14 @@ recovery_policies:
   # Policies for system-level events, not tied to a specific module
   system:
     preemptive_repair:
-      action: "preemptive_repair"
-      description: "Triggered by InsightMonitor when a future anomaly is predicted. Signals the system to take preemptive corrective action."
-      # This policy is simple, but could have conditions, e.g., based on the predicted risk level.
-      # condition: "context.get('mid_term.predicted_anomaly_risk') > 0.6"
+      action: "auto_fix"
+      condition: "mid_term.predicted_anomaly_probability > 0.7" # Trigger auto_fix if predicted anomaly probability > 0.7
+      script: "optimize_resources.ps1" # Example script to run for preemptive optimization
+      description: "Triggered by InsightMonitor when a future anomaly is predicted. Automatically runs an optimization script."
+    high_cpu_usage:
+      action: "auto_fix"
+      condition: "short_term.system_health.cpu_percent > 80" # Example: Trigger auto_fix if CPU > 80%
+      description: "If CPU usage is consistently high, trigger an auto-fix script."
 
   # Policies for the Evaluator module
   evaluator:

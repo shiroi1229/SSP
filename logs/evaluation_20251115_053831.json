@@ -1,0 +1,15 @@
+{
+  "id": "evaluation_20251115_053831",
+  "timestamp": "2025-11-15T05:38:31.625504",
+  "type": "evaluation_feedback",
+  "context": {
+    "session_id": "20251103_190617"
+  },
+  "output": {
+    "score": 3.0,
+    "comment": "世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。"
+  },
+  "commit_hash": "13a7f020d5880186fda9271d06d9fbe1c07dde84",
+  "env_snapshot": "﻿# ======================\n# SSP (Python Backend)\n# ======================\nPOSTGRES_HOST=172.25.208.1\nPOSTGRES_PORT=5432\nPOSTGRES_DB=ssp_memory\nPOSTGRES_USER=ssp_admin\nPOSTGRES_PASSWORD=Mizuho0824\n\n# LM Studio設定\nLM_STUDIO_URL=http://172.25.208.1:1234\nLOCAL_LLM_API_URL=http://172.25.208.1:1234/v1\nSSP_LOCAL_LLM_MODEL_NAME=meta-llama-3-8b-instruct\n\n# Transformers backend (Hugging Face pipeline)\nTRANSFORMERS_MODEL=Qwen/Qwen2-7B-Instruct\nTRANSFORMERS_DEVICE=cuda:0\nTRANSFORMERS_TRUST_REMOTE_CODE=false\n\n# ======================\n# CLI / Gemini settings\n# ======================\nGEMINI_ENV_DISABLE=1\n",
+  "ai_comment": "Feedback received."
+}

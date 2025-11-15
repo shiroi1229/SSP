@@ -9,7 +9,7 @@ from backend.db.models import RoadmapItem as DBRoadmapItem
 from backend.db.schemas import RoadmapItem, RoadmapItemBase
 from pydantic import BaseModel, Field
 
-router = APIRouter(prefix="/api/roadmap")
+router = APIRouter(prefix="/roadmap")
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

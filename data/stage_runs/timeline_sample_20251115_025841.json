@@ -1,0 +1,25 @@
+{
+  "timeline_source": "data/timeline_sample.json",
+  "label": "test_run",
+  "tags": [
+    "demo"
+  ],
+  "captured_at": "2025-11-15T02:58:41.103465",
+  "timeline": [
+    {
+      "character": "Shiroi",
+      "text": "こんにちは、今日の火星は静かね。",
+      "emotion": "calm",
+      "duration": 1.5
+    }
+  ],
+  "log_events": [
+    {
+      "timestamp": "2025-11-15T02:58:39.586843",
+      "character": "Shiroi",
+      "emotion": "calm",
+      "text": "こんにちは、今日の火星は静かね。",
+      "duration": 1.5
+    }
+  ]
+}

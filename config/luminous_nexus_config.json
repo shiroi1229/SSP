@@ -1,0 +1,18 @@
+{
+  "clusters": [
+    {
+      "name": "east-region",
+      "nodes": [
+        {"name": "east-primary", "status": "active"},
+        {"name": "east-backup", "status": "standby"}
+      ]
+    },
+    {
+      "name": "west-region",
+      "nodes": [
+        {"name": "west-primary", "status": "active"},
+        {"name": "west-backup", "status": "standby"}
+      ]
+    }
+  ]
+}

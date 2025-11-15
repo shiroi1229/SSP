@@ -2,10 +2,65 @@ import json
 import os
 import psycopg2
 import datetime
+from threading import Lock
+from psycopg2.extensions import connection as PGConnection
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
 from modules.config_manager import load_environment
 from modules.log_manager import log_manager
+
+_resource_lock = Lock()
+_shared_qdrant_clients: dict[tuple[str, int], QdrantClient] = {}
+_shared_embedding_models: dict[str, SentenceTransformer] = {}
+_shared_pg_connections: dict[tuple[str, int, str, str, str], PGConnection] = {}
+
+
+def _get_shared_qdrant_client(host: str, port: int) -> QdrantClient:
+    key = (host, port)
+    client = _shared_qdrant_clients.get(key)
+    if client:
+        return client
+    with _resource_lock:
+        client = _shared_qdrant_clients.get(key)
+        if client:
+            return client
+        client = QdrantClient(host=host, port=port)
+        _shared_qdrant_clients[key] = client
+        return client
+
+
+def _get_shared_embedding_model(model_name: str) -> SentenceTransformer:
+    model = _shared_embedding_models.get(model_name)
+    if model:
+        return model
+    with _resource_lock:
+        model = _shared_embedding_models.get(model_name)
+        if model:
+            return model
+        model = SentenceTransformer(model_name)
+        _shared_embedding_models[model_name] = model
+        return model
+
+
+def _get_shared_pg_connection(host: str, port: int, database: str, user: str, password: str):
+    key = (host, port, database, user, password)
+    conn = _shared_pg_connections.get(key)
+    if conn and getattr(conn, "closed", 1) == 0:
+        return conn
+    with _resource_lock:
+        conn = _shared_pg_connections.get(key)
+        if conn and getattr(conn, "closed", 1) == 0:
+            return conn
+        conn = psycopg2.connect(
+            host=host,
+            port=port,
+            database=database,
+            user=user,
+            password=password,
+            client_encoding='UTF8'
+        )
+        _shared_pg_connections[key] = conn
+        return conn
 
 class RAGEngine:
     def __init__(self, collection_name: str = None):
@@ -24,24 +79,43 @@ class RAGEngine:
         self.pg_conn = None
 
         try:
-            self.qdrant_client = QdrantClient(host=self.qdrant_host, port=self.qdrant_port)
-            log_manager.info(f"Qdrant client initialized for {self.qdrant_host}:{self.qdrant_port}")
-            self.embedding_model = SentenceTransformer(config.get("EMBEDDING_MODEL", "all-MiniLM-L6-v2"))
-            log_manager.info(f"Embedding model {config.get("EMBEDDING_MODEL", "all-MiniLM-L6-v2")} loaded.")
-            self.pg_conn = psycopg2.connect(
-                host=self.pg_host,
-                port=self.pg_port,
-                database=self.pg_database,
-                user=self.pg_user,
-                password=self.pg_password,
-                client_encoding='UTF8' # Explicitly set client encoding to UTF8
+            self.qdrant_client = _get_shared_qdrant_client(self.qdrant_host, self.qdrant_port)
+            log_manager.info(f"Qdrant client ready for {self.qdrant_host}:{self.qdrant_port} (shared).")
+
+            embedding_name = config.get("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
+            self.embedding_model = _get_shared_embedding_model(embedding_name)
+            log_manager.info(f"Embedding model {embedding_name} loaded (shared).")
+
+            self.pg_conn = _get_shared_pg_connection(
+                self.pg_host,
+                self.pg_port,
+                self.pg_database,
+                self.pg_user,
+                self.pg_password
             )
-            log_manager.info(f"PostgreSQL connected to {self.pg_host}:{self.pg_port}/{self.pg_database}")
+            log_manager.info(f"PostgreSQL connected to {self.pg_host}:{self.pg_port}/{self.pg_database} (shared).")
         except Exception as e:
             log_manager.exception(f"RAGEngine initialization error: {e}. RAG will be unavailable.")
             self.qdrant_client = None
             self.embedding_model = None
             self.pg_conn = None
+
+    def _ensure_pg_connection(self):
+        if self.pg_conn and getattr(self.pg_conn, "closed", 1) == 0:
+            return self.pg_conn
+        try:
+            self.pg_conn = _get_shared_pg_connection(
+                self.pg_host,
+                self.pg_port,
+                self.pg_database,
+                self.pg_user,
+                self.pg_password
+            )
+            log_manager.debug("PostgreSQL connection refreshed for RAGEngine instance.")
+        except Exception as e:
+            log_manager.exception(f"Failed to refresh PostgreSQL connection: {e}")
+            self.pg_conn = None
+        return self.pg_conn
 
     def _vectorize_query(self, query: str):
         if not self.embedding_model:
@@ -120,23 +194,27 @@ class RAGEngine:
         return [hit.id for hit in search_result]
 
     def _get_text_from_postgresql(self, ids: list):
-        if not self.pg_conn:
+        conn = self._ensure_pg_connection()
+        if not conn:
+            log_manager.error("PostgreSQL connection is unavailable for text retrieval.")
             return []
         log_manager.debug(f"Fetching texts from PostgreSQL for IDs: {ids}")
         if not ids:
             log_manager.debug("No IDs provided for PostgreSQL text retrieval.")
             return []
         
-        cur = self.pg_conn.cursor() # type: ignore
-        id_list = ','.join(map(str, ids))
-        cur.execute(f"SELECT content FROM world_knowledge WHERE id IN ({id_list}) ORDER BY id;")
-        texts = [row[0] for row in cur.fetchall()]
-        cur.close()
-        log_manager.debug(f"Retrieved {len(texts)} texts from PostgreSQL.")
-        return texts
+        cur = conn.cursor()
+        try:
+            id_list = ','.join(map(str, ids))
+            cur.execute(f"SELECT content FROM world_knowledge WHERE id IN ({id_list}) ORDER BY id;")
+            texts = [row[0] for row in cur.fetchall()]
+            log_manager.debug(f"Retrieved {len(texts)} texts from PostgreSQL.")
+            return texts
+        finally:
+            cur.close()
 
     def get_context(self, query: str) -> str: # Reverted to get_context
-        if not self.qdrant_client or not self.pg_conn or not self.embedding_model:
+        if not self.qdrant_client or not self.embedding_model or not self._ensure_pg_connection():
             log_manager.error("Cannot get context: RAGEngine is not available.")
             return "RAG Engine is currently unavailable."
 

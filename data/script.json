@@ -1,0 +1,19 @@
+{
+  "title": "Test Stage",
+  "scenes": [
+    {
+      "id": 1,
+      "character": "Shiroi",
+      "emotion": "joy",
+      "text": "こんにちは、瑞希。今日はシステムのデモを始めるね。",
+      "duration": 4.2
+    },
+    {
+      "id": 2,
+      "character": "Mizuki",
+      "emotion": "calm",
+      "text": "よろしくねシロイ、準備はできてる？",
+      "duration": 3.5
+    }
+  ]
+}

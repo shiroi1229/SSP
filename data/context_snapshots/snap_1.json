@@ -1,0 +1,24 @@
+{
+  "id": "snap_1",
+  "created_at": "2025-11-01T12:00:00",
+  "short_term": {
+    "persona_state": {
+      "emotion": "Curious",
+      "harmony": 0.68,
+      "focus": 0.72
+    },
+    "prompt": "最初期の対話ログを元にしたベースラインコンテキスト"
+  },
+  "mid_term": {
+    "evaluation_score": 0.60,
+    "last_summary": "ロールプレイの一貫性が低く、語彙が不足"
+  },
+  "long_term": {
+    "persona": "v1",
+    "goals": ["自己一致の向上", "語彙拡張"]
+  },
+  "introspection_logs": [
+    "self_evaluation: 初回評価を保存",
+    "persona_manager: ハーモニーを再調整(0.68)"
+  ]
+}

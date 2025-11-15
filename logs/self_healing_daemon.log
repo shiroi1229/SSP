@@ -645,3 +645,131 @@
 {"timestamp": "2025-11-03 17:07:04", "status": "PASS", "summary": "笨� Backend is ready. Proceeding with system_test...\n", "governor_result": {"detail": "Not Found"}}
 {"timestamp": "2025-11-03 17:08:05", "status": "PASS", "summary": "笨� Backend is ready. Proceeding with system_test...\n", "governor_result": {"detail": "Not Found"}}
 {"timestamp": "2025-11-03 17:09:05", "status": "PASS", "summary": "笨� Backend is ready. Proceeding with system_test...\n", "governor_result": {"detail": "Not Found"}}
+\U0001f310 Starting full validation cycle...
+[Daemon] Executing command: python backend/tests/self_healing_runner.py
+[self_healing_runner.py] STDOUT:
+None
+[self_healing_runner.py] STDERR:
+
+\U0001f310 Starting full validation cycle...
+[Daemon] Executing command: python backend/tests/self_healing_runner.py
+[self_healing_runner.py] STDOUT:
+\u26a0\ufe0f Backend not running. Launching Uvicorn...
+\u2705 Backend is ready. Proceeding with system_test...
+
+[self_healing_runner.py] STDERR:
+Traceback (most recent call last):
+  File "D:\gemini\backend\tests\system_test.py", line 10, in <module>
+    from modules.self_optimizer import apply_self_optimization
+ModuleNotFoundError: No module named 'modules'
+
+{"timestamp": "2025-11-10 19:08:48", "status": "PASS", "summary": "Self-healing runner cycle complete."}
+[Daemon] Executing command: python backend/tests/gemini_reporter_v2.py ./reports\system_test_20251103_121229.md
+[gemini_reporter_v2.py] STDOUT:
+{
+  "status": "PASS",
+  "issues": 0,
+  "trend": "（安定）",
+  "summary_excerpt": "# Shiroi System v2.0 総合テストレポート\n\n\U0001f552 実行日時: 2025-11-03 12:12:29\n\n## persona_state\n```\n(200, {'emotion': 'neutral', 'harmony': 0.0, 'focus': 0.0, 'comment': 'No harmony data', 'traits': {}})\n```\n\n## logs_recent\n```\n(200, [])\n```\n\n## analysis\n```\n(200, {'message': 'Self-analysis report generated and saved', 'filename': './reports/self_analysis\\\\self_analysis_20251103_121229.md', 'params_updated': {'temperature': 0.7999999999999999, 'top_p': 0.9500000000000001, 'max_tokens': 1024}})\n```\n\n## optimizer\n`"
+}
+
+[gemini_reporter_v2.py] STDERR:
+
+\U0001f310 Starting full validation cycle...
+[Daemon] Executing command: python backend/tests/self_healing_runner.py
+[self_healing_runner.py] STDOUT:
+\U0001f9e9 Running Shiroi System Full Test @ 2025-11-10 19:10:50
+\u2705 テスト完了 → ./reports\system_test_20251110_191053.md
+\u26a0\ufe0f Backend not running. Launching Uvicorn...
+\u2705 Backend is ready. Proceeding with system_test...
+
+[self_healing_runner.py] STDERR:
+2025-11-10 19:10:52,954 - INFO - [SelfOptimizer] Applying self-optimization...
+2025-11-10 19:10:52,959 - INFO - [Metacognition] test_stage: This is a test thought for metacognition.
+2025-11-10 19:10:52,960 - INFO - [Persona Evolver] Evolving persona profile...
+2025-11-10 19:10:52,960 - INFO - [Persona Evolver] Persona updated: {'assertiveness': 0.28, 'empathy': 0.5, 'curiosity': 0.29, 'stability': 0.55, 'creativity': 0.5}
+
+{"timestamp": "2025-11-10 19:10:53", "status": "PASS", "summary": "Self-healing runner cycle complete."}
+[Daemon] Executing command: python backend/tests/gemini_reporter_v2.py ./reports\system_test_20251110_191053.md
+[gemini_reporter_v2.py] STDOUT:
+{
+  "status": "WARN",
+  "issues": 2,
+  "trend": "（改善必要）",
+  "summary_excerpt": "# Shiroi System v2.0 総合テストレポート\n\n\U0001f552 実行日時: 2025-11-10 19:10:50\n\n## persona_state\n```\n(200, {'persona_id': 'shiroi_core', 'emotion_state': {'joy': 0.54, 'sad': 0.57, 'neutral': 0.23}, 'tone': '柔らかい科学口調', 'logic_ratio': 0.46, 'creativity_ratio': 0.76, 'memory_usage': 0.58, 'context_sync_rate': 0.94, 'last_update': '2025-11-09T14:18:43.689552'})\n```\n\n## logs_recent\n```\n(404, {'detail': 'Not Found'})\n```\n\n## analysis\n```\n(200, {'summary': 'LLMからの応答を解析できませんでした。', 'insight': 'LLMはJSONではない応答を返しました: Here i"
+}
+
+[gemini_reporter_v2.py] STDERR:
+
+\U0001fa7a Warning detected → triggering self-healing UI.
+[Daemon] Executing command: python backend/tests/self_healing_ui.py
+[self_healing_ui.py] STDOUT:
+\u2705 No UI errors detected. System stable.
+
+[self_healing_ui.py] STDERR:
+
+\U0001f310 Starting full validation cycle...
+[Daemon] Executing command: python backend/tests/self_healing_runner.py
+[self_healing_runner.py] STDOUT:
+\U0001f9e9 Running Shiroi System Full Test @ 2025-11-10 19:12:41
+\u2705 テスト完了 → ./reports\system_test_20251110_191243.md
+\u26a0\ufe0f Backend not running. Launching Uvicorn...
+\u2705 Backend is ready. Proceeding with system_test...
+
+[self_healing_runner.py] STDERR:
+2025-11-10 19:12:43,283 - INFO - [SelfOptimizer] Applying self-optimization...
+2025-11-10 19:12:43,289 - INFO - [Metacognition] test_stage: This is a test thought for metacognition.
+2025-11-10 19:12:43,289 - INFO - [Persona Evolver] Evolving persona profile...
+2025-11-10 19:12:43,290 - INFO - [Persona Evolver] Persona updated: {'assertiveness': 0.28, 'empathy': 0.5, 'curiosity': 0.29, 'stability': 0.55, 'creativity': 0.5}
+
+{"timestamp": "2025-11-10 19:12:43", "status": "PASS", "summary": "Self-healing runner cycle complete."}
+[Daemon] Executing command: python backend/tests/gemini_reporter_v2.py ./reports\system_test_20251110_191243.md
+[gemini_reporter_v2.py] STDOUT:
+{
+  "status": "WARN",
+  "issues": 2,
+  "trend": "（改善必要）",
+  "summary_excerpt": "# Shiroi System v2.0 総合テストレポート\n\n\U0001f552 実行日時: 2025-11-10 19:12:41\n\n## persona_state\n```\n(200, {'persona_id': 'shiroi_core', 'emotion_state': {'joy': 0.54, 'sad': 0.57, 'neutral': 0.23}, 'tone': '柔らかい科学口調', 'logic_ratio': 0.46, 'creativity_ratio': 0.76, 'memory_usage': 0.58, 'context_sync_rate': 0.94, 'last_update': '2025-11-09T14:18:43.689552'})\n```\n\n## logs_recent\n```\n(404, {'detail': 'Not Found'})\n```\n\n## analysis\n```\n(200, {'summary': 'LLMからの応答を解析できませんでした。', 'insight': 'LLMはJSONではない応答を返しました: Here i"
+}
+
+[gemini_reporter_v2.py] STDERR:
+
+\U0001fa7a Warning detected → triggering self-healing UI.
+[Daemon] Executing command: python backend/tests/self_healing_ui.py
+[self_healing_ui.py] STDOUT:
+\u2705 No UI errors detected. System stable.
+
+[self_healing_ui.py] STDERR:
+
+\U0001f310 Starting full validation cycle...
+[Daemon] Executing command: python backend/tests/self_healing_runner.py
+[self_healing_runner.py] STDOUT:
+\U0001f9e9 Running Shiroi System Full Test @ 2025-11-10 19:19:02
+\u2705 テスト完了 → ./reports\system_test_20251110_191903.md
+\u2705 Backend is ready. Proceeding with system_test...
+
+[self_healing_runner.py] STDERR:
+2025-11-10 19:19:03,160 - INFO - [SelfOptimizer] Applying self-optimization...
+2025-11-10 19:19:03,166 - INFO - [Metacognition] test_stage: This is a test thought for metacognition.
+2025-11-10 19:19:03,167 - INFO - [Persona Evolver] Evolving persona profile...
+2025-11-10 19:19:03,167 - INFO - [Persona Evolver] Persona updated: {'assertiveness': 0.28, 'empathy': 0.5, 'curiosity': 0.29, 'stability': 0.55, 'creativity': 0.5}
+
+{"timestamp": "2025-11-10 19:19:03", "status": "PASS", "summary": "Self-healing runner cycle complete."}
+[Daemon] Executing command: python backend/tests/gemini_reporter_v2.py ./reports\system_test_20251110_191903.md
+[gemini_reporter_v2.py] STDOUT:
+{
+  "status": "WARN",
+  "issues": 2,
+  "trend": "（改善必要）",
+  "summary_excerpt": "# Shiroi System v2.0 総合テストレポート\n\n\U0001f552 実行日時: 2025-11-10 19:19:02\n\n## persona_state\n```\n(200, {'persona_id': 'shiroi_core', 'emotion_state': {'joy': 0.54, 'sad': 0.57, 'neutral': 0.23}, 'tone': '柔らかい科学口調', 'logic_ratio': 0.46, 'creativity_ratio': 0.76, 'memory_usage': 0.58, 'context_sync_rate': 0.94, 'last_update': '2025-11-09T14:18:43.689552'})\n```\n\n## logs_recent\n```\n(404, {'detail': 'Not Found'})\n```\n\n## analysis\n```\n(200, {'summary': 'LLMからの応答を解析できませんでした。', 'insight': 'LLMはJSONではない応答を返しました: Here i"
+}
+
+[gemini_reporter_v2.py] STDERR:
+
+\U0001fa7a Warning detected → triggering self-healing UI.
+[Daemon] Executing command: python backend/tests/self_healing_ui.py
+[self_healing_ui.py] STDOUT:
+\u2705 No UI errors detected. System stable.
+
+[self_healing_ui.py] STDERR:
+

@@ -1,0 +1,17 @@
+# path: config/alert_targets.yaml
+# version: R-v1.0
+
+# This file defines external targets for dispatching alerts.
+
+alert_targets:
+  default:
+    type: "slack_webhook"
+    url: "YOUR_SLACK_WEBHOOK_URL_HERE" # Replace with your actual Slack webhook URL
+    description: "Default Slack channel for critical alerts."
+
+  email_admin:
+    type: "email"
+    address: "admin@example.com" # Placeholder
+    description: "Admin email for high-severity notifications."
+
+  # Add more alert targets as needed

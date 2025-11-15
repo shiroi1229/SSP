@@ -10,6 +10,34 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 CONFIG_SNAPSHOT_PATH = Path(__file__).resolve().parent.parent / "config_snapshot.json"
+_LAST_SNAPSHOT_DATA = None
+
+
+def _write_config_snapshot_if_needed(config: dict):
+    """config_snapshot.json を不要に書き換えないよう差分を確認してから保存する。"""
+    global _LAST_SNAPSHOT_DATA
+    if _LAST_SNAPSHOT_DATA == config:
+        return
+
+    if CONFIG_SNAPSHOT_PATH.exists():
+        try:
+            existing_data = json.loads(CONFIG_SNAPSHOT_PATH.read_text(encoding="utf-8"))
+            if existing_data == config:
+                _LAST_SNAPSHOT_DATA = config.copy()
+                return
+        except json.JSONDecodeError:
+            logging.warning("Existing config_snapshot.json is invalid JSON. It will be replaced.")
+        except IOError as e:
+            logging.error(f"Failed to read config_snapshot.json: {e}")
+            return
+
+    try:
+        with open(CONFIG_SNAPSHOT_PATH, "w", encoding="utf-8") as f:
+            json.dump(config, f, indent=2)
+        _LAST_SNAPSHOT_DATA = config.copy()
+        logging.info(f"Configuration snapshot saved to {CONFIG_SNAPSHOT_PATH}")
+    except IOError as e:
+        logging.error(f"Failed to write config_snapshot.json: {e}")
 
 def load_environment():
     project_root = Path(__file__).resolve().parent.parent
@@ -24,12 +52,19 @@ def load_environment():
         logging.warning("PYTHONIOENCODING is not set to 'utf-8'. Setting it for consistency.")
         os.environ["PYTHONIOENCODING"] = "utf-8"
 
-    # Determine LLM model based on priority (Gemini > LMSTUDIO)
+    # Determine LLM model based on priority (Transformers > Gemini > LMSTUDIO)
+    transformers_model = os.getenv("TRANSFORMERS_MODEL")
     gemini_model = os.getenv("GEMINI_MODEL")
     lm_studio_url = os.getenv("LM_STUDIO_URL")
     
     active_llm_config = {}
-    if gemini_model:
+    if transformers_model:
+        active_llm_config["LLM_PROVIDER"] = "TRANSFORMERS"
+        active_llm_config["TRANSFORMERS_MODEL"] = transformers_model
+        active_llm_config["TRANSFORMERS_DEVICE"] = os.getenv("TRANSFORMERS_DEVICE", "cpu")
+        active_llm_config["TRANSFORMERS_TRUST_REMOTE_CODE"] = os.getenv("TRANSFORMERS_TRUST_REMOTE_CODE", "false")
+        logging.info(f"Active LLM Provider: TRANSFORMERS with model {transformers_model}")
+    elif gemini_model:
         active_llm_config["LLM_PROVIDER"] = "GEMINI"
         active_llm_config["GEMINI_MODEL"] = gemini_model
         logging.info(f"Active LLM Provider: GEMINI with model {gemini_model}")
@@ -39,7 +74,7 @@ def load_environment():
         logging.info(f"Active LLM Provider: LM_STUDIO with URL {lm_studio_url}")
     else:
         active_llm_config["LLM_PROVIDER"] = "NONE"
-        logging.warning("No LLM provider configured. Please set GEMINI_MODEL or LM_STUDIO_URL in .env")
+        logging.warning("No LLM provider configured. Please set TRANSFORMERS_MODEL, GEMINI_MODEL or LM_STUDIO_URL in .env")
 
     config = {
         "POSTGRES_USER": os.getenv("POSTGRES_USER"),
@@ -58,19 +93,13 @@ def load_environment():
     }
 
     # Log sensitive information with caution (e.g., mask it)
-    logging.debug(f"Loaded POSTGRES_USER: {config.get("POSTGRES_USER")}")
-    logging.debug(f"Loaded POSTGRES_PASSWORD: {'*' * len(config.get("POSTGRES_PASSWORD", ''))}") # Mask password
-    logging.debug(f"Loaded POSTGRES_DB: {config.get("POSTGRES_DB")}")
-    logging.debug(f"Loaded POSTGRES_HOST: {config.get("POSTGRES_HOST")}")
-    logging.debug(f"Loaded POSTGRES_PORT: {config.get("POSTGRES_PORT")}")
+    logging.debug(f"Loaded POSTGRES_USER: {config.get('POSTGRES_USER')}")
+    logging.debug(f"Loaded POSTGRES_PASSWORD: {'*' * len(config.get('POSTGRES_PASSWORD', ''))}") # Mask password
+    logging.debug(f"Loaded POSTGRES_DB: {config.get('POSTGRES_DB')}")
+    logging.debug(f"Loaded POSTGRES_HOST: {config.get('POSTGRES_HOST')}")
+    logging.debug(f"Loaded POSTGRES_PORT: {config.get('POSTGRES_PORT')}")
 
-    # Generate config_snapshot.json
-    try:
-        with open(CONFIG_SNAPSHOT_PATH, "w", encoding="utf-8") as f:
-            json.dump(config, f, indent=2)
-        logging.info(f"Configuration snapshot saved to {CONFIG_SNAPSHOT_PATH}")
-    except IOError as e:
-        logging.error(f"Failed to write config_snapshot.json: {e}")
+    _write_config_snapshot_if_needed(config)
 
     return config
 

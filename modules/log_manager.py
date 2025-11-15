@@ -7,41 +7,66 @@ from pathlib import Path
 import json # Added json import for JsonFormatter
 from datetime import datetime # Added datetime import for _get_log_filepath
 import sys # Added import for sys.stdout
+import io
+
+LOG_DIR = Path("logs")
+JSON_LOG_FILENAME = "ssp_log_json.log"
+_STDOUT_WRAPPED = False
+
+
+def _ensure_stdout_utf8():
+    global _STDOUT_WRAPPED
+    if _STDOUT_WRAPPED:
+        return
+    try:
+        if hasattr(sys.stdout, "reconfigure"):
+            sys.stdout.reconfigure(encoding='utf-8')
+        else:
+            sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
+        _STDOUT_WRAPPED = True
+    except Exception:
+        logging.getLogger("ssp_logger").warning("Failed to enforce UTF-8 stdout encoding.", exc_info=True)
+
 
 class LogManager:
     def __init__(self):
-        sys.stdout.reconfigure(encoding='utf-8') # Explicitly set stdout encoding to UTF-8
+        _ensure_stdout_utf8()
         self.logger = logging.getLogger("ssp_logger")
         self.logger.setLevel(logging.DEBUG)
-        
-        # Clear existing handlers to prevent duplicates during hot-reloads
+
+        if getattr(self.logger, "_ssp_initialized", False):
+            return
+
         if self.logger.hasHandlers():
             self.logger.handlers.clear()
 
         formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 
-        log_dir = Path("logs")
-        log_dir.mkdir(exist_ok=True)
+        LOG_DIR.mkdir(exist_ok=True)
         
         # File handler for feedback_loop.log
-        fh = logging.FileHandler(log_dir / "feedback_loop.log", encoding="utf-8")
+        fh = logging.FileHandler(LOG_DIR / "feedback_loop.log", encoding="utf-8")
         fh.setFormatter(formatter)
         self.logger.addHandler(fh)
 
         # Console handler
-        ch = logging.StreamHandler(sys.stdout) # Removed encoding argument
+        ch = logging.StreamHandler(sys.stdout)
         ch.setFormatter(formatter)
         self.logger.addHandler(ch)
 
         # JSON handler (re-added for consistency with previous versions)
         json_formatter = JsonFormatter()
-        json_handler = logging.FileHandler(self._get_log_filepath("_json.log"))
+        json_handler = logging.FileHandler(self._get_log_filepath("_json.log"), encoding="utf-8")
         json_handler.setFormatter(json_formatter)
         self.logger.addHandler(json_handler)
 
+        self.logger._ssp_initialized = True  # type: ignore[attr-defined]
+
     def _get_log_filepath(self, suffix):
+        if suffix == "_json.log":
+            return LOG_DIR / JSON_LOG_FILENAME
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        return Path("logs") / f"ssp_log_{timestamp}{suffix}"
+        return LOG_DIR / f"ssp_log_{timestamp}{suffix}"
 
     def info(self, message, extra=None):
         self.logger.info(message, extra=extra)
@@ -59,12 +84,6 @@ class LogManager:
     def exception(self, message, extra=None):
         """Logs a message with exception information. Automatically sets exc_info=True."""
         self.logger.exception(message, extra=extra)
-
-import sys
-import io
-
-# Force UTF-8 encoding for stdout to handle emojis and Japanese characters
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 class JsonFormatter(logging.Formatter):
     def format(self, record):

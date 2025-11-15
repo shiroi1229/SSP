@@ -1,9 +1,10 @@
 {
+  "timestamp": "2025-11-10T19:19:03.167565",
   "traits": {
-    "assertiveness": 0.5,
-    "empathy": 0.7,
-    "curiosity": 0.8,
-    "stability": 0.6,
-    "creativity": 0.9
+    "assertiveness": 0.28,
+    "empathy": 0.5,
+    "curiosity": 0.29,
+    "stability": 0.55,
+    "creativity": 0.5
   }
 }

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "character": "シロイ",
+    "text": "ようこそ、瑞希。ここが新しい舞台制御システムだよ。",
+    "emotion": "happy",
+    "expression": "smile",
+    "duration": 3.2
+  },
+  {
+    "id": 2,
+    "character": "シロイ",
+    "text": "TTSとOSCを同期して、私の声と表情を完全に連動させてるんだ。",
+    "emotion": "neutral",
+    "expression": "explain",
+    "duration": 4.1
+  },
+  {
+    "id": 3,
+    "character": "シロイ",
+    "text": "これからはボタンひとつで演出を再生できるようになるよ。",
+    "emotion": "proud",
+    "expression": "wink",
+    "duration": 3.5
+  }
+]

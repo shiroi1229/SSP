@@ -203,3 +203,48 @@ def log_persona_update(persona):
     os.makedirs(os.path.dirname(log_file), exist_ok=True)
     with open(log_file, "a", encoding="utf-8") as f:
         f.write(json.dumps(persona, ensure_ascii=False) + "\n")
+
+def recalibrate_persona(baseline: str = "default") -> dict:
+    """
+    Recalibrates the persona profile to a stable state based on a given baseline.
+    This is a placeholder implementation.
+    """
+    logging.info(f"[Persona Evolver] Recalibrating persona to baseline: {baseline}")
+
+    # Define stable traits for different baselines (placeholder values)
+    stable_traits = {
+        "default": {
+            "assertiveness": 0.5,
+            "empathy": 0.5,
+            "curiosity": 0.5,
+            "stability": 0.8, # Emphasize stability for default recalibration
+            "creativity": 0.5
+        },
+        "cautious": {
+            "assertiveness": 0.3,
+            "empathy": 0.6,
+            "curiosity": 0.4,
+            "stability": 0.9, # Higher stability for cautious
+            "creativity": 0.3
+        }
+        # Add more baselines as needed
+    }
+
+    new_traits = stable_traits.get(baseline, stable_traits["default"])
+
+    persona = {
+        "timestamp": datetime.datetime.now().isoformat(),
+        "traits": new_traits
+    }
+
+    os.makedirs(os.path.dirname(PERSONA_FILE), exist_ok=True)
+    try:
+        with open(PERSONA_FILE, "w", encoding="utf-8") as f:
+            json.dump(persona, f, indent=2)
+        logging.info(f"[Persona Evolver] Persona recalibrated to {baseline} baseline: {new_traits}")
+        log_persona_update(persona) # Log the recalibrated persona
+        return {"message": f"Persona recalibrated successfully to {baseline} baseline", "profile": new_traits, "status": "completed"}
+    except IOError as e:
+        logging.error(f"Error writing recalibrated persona profile to {PERSONA_FILE}: {e}")
+        return {"message": f"Error writing recalibrated persona profile: {e}", "status": "failed"}
+

@@ -5,7 +5,7 @@ import logging
 # Assuming orchestrator is in the Python path
 from orchestrator.main import handle_chat_message
 
-router = APIRouter(prefix="/api")
+router = APIRouter()
 
 class ChatRequest(BaseModel):
     user_input: str

@@ -1,0 +1,6 @@
+{
+  "auto_actions": [
+    {"name": "hot_patch", "enabled": true, "trigger": "alignment_drift"},
+    {"name": "restart_loop", "enabled": false, "trigger": "error_spike"}
+  ]
+}

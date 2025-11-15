@@ -3,4 +3,3 @@ __pycache__/
 *.pyc
 logs/*.log
 logs/context_evolution_snapshots/
-frontend/

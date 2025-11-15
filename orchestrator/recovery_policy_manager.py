@@ -4,6 +4,7 @@
 import yaml
 from orchestrator.context_manager import ContextManager # Import ContextManager for rollback
 from modules.log_manager import log_manager
+from modules.auto_fix_executor import AutoFixExecutor # Import AutoFixExecutor
 
 class RecoveryPolicyManager:
     """Loads and provides recovery policies for different modules and applies them."""
@@ -11,6 +12,7 @@ class RecoveryPolicyManager:
     def __init__(self, policy_file: str = 'config/recovery_policies.yaml'):
         self.policy_file = policy_file
         self.policies = self._load_policies()
+        self.auto_fix_executor = AutoFixExecutor() # Instantiate AutoFixExecutor
         if not self.policies: # Validate loaded policies
             log_manager.error("[RecoveryPolicyManager] No policies loaded or policies are invalid.")
 
@@ -46,7 +48,7 @@ class RecoveryPolicyManager:
             raise ValueError(f"Policy at '{policy_path}' must specify an 'action'.")
 
         # Add more specific validation for actions if needed
-        valid_actions = ["retry", "rollback", "recalibrate", "notify", "preemptive_repair"]
+        valid_actions = ["retry", "rollback", "recalibrate", "notify", "preemptive_repair", "auto_fix"]
         if policy["action"] not in valid_actions:
             raise ValueError(f"Invalid action '{policy["action"]}' in policy at '{policy_path}'. Must be one of {valid_actions}.")
 
@@ -76,14 +78,22 @@ class RecoveryPolicyManager:
             # For SSP, assuming policy files are trusted assets.
             try:
                 # Make context variables available for evaluation
-                score = context_manager.get("mid_term.evaluation_score")
-                harmony = context_manager.get("mid_term.persona_state.harmony") # Example from persona_manager policy
+                eval_locals = {
+                    "mid_term": context_manager.get("mid_term", {}),
+                    "short_term": context_manager.get("short_term", {}),
+                    "long_term": context_manager.get("long_term", {}),
+                    "abs": abs
+                }
+                # Ensure nested dictionaries are handled for evaluation
+                # Example: mid_term.evaluation_score
+                # This requires a more robust way to access nested context values in eval_locals
+                # For now, we'll rely on the context_manager.get() for specific values if needed
+                # Or, pass the context_manager directly to eval_locals and use context_manager.get() in condition string
                 
-                # Create a safe environment for eval
-                eval_globals = {"__builtins__": None}
-                eval_locals = {"mid_term": {"evaluation_score": score, "persona_state": {"harmony": harmony}}, "abs": abs}
-
-                condition_met = eval(condition_str, eval_globals, eval_locals)
+                # Re-evaluating condition with direct context_manager access for robustness
+                # This is safer than trying to reconstruct nested dicts for eval_locals
+                eval_globals = {"__builtins__": None, "context_manager": context_manager}
+                condition_met = eval(condition_str, eval_globals, {"context_manager": context_manager})
                 log_manager.debug(f"[RecoveryPolicyManager] Condition '{condition_str}' evaluated to {condition_met}")
             except Exception as e:
                 log_manager.error(f"[RecoveryPolicyManager] Error evaluating condition '{condition_str}': {e}", exc_info=True)
@@ -123,6 +133,17 @@ class RecoveryPolicyManager:
                 # This action signals the orchestrator to take preemptive measures
                 action_outcome["result"] = {"message": "Preemptive repair signaled"}
                 action_outcome["status"] = "applied_signal"
+            elif action == "auto_fix":
+                script_name = policy.get("script")
+                if script_name:
+                    log_manager.info(f"[RecoveryPolicyManager] Executing auto_fix script: {script_name}")
+                    fix_result = self.auto_fix_executor.execute_fix(script_name=script_name)
+                    action_outcome["result"] = fix_result
+                    action_outcome["status"] = "applied"
+                else:
+                    action_outcome["result"] = "No script specified for auto_fix policy."
+                    action_outcome["status"] = "failed"
+                    log_manager.error("[RecoveryPolicyManager] Auto_fix failed: No script specified in policy.")
             
             # Log policy action for ContextHistory
             context_manager.history.record_change(
@@ -137,3 +158,4 @@ class RecoveryPolicyManager:
             log_manager.info(f"[RecoveryPolicyManager] Policy '{action}' for {module_name}.{event_name} not applied. Condition not met.")
 
         return action_outcome
+

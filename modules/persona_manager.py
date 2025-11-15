@@ -6,11 +6,31 @@ import statistics
 from orchestrator.context_manager import ContextManager
 from modules.log_manager import log_manager
 
+# Global in-memory store for the detailed emotion state
+_current_detailed_emotion_state = {
+    "joy": 0.5,
+    "anger": 0.1,
+    "sadness": 0.2,
+    "happiness": 0.7,
+    "fear": 0.05,
+    "calm": 0.8,
+}
+
+def set_detailed_emotion_state(new_state: dict):
+    """Updates the global detailed emotion state."""
+    global _current_detailed_emotion_state
+    _current_detailed_emotion_state = {**_current_detailed_emotion_state, **new_state}
+    log_manager.info(f"[PersonaManager] Detailed emotion state updated: {_current_detailed_emotion_state}")
+
 class PersonaManager:
     """Manages the AI's persona by observing the context and updating its state."""
 
+    _has_logged_init = False
+
     def __init__(self):
-        log_manager.info("[PersonaManager] Initialized.")
+        if not PersonaManager._has_logged_init:
+            log_manager.info("[PersonaManager] Initialized.")
+            PersonaManager._has_logged_init = True
 
     def _calculate_current_state(self, context_manager: ContextManager) -> dict:
         """Calculates the current harmony, focus, and emotion from the context."""
@@ -21,16 +41,22 @@ class PersonaManager:
         recent_scores = [log.get("evaluation_result", {}).get("rating", 0.5) for log in evaluator_logs[-10:]]
         harmony = statistics.mean(recent_scores) if recent_scores else 0.5
 
-        # Placeholder logic for focus and emotion
+        # Placeholder logic for focus
         focus = 0.78
-        emotion = "Calm"
+        
+        # Use the globally managed detailed emotion state
+        detailed_emotion_state = _current_detailed_emotion_state
+        
+        # Also keep a simplified emotion string for backward compatibility if needed
+        emotion_string = "Calm"
         if harmony < 0.4:
-            emotion = "Anxious"
+            emotion_string = "Anxious"
         elif harmony > 0.8:
-            emotion = "Pleased"
+            emotion_string = "Pleased"
 
         return {
-            "emotion": emotion,
+            "emotion": emotion_string, # Simplified string emotion
+            "detailed_emotion_state": detailed_emotion_state, # New detailed emotion state
             "harmony": round(harmony, 2),
             "focus": focus
         }
@@ -97,4 +123,7 @@ async def get_current_persona_state():
     state = persona_manager._calculate_current_state(dummy_context_manager)
     # Add harmony_score alias for consistency with dashboard_ws.py
     state["harmony_score"] = state["harmony"]
+    
+    # Ensure the detailed_emotion_state is always present and up-to-date
+    state["emotion_state"] = _current_detailed_emotion_state
     return state

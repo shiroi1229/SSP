@@ -1,0 +1,200 @@
+{
+  "generated_at": "2025-11-14T17:45:08.915879+00:00",
+  "schema_version": "v3.0",
+  "contracts": [
+    {
+      "name": "evaluator",
+      "path": "contracts\\evaluator.yaml",
+      "version": "1.0",
+      "schema_version": "v3.0",
+      "status": "unknown",
+      "description": "Evaluates the quality of a generated response based on the context.",
+      "timestamp": "2025-11-14T17:45:08.905470+00:00",
+      "stats": {
+        "input_count": 2,
+        "output_count": 2,
+        "required_inputs": 1,
+        "required_outputs": 0
+      },
+      "missing_fields": [],
+      "inputs": [
+        {
+          "name": "short_term.response",
+          "type": "str",
+          "description": "The generated response to be evaluated.",
+          "required": true
+        },
+        {
+          "name": "long_term.model_params",
+          "type": "dict",
+          "description": "Current model parameters for reference.",
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mid_term.evaluation_score",
+          "type": "float",
+          "description": "The calculated quality score of the response (0.0 to 1.0).",
+          "required": false
+        },
+        {
+          "name": "long_term.optimization_log",
+          "type": "list",
+          "description": "A log entry detailing the evaluation, for future optimization.",
+          "required": false
+        }
+      ],
+      "context_index": {
+        "inputs": {
+          "short_term": [
+            "response"
+          ],
+          "long_term": [
+            "model_params"
+          ]
+        },
+        "outputs": {
+          "mid_term": [
+            "evaluation_score"
+          ],
+          "long_term": [
+            "optimization_log"
+          ]
+        }
+      }
+    },
+    {
+      "name": "generator",
+      "path": "contracts\\generator.yaml",
+      "version": "v1",
+      "schema_version": "v3.0",
+      "status": "active",
+      "description": "",
+      "timestamp": "2025-11-14T17:45:08.905492+00:00",
+      "stats": {
+        "input_count": 1,
+        "output_count": 1,
+        "required_inputs": 0,
+        "required_outputs": 0
+      },
+      "missing_fields": [],
+      "inputs": [
+        {
+          "name": "input",
+          "type": "any",
+          "description": "",
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "any",
+          "description": "",
+          "required": false
+        }
+      ],
+      "context_index": {
+        "inputs": {},
+        "outputs": {}
+      }
+    },
+    {
+      "name": "persona_manager",
+      "path": "contracts\\persona_manager.yaml",
+      "version": "1.0",
+      "schema_version": "v3.0",
+      "status": "unknown",
+      "description": "Manages the AI's persona, including emotion, focus, and harmony.",
+      "timestamp": "2025-11-14T17:45:08.905500+00:00",
+      "stats": {
+        "input_count": 0,
+        "output_count": 2,
+        "required_inputs": 0,
+        "required_outputs": 0
+      },
+      "missing_fields": [],
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "short_term.persona_state",
+          "type": "dict",
+          "description": "The current, transient state of the AI's persona.",
+          "required": false
+        },
+        {
+          "name": "long_term.persona_profile",
+          "type": "dict",
+          "description": "The stable, long-term personality traits of the AI.",
+          "required": false
+        }
+      ],
+      "context_index": {
+        "inputs": {},
+        "outputs": {
+          "short_term": [
+            "persona_state"
+          ],
+          "long_term": [
+            "persona_profile"
+          ]
+        }
+      }
+    },
+    {
+      "name": "self_optimizer",
+      "path": "contracts\\self_optimizer.yaml",
+      "version": "1.0",
+      "schema_version": "v3.0",
+      "status": "unknown",
+      "description": "Analyzes self-analysis reports and dynamically adjusts model parameters.",
+      "timestamp": "2025-11-14T17:45:08.905508+00:00",
+      "stats": {
+        "input_count": 3,
+        "output_count": 2,
+        "required_inputs": 2,
+        "required_outputs": 0
+      },
+      "missing_fields": [],
+      "inputs": [
+        {
+          "name": "self_analysis_report",
+          "type": "String",
+          "description": "The content of the self-analysis report.",
+          "required": true
+        },
+        {
+          "name": "model_params",
+          "type": "Dict",
+          "description": "The current model parameters.",
+          "required": true
+        },
+        {
+          "name": "optimization_log",
+          "type": "List[Dict]",
+          "description": "The history of optimization events.",
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model_params",
+          "type": "Dict",
+          "description": "The updated model parameters.",
+          "required": false
+        },
+        {
+          "name": "optimization_log",
+          "type": "List[Dict]",
+          "description": "The updated history of optimization events.",
+          "required": false
+        }
+      ],
+      "context_index": {
+        "inputs": {},
+        "outputs": {}
+      }
+    }
+  ]
+}

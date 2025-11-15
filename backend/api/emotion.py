@@ -1,22 +1,31 @@
-# path: backend/api/emotion.py
-# version: v1
-# Emotion Engine REST API
-from fastapi import APIRouter, Body
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
-from modules.emotion_engine import EmotionEngine
-from typing import Dict
+from sqlalchemy.orm import Session
+import logging
+
+from backend.db.connection import get_db
+from modules.persona_manager import set_detailed_emotion_state # Import the setter function
 
 router = APIRouter(prefix="/api")
-engine = EmotionEngine()
+logger = logging.getLogger(__name__)
 
-class EmotionRequest(BaseModel):
-    text: str
+class EmotionStateUpdate(BaseModel):
+    joy: float
+    anger: float
+    sadness: float
+    happiness: float
+    fear: float
+    calm: float
 
-@router.post("/emotion", response_model=Dict)
-async def analyze_emotion_endpoint(payload: EmotionRequest):
+@router.post("/emotion")
+async def update_emotion_state(emotion_state: EmotionStateUpdate, db: Session = Depends(get_db)):
     """
-    Analyzes the emotion of a given text.
+    Receives updated emotion state from the frontend and processes it.
+    This will now update the AI's internal emotion model via persona_manager.
     """
-    text = payload.text
-    result = engine.analyze(text)
-    return {"input": text, "emotion": result}
+    logger.info(f"Received emotion state update: {emotion_state.model_dump_json()}")
+    
+    # Update the global detailed emotion state in persona_manager
+    set_detailed_emotion_state(emotion_state.model_dump())
+    
+    return {"message": "Emotion state received", "status": "success", "data": emotion_state}

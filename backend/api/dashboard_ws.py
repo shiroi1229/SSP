@@ -48,7 +48,8 @@ async def get_persona_state_data(): # Changed to async again
     return {
         "type": "persona_state",
         "timestamp": datetime.now().isoformat(),
-        "emotion": persona_state.get("emotion", "unknown"),
+        "emotion": persona_state.get("emotion", "unknown"), # Simplified emotion string
+        "emotion_state": persona_state.get("detailed_emotion_state", {}), # Detailed emotion state for UI
         "harmony": persona_state.get("harmony_score", 0.0),
         "cognitive_graph": cognitive_graph
     }
@@ -102,4 +103,26 @@ async def websocket_endpoint(websocket: WebSocket):
         logger.info(f"WebSocket {websocket.client} disconnected.")
     except Exception as e:
         logger.error(f"WebSocket error for {websocket.client}: {e}", exc_info=True)
+        manager.disconnect(websocket)
+
+# --- Emotion WebSocket Endpoint ---
+@router.websocket("/ws/emotion")
+async def websocket_emotion_endpoint(websocket: WebSocket):
+    await manager.connect(websocket)
+    try:
+        while True:
+            # Fetch current emotion state from persona_manager
+            persona_state = await get_current_persona_state()
+            current_emotion = persona_state.get("detailed_emotion_state", {
+                "joy": 0.5, "anger": 0.1, "sadness": 0.2,
+                "happiness": 0.7, "fear": 0.05, "calm": 0.8
+            }) # Fallback to placeholder if not found
+
+            await manager.send_personal_message(json.dumps(current_emotion), websocket)
+            await asyncio.sleep(0.5) # Send updates more frequently for emotions
+    except WebSocketDisconnect:
+        manager.disconnect(websocket)
+        logger.info(f"Emotion WebSocket {websocket.client} disconnected.")
+    except Exception as e:
+        logger.error(f"Emotion WebSocket error for {websocket.client}: {e}", exc_info=True)
         manager.disconnect(websocket)

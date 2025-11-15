@@ -5,6 +5,7 @@
 
 from pythonosc.udp_client import SimpleUDPClient
 import os
+import asyncio
 from typing import Dict, Any
 
 class OSCBridge:
@@ -18,48 +19,57 @@ class OSCBridge:
             print(f"Could not create OSC client: {e}")
             self.client = None
 
-    def send(self, address: str, value: float):
-        """Sends a single OSC message."""
+    async def send(self, address: str, value: float):
+        """Sends a single OSC message asynchronously."""
         if self.client:
-            self.client.send_message(address, value)
+            loop = asyncio.get_running_loop()
+            await loop.run_in_executor(None, self.client.send_message, address, value)
 
-    def send_emotion(self, emotion_data: Dict[str, Any]) -> Dict[str, Any]:
+    async def send_emotion(self, emotion: str) -> Dict[str, Any]:
         """
         Sends OSC messages based on emotion data to control VTube Studio parameters.
+        Emotion is a string (e.g., "joy", "calm").
         """
         if not self.client:
             return {"status": "error", "reason": "OSC client not initialized"}
 
+        # Convert string emotion to dictionary format
+        emotion_data = {"emotion_tags": [emotion.capitalize()], "intensity": 0.7} # Default intensity
+        
         tags = emotion_data.get("emotion_tags", ["Neutral"])
         intensity = emotion_data.get("intensity", 0.5)
         
-        # Reset all params first to avoid conflicting expressions
-        self.send("/avatar/parameters/ParamSmile", 0.0)
-        self.send("/avatar/parameters/ParamEyeOpen", 0.8) # Default open
-        self.send("/avatar/parameters/ParamBrowAngle", 0.0)
-        self.send("/avatar/parameters/ParamEyeForm", 0.0)
-
         primary_emotion = tags[0] if tags else "Neutral"
+
+        # Create a list of tasks to run in parallel
+        tasks = [
+            self.send("/avatar/parameters/ParamSmile", 0.0),
+            self.send("/avatar/parameters/ParamEyeOpen", 0.8),
+            self.send("/avatar/parameters/ParamBrowAngle", 0.0),
+            self.send("/avatar/parameters/ParamEyeForm", 0.0)
+        ]
 
         # Set expression based on primary emotion
         if primary_emotion == "Joy":
-            self.send("/avatar/parameters/ParamSmile", min(1.0, 0.4 + intensity * 0.6))
-            self.send("/avatar/parameters/ParamEyeOpen", 1.0)
+            tasks.append(self.send("/avatar/parameters/ParamSmile", min(1.0, 0.4 + intensity * 0.6)))
+            tasks.append(self.send("/avatar/parameters/ParamEyeOpen", 1.0))
         elif primary_emotion == "Calm":
-            self.send("/avatar/parameters/ParamSmile", 0.1 * intensity)
-            self.send("/avatar/parameters/ParamEyeOpen", 0.7)
+            tasks.append(self.send("/avatar/parameters/ParamSmile", 0.1 * intensity))
+            tasks.append(self.send("/avatar/parameters/ParamEyeOpen", 0.7))
         elif primary_emotion == "Sad":
-            self.send("/avatar/parameters/ParamEyeForm", -0.5 * intensity)
-            self.send("/avatar/parameters/ParamBrowAngle", -0.2 * intensity)
-            self.send("/avatar/parameters/ParamEyeOpen", 0.6)
+            tasks.append(self.send("/avatar/parameters/ParamEyeForm", -0.5 * intensity))
+            tasks.append(self.send("/avatar/parameters/ParamBrowAngle", -0.2 * intensity))
+            tasks.append(self.send("/avatar/parameters/ParamEyeOpen", 0.6))
         elif primary_emotion == "Angry":
-            self.send("/avatar/parameters/ParamBrowAngle", 0.6 * intensity)
-            self.send("/avatar/parameters/ParamEyeOpen", 0.7)
+            tasks.append(self.send("/avatar/parameters/ParamBrowAngle", 0.6 * intensity))
+            tasks.append(self.send("/avatar/parameters/ParamEyeOpen", 0.7))
         elif primary_emotion == "Curious":
-            self.send("/avatar/parameters/ParamEyeOpen", 0.9)
-            self.send("/avatar/parameters/ParamSmile", 0.2 * intensity)
+            tasks.append(self.send("/avatar/parameters/ParamEyeOpen", 0.9))
+            tasks.append(self.send("/avatar/parameters/ParamSmile", 0.2 * intensity))
         else: # Neutral
-            self.send("/avatar/parameters/ParamEyeOpen", 0.8)
+            tasks.append(self.send("/avatar/parameters/ParamEyeOpen", 0.8))
+
+        await asyncio.gather(*tasks)
 
         return {
             "status": "sent", 
@@ -68,3 +78,4 @@ class OSCBridge:
             "emotion": primary_emotion,
             "intensity": intensity
         }
+

@@ -1,0 +1,54 @@
+{
+  "name": "self_optimizer",
+  "path": "contracts\\self_optimizer.yaml",
+  "version": "1.0",
+  "schema_version": "v3.0",
+  "status": "unknown",
+  "description": "Analyzes self-analysis reports and dynamically adjusts model parameters.",
+  "timestamp": "2025-11-14T17:45:08.905508+00:00",
+  "stats": {
+    "input_count": 3,
+    "output_count": 2,
+    "required_inputs": 2,
+    "required_outputs": 0
+  },
+  "missing_fields": [],
+  "inputs": [
+    {
+      "name": "self_analysis_report",
+      "type": "String",
+      "description": "The content of the self-analysis report.",
+      "required": true
+    },
+    {
+      "name": "model_params",
+      "type": "Dict",
+      "description": "The current model parameters.",
+      "required": true
+    },
+    {
+      "name": "optimization_log",
+      "type": "List[Dict]",
+      "description": "The history of optimization events.",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "model_params",
+      "type": "Dict",
+      "description": "The updated model parameters.",
+      "required": false
+    },
+    {
+      "name": "optimization_log",
+      "type": "List[Dict]",
+      "description": "The updated history of optimization events.",
+      "required": false
+    }
+  ],
+  "context_index": {
+    "inputs": {},
+    "outputs": {}
+  }
+}

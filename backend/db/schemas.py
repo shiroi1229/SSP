@@ -69,3 +69,68 @@ class RoadmapData(BaseModel):
     frontend: List[RoadmapItem]
     robustness: List[RoadmapItem]
     Awareness_Engine: List[RoadmapItem] = []
+
+class RoadmapPrefixSummary(BaseModel):
+    prefix: str
+    count: int
+    completed: int
+    in_progress: int
+    not_started: int
+
+class RoadmapDelayedItem(BaseModel):
+    version: str
+    codename: str
+    progress: Optional[int] = None
+    status: Optional[str] = None
+
+class RoadmapStatsResponse(BaseModel):
+    summary: List[RoadmapPrefixSummary]
+    delayed: List[RoadmapDelayedItem]
+
+
+class AwarenessSnapshotBase(BaseModel):
+    created_at: datetime
+    backend_state: Optional[Dict[str, Any]] = None
+    frontend_state: Optional[Dict[str, Any]] = None
+    robustness_state: Optional[Dict[str, Any]] = None
+    awareness_summary: Optional[str] = None
+    context_vector: Optional[Dict[str, Any]] = None
+
+    class Config:
+        from_attributes = True
+
+
+class AwarenessSnapshotCreate(BaseModel):
+    backend_state: Optional[Dict[str, Any]] = None
+    frontend_state: Optional[Dict[str, Any]] = None
+    robustness_state: Optional[Dict[str, Any]] = None
+    awareness_summary: Optional[str] = None
+    context_vector: Optional[Dict[str, Any]] = None
+
+
+class AwarenessSnapshot(AwarenessSnapshotBase):
+    id: int
+
+
+class InternalDialogueBase(BaseModel):
+    created_at: datetime
+    participants: Optional[List[str]] = None
+    transcript: Optional[List[Dict[str, Any]]] = None
+    insights: Optional[str] = None
+    source_snapshot_id: Optional[int] = None
+    meta: Optional[Dict[str, Any]] = None
+
+    class Config:
+        from_attributes = True
+
+
+class InternalDialogueCreate(BaseModel):
+    participants: Optional[List[str]] = None
+    transcript: Optional[List[Dict[str, Any]]] = None
+    insights: Optional[str] = None
+    source_snapshot_id: Optional[int] = None
+    meta: Optional[Dict[str, Any]] = None
+
+
+class InternalDialogue(InternalDialogueBase):
+    id: int

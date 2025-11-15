@@ -1,0 +1,16 @@
+[
+  {
+    "time": 0.0,
+    "character": "Shiroi",
+    "text": "こんにちは、瑞希。今日はシステムのデモを始めるね。",
+    "emotion": "joy",
+    "duration": 4.2
+  },
+  {
+    "time": 4.2,
+    "character": "Mizuki",
+    "text": "よろしくねシロイ、準備はできてる？",
+    "emotion": "calm",
+    "duration": 3.5
+  }
+]

@@ -3,5 +3,20 @@
     "timestamp": "2025-11-03T10:00:00Z",
     "harmony_score": 0.75,
     "comment": "Initial harmony state."
+  },
+  {
+    "timestamp": "2025-11-10T19:10:52.959866",
+    "harmony_score": 0.0,
+    "comment": "Test harmony comment."
+  },
+  {
+    "timestamp": "2025-11-10T19:12:43.289549",
+    "harmony_score": 0.0,
+    "comment": "Test harmony comment."
+  },
+  {
+    "timestamp": "2025-11-10T19:19:03.167006",
+    "harmony_score": 0.0,
+    "comment": "Test harmony comment."
   }
 ]

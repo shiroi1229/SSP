@@ -1,21 +1,17 @@
-# path: orchestrator/insight_monitor.py
-# version: v2.6
-
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 import collections
 import json
 import os
 import argparse
 import random
 import numpy as np
+import datetime # Added datetime import
 
 from orchestrator.context_manager import ContextManager
 from orchestrator.recovery_policy_manager import RecoveryPolicyManager
 from orchestrator.policy_scheduler import PolicyScheduler
 from modules.log_manager import log_manager
+from modules.anomaly_detector import AnomalyDetector
+from modules.predictive_analyzer import PredictiveAnalyzer # Import the new PredictiveAnalyzer
 
 class TimeSeriesBuffer:
     """Maintain rolling historical data for anomaly metrics."""
@@ -104,45 +100,71 @@ class InsightMonitor:
         # New v2.6 components
         self.time_series = TimeSeriesBuffer(window_size=50)
         self.predictive_model = PredictiveRepairModel()
-
-        # Legacy deques (can be deprecated if fully replaced by TimeSeriesBuffer)
-        self.evaluation_score_history = collections.deque(maxlen=10)
-        self.emotion_history = collections.deque(maxlen=10)
+        self.anomaly_detector = AnomalyDetector()
+        self.predictive_analyzer = PredictiveAnalyzer() # Instantiate PredictiveAnalyzer
 
     def detect_anomaly(self) -> dict | None:
         """
-        Detects anomalies, including predicted future risks.
+        Detects anomalies using the AnomalyDetector and predictive model.
         """
-        # 1. Update time series buffer with latest metrics from context
+        # 1. Update time series buffer and AnomalyDetector with latest metrics from context
         self._update_metrics()
 
-        # 2. Predictive Anomaly Detection
-        impact_series = self.time_series.get_series("impact_score")
-        predicted_risk = self.predictive_model.predict(impact_series)
+        # Get current metrics for logging
+        cpu_percent = self.context_manager.get("short_term.system_health.cpu_percent", default=None)
+        memory_percent = self.context_manager.get("short_term.system_health.memory_percent", default=None)
+        latency = self.context_manager.get("short_term.system_health.latency", default=None)
 
-        if predicted_risk > 0.4: # Configurable threshold
-            log_manager.warning(f"[PredictiveRepair] Upcoming anomaly risk detected. Risk level: {predicted_risk:.2f}")
-            self.context_manager.set("mid_term.predicted_anomaly_risk", predicted_risk, reason="Forecast")
+        # 2. Predictive Anomaly Detection using PredictiveAnalyzer
+        predicted_anomaly_probability = self.predictive_analyzer.predict_anomaly_probability()
+        self.context_manager.set("mid_term.predicted_anomaly_probability", predicted_anomaly_probability, reason="Predictive Analyzer output")
+        
+        PREDICTIVE_ANOMALY_THRESHOLD = 0.7 # Configurable threshold
+        action_taken = "none"
+        if predicted_anomaly_probability > PREDICTIVE_ANOMALY_THRESHOLD:
+            log_manager.warning(f"[PredictiveAnalyzer] High predicted anomaly probability: {predicted_anomaly_probability:.2f}. Triggering preemptive repair.")
             self.policy_scheduler.trigger_preemptive_repair()
-            # We might still return an anomaly to stop current execution, or just let the preemptive repair run in the background.
-            # For now, we log and trigger, but don't return an immediate anomaly.
+            action_taken = "preemptive_repair_triggered"
+            # Log the predictive anomaly and action
+            self._log_predictive_self_correction(
+                pred_prob=predicted_anomaly_probability, 
+                action=action_taken,
+                metrics={"cpu": cpu_percent, "mem": memory_percent, "latency": latency}
+            )
+            
+            # Return this as an anomaly to potentially trigger auto_fix or other policies
+            return {
+                "type": "predictive_anomaly",
+                "message": f"Predicted anomaly probability {predicted_anomaly_probability:.2f} exceeds threshold {PREDICTIVE_ANOMALY_THRESHOLD}.",
+                "predicted_probability": predicted_anomaly_probability,
+                "source_module": "predictive_analyzer"
+            }
+        else:
+            # Log the prediction even if no action is taken
+            self._log_predictive_self_correction(
+                pred_prob=predicted_anomaly_probability,
+                action=action_taken,
+                metrics={"cpu": cpu_percent, "mem": memory_percent, "latency": latency}
+            )
 
-        # 3. Immediate Anomaly Detection (existing logic)
-        # This logic remains important for sudden, non-trend-based failures.
-        current_score = self.context_manager.get("mid_term.evaluation_score")
-        if current_score is not None:
-            self.evaluation_score_history.append(current_score)
 
-        if len(self.evaluation_score_history) >= 2:
-            latest_score, previous_score = self.evaluation_score_history[-1], self.evaluation_score_history[-2]
-            if (previous_score - latest_score) > 0.3:
-                anomaly_details = {
-                    "type": "evaluation_score_drop",
-                    "message": f"Evaluation score dropped significantly from {previous_score:.2f} to {latest_score:.2f}",
-                }
-                log_manager.warning(f"[Anomaly Detected] {anomaly_details['message']}")
-                return anomaly_details
+        # 3. Immediate Anomaly Detection using AnomalyDetector
+        metrics_to_check = {
+            "cpu_percent": self.context_manager.get("short_term.system_health.cpu_percent"),
+            "memory_percent": self.context_manager.get("short_term.system_health.memory_percent"),
+            "evaluation_score": self.context_manager.get("mid_term.evaluation_score"),
+            "impact_score": self.context_manager.get("short_term.impact_score"),
+            # Add other critical metrics here as they become available in context
+        }
 
+        for metric_name, value in metrics_to_check.items():
+            if value is not None:
+                anomaly = self.anomaly_detector.detect_anomaly(metric_name, value)
+                if anomaly:
+                    log_manager.warning(f"[InsightMonitor] Anomaly detected by AnomalyDetector: {anomaly['message']}")
+                    return anomaly # Return the first detected anomaly
+
+        # Check for module errors (legacy logic, can be integrated into AnomalyDetector if desired)
         evaluator_feedback = self.context_manager.get("mid_term.evaluation_feedback")
         if isinstance(evaluator_feedback, str) and "error" in evaluator_feedback.lower():
             anomaly_details = {
@@ -150,7 +172,7 @@ class InsightMonitor:
                 "module": "evaluator",
                 "message": f"Evaluator returned an error message: {evaluator_feedback}",
             }
-            log_manager.warning(f"[Anomaly Detected] {anomaly_details['message']}")
+            log_manager.warning(f"[InsightMonitor] Module error detected: {anomaly_details['message']}")
             return anomaly_details
 
         return None
@@ -160,21 +182,145 @@ class InsightMonitor:
         log_manager.info(f"🩹 [Recovery] {message}")
 
     def _update_metrics(self):
-        """Gathers the latest metrics from the context and adds them to the time series buffer."""
+        """Gathers the latest metrics from the context and adds them to the time series buffer and AnomalyDetector."""
         # Get metrics from context, with defaults if not present
         impact_score = self.context_manager.get("short_term.impact_score", default=None)
         evaluation_score = self.context_manager.get("mid_term.evaluation_score", default=None)
         repair_success_rate = self.context_manager.get("long_term.repair_success_rate", default=None)
+        
+        # System health metrics from the new /api/system/health endpoint
+        cpu_percent = self.context_manager.get("short_term.system_health.cpu_percent", default=None)
+        memory_percent = self.context_manager.get("short_term.system_health.memory_percent", default=None)
+        latency = self.context_manager.get("short_term.system_health.latency", default=None) # Assuming latency will be available
 
         self.time_series.add_point("impact_score", impact_score)
         self.time_series.add_point("evaluation_score", evaluation_score)
         self.time_series.add_point("repair_success_rate", repair_success_rate)
+        self.time_series.add_point("cpu_percent", cpu_percent)
+        self.time_series.add_point("memory_percent", memory_percent)
+
+        # AnomalyDetector also needs to be updated with current metrics
+        if cpu_percent is not None:
+            self.anomaly_detector.update_metric("cpu_percent", cpu_percent)
+        if memory_percent is not None:
+            self.anomaly_detector.update_metric("memory_percent", memory_percent)
+        if evaluation_score is not None:
+            self.anomaly_detector.update_metric("evaluation_score", evaluation_score)
+        if impact_score is not None:
+            self.anomaly_detector.update_metric("impact_score", impact_score)
+
+        # Feed metrics to PredictiveAnalyzer
+        self.predictive_analyzer.update_metrics(cpu_percent, memory_percent, latency)
+
+    def _log_predictive_self_correction(self, pred_prob: float, action: str, result: dict = None, context_id: str = None, metrics: dict = None):
+        """
+        Logs prediction results and actions to logs/predictive_self_correction.json.
+        (R-v1.1 Updated)
+        """
+        log_entry = {
+            "timestamp": datetime.datetime.now().isoformat(),
+            "pred_prob": pred_prob,
+            "action": action,
+        }
+        if result is not None:
+            log_entry["result"] = result
+        if context_id is not None:
+            log_entry["context_id"] = context_id
+        if metrics:
+            log_entry.update(metrics)
+
+        log_file_path = "logs/predictive_self_correction.json"
+        os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
+
+        # Read existing logs, append new entry, and write back
+        logs = []
+        if os.path.exists(log_file_path):
+            try:
+                with open(log_file_path, 'r', encoding='utf-8') as f:
+                    # Handle empty or malformed file
+                    content = f.read()
+                    if content.strip():
+                        logs = json.loads(content)
+                    if not isinstance(logs, list):
+                        log_manager.warning(f"{log_file_path} is not a list. Re-initializing.")
+                        logs = []
+            except json.JSONDecodeError:
+                log_manager.warning(f"Could not decode JSON from {log_file_path}. Starting new log.")
+                logs = []
+        
+        logs.append(log_entry)
+        
+        try:
+            with open(log_file_path, 'w', encoding='utf-8') as f:
+                json.dump(logs, f, indent=4)
+            log_manager.debug(f"Logged predictive self-correction data to {log_file_path}")
+        except IOError as e:
+            log_manager.error(f"Failed to write predictive self-correction log to {log_file_path}: {e}", exc_info=True)
+
+
+    def forecast_anomaly(self) -> dict:
+        """
+        予測型異常検出 (R-v1.1):
+        過去のメトリクス履歴から PredictiveAnalyzer により
+        異常発生確率を推定し、閾値を超えた場合に予防修復を実行する。
+        """
+        try:
+            # This is a deviation from the class's usual dependency injection for demonstration
+            from orchestrator.context_manager import ContextManager
+            from modules.auto_fix_executor import AutoFixExecutor
+            import time
+
+            context_manager = ContextManager(
+                history_path="logs/context_history.json",
+                context_filepath="data/test_context.json"
+            )
+            analyzer = PredictiveAnalyzer()
+
+            # 最新メトリクスを取得
+            self._update_metrics() # Ensure analyzer has latest metrics
+            pred_prob = analyzer.predict_anomaly_probability()
+
+            # Contextへ記録
+            context_manager.set(
+                "mid_term.forecast.predicted_anomaly_probability",
+                pred_prob,
+                reason="Predicted anomaly probability from R-v1.1"
+            )
+
+            log_manager.info(f"[Forecast] Predicted anomaly probability: {pred_prob:.3f}")
+
+            # Preventive trigger
+            if pred_prob >= 0.7:
+                log_manager.warning("[Forecast] Preventive Auto-Fix triggered.")
+                auto_fix = AutoFixExecutor()
+                result = auto_fix.execute_auto_fix(
+                    "preventive_fix",
+                    metadata={"pred_prob": pred_prob, "timestamp": time.time()}
+                )
+                log_manager.info(f"[Forecast] Preventive Auto-Fix Result: {result}")
+
+                context_manager.set(
+                    "mid_term.forecast.last_preventive_fix",
+                    {"prob": pred_prob, "result": result},
+                    reason="Preventive Auto-Fix event record"
+                )
+                # Log the event
+                self._log_predictive_self_correction(pred_prob, "preventive_fix", result=result, context_id="system.forecast.R-v1.1")
+                return {"pred_prob": pred_prob, "action": "preventive_fix", "result": result}
+            
+            # Log the 'none' action case
+            self._log_predictive_self_correction(pred_prob, "none", context_id="system.forecast.R-v1.1")
+            return {"pred_prob": pred_prob, "action": "none"}
+
+        except Exception as e:
+            log_manager.error(f"[InsightMonitor] forecast_anomaly failed: {e}", exc_info=True)
+            return {"error": str(e), "action": "failed"}
 
     def detect_trend(self) -> dict | None:
         """Detects significant trends in historical data."""
-        # This can be enhanced or replaced by the predictive model's insights
-        if len(self.evaluation_score_history) == self.evaluation_score_history.maxlen:
-            avg_score = sum(self.evaluation_score_history) / len(self.evaluation_score_history)
+        eval_scores = self.time_series.get_series("evaluation_score")
+        if len(eval_scores) == self.time_series.window_size:
+            avg_score = sum(eval_scores) / len(eval_scores)
             if avg_score < 0.5:
                 return {"type": "low_performance_trend", "message": "Consistent low evaluation scores.", "significant_change": True}
         return None
@@ -196,16 +342,58 @@ class InsightMonitor:
         log_manager.info("Phase 1: Simulating stable performance.")
         for i in range(30):
             stable_impact = 0.1 + random.uniform(-0.05, 0.05)
+            cpu = 20 + random.uniform(-5, 5)
+            mem = 30 + random.uniform(-5, 5)
+            latency = 50 + random.uniform(-10, 10)
+
             self.context_manager.set("short_term.impact_score", stable_impact, "sim")
+            self.context_manager.set("short_term.system_health.cpu_percent", cpu, "sim")
+            self.context_manager.set("short_term.system_health.memory_percent", mem, "sim")
+            self.context_manager.set("short_term.system_health.latency", latency, "sim")
+            self.context_manager.set("mid_term.evaluation_score", 0.8 + random.uniform(-0.1, 0.1), "sim")
+            
+            # Update metrics and get prediction
+            self._update_metrics()
+            predicted_prob = self.predictive_analyzer.predict_anomaly_probability()
+            self.context_manager.set("mid_term.predicted_anomaly_probability", predicted_prob, reason="Predictive Analyzer output")
+            
+            # Log simulation step
+            self._log_predictive_self_correction(cpu, mem, latency, predicted_prob, "none")
             self.detect_anomaly()
 
         # Phase 2: Introduce a downward trend
-        log_manager.info("Phase 2: Simulating downward trend in impact score.")
+        log_manager.info("Phase 2: Simulating downward trend in impact score and increasing CPU/Memory/Latency.")
         current_impact = 0.1
+        current_cpu = 20
+        current_mem = 30
+        current_latency = 50
+        current_eval = 0.8
         for i in range(steps - 30):
             current_impact += random.uniform(0.01, 0.03) # Negative trend
             degradation = 0.1 * (i / (steps - 30)) # Degradation gets worse over time
+            cpu = min(95, current_cpu + random.uniform(0.5, 1.5))
+            mem = min(95, current_mem + random.uniform(0.5, 1.0))
+            latency = min(500, current_latency + random.uniform(1.0, 3.0))
+
             self.context_manager.set("short_term.impact_score", current_impact + degradation, "sim")
+            self.context_manager.set("short_term.system_health.cpu_percent", cpu, "sim")
+            self.context_manager.set("short_term.system_health.memory_percent", mem, "sim")
+            self.context_manager.set("short_term.system_health.latency", latency, "sim")
+
+            current_eval -= random.uniform(0.01, 0.02)
+            self.context_manager.set("mid_term.evaluation_score", max(0.1, current_eval), "sim")
+
+            # Update metrics and get prediction
+            self._update_metrics()
+            predicted_prob = self.predictive_analyzer.predict_anomaly_probability()
+            self.context_manager.set("mid_term.predicted_anomaly_probability", predicted_prob, reason="Predictive Analyzer output")
+
+            # Determine action for logging
+            action_taken = "none"
+            if predicted_prob > PREDICTIVE_ANOMALY_THRESHOLD: # Use the same threshold as detect_anomaly
+                action_taken = "preemptive_repair_triggered"
+            
+            self._log_predictive_self_correction(cpu, mem, latency, predicted_prob, action_taken)
             self.detect_anomaly()
             
         # Export final data

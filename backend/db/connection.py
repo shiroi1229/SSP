@@ -12,7 +12,7 @@ from pathlib import Path # Add this import
 import json # Add this import
 from modules.config_manager import load_environment # Import the new function
 from modules.log_manager import log_manager # Import log_manager
-from backend.db.models import SessionLog, Sample, Base, DevLog, RoadmapItem # Import SessionLog, Sample, Base, DevLog, and RoadmapItem models
+from backend.db.models import SessionLog, Sample, Base, DevLog, RoadmapItem, AwarenessSnapshot, InternalDialogue # Import SessionLog, Sample, Base, DevLog, and RoadmapItem models
 
 # Load environment variables
 config = load_environment()
@@ -149,8 +149,63 @@ def update_session_logs_table():
     except Exception as e:
         log_manager.exception(f"Failed to update session_logs table: {e}")
 
+def update_roadmap_items_table():
+    """Adds the development_details column to the roadmap_items table."""
+    try:
+        with engine.connect() as connection:
+            connection.execute(text("ALTER TABLE roadmap_items ADD COLUMN IF NOT EXISTS development_details TEXT"))
+            connection.commit()
+            log_manager.info("Updated table roadmap_items with new column 'development_details'.")
+    except Exception as e:
+        log_manager.exception(f"Failed to update roadmap_items table: {e}")
+
+def ensure_awareness_snapshot_table():
+    """Ensures the awareness_snapshots table exists."""
+    ddl = """
+    CREATE TABLE IF NOT EXISTS awareness_snapshots (
+        id SERIAL PRIMARY KEY,
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        backend_state JSONB,
+        frontend_state JSONB,
+        robustness_state JSONB,
+        awareness_summary TEXT,
+        context_vector JSONB
+    );
+    """
+    try:
+        with engine.connect() as connection:
+            connection.execute(text(ddl))
+            connection.commit()
+            log_manager.info("Ensured awareness_snapshots table exists.")
+    except Exception as e:
+        log_manager.exception(f"Failed to ensure awareness_snapshots table: {e}")
+
+def ensure_internal_dialogue_table():
+    """Ensures the internal_dialogues table exists."""
+    ddl = """
+    CREATE TABLE IF NOT EXISTS internal_dialogues (
+        id SERIAL PRIMARY KEY,
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        participants JSONB,
+        transcript JSONB,
+        insights TEXT,
+        source_snapshot_id INTEGER,
+        meta JSONB
+    );
+    """
+    try:
+        with engine.connect() as connection:
+            connection.execute(text(ddl))
+            connection.commit()
+            log_manager.info("Ensured internal_dialogues table exists.")
+    except Exception as e:
+        log_manager.exception(f"Failed to ensure internal_dialogues table: {e}")
+
 if __name__ == "__main__":
     log_manager.info("Running connection.py example usage.")
     test_connection()
-    # The following line is for development purposes to apply schema changes.
-    # update_session_logs_table()
+    # The following lines are for development purposes to apply schema changes.
+    update_session_logs_table()
+    update_roadmap_items_table()
+    ensure_awareness_snapshot_table()
+    ensure_internal_dialogue_table()

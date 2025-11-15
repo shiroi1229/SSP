@@ -76,3 +76,27 @@ class RoadmapItem(Base):
     prLink = Column(String)
     development_details = Column(Text)
     parent_id = Column(Integer, nullable=True) # New column for hierarchical relationships
+
+
+class AwarenessSnapshot(Base):
+    __tablename__ = "awareness_snapshots"
+
+    id = Column(Integer, primary_key=True, index=True)
+    created_at = Column(DateTime(timezone=True), default=datetime.utcnow, index=True)
+    backend_state = Column(JSON)
+    frontend_state = Column(JSON)
+    robustness_state = Column(JSON)
+    awareness_summary = Column(Text)
+    context_vector = Column(JSON)
+
+
+class InternalDialogue(Base):
+    __tablename__ = "internal_dialogues"
+
+    id = Column(Integer, primary_key=True, index=True)
+    created_at = Column(DateTime(timezone=True), default=datetime.utcnow, index=True)
+    participants = Column(JSON)  # e.g., ["創造","理性","感情","意志"]
+    transcript = Column(JSON)    # list of {"speaker": str, "message": str}
+    insights = Column(Text)
+    source_snapshot_id = Column(Integer, nullable=True)
+    meta = Column(JSON)

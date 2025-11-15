@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import List, Dict
 from collections import defaultdict
@@ -8,7 +8,16 @@ import json # Added json import
 
 from backend.db.connection import get_db
 from backend.db.models import RoadmapItem as DBRoadmapItem
-from backend.db.schemas import RoadmapItem, RoadmapData, RoadmapItemCreate, RoadmapItemBase, RoadmapItemUpdateByVersion
+from backend.db.schemas import (
+    RoadmapItem,
+    RoadmapData,
+    RoadmapItemCreate,
+    RoadmapItemBase,
+    RoadmapItemUpdateByVersion,
+    RoadmapPrefixSummary,
+    RoadmapStatsResponse,
+    RoadmapDelayedItem,
+)
 
 from pydantic import BaseModel # Moved from lower down
 # import re # Already imported above
@@ -145,6 +154,99 @@ def get_version_sort_key(item):
 
     return (prefix_num, int(major), int(minor))
 
+LIST_FIELDS = ("keyFeatures", "dependencies", "metrics")
+OPTIONAL_STRING_FIELDS = ("owner", "documentationLink", "prLink", "startDate", "endDate", "development_details")
+
+
+def _normalize_payload_fields(payload: Dict, fill_missing: bool = False) -> Dict:
+    for field in LIST_FIELDS:
+        if field in payload:
+            payload[field] = _split_and_clean_list_field(payload[field])
+        elif fill_missing:
+            payload[field] = []
+    for field in OPTIONAL_STRING_FIELDS:
+        if field in payload and not payload[field]:
+            payload[field] = None
+        elif fill_missing and field not in payload:
+            payload[field] = None
+    return payload
+
+
+def _validate_dependencies(dependencies: List[str], db: Session):
+    if not dependencies:
+        return
+    existing_versions = {row[0] for row in db.query(DBRoadmapItem.version).all()}
+    missing = [dep for dep in dependencies if dep not in existing_versions]
+    if missing:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Dependencies not found: {', '.join(missing)}"
+        )
+
+
+def _get_prefix_from_version(version: str | None) -> str:
+    if not version:
+        return "UNKNOWN"
+    return version.split('-', 1)[0] if '-' in version else version
+
+
+def _coerce_progress(value) -> int:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return 0
+
+
+@router.get("/stats", response_model=RoadmapStatsResponse)
+def get_roadmap_stats(
+    focus_prefix: str = Query("A", description="Prefix to surface in the delayed list."),
+    db: Session = Depends(get_db),
+):
+    log_manager.info("Generating roadmap prefix summary.")
+    try:
+        db_items = db.query(DBRoadmapItem).all()
+    except Exception as exc:
+        log_manager.error(f"Failed to fetch roadmap stats: {exc}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Database error: {exc}")
+
+    aggregates: Dict[str, Dict[str, int]] = defaultdict(lambda: {"count": 0, "completed": 0, "in_progress": 0, "not_started": 0})
+    delayed_items: List[RoadmapDelayedItem] = []
+
+    for item in db_items:
+        prefix = _get_prefix_from_version(item.version)
+        progress_value = _coerce_progress(item.progress)
+        bucket = aggregates[prefix]
+        bucket["count"] += 1
+        if progress_value >= 100:
+            bucket["completed"] += 1
+        elif progress_value > 0:
+            bucket["in_progress"] += 1
+        else:
+            bucket["not_started"] += 1
+
+        if prefix == focus_prefix and progress_value < 100:
+            delayed_items.append(
+                RoadmapDelayedItem(
+                    version=item.version,
+                    codename=item.codename,
+                    progress=item.progress,
+                    status=item.status,
+                )
+            )
+
+    ordered_summary = [
+        RoadmapPrefixSummary(
+            prefix=prefix,
+            count=bucket["count"],
+            completed=bucket["completed"],
+            in_progress=bucket["in_progress"],
+            not_started=bucket["not_started"],
+        )
+        for prefix, bucket in sorted(aggregates.items(), key=lambda kv: kv[0])
+    ]
+
+    return RoadmapStatsResponse(summary=ordered_summary, delayed=delayed_items)
+
 
 @router.get("/current", response_model=RoadmapData)
 def get_current_roadmap(db: Session = Depends(get_db)):
@@ -240,6 +342,9 @@ def update_roadmap_item_by_version(
         raise HTTPException(status_code=404, detail="Roadmap item not found")
 
     update_data = item_update.model_dump(exclude_unset=True, by_alias=True)
+    _normalize_payload_fields(update_data, fill_missing=False)
+    if "dependencies" in update_data:
+        _validate_dependencies(update_data["dependencies"], db)
     for key, value in update_data.items():
         setattr(db_item, key, value)
 
@@ -260,7 +365,9 @@ def create_roadmap_item(item: RoadmapItemCreate, db: Session = Depends(get_db)):
     """
     log_manager.info(f"Attempting to create a new roadmap item with version: {item.version}")
     try:
-        db_item = DBRoadmapItem(**item.model_dump(by_alias=True))
+        payload = _normalize_payload_fields(item.model_dump(by_alias=True), fill_missing=True)
+        _validate_dependencies(payload.get("dependencies", []), db)
+        db_item = DBRoadmapItem(**payload)
         db.add(db_item)
         db.commit()
         db.refresh(db_item)
@@ -282,7 +389,8 @@ def update_roadmap_item(item_id: int, item: RoadmapItemBase, db: Session = Depen
         log_manager.warning(f"Update failed: Roadmap item with ID {item_id} not found.")
         raise HTTPException(status_code=404, detail="Roadmap item not found")
 
-    update_data = item.model_dump(exclude_unset=True, by_alias=True)
+    update_data = _normalize_payload_fields(item.model_dump(by_alias=True), fill_missing=True)
+    _validate_dependencies(update_data.get("dependencies", []), db)
     for key, value in update_data.items():
         setattr(db_item, key, value)
 
@@ -317,8 +425,9 @@ def import_roadmap_item_from_text(payload: RoadmapImportText, db: Session = Depe
                 raise HTTPException(status_code=400, detail=f"Parsing error: Missing required field '{field}'")
 
         roadmap_item_create = RoadmapItemCreate(**parsed_data)
-        
-        db_item = DBRoadmapItem(**roadmap_item_create.model_dump(by_alias=True))
+        payload = _normalize_payload_fields(roadmap_item_create.model_dump(by_alias=True), fill_missing=True)
+        _validate_dependencies(payload.get("dependencies", []), db)
+        db_item = DBRoadmapItem(**payload)
         db.add(db_item)
         db.commit()
         db.refresh(db_item)

@@ -2,7 +2,7 @@
 # version: v0.30
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.api import persona_state, logs_recent, evaluate, context, analyze_sessions, sessions, chat, get_context, status, emotion, tts, osc, roadmap, roadmap_tree, dashboard_ws, system_health, modules, collective_mind, robustness_firewall, robustness_self_healing, robustness_loop_health, robustness_loop_config
+from backend.api import persona_state, logs_recent, evaluate, context, analyze_sessions, sessions, chat, get_context, status, emotion, tts, osc, roadmap, roadmap_tree, dashboard_ws, system_health, modules, collective_mind, robustness_firewall, robustness_self_healing, robustness_loop_health, robustness_loop_config, robustness_load_balancer, robustness_recovery, robustness_akashic, robustness_resilience, robustness_luminous
 from backend.api import system_forecast # Import the new forecast router
 from backend.api.logs import recent
 from backend.api.logs import roadmap_sync # Import the new roadmap_sync router
@@ -85,6 +85,11 @@ app.include_router(robustness_firewall.router, prefix="/api")
 app.include_router(robustness_self_healing.router, prefix="/api")
 app.include_router(robustness_loop_health.router, prefix="/api")
 app.include_router(robustness_loop_config.router, prefix="/api")
+app.include_router(robustness_load_balancer.router, prefix="/api")
+app.include_router(robustness_recovery.router, prefix="/api")
+app.include_router(robustness_akashic.router, prefix="/api")
+app.include_router(robustness_resilience.router, prefix="/api")
+app.include_router(robustness_luminous.router, prefix="/api")
 app.include_router(meta_contracts.router, prefix="/api")
 
 # Test comment for ImpactAnalyzer

@@ -1,0 +1,62 @@
+{
+  "name": "evaluator",
+  "path": "contracts\\evaluator.yaml",
+  "version": "1.0",
+  "schema_version": "v3.0",
+  "status": "unknown",
+  "description": "Evaluates the quality of a generated response based on the context.",
+  "timestamp": "2025-11-14T17:45:08.905470+00:00",
+  "stats": {
+    "input_count": 2,
+    "output_count": 2,
+    "required_inputs": 1,
+    "required_outputs": 0
+  },
+  "missing_fields": [],
+  "inputs": [
+    {
+      "name": "short_term.response",
+      "type": "str",
+      "description": "The generated response to be evaluated.",
+      "required": true
+    },
+    {
+      "name": "long_term.model_params",
+      "type": "dict",
+      "description": "Current model parameters for reference.",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "mid_term.evaluation_score",
+      "type": "float",
+      "description": "The calculated quality score of the response (0.0 to 1.0).",
+      "required": false
+    },
+    {
+      "name": "long_term.optimization_log",
+      "type": "list",
+      "description": "A log entry detailing the evaluation, for future optimization.",
+      "required": false
+    }
+  ],
+  "context_index": {
+    "inputs": {
+      "short_term": [
+        "response"
+      ],
+      "long_term": [
+        "model_params"
+      ]
+    },
+    "outputs": {
+      "mid_term": [
+        "evaluation_score"
+      ],
+      "long_term": [
+        "optimization_log"
+      ]
+    }
+  }
+}

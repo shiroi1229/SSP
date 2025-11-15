@@ -225,7 +225,27 @@ detailed_roadmap_data = {
       "metrics": ["手動介入の削減率", "異常解決時間", "自己修正の成功率"],
       "owner": "堅牢性チーム",
       "documentationLink": "/docs/robustness/r-v1.0",
-      "prLink": "https://github.com/shiroi/ssp/pull/11"
+      "prLink": "https://github.com/shiroi/ssp/pull/11",
+    },
+    {
+      "version": "R-v1.2",
+      "codename": "システム堅牢性の向上",
+      "goal": "自己修復システムの信頼性と移植性を向上させるため、内部コードの改善を実施する。",
+      "status": "🟢",
+      "description": "ハードコードされたパスの動的解決、テストの独立性向上、エラーハンドリングの具体化を行い、開発環境への依存を低減させ、システムの安定性を高める。",
+      "startDate": "2025-11-10",
+      "endDate": "2025-11-10",
+      "progress": 100,
+      "keyFeatures": [
+        "パス解決の動的化: `self_healing_daemon.py` と `self_healing_runner.py` 内の絶対パスを、実行場所からの相対パス解決に変更。",
+        "テストの独立性向上: `system_test.py` がテスト実行時にファイルI/Oを行わないよう、ContextManagerを用いたインメモリでのテストに切り替え。",
+        "エラーハンドリングの具体化: `system_test.py` のAPI呼び出し箇所で、一般的な `Exception` 捕捉から具体的な `requests.exceptions.RequestException` の捕捉に変更。"
+      ],
+      "dependencies": ["R-v1.0"],
+      "metrics": ["異なる環境での自己修復デーモンの動作安定性", "`system_test.py` 実行時の副作用（意図しないファイルの生成）の排除"],
+      "owner": "Gemini",
+      "documentationLink": "/docs/robustness/r-v1.2",
+      "prLink": ""
     },
     {
       "version": "R-v1.5",
@@ -242,14 +262,18 @@ detailed_roadmap_data = {
       "owner": "堅牢性チーム",
       "documentationLink": "/docs/robustness/r-v1.5",
       "prLink": ""
-    }
-  ]
+    },
+  ],
 }
 
 def populate_roadmap_data():
     db: Session = SessionLocal()
     try:
-        create_all_tables() # Ensure tables are created
+        # Drop and recreate the table to ensure a clean slate
+        log_manager.info("Dropping and recreating roadmap_items table...")
+        DBRoadmapItem.__table__.drop(engine, checkfirst=True)
+        DBRoadmapItem.__table__.create(engine, checkfirst=True)
+        log_manager.info("Table recreated successfully.")
 
         for category, items in detailed_roadmap_data.items():
             for item_data in items:
@@ -268,13 +292,13 @@ def populate_roadmap_data():
 
                 if existing_item:
                     # Update existing item
-                    for key, value in roadmap_item_create.dict(exclude_unset=True).items():
+                    for key, value in roadmap_item_create.model_dump(exclude_unset=True).items():
                         setattr(existing_item, key, value)
                     db.add(existing_item)
                     log_manager.info(f"Updated roadmap item: {roadmap_item_create.version}")
                 else:
                     # Create new item
-                    db_item = DBRoadmapItem(**roadmap_item_create.dict())
+                    db_item = DBRoadmapItem(**roadmap_item_create.model_dump())
                     db.add(db_item)
                     log_manager.info(f"Added new roadmap item: {roadmap_item_create.version}")
         
