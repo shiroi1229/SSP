@@ -8,13 +8,13 @@ completed = [
     ("R-v0.3", "Alert & Diagnostic System"),
     ("R-v0.4", "Adaptive Load Balancer"),
     ("R-v0.5", "Distributed Recovery System"),
+    ("R-v0.7", "Temporal Recovery Layer"),
     ("R-v0.8", "Causal Integrity Engine"),
 ]
 
 # (version, codename, progress)
 in_progress = [
     ("R-v0.6", "Quantum Safety Protocol", 60),
-    ("R-v0.7", "Temporal Recovery Layer", 85),
     ("R-v0.9", "Meta-Causal Feedback System", 70),
 ]
 

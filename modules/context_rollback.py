@@ -13,9 +13,11 @@ class ContextRollback:
         self,
         history_path: str = "logs/context_history.json",
         output_path: str = "data/context_rollback_snapshot.json",
+        log_path: str = "logs/context_rollback.jsonl",
     ) -> None:
         self.history_path = Path(history_path)
         self.output_path = Path(output_path)
+        self.log_path = Path(log_path)
 
     def rollback(self, timestamp: Optional[str], reason: str = "manual rollback") -> Dict[str, Any]:
         snapshots = self._load_history()
@@ -30,7 +32,15 @@ class ContextRollback:
         }
         self.output_path.parent.mkdir(parents=True, exist_ok=True)
         self.output_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-        return {"success": True, "payload": payload}
+        payload["snapshot_file"] = str(self.output_path)
+        log_entry = {
+            "restored_at": payload["restored_at"],
+            "requested_timestamp": timestamp,
+            "reason": reason,
+            "snapshot_file": payload["snapshot_file"],
+        }
+        self._append_log(log_entry)
+        return {"success": True, "payload": payload, "log": log_entry}
 
     def _load_history(self):
         if not self.history_path.exists():
@@ -53,6 +63,11 @@ class ContextRollback:
                 best = entry
                 best_diff = diff
         return best
+
+    def _append_log(self, entry: Dict[str, Any]) -> None:
+        self.log_path.parent.mkdir(parents=True, exist_ok=True)
+        with self.log_path.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
 
 rollback_manager = ContextRollback()
