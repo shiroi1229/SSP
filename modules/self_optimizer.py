@@ -20,19 +20,17 @@ def apply_self_optimization(context_manager: object):
 
     # Get data from context
     report = context_manager.get('short_term.self_analysis_report')
-    params = context_manager.get('long_term.model_params')
-    optimization_log = context_manager.get('long_term.optimization_log')
+    params = context_manager.get('long_term.model_params') or {"temperature": 0.7, "top_p": 0.9, "max_tokens": 1024}
+    optimization_log = context_manager.get('long_term.optimization_log') or []
 
     if not report:
         logging.warning("[SelfOptimizer] No self-analysis report found in the context.")
-        return {"status": "skipped", "message": "No report found."}
-
-    if not params:
-        params = {"temperature": 0.7, "top_p": 0.9, "max_tokens": 1024}
-        logging.info("[SelfOptimizer] No model parameters found in context, using defaults.")
-    
-    if optimization_log is None:
-        optimization_log = []
+        return {
+            "status": "skipped",
+            "message": "No report found.",
+            "params": params,
+            "avg_score": None,
+        }
 
     # Extract numeric indicators from the report
     avg_match = re.search(r"Average Evaluation Score:\s*(\d+\.?\d*)", report)
@@ -59,4 +57,4 @@ def apply_self_optimization(context_manager: object):
     context_manager.set('long_term.optimization_log', optimization_log)
 
     logging.info(f"[SelfOptimizer] Updated model parameters: {params}")
-    return {"status": "success", "params": params}
+    return {"status": "success", "params": params, "avg_score": avg_score}

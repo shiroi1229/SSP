@@ -25,7 +25,7 @@ async def fetch_github_roadmap():
         try:
             async with session.get(GITHUB_RAW_URL) as response:
                 response.raise_for_status()
-                return await response.json()
+                return await response.json(content_type=None)
         except aiohttp.ClientError as e:
             roadmap_sync_logger.error(f"Failed to fetch roadmap from GitHub: {e}")
             return None

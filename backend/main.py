@@ -2,7 +2,8 @@
 # version: v0.30
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.api import persona_state, logs_recent, evaluate, context, analyze_sessions, sessions, chat, get_context, status, emotion, tts, osc, roadmap, roadmap_tree, dashboard_ws, system_health, modules, collective_mind, robustness_firewall, robustness_self_healing, robustness_loop_health, robustness_loop_config, robustness_load_balancer, robustness_recovery, robustness_akashic, robustness_resilience, robustness_luminous
+from backend.api import persona_state, logs_recent, evaluate, context, analyze_sessions, sessions, chat, get_context, status, emotion, tts, osc, roadmap, roadmap_tree, dashboard_ws, system_health, modules, collective_mind, robustness_firewall, robustness_self_healing, robustness_loop_health, robustness_loop_config, robustness_load_balancer, robustness_recovery, robustness_akashic, robustness_resilience, robustness_luminous, awareness, internal_dialogue, security
+from backend.api import timeline_restore, context_rollback, causal_trace, causal_verify, causal_events, causal_insight, causal_report, meta_causal_feedback, meta_causal_bias, auto_actions, meta_causal_bias_history, meta_optimizer
 from backend.api import system_forecast # Import the new forecast router
 from backend.api.logs import recent
 from backend.api.logs import roadmap_sync # Import the new roadmap_sync router
@@ -52,8 +53,7 @@ async def startup_event():
     log_manager.info("Global ContextManager and InsightMonitor initialized.")
 
 
-# ✅ router登録（prefix指定）
-# app.include_router(persona_state.router, prefix="/api")
+# ✁Erouter登録�E�Erefix持E��！E# app.include_router(persona_state.router, prefix="/api")
 app.include_router(logs_recent.router, prefix="/api")
 app.include_router(evaluate.router, prefix="/api")
 app.include_router(context.router, prefix="/api")
@@ -81,6 +81,8 @@ app.include_router(stage_runs_router, prefix="/api")
 app.include_router(persona_routes_router, prefix="/api")
 app.include_router(modules.router, prefix="/api")
 app.include_router(collective_mind.router, prefix="/api")
+app.include_router(awareness.router, prefix="/api")
+app.include_router(internal_dialogue.router, prefix="/api")
 app.include_router(robustness_firewall.router, prefix="/api")
 app.include_router(robustness_self_healing.router, prefix="/api")
 app.include_router(robustness_loop_health.router, prefix="/api")
@@ -90,6 +92,19 @@ app.include_router(robustness_recovery.router, prefix="/api")
 app.include_router(robustness_akashic.router, prefix="/api")
 app.include_router(robustness_resilience.router, prefix="/api")
 app.include_router(robustness_luminous.router, prefix="/api")
+app.include_router(security.router, prefix="/api")
+app.include_router(timeline_restore.router, prefix="/api")
+app.include_router(context_rollback.router, prefix="/api")
+app.include_router(causal_trace.router, prefix="/api")
+app.include_router(causal_verify.router, prefix="/api")
+app.include_router(causal_events.router, prefix="/api")
+app.include_router(causal_insight.router, prefix="/api")
+app.include_router(causal_report.router, prefix="/api")
+app.include_router(meta_causal_feedback.router, prefix="/api")
+app.include_router(meta_causal_bias.router, prefix="/api")
+app.include_router(meta_causal_bias_history.router, prefix="/api")
+app.include_router(auto_actions.router, prefix="/api")
+app.include_router(meta_optimizer.router, prefix="/api")
 app.include_router(meta_contracts.router, prefix="/api")
 
 # Test comment for ImpactAnalyzer

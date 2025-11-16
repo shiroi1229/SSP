@@ -12,6 +12,12 @@ from orchestrator.policy_scheduler import PolicyScheduler
 from modules.log_manager import log_manager
 from modules.anomaly_detector import AnomalyDetector
 from modules.predictive_analyzer import PredictiveAnalyzer # Import the new PredictiveAnalyzer
+from modules.causal_graph import causal_graph
+from modules.causal_verifier import verify_causality
+from modules.causal_ingest import ingest_from_history
+from modules.context_rollback import rollback_manager
+from modules.auto_action_log import log_action
+from modules.auto_action_analyzer import compute_action_stats, should_execute
 
 class TimeSeriesBuffer:
     """Maintain rolling historical data for anomaly metrics."""
@@ -407,6 +413,62 @@ class InsightMonitor:
             json.dump({"final_predicted_risk": final_risk}, f, indent=4)
         
         log_manager.info(f"--- Simulation Complete. Final predicted risk: {final_risk:.2f} ---")
+
+    def compute_causal_integrity(self, sample_size: int = 50) -> dict:
+        """Evaluate causal graph consistency by sampling events."""
+        graph = causal_graph.build_graph()
+        nodes = graph.get("nodes", [])
+        edges = graph.get("edges", [])
+        total_nodes = len(nodes)
+        auto_action = None
+        if total_nodes == 0:
+            return {
+                "total_nodes": 0,
+                "total_edges": 0,
+                "sampled": 0,
+                "success_ratio": 0.0,
+                "missing_parent_events": [],
+                "auto_action": auto_action,
+            }
+        sampled = nodes[-sample_size:]
+        failures = []
+        for node in sampled:
+            result = verify_causality(node["event_id"])
+            if not result["success"]:
+                failures.append({"event_id": node["event_id"], "missing": result["missing_parents"]})
+        success_ratio = 1 - (len(failures) / max(len(sampled), 1))
+        if failures:
+            action_stats = compute_action_stats(limit=200)
+            stats_snapshot = action_stats.get("causal_auto_action", {})
+            min_ratio = 0.5
+            if not should_execute("causal_auto_action", action_stats, min_ratio=min_ratio):
+                auto_action = {
+                    "decision": "skipped",
+                    "skipped": True,
+                    "reason": f"success ratio {stats_snapshot.get('success_ratio', 0.0):.2f} < {min_ratio:.2f}",
+                    "stats": stats_snapshot,
+                }
+            else:
+                ingest_result = ingest_from_history(limit=50)
+                rollback_result = rollback_manager.rollback(None, reason="auto-causal-repair")
+                overall_success = bool(ingest_result.get("success")) and bool(rollback_result.get("success"))
+                auto_action = {
+                    "decision": "executed",
+                    "skipped": False,
+                    "ingest": ingest_result,
+                    "rollback": rollback_result,
+                    "success": overall_success,
+                    "stats": stats_snapshot,
+                }
+                log_action({"type": "causal_auto_action", "ingest": ingest_result, "rollback": rollback_result}, success=overall_success)
+        return {
+            "total_nodes": total_nodes,
+            "total_edges": len(edges),
+            "sampled": len(sampled),
+            "success_ratio": round(success_ratio, 3),
+            "missing_parent_events": failures[:10],
+            "auto_action": auto_action,
+        }
 
 
 if __name__ == "__main__":

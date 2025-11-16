@@ -74,6 +74,7 @@ class MetaContract:
     inputs: List[Dict[str, Any]] = field(default_factory=list)
     outputs: List[Dict[str, Any]] = field(default_factory=list)
     context_index: Dict[str, List[str]] = field(default_factory=dict)
+    contract_hash: str = ""
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -105,6 +106,8 @@ class MetaContractManager:
         self.meta_dir = meta_dir or CONTRACT_META_DIR
         self.contracts_dir.mkdir(exist_ok=True)
         self.meta_dir.mkdir(parents=True, exist_ok=True)
+        self.history_dir = self.meta_dir / "history"
+        self.history_dir.mkdir(parents=True, exist_ok=True)
 
     def load_contracts(self) -> List[Tuple[Path, Dict[str, Any]]]:
         """Load raw contract YAML files as dictionaries."""
@@ -176,7 +179,19 @@ class MetaContractManager:
             "inputs": self._build_context_index(inputs),
             "outputs": self._build_context_index(outputs),
         }
+        meta.contract_hash = self._compute_hash(contract)
         return meta
+
+    def _compute_hash(self, contract: Dict[str, Any]) -> str:
+        normalised = json.dumps(contract, sort_keys=True, ensure_ascii=False)
+        return str(abs(hash(normalised)))
+
+    def record_history(self, meta: MetaContract) -> None:
+        history_path = self.history_dir / f"{meta.name}.jsonl"
+        entry = meta.to_dict()
+        entry["recorded_at"] = datetime.now(timezone.utc).isoformat()
+        with open(history_path, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
     def sync(self) -> Dict[str, Any]:
         """Regenerate per-contract metadata files and the aggregated registry."""
@@ -187,6 +202,7 @@ class MetaContractManager:
             output_path = self.meta_dir / f"{meta.name}_meta.json"
             with open(output_path, "w", encoding="utf-8") as fh:
                 json.dump(meta.to_dict(), fh, ensure_ascii=False, indent=2)
+            self.record_history(meta)
 
         registry_payload = {
             "generated_at": datetime.now(timezone.utc).isoformat(),

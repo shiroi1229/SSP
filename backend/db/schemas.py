@@ -134,3 +134,11 @@ class InternalDialogueCreate(BaseModel):
 
 class InternalDialogue(InternalDialogueBase):
     id: int
+
+
+class AkashicIntegrationState(BaseModel):
+    collected_at: datetime
+    snapshot: Optional[AwarenessSnapshot] = None
+    internal_dialogue: Optional[InternalDialogue] = None
+    akashic_sync: Dict[str, Any]
+    persona_state: Dict[str, Any]

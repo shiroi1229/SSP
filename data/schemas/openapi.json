@@ -578,6 +578,38 @@
     "output_schema": null
   },
   {
+    "id": "get_roadmap_stats_api_roadmap_stats_get",
+    "path": "/api/roadmap/stats",
+    "method": "GET",
+    "summary": "Get Roadmap Stats",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": {
+      "properties": {
+        "summary": {
+          "items": {
+            "$ref": "#/components/schemas/RoadmapPrefixSummary"
+          },
+          "type": "array",
+          "title": "Summary"
+        },
+        "delayed": {
+          "items": {
+            "$ref": "#/components/schemas/RoadmapDelayedItem"
+          },
+          "type": "array",
+          "title": "Delayed"
+        }
+      },
+      "type": "object",
+      "required": [
+        "summary",
+        "delayed"
+      ],
+      "title": "RoadmapStatsResponse"
+    }
+  },
+  {
     "id": "get_current_roadmap_api_roadmap_current_get",
     "path": "/api/roadmap/current",
     "method": "GET",
@@ -2146,6 +2178,328 @@
     "output_schema": null
   },
   {
+    "id": "list_awareness_snapshots_api_awareness_snapshots_get",
+    "path": "/api/awareness/snapshots",
+    "method": "GET",
+    "summary": "List Awareness Snapshots",
+    "tags": [
+      "Awareness"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "create_awareness_snapshot_api_awareness_snapshots_post",
+    "path": "/api/awareness/snapshots",
+    "method": "POST",
+    "summary": "Create Awareness Snapshot",
+    "tags": [
+      "Awareness"
+    ],
+    "input_schema": {
+      "properties": {
+        "backend_state": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Backend State"
+        },
+        "frontend_state": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Frontend State"
+        },
+        "robustness_state": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Robustness State"
+        },
+        "awareness_summary": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Awareness Summary"
+        },
+        "context_vector": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Context Vector"
+        }
+      },
+      "type": "object",
+      "title": "AwarenessSnapshotCreate"
+    },
+    "output_schema": {
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Created At"
+        },
+        "backend_state": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Backend State"
+        },
+        "frontend_state": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Frontend State"
+        },
+        "robustness_state": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Robustness State"
+        },
+        "awareness_summary": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Awareness Summary"
+        },
+        "context_vector": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Context Vector"
+        },
+        "id": {
+          "type": "integer",
+          "title": "Id"
+        }
+      },
+      "type": "object",
+      "required": [
+        "created_at",
+        "id"
+      ],
+      "title": "AwarenessSnapshot"
+    }
+  },
+  {
+    "id": "get_akashic_state_api_awareness_akashic_get",
+    "path": "/api/awareness/akashic",
+    "method": "GET",
+    "summary": "Get Akashic State",
+    "tags": [
+      "Awareness"
+    ],
+    "input_schema": null,
+    "output_schema": {
+      "properties": {
+        "collected_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Collected At"
+        },
+        "snapshot": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/AwarenessSnapshot"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "internal_dialogue": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/InternalDialogue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "akashic_sync": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Akashic Sync"
+        },
+        "persona_state": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Persona State"
+        }
+      },
+      "type": "object",
+      "required": [
+        "collected_at",
+        "akashic_sync",
+        "persona_state"
+      ],
+      "title": "AkashicIntegrationState"
+    }
+  },
+  {
+    "id": "list_internal_dialogues_api_internal_dialogue_logs_get",
+    "path": "/api/internal-dialogue/logs",
+    "method": "GET",
+    "summary": "List Internal Dialogues",
+    "tags": [
+      "InternalDialogue"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "trigger_internal_dialogue_api_internal_dialogue_generate_post",
+    "path": "/api/internal-dialogue/generate",
+    "method": "POST",
+    "summary": "Trigger Internal Dialogue",
+    "tags": [
+      "InternalDialogue"
+    ],
+    "input_schema": null,
+    "output_schema": {
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Created At"
+        },
+        "participants": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Participants"
+        },
+        "transcript": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Transcript"
+        },
+        "insights": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Insights"
+        },
+        "source_snapshot_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Snapshot Id"
+        },
+        "meta": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Meta"
+        },
+        "id": {
+          "type": "integer",
+          "title": "Id"
+        }
+      },
+      "type": "object",
+      "required": [
+        "created_at",
+        "id"
+      ],
+      "title": "InternalDialogue"
+    }
+  },
+  {
     "id": "get_cognitive_firewall_state_api_robustness_firewall_get",
     "path": "/api/robustness/firewall",
     "method": "GET",
@@ -2182,6 +2536,326 @@
     "output_schema": null
   },
   {
+    "id": "get_load_balancer_state_api_robustness_load_balancer_get",
+    "path": "/api/robustness/load-balancer",
+    "method": "GET",
+    "summary": "Get Load Balancer State",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "update_load_balancer_rules_api_robustness_load_balancer_rules_post",
+    "path": "/api/robustness/load-balancer/rules",
+    "method": "POST",
+    "summary": "Update Load Balancer Rules",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_recovery_state_api_robustness_distributed_recovery_get",
+    "path": "/api/robustness/distributed-recovery",
+    "method": "GET",
+    "summary": "Get Recovery State",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "promote_standby_api_robustness_distributed_recovery_promote_post",
+    "path": "/api/robustness/distributed-recovery/promote",
+    "method": "POST",
+    "summary": "Promote Standby",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "update_node_status_api_robustness_distributed_recovery_status_post",
+    "path": "/api/robustness/distributed-recovery/status",
+    "method": "POST",
+    "summary": "Update Node Status",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_akashic_sync_state_api_robustness_akashic_sync_get",
+    "path": "/api/robustness/akashic-sync",
+    "method": "GET",
+    "summary": "Get Akashic Sync State",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "update_thresholds_api_robustness_akashic_sync_thresholds_post",
+    "path": "/api/robustness/akashic-sync/thresholds",
+    "method": "POST",
+    "summary": "Update Thresholds",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_resilience_state_api_robustness_existential_resilience_get",
+    "path": "/api/robustness/existential-resilience",
+    "method": "GET",
+    "summary": "Get Resilience State",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "update_resilience_actions_api_robustness_existential_resilience_actions_post",
+    "path": "/api/robustness/existential-resilience/actions",
+    "method": "POST",
+    "summary": "Update Resilience Actions",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_luminous_state_api_robustness_luminous_nexus_get",
+    "path": "/api/robustness/luminous-nexus",
+    "method": "GET",
+    "summary": "Get Luminous State",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "sync_cluster_api_robustness_luminous_nexus_sync_post",
+    "path": "/api/robustness/luminous-nexus/sync",
+    "method": "POST",
+    "summary": "Sync Cluster",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "verify_security_stack_api_security_verify_get",
+    "path": "/api/security/verify",
+    "method": "GET",
+    "summary": "Verify Security Stack",
+    "tags": [
+      "Security"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_refresh_log_api_security_refresh_log_get",
+    "path": "/api/security/refresh-log",
+    "method": "GET",
+    "summary": "Get Refresh Log",
+    "tags": [
+      "Security"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "trigger_security_refresh_api_security_refresh_run_post",
+    "path": "/api/security/refresh-run",
+    "method": "POST",
+    "summary": "Trigger Security Refresh",
+    "tags": [
+      "Security"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "restore_timeline_api_timeline_restore_get",
+    "path": "/api/timeline/restore",
+    "method": "GET",
+    "summary": "Restore Timeline",
+    "tags": [
+      "Timeline"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "rollback_context_api_context_rollback_post",
+    "path": "/api/context/rollback",
+    "method": "POST",
+    "summary": "Rollback Context",
+    "tags": [
+      "Context"
+    ],
+    "input_schema": {
+      "properties": {
+        "timestamp": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Timestamp",
+          "description": "ISO8601 timestamp to target."
+        },
+        "reason": {
+          "type": "string",
+          "title": "Reason",
+          "default": "manual rollback"
+        }
+      },
+      "type": "object",
+      "title": "RollbackRequest"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "trace_api_causal_trace_get",
+    "path": "/api/causal/trace",
+    "method": "GET",
+    "summary": "Trace",
+    "tags": [
+      "Causal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "verify_api_causal_verify_post",
+    "path": "/api/causal/verify",
+    "method": "POST",
+    "summary": "Verify",
+    "tags": [
+      "Causal"
+    ],
+    "input_schema": {
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "title": "Event Id"
+        }
+      },
+      "type": "object",
+      "required": [
+        "event_id"
+      ],
+      "title": "VerifyRequest"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "ingest_causal_events_api_causal_ingest_post",
+    "path": "/api/causal/ingest",
+    "method": "POST",
+    "summary": "Ingest Causal Events",
+    "tags": [
+      "Causal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_causal_graph_api_causal_graph_get",
+    "path": "/api/causal/graph",
+    "method": "GET",
+    "summary": "Get Causal Graph",
+    "tags": [
+      "Causal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "causal_insight_api_causal_insight_get",
+    "path": "/api/causal/insight",
+    "method": "GET",
+    "summary": "Causal Insight",
+    "tags": [
+      "Causal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "causal_report_api_causal_report_get",
+    "path": "/api/causal/report",
+    "method": "GET",
+    "summary": "Causal Report",
+    "tags": [
+      "Causal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_meta_causal_feedback_api_meta_causal_feedback_get",
+    "path": "/api/meta_causal/feedback",
+    "method": "GET",
+    "summary": "Get Meta Causal Feedback",
+    "tags": [
+      "MetaCausal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "run_meta_feedback_api_meta_causal_feedback_run_post",
+    "path": "/api/meta_causal/feedback/run",
+    "method": "POST",
+    "summary": "Run Meta Feedback",
+    "tags": [
+      "MetaCausal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_bias_api_meta_causal_bias_get",
+    "path": "/api/meta_causal/bias",
+    "method": "GET",
+    "summary": "Get Bias",
+    "tags": [
+      "MetaCausal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_bias_history_api_meta_causal_bias_history_get",
+    "path": "/api/meta_causal/bias/history",
+    "method": "GET",
+    "summary": "Get Bias History",
+    "tags": [
+      "MetaCausal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_auto_actions_api_meta_causal_actions_get",
+    "path": "/api/meta_causal/actions",
+    "method": "GET",
+    "summary": "Get Auto Actions",
+    "tags": [
+      "MetaCausal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "optimizer_history_api_meta_causal_optimizer_history_get",
+    "path": "/api/meta_causal/optimizer/history",
+    "method": "GET",
+    "summary": "Optimizer History",
+    "tags": [
+      "MetaCausal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
     "id": "list_meta_contracts_api_meta_contracts_get",
     "path": "/api/meta/contracts",
     "method": "GET",
@@ -2195,6 +2869,24 @@
     "path": "/api/meta/contracts/{name}",
     "method": "GET",
     "summary": "Get Meta Contract",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_meta_contract_history_api_meta_contracts__name__history_get",
+    "path": "/api/meta/contracts/{name}/history",
+    "method": "GET",
+    "summary": "Get Meta Contract History",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "sync_meta_contracts_api_meta_contracts_sync_post",
+    "path": "/api/meta/contracts/sync",
+    "method": "POST",
+    "summary": "Sync Meta Contracts",
     "tags": [],
     "input_schema": null,
     "output_schema": null

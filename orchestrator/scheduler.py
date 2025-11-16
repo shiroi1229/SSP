@@ -20,6 +20,7 @@ from modules.metacognition import summarize_introspection, compute_cognitive_har
 from modules.auto_sync_monitor import monitor_roadmap_sync
 from modules.awareness_observer import collect_awareness_snapshot
 from modules.internal_dialogue import generate_internal_dialogue
+from modules.akashic_integration import collect_and_persist_akashic_state
 
 log_manager = LogManager()
 
@@ -172,6 +173,7 @@ def start_scheduler():
     schedule.every().saturday.at("04:00").do(run_job, "weekly_persona_echo", generate_persona_echo)
     schedule.every(10).minutes.do(run_job, "awareness_snapshot", collect_awareness_snapshot)
     schedule.every(30).minutes.do(run_job, "internal_dialogue", generate_internal_dialogue)
+    schedule.every(60).minutes.do(run_job, "akashic_integration", collect_and_persist_akashic_state)
     schedule.every(10).minutes.do(run_job, "roadmap_sync_monitor", monitor_roadmap_sync)
 
     log_manager.info(f"[Scheduler] Scheduler started. Next run at: {schedule.next_run()}")
