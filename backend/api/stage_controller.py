@@ -1,51 +1,58 @@
-# path: backend/api/stage_controller.py
-# version: UI-v1.2
-"""
-Controls stage playback via TTS + OSC through FastAPI endpoints and WebSocket.
-"""
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
-from modules.stage_director import StageDirector
-from modules.script_parser import ScriptParser
-from modules.tts_manager import TTSManager
-from modules.osc_bridge import OSCBridge
-from modules.log_manager import log_manager
+"""Stage playback API for orchestrating TTS + OSC pipeline."""
+
+from __future__ import annotations
+
 import asyncio
 import json
-import time
 import os
+from typing import Any, Dict, List
+
+from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect
+
+from modules.log_manager import log_manager
+from modules.osc_bridge import OSCBridge
+from modules.script_parser import ScriptParser
+from modules.stage_director import StageDirector
+from modules.tts_manager import TTSManager
 
 router = APIRouter()
 
-# Global instance of StageDirector
-# This will be initialized once and reused across requests
-# For now, we'll instantiate it directly. In a larger app,
-# dependency injection might be used.
 tts_manager = TTSManager()
 osc_bridge = OSCBridge()
-director = StageDirector(tts=tts_manager, osc=osc_bridge)
 
-# Store active WebSocket connections
-active_connections: list[WebSocket] = []
+active_connections: List[WebSocket] = []
+
+
+async def broadcast_progress(payload: Dict[str, Any]):
+    stale: List[WebSocket] = []
+    for connection in list(active_connections):
+        try:
+            await connection.send_json(payload)
+        except WebSocketDisconnect:
+            stale.append(connection)
+        except RuntimeError:
+            stale.append(connection)
+    for connection in stale:
+        if connection in active_connections:
+            active_connections.remove(connection)
+
+
+director = StageDirector(tts=tts_manager, osc=osc_bridge, progress_callback=broadcast_progress)
+
 
 @router.post("/api/stage/play")
 async def play_stage():
     log_manager.info("[StageController] Play request received.")
-    # In a real scenario, you might want to pass the timeline path dynamically
-    # For now, it's hardcoded as per the spec.
     asyncio.create_task(director.play_timeline("data/timeline.json"))
     return {"status": "playing"}
+
 
 @router.post("/api/stage/stop")
 async def stop_stage():
     log_manager.info("[StageController] Stop request received.")
-    # Future: Implement graceful stop in StageDirector
-    # For now, we'll just send a stop signal to connected UIs
-    for connection in active_connections:
-        try:
-            await connection.send_json({"type": "status", "status": "stopped"})
-        except WebSocketDisconnect:
-            pass # Client already disconnected
+    await broadcast_progress({"type": "status", "status": "stopped"})
     return {"status": "stopped"}
+
 
 @router.get("/api/stage/timeline")
 async def get_timeline():

@@ -1,0 +1,2 @@
+#!/bin/sh
+python "$(dirname "$0")/../auto_sync_roadmap.py"

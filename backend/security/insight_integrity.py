@@ -1,4 +1,4 @@
-"""Insight Integrity utilities translate raw checks into trust guidance."""
+﻿"""Insight Integrity utilities translate raw checks into trust guidance."""
 
 from __future__ import annotations
 
@@ -24,20 +24,22 @@ class InsightIntegrity:
             6,
         )
 
+        recommendations = integrity_report.get("recommendations", [])
         verdict = "secure"
-        action = "継続的に監視しています。"
+        action = "Monitor channels and archive signatures."
         if trust_index < 0.94:
             verdict = "degraded"
-            action = "通信層を再同期し、キーの再発行を推奨します。"
-        elif integrity_report.get("alerts"):
+            action = "Run security refresh and rotate PQC keys."
+        elif recommendations:
             verdict = "resyncing"
-            action = "検出済みのドリフトに対してキー再生成を準備中。"
+            action = f"Address {len(recommendations)} channel recommendation(s)."
 
         return {
             "trust_index": trust_index,
             "verdict": verdict,
             "recommended_action": action,
             "signature_success_ratio": round(signature_success, 3),
+            "recommendations": recommendations,
         }
 
 

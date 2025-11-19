@@ -20,8 +20,6 @@ Core Concepts:
 import os, json, datetime, statistics, logging
 import collections
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 PERSONA_PATH = "./config/persona_profile.json"
 COLLECTIVE_LOG = "./logs/collective_log.json"
 OUTPUT_PATH = "./config/self_intent_profile.json"

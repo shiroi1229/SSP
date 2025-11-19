@@ -11,8 +11,6 @@ from orchestrator.contract_registry import ContractRegistry
 from orchestrator.cognitive_graph_engine import CognitiveGraphEngine
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 def run_cognitive_graph_initialization():
     logging.info("Starting Cognitive Graph Engine initialization via CLI tool...")
     

@@ -3,7 +3,6 @@
 
 import os
 import sys
-import yaml
 import argparse
 import logging
 import json
@@ -13,6 +12,7 @@ from typing import Dict, List, Any
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from modules.log_manager import log_manager
+from modules.contract_loader import ContractLoader
 from orchestrator.contract_reinforcer import ContractReinforcer
 from orchestrator.contract_evolution_engine import ContractEvolutionEngine
 from orchestrator.meta_contract_engine import MetaContractEngine
@@ -41,32 +41,10 @@ class ContractRegistry:
 
     def load_contracts(self):
         log_manager.info(f"[ContractRegistry] Loading contracts from {self.contract_dir}...")
-        self.contracts = {}
-        self.meta_contracts = {}
-        for filename in os.listdir(self.contract_dir):
-            filepath = os.path.join(self.contract_dir, filename)
-            if filename.endswith(".yaml") or filename.endswith(".yml"):
-                try:
-                    with open(filepath, 'r', encoding='utf-8') as f:
-                        contract = yaml.safe_load(f)
-                        if contract and 'name' in contract:
-                            self.contracts[contract['name']] = contract
-                            log_manager.info(f"[ContractRegistry] Loaded base contract: {contract['name']}")
-                        else:
-                            log_manager.warning(f"[ContractRegistry] Could not load contract from {filename}: missing 'name' field.")
-                except Exception as e:
-                    log_manager.error(f"[ContractRegistry] Unexpected error loading contract from {filename}: {e}")
-            elif filename.endswith("_meta_v3.json"):
-                try:
-                    with open(filepath, 'r', encoding='utf-8') as f:
-                        meta_contract = json.load(f)
-                        if meta_contract and 'name' in meta_contract:
-                            self.meta_contracts[meta_contract['name']] = meta_contract
-                            log_manager.info(f"[ContractRegistry] Loaded meta-contract: {meta_contract['name']}")
-                        else:
-                            log_manager.warning(f"[ContractRegistry] Could not load meta-contract from {filename}: missing 'name' field.")
-                except Exception as e:
-                    log_manager.error(f"[ContractRegistry] Unexpected error loading meta-contract from {filename}: {e}")
+        contract_map = self.contract_loader.load_all()
+        self.contracts = contract_map
+        self.meta_contracts = {name: data for name, data in contract_map.items() if data.get("type") == "meta"}
+        log_manager.info(f"[ContractRegistry] Loaded {len(self.contracts)} contracts (meta contracts: {len(self.meta_contracts)}).")
         return self.contracts
 
     def get_contract(self, name: str) -> Dict | None:
@@ -132,8 +110,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Setup basic logging for direct script execution
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
     registry = ContractRegistry()
 
     if args.auto_reinforce:

@@ -17,9 +17,6 @@ Core Features:
 
 import os, json, statistics, datetime, logging
 
-# Configure logging
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 COLLECTIVE_LOG = "./logs/collective_log.json"
 PARAM_FILE = "./config/model_params.json"
 OPT_LOG = "./logs/optimization_log.json"

@@ -8,8 +8,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from orchestrator.contract_registry import ContractRegistry
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 def run_meta_contract_initialization():
     logging.info("Starting Meta-Contract System initialization via CLI tool...")
     registry = ContractRegistry()

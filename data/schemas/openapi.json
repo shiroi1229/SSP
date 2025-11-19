@@ -442,6 +442,37 @@
     "output_schema": null
   },
   {
+    "id": "module_stats_api_module_stats_get",
+    "path": "/api/module_stats",
+    "method": "GET",
+    "summary": "Module Stats",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "restart_module_api_recovery_restart_post",
+    "path": "/api/recovery/restart",
+    "method": "POST",
+    "summary": "Restart Module",
+    "tags": [
+      "Recovery"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "resync_state_api_recovery_state_resync_post",
+    "path": "/api/recovery/state_resync",
+    "method": "POST",
+    "summary": "Resync State",
+    "tags": [
+      "Recovery"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
     "id": "get_system_status_api_api_status_get",
     "path": "/api/api/status",
     "method": "GET",
@@ -1395,23 +1426,58 @@
     "input_schema": {
       "properties": {
         "version": {
-          "type": "string",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
           "title": "Version"
         },
         "codename": {
-          "type": "string",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
           "title": "Codename"
         },
         "goal": {
-          "type": "string",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
           "title": "Goal"
         },
         "status": {
-          "type": "string",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
           "title": "Status"
         },
         "description": {
-          "type": "string",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
           "title": "Description"
         },
         "startDate": {
@@ -1533,14 +1599,7 @@
         }
       },
       "type": "object",
-      "required": [
-        "version",
-        "codename",
-        "goal",
-        "status",
-        "description"
-      ],
-      "title": "RoadmapItemBase"
+      "title": "RoadmapItemUpdate"
     },
     "output_schema": {
       "properties": {
@@ -1943,6 +2002,162 @@
     "output_schema": null
   },
   {
+    "id": "get_diagnostic_summary_api_api_system_diagnose_get",
+    "path": "/api/api/system/diagnose",
+    "method": "GET",
+    "summary": "Get Diagnostic Summary",
+    "tags": [
+      "System"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_system_metrics_api_api_system_metrics_get",
+    "path": "/api/api/system/metrics",
+    "method": "GET",
+    "summary": "Get System Metrics",
+    "tags": [
+      "System"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "rebalance_api_api_system_rebalance_post",
+    "path": "/api/api/system/rebalance",
+    "method": "POST",
+    "summary": "Rebalance",
+    "tags": [
+      "System"
+    ],
+    "input_schema": {
+      "properties": {
+        "modes": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Modes"
+        },
+        "task_priorities": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Task Priorities"
+        }
+      },
+      "type": "object",
+      "title": "RebalanceRequest"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "singularity_status_api_system_singularity_get",
+    "path": "/api/system/singularity",
+    "method": "GET",
+    "summary": "Singularity Status",
+    "tags": [
+      "System"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_state_api_continuum_state_get",
+    "path": "/api/continuum/state",
+    "method": "GET",
+    "summary": "Get State",
+    "tags": [
+      "Continuum"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "continuum_stream_api_continuum_stream_get",
+    "path": "/api/continuum/stream",
+    "method": "GET",
+    "summary": "Continuum Stream",
+    "tags": [
+      "Continuum"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_cluster_health_api_api_cluster_health_get",
+    "path": "/api/api/cluster/health",
+    "method": "GET",
+    "summary": "Get Cluster Health",
+    "tags": [
+      "Cluster"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "recover_node_api_api_cluster_recover_post",
+    "path": "/api/api/cluster/recover",
+    "method": "POST",
+    "summary": "Recover Node",
+    "tags": [
+      "Cluster"
+    ],
+    "input_schema": {
+      "properties": {
+        "node": {
+          "type": "string",
+          "title": "Node"
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "promote",
+            "heal",
+            "sync"
+          ],
+          "title": "Action"
+        },
+        "target": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target"
+        }
+      },
+      "type": "object",
+      "required": [
+        "node",
+        "action"
+      ],
+      "title": "RecoveryCommand"
+    },
+    "output_schema": null
+  },
+  {
     "id": "play_stage_api_api_stage_play_post",
     "path": "/api/api/stage/play",
     "method": "POST",
@@ -2169,6 +2384,17 @@
     "output_schema": null
   },
   {
+    "id": "get_insight_report_api_insight_report_get",
+    "path": "/api/insight/report",
+    "method": "GET",
+    "summary": "Get Insight Report",
+    "tags": [
+      "Insight"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
     "id": "get_collective_mind_api_collective_mind_get",
     "path": "/api/collective/mind",
     "method": "GET",
@@ -2178,223 +2404,15 @@
     "output_schema": null
   },
   {
-    "id": "list_awareness_snapshots_api_awareness_snapshots_get",
-    "path": "/api/awareness/snapshots",
+    "id": "get_awareness_insights_api_awareness_insights_get",
+    "path": "/api/awareness/insights",
     "method": "GET",
-    "summary": "List Awareness Snapshots",
+    "summary": "Get Awareness Insights",
     "tags": [
       "Awareness"
     ],
     "input_schema": null,
     "output_schema": null
-  },
-  {
-    "id": "create_awareness_snapshot_api_awareness_snapshots_post",
-    "path": "/api/awareness/snapshots",
-    "method": "POST",
-    "summary": "Create Awareness Snapshot",
-    "tags": [
-      "Awareness"
-    ],
-    "input_schema": {
-      "properties": {
-        "backend_state": {
-          "anyOf": [
-            {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Backend State"
-        },
-        "frontend_state": {
-          "anyOf": [
-            {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Frontend State"
-        },
-        "robustness_state": {
-          "anyOf": [
-            {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Robustness State"
-        },
-        "awareness_summary": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Awareness Summary"
-        },
-        "context_vector": {
-          "anyOf": [
-            {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Context Vector"
-        }
-      },
-      "type": "object",
-      "title": "AwarenessSnapshotCreate"
-    },
-    "output_schema": {
-      "properties": {
-        "created_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Created At"
-        },
-        "backend_state": {
-          "anyOf": [
-            {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Backend State"
-        },
-        "frontend_state": {
-          "anyOf": [
-            {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Frontend State"
-        },
-        "robustness_state": {
-          "anyOf": [
-            {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Robustness State"
-        },
-        "awareness_summary": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Awareness Summary"
-        },
-        "context_vector": {
-          "anyOf": [
-            {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Context Vector"
-        },
-        "id": {
-          "type": "integer",
-          "title": "Id"
-        }
-      },
-      "type": "object",
-      "required": [
-        "created_at",
-        "id"
-      ],
-      "title": "AwarenessSnapshot"
-    }
-  },
-  {
-    "id": "get_akashic_state_api_awareness_akashic_get",
-    "path": "/api/awareness/akashic",
-    "method": "GET",
-    "summary": "Get Akashic State",
-    "tags": [
-      "Awareness"
-    ],
-    "input_schema": null,
-    "output_schema": {
-      "properties": {
-        "collected_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Collected At"
-        },
-        "snapshot": {
-          "anyOf": [
-            {
-              "$ref": "#/components/schemas/AwarenessSnapshot"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "internal_dialogue": {
-          "anyOf": [
-            {
-              "$ref": "#/components/schemas/InternalDialogue"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "akashic_sync": {
-          "additionalProperties": true,
-          "type": "object",
-          "title": "Akashic Sync"
-        },
-        "persona_state": {
-          "additionalProperties": true,
-          "type": "object",
-          "title": "Persona State"
-        }
-      },
-      "type": "object",
-      "required": [
-        "collected_at",
-        "akashic_sync",
-        "persona_state"
-      ],
-      "title": "AkashicIntegrationState"
-    }
   },
   {
     "id": "list_internal_dialogues_api_internal_dialogue_logs_get",
@@ -2834,6 +2852,17 @@
     "output_schema": null
   },
   {
+    "id": "meta_causal_report_api_meta_causal_report_get",
+    "path": "/api/meta_causal/report",
+    "method": "GET",
+    "summary": "Meta Causal Report",
+    "tags": [
+      "MetaCausal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
     "id": "get_auto_actions_api_meta_causal_actions_get",
     "path": "/api/meta_causal/actions",
     "method": "GET",
@@ -2851,6 +2880,238 @@
     "summary": "Optimizer History",
     "tags": [
       "MetaCausal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_world_timeline_api_world_timeline_get",
+    "path": "/api/world/timeline",
+    "method": "GET",
+    "summary": "Get World Timeline",
+    "tags": [
+      "World"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "create_timeline_event_api_world_timeline_post",
+    "path": "/api/world/timeline",
+    "method": "POST",
+    "summary": "Create Timeline Event",
+    "tags": [
+      "World"
+    ],
+    "input_schema": {
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "Title"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Description"
+        },
+        "era": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Era"
+        },
+        "faction": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Faction"
+        },
+        "start_year": {
+          "type": "integer",
+          "title": "Start Year"
+        },
+        "end_year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "End Year"
+        },
+        "importance": {
+          "type": "number",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Importance",
+          "default": 0.5
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tags"
+        },
+        "metadata": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Metadata"
+        }
+      },
+      "type": "object",
+      "required": [
+        "title",
+        "start_year"
+      ],
+      "title": "TimelineEventPayload"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "update_timeline_event_api_world_timeline__event_id__put",
+    "path": "/api/world/timeline/{event_id}",
+    "method": "PUT",
+    "summary": "Update Timeline Event",
+    "tags": [
+      "World"
+    ],
+    "input_schema": {
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "Title"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Description"
+        },
+        "era": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Era"
+        },
+        "faction": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Faction"
+        },
+        "start_year": {
+          "type": "integer",
+          "title": "Start Year"
+        },
+        "end_year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "End Year"
+        },
+        "importance": {
+          "type": "number",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Importance",
+          "default": 0.5
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tags"
+        },
+        "metadata": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Metadata"
+        }
+      },
+      "type": "object",
+      "required": [
+        "title",
+        "start_year"
+      ],
+      "title": "TimelineEventPayload"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "delete_timeline_event_api_world_timeline__event_id__delete",
+    "path": "/api/world/timeline/{event_id}",
+    "method": "DELETE",
+    "summary": "Delete Timeline Event",
+    "tags": [
+      "World"
     ],
     "input_schema": null,
     "output_schema": null

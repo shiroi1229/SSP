@@ -53,7 +53,7 @@ class MemoryStore:
             log_manager.exception(f"❌ MemoryStore: {self.file_path} の保存中にエラーが発生しました: {e}")
 
     def save(self, record_data: dict, iteration: int = 1):
-        log_manager.debug(f"Attempting to save record for session_id: {record_data.get("session_id")}, iteration: {iteration}")
+        log_manager.debug(f"Attempting to save record for session_id: {record_data.get('session_id')}, iteration: {iteration}")
         try:
             all_sessions = self._load_records()
         except Exception as e:
@@ -79,6 +79,9 @@ class MemoryStore:
             "regenerated": record_data.get("regeneration", False),
             "timestamp": record_data.get("timestamp") or datetime.datetime.now().isoformat()
         }
+        for field in ("audio_path", "emotion_vector", "osc_payload", "emotion_tags"):
+            if record_data.get(field) is not None:
+                new_record_entry[field] = record_data.get(field)
 
         if existing_session_index != -1:
             all_sessions[existing_session_index]["records"].append(new_record_entry)
@@ -94,7 +97,7 @@ class MemoryStore:
         self._save_records(all_sessions)
 
     def save_record_to_db(self, log_data: dict):
-        log_manager.debug(f"Attempting to save record to DB for session_id: {log_data.get("session_id")}")
+        log_manager.debug(f"Attempting to save record to DB for session_id: {log_data.get('session_id')}")
         try:
             if not isinstance(log_data, dict):
                 raise TypeError("log_data must be a dictionary")

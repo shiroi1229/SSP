@@ -58,6 +58,23 @@ class RoadmapItemUpdateByVersion(BaseModel):
 class RoadmapItemCreate(RoadmapItemBase):
     pass
 
+class RoadmapItemUpdate(BaseModel):
+    version: Optional[str] = None
+    codename: Optional[str] = None
+    goal: Optional[str] = None
+    status: Optional[str] = None
+    description: Optional[str] = None
+    startDate: Optional[str] = None
+    endDate: Optional[str] = None
+    progress: Optional[int] = None
+    keyFeatures: Optional[List[str]] = None
+    dependencies: Optional[List[str]] = None
+    metrics: Optional[List[str]] = None
+    owner: Optional[str] = None
+    documentationLink: Optional[str] = None
+    developmentInstruction: Optional[Any] = Field(None, alias="development_details")
+    parent_id: Optional[int] = None
+
 class RoadmapItem(RoadmapItemBase):
     id: int
 

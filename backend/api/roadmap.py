@@ -4,7 +4,7 @@ from typing import List, Dict
 from collections import defaultdict
 from modules.log_manager import log_manager
 import re
-import json # Added json import
+import json
 
 from backend.db.connection import get_db
 from backend.db.models import RoadmapItem as DBRoadmapItem
@@ -13,13 +13,16 @@ from backend.db.schemas import (
     RoadmapData,
     RoadmapItemCreate,
     RoadmapItemBase,
+    RoadmapItemUpdate,
     RoadmapItemUpdateByVersion,
     RoadmapPrefixSummary,
     RoadmapStatsResponse,
     RoadmapDelayedItem,
 )
+from backend.utils.roadmap_utils import categorize_version, parse_version_sort_key
+from backend.scripts.roadmap_doc_sync import sync_roadmap_documents
 
-from pydantic import BaseModel # Moved from lower down
+from pydantic import BaseModel
 # import re # Already imported above
 
 class RoadmapImportText(BaseModel): # Moved from lower down
@@ -121,38 +124,18 @@ router = APIRouter(prefix="/roadmap")
 
 
 def _split_and_clean_list_field(field_value: str | List[str] | None) -> List[str]:
-    """Helper to split a string field into a list of cleaned strings, or return as-is if already a list."""
     if field_value is None:
         return []
     if isinstance(field_value, list):
-        return [item.strip().lstrip('-').strip() for item in field_value if item.strip()]
+        return [item.strip().lstrip("-").strip() for item in field_value if item.strip()]
     if isinstance(field_value, str):
-        return [line.strip().lstrip('-').strip() for line in field_value.split('\n') if line.strip()]
+        return [
+            line.strip().lstrip("-").strip()
+            for line in field_value.split("\n")
+            if line.strip()
+        ]
     return []
 
-def get_version_sort_key(item):
-    """Creates a sort key for version strings like 'v1.0', 'UI-v0.5'."""
-    version_str = item.version
-    # Regex to capture an optional prefix (like 'UI-'), the major, and minor numbers
-    match = re.match(r'([A-Z]+-)?v(\d+)\.(\d+)', version_str) # Fixed re.re.match to re.match
-    
-    if not match:
-        # Fallback for any formats that don't match
-        return (99, version_str)
-
-    prefix, major, minor = match.groups()
-    prefix = prefix or '' # Ensure prefix is a string
-
-    # Define a sort order for known prefixes
-    prefix_order = {
-        '': 0,        # for 'vX.X'
-        'UI-': 1,     # for 'UI-vX.X'
-        'R-': 2,      # for 'R-vX.X'
-    }
-    
-    prefix_num = prefix_order.get(prefix, 99)
-
-    return (prefix_num, int(major), int(minor))
 
 LIST_FIELDS = ("keyFeatures", "dependencies", "metrics")
 OPTIONAL_STRING_FIELDS = ("owner", "documentationLink", "prLink", "startDate", "endDate", "development_details")
@@ -172,11 +155,26 @@ def _normalize_payload_fields(payload: Dict, fill_missing: bool = False) -> Dict
     return payload
 
 
+def _sync_docs_or_log(operation: str) -> None:
+    if not sync_roadmap_documents():
+        log_manager.warning(f"Roadmap documents not updated after {operation}.")
+
+
 def _validate_dependencies(dependencies: List[str], db: Session):
     if not dependencies:
         return
     existing_versions = {row[0] for row in db.query(DBRoadmapItem.version).all()}
-    missing = [dep for dep in dependencies if dep not in existing_versions]
+    version_pattern = re.compile(r'^(?:[A-Za-z]+-)?v\d+(?:\.\d+)*$', re.IGNORECASE)
+
+    missing = []
+    for dep in dependencies:
+        if not isinstance(dep, str):
+            continue
+        if not version_pattern.match(dep):
+            continue
+        if dep not in existing_versions:
+            missing.append(dep)
+
     if missing:
         raise HTTPException(
             status_code=400,
@@ -257,7 +255,7 @@ def get_current_roadmap(db: Session = Depends(get_db)):
     try:
         db_items = db.query(DBRoadmapItem).all()
         # Sort items using the custom version sort key
-        db_items.sort(key=get_version_sort_key)
+        db_items.sort(key=lambda item: parse_version_sort_key(item.version))
         log_manager.info(f"Retrieved and sorted {len(db_items)} roadmap items.")
     except Exception as e:
         log_manager.error(f"Error retrieving roadmap items from DB: {e}", exc_info=True)
@@ -266,17 +264,12 @@ def get_current_roadmap(db: Session = Depends(get_db)):
     categorized_items: Dict[str, List[RoadmapItem]] = defaultdict(list)
     for item in db_items:
         try:
+            log_manager.debug(f"Processing item ID: {item.id}, Version: {item.version}")
             pydantic_item = RoadmapItem.model_validate(item)
-            if pydantic_item.version.startswith("UI-v"):
-                categorized_items["frontend"].append(pydantic_item)
-            elif pydantic_item.version.startswith("R-v"):
-                categorized_items["robustness"].append(pydantic_item)
-            elif pydantic_item.version.startswith("A-v"):
-                categorized_items["Awareness_Engine"].append(pydantic_item)
-            else: # Default to backend for 'vX.X'
-                categorized_items["backend"].append(pydantic_item)
+            category = categorize_version(pydantic_item.version)
+            categorized_items[category].append(pydantic_item)
         except Exception as e:
-            log_manager.error(f"Error processing roadmap item {item.version}: {e}", exc_info=True)
+            log_manager.error(f"Error processing roadmap item ID {item.id}, Version {item.version}: {e}", exc_info=True)
             continue
 
     log_manager.info("Roadmap items categorized successfully.")
@@ -372,6 +365,7 @@ def create_roadmap_item(item: RoadmapItemCreate, db: Session = Depends(get_db)):
         db.commit()
         db.refresh(db_item)
         log_manager.info(f"Successfully created roadmap item: {db_item.version}")
+        _sync_docs_or_log("creating roadmap item")
         return RoadmapItem.model_validate(db_item)
     except Exception as e:
         db.rollback()
@@ -379,7 +373,7 @@ def create_roadmap_item(item: RoadmapItemCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=f"Failed to create roadmap item: {e}")
 
 @router.put("/{item_id}", response_model=RoadmapItem)
-def update_roadmap_item(item_id: int, item: RoadmapItemBase, db: Session = Depends(get_db)):
+def update_roadmap_item(item_id: int, item: RoadmapItemUpdate, db: Session = Depends(get_db)):
     """
     Update an existing roadmap item by its ID.
     """
@@ -389,8 +383,9 @@ def update_roadmap_item(item_id: int, item: RoadmapItemBase, db: Session = Depen
         log_manager.warning(f"Update failed: Roadmap item with ID {item_id} not found.")
         raise HTTPException(status_code=404, detail="Roadmap item not found")
 
-    update_data = _normalize_payload_fields(item.model_dump(by_alias=True), fill_missing=True)
-    _validate_dependencies(update_data.get("dependencies", []), db)
+    update_data = _normalize_payload_fields(item.model_dump(by_alias=True, exclude_unset=True), fill_missing=False)
+    if "dependencies" in update_data:
+        _validate_dependencies(update_data.get("dependencies", []), db)
     for key, value in update_data.items():
         setattr(db_item, key, value)
 
@@ -398,6 +393,7 @@ def update_roadmap_item(item_id: int, item: RoadmapItemBase, db: Session = Depen
         db.commit()
         db.refresh(db_item)
         log_manager.info(f"Successfully updated roadmap item ID: {item_id}")
+        _sync_docs_or_log("updating roadmap item")
         return RoadmapItem.model_validate(db_item)
     except Exception as e:
         db.rollback()
@@ -433,6 +429,7 @@ def import_roadmap_item_from_text(payload: RoadmapImportText, db: Session = Depe
         db.refresh(db_item)
         
         log_manager.info(f"Successfully imported and created roadmap item: {db_item.version}")
+        _sync_docs_or_log("importing roadmap item from text")
         return RoadmapItem.model_validate(db_item)
 
     except HTTPException as he:
@@ -458,6 +455,7 @@ def delete_roadmap_item(item_id: int, db: Session = Depends(get_db)):
         db.delete(db_item)
         db.commit()
         log_manager.info(f"Successfully deleted roadmap item ID: {item_id}")
+        _sync_docs_or_log("deleting roadmap item")
         return {"message": "Roadmap item deleted successfully"}
     except Exception as e:
         db.rollback()

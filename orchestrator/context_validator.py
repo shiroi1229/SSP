@@ -14,6 +14,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from orchestrator.context_manager import ContextManager, CONTEXT_FILE
 from orchestrator.contract_registry import ContractRegistry
+from modules import log_monitor
 
 # --- Constants ---
 DRIFT_LOG_DIR = "logs/context_drift"
@@ -22,7 +23,6 @@ RESYNC_PATCH_FILE = os.path.join(DRIFT_LOG_DIR, "context_resync_patches.json")
 
 # --- Setup Logging ---
 log_manager = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # --- Mock LLM for semantic similarity ---
 def get_semantic_similarity(text_a: str, text_b: str) -> float:
@@ -142,11 +142,13 @@ class ContextValidator:
                     if any(linked_contract_name in key for key in drifted_keys):
                         impacted_contracts.add(contract_name)
                         log_manager.warning(f"[ContextValidator] Contract '{contract_name}' potentially impacted due to drift in linked contract '{linked_contract_name}'.")
+                        log_monitor.log_contract_violation(contract_name, 'potential_drift_link', {'linked_contract': linked_contract_name})
             else:
                 log_manager.debug(f"[ContextValidator] Contract '{contract_name}' has no semantic links.")
         
         if impacted_contracts:
             log_manager.warning(f"[ContextValidator] Detected {len(impacted_contracts)} contracts potentially impacted by context drift: {list(impacted_contracts)}")
+            log_monitor.log_contract_violation('meta_dependency', 'impacted_contracts', {'contracts': list(impacted_contracts)})
         else:
             log_manager.info("[ContextValidator] No contracts detected as directly impacted by context drift via semantic links.")
 
@@ -155,6 +157,7 @@ class ContextValidator:
         self._check_meta_contract_dependencies(drifted_keys) # Integrate meta-contract check
         if drifted_keys:
             log_manager.warning(f"[CrossContextSync] Drift detected in {len(drifted_keys)} keys: {drifted_keys}")
+            log_monitor.log_contract_violation('context_drift', 'cross_layer_drift', {'keys': drifted_keys})
         else:
             log_manager.info("[CrossContextSync] No drift detected.")
         return drifted_keys

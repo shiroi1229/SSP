@@ -12,8 +12,13 @@ import logging
 
 log_file = "./logs/governor_trace.log"
 os.makedirs(os.path.dirname(log_file), exist_ok=True)
-logging.basicConfig(filename=log_file, level=logging.INFO, 
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+file_handler = logging.FileHandler(log_file)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
 
 def apply_patch(file_path: str, instruction: str, old_code: str, new_code: str) -> dict:
     """
@@ -23,7 +28,7 @@ def apply_patch(file_path: str, instruction: str, old_code: str, new_code: str) 
     try:
         # Create a backup
         shutil.copyfile(file_path, backup_path)
-        logging.info(f"[AutoPatcher] Created backup {backup_path}")
+        logger.info(f"[AutoPatcher] Created backup {backup_path}")
 
         # Apply the patch (This is a simplified example. A real patcher would use AST or regex for precise changes)
         with open(file_path, "r", encoding="utf-8") as f:

@@ -100,3 +100,24 @@ class InternalDialogue(Base):
     insights = Column(Text)
     source_snapshot_id = Column(Integer, nullable=True)
     meta = Column(JSON)
+
+
+class Chronicle(Base):
+    __tablename__ = "chronicles"
+
+    id = Column(String, primary_key=True, index=True)
+    created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
+    updated_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    event_date_str = Column(String, nullable=False, index=True) # e.g., "王国暦 105年", "古代魔法時代"
+    event_year = Column(Integer, nullable=True, index=True) # For sorting and filtering
+    
+    title = Column(String, nullable=False, index=True)
+    summary = Column(Text, nullable=True)
+    details = Column(Text, nullable=True)
+    
+    tags = Column(JSON, nullable=True) # e.g., {"characters": ["英雄A"], "locations": ["王都"]}
+    category = Column(String, nullable=True, index=True) # e.g., "戦争", "政治", "文化"
+
+    def __repr__(self):
+        return f"<Chronicle(id={self.id}, event_date_str='{self.event_date_str}', title='{self.title[:30]}...')>"

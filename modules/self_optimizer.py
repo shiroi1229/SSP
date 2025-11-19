@@ -11,9 +11,6 @@ import re
 import datetime
 import logging
 
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 def apply_self_optimization(context_manager: object):
     """Applies self-optimization based on data from the context."""
     logging.info("[SelfOptimizer] Applying self-optimization...")

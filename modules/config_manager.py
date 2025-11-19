@@ -6,9 +6,6 @@ from dotenv import load_dotenv
 from pathlib import Path
 import logging
 
-# Configure logging for config_manager
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 CONFIG_SNAPSHOT_PATH = Path(__file__).resolve().parent.parent / "config_snapshot.json"
 _LAST_SNAPSHOT_DATA = None
 

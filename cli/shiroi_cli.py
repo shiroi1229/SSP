@@ -6,6 +6,7 @@ import sys
 import os
 import json
 import datetime
+import asyncio
 
 # プロジェクトルートをパスに追加
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -14,16 +15,25 @@ from orchestrator.main import run_orchestrator_workflow
 from backend.db.connection import save_session_to_db
 from modules.evaluator import save_feedback
 from modules.rag_engine import register_high_score_sample
+from modules.tts_manager import TTSManager
+from modules.emotion_parser import parse_emotion
+
+tts_manager = TTSManager()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Shiroi System Platform CLI for interactive feedback.")
     parser.add_argument("prompt", type=str, help="User input to the system.")
+    parser.add_argument("--speak", action="store_true", help="Synthesize and play the response.")
     args = parser.parse_args()
 
     print("--- 初回生成: 開始 ---")
     initial_answer, context, original_user_input = run_orchestrator_workflow(args.prompt, interactive_feedback=True)
     print(f"シロイ: {initial_answer}")
     print("--- 初回生成: 終了 ---")
+    if args.speak:
+        emotion_info = parse_emotion(initial_answer)
+        asyncio.run(tts_manager.speak(initial_answer, emotion=emotion_info['emotion_tags'][0]))
+
 
     # Interactive feedback
     try:

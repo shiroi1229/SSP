@@ -5,6 +5,7 @@ import backend.api.meta_causal_feedback as meta_module
 from backend.api.meta_causal_feedback import router as feedback_router
 from backend.api.meta_causal_bias import router as bias_router
 from backend.api.meta_causal_bias_history import router as bias_history_router
+from backend.api.meta_causal_report import router as report_router
 from backend.api.meta_optimizer import router as optimizer_router
 
 
@@ -13,6 +14,7 @@ def create_app():
     app.include_router(feedback_router, prefix="/api")
     app.include_router(bias_router, prefix="/api")
     app.include_router(bias_history_router, prefix="/api")
+    app.include_router(report_router, prefix="/api")
     app.include_router(optimizer_router, prefix="/api")
     return app
 
@@ -133,6 +135,23 @@ def test_meta_optimizer_history_api(monkeypatch):
     data = resp.json()
     assert data["summary"]["count"] == 2
     assert abs(data["summary"]["averages"]["temperature"] - 0.65) < 1e-6
+
+
+def test_meta_causal_report_endpoint(monkeypatch):
+    sample = {
+        "generated_at": "2025-11-16T01:00:00Z",
+        "summary": "test summary",
+        "highlights": ["a", "b"],
+        "bias": {"latest": {"emotion_bias": []}, "long_term": {"history_length": 4}},
+        "actions": {"latest": {"action_type": "ingest"}, "stats": {"ingest": {"count": 4, "success_ratio": 0.5}}},
+        "optimizer": {"latest": {"status": "success"}},
+        "recommendations": [],
+    }
+    monkeypatch.setattr("backend.api.meta_causal_report.build_meta_causal_report", lambda limit: sample)
+    client = TestClient(create_app())
+    resp = client.get("/api/meta_causal/report")
+    assert resp.status_code == 200
+    assert resp.json()["summary"] == "test summary"
 
 
 def test_meta_causal_run(monkeypatch):

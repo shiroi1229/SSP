@@ -13,13 +13,18 @@ from backend.modules.auto_patcher import apply_patch
 
 log_file = "./logs/governor_trace.log"
 os.makedirs(os.path.dirname(log_file), exist_ok=True)
-logging.basicConfig(filename=log_file, level=logging.INFO, 
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+file_handler = logging.FileHandler(log_file)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
 
 def make_decision_and_act(error_info: Dict[str, Any], file_path: str) -> Dict[str, Any]:
-    logging.info(f"[Governor] Analyzing error for {file_path}: {error_info.get('message')}")
+    logger.info(f"[Governor] Analyzing error for {file_path}: {error_info.get('message')}")
     analysis = analyze_code_for_error(error_info, file_path)
-    logging.info(f"[Governor] Analysis result: {json.dumps(analysis)}")
+    logger.info(f"[Governor] Analysis result: {json.dumps(analysis)}")
 
     decision_result = {
         "status": "no_action",

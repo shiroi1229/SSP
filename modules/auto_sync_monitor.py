@@ -7,7 +7,6 @@ from datetime import datetime
 from orchestrator.context_manager import ContextManager
 
 # Configure logging for roadmap sync
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 roadmap_sync_logger = logging.getLogger('roadmap_sync')
 file_handler = logging.FileHandler('logs/roadmap_sync.log')
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')

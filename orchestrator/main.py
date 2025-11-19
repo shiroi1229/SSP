@@ -1,16 +1,20 @@
 # path: orchestrator/main.py
-# version: v2.4
+# version: v3.0
 
 import os
 import sys
 import json
 import datetime
 from typing import Dict, Any, List
+from collections import namedtuple
+import argparse
+import asyncio
 
 # Add project root to the Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from modules.alert_dispatcher import AlertDispatcher  # Import AlertDispatcher
+from orchestrator.meta_contract_engine import MetaContractEngine
+from modules.alert_dispatcher import AlertDispatcher
 from orchestrator.context_manager import ContextManager
 from orchestrator.contract_registry import ContractRegistry
 from orchestrator.context_validator import ContextValidator
@@ -21,16 +25,13 @@ from orchestrator.learner import Learner
 from orchestrator.impact_analyzer import ImpactAnalyzer
 from orchestrator.auto_repair_engine import AutoRepairEngine
 from modules.log_manager import log_manager
-from modules.auto_fix_executor import AutoFixExecutor # Import AutoFixExecutor
+from modules.auto_fix_executor import AutoFixExecutor
 from qdrant_client import QdrantClient
-from modules.meta_contract_system import generate_contract, negotiate_contract, list_contracts
 from modules.cognitive_graph_engine import CognitiveGraphEngine
 from modules.self_reasoning_loop import SelfReasoningLoop
 from modules.distributed_persona_fabric import DistributedPersonaFabric
 from modules.collective_intelligence_core import CollectiveIntelligenceCore
 from modules.evolution_mirror import EvolutionMirror
-import argparse
-import asyncio
 from orchestrator.predictive_scheduler import start_predictive_scheduler
 
 def run_evolution_mirror(mode: str = "reflect", event: str = None, data: dict = None):
@@ -41,7 +42,6 @@ def run_evolution_mirror(mode: str = "reflect", event: str = None, data: dict = 
     elif mode == "reflect":
         result = mirror.reflect()
         print(json.dumps(result, ensure_ascii=False, indent=2))
-
 
 def run_collective_intelligence(personas: int = 3, cycles: int = 2):
     core = CollectiveIntelligenceCore(personas=personas, cycles=cycles)
@@ -72,28 +72,71 @@ def run_cognitive_graph(mode: str, src: str = None, rel: str = None, tgt: str = 
     else:
         print("Usage: --graph add <src> <rel> <tgt> | --graph path <src> <tgt>")
 
-def run_meta_contract(mode: str, module_name: str, spec: dict = None):
+def run_meta_contract(mode: str, module_name: str = None, spec: dict = None, reason: str = None):
+    engine = MetaContractEngine()
+    engine.load_contracts() # 契約をロード
+    
     if mode == "generate":
-        path = generate_contract(module_name, ["input"], ["output"])
-        print(f"✅ Contract generated: {path}")
-    elif mode == "negotiate":
-        result = negotiate_contract(module_name, spec or {})
-        print(json.dumps(result, ensure_ascii=False, indent=2))
+        if not module_name:
+            print("Error: module_name is required for generate mode.")
+            return
+        context = {'module_name': module_name, 'purpose': spec.get('purpose', 'CLI generated')} if spec else {'module_name': module_name}
+        new_contract = engine.generate_new_contract(context)
+        engine.save_contract_to_file(module_name, new_contract)
+        print(f"✅ New contract generated and saved for {module_name}.")
+    elif mode == "propose_update":
+        if not module_name or not spec:
+            print("Error: module_name and spec (proposed_changes) are required for propose_update mode.")
+            return
+        updated_contract = engine.propose_contract_update(module_name, spec)
+        if updated_contract:
+            print(f"✅ Proposed update for contract {module_name}: {json.dumps(updated_contract, indent=2, ensure_ascii=False)}")
+        else:
+            print(f"❌ Failed to propose update for {module_name}.")
+    elif mode == "apply_rewrite":
+        if not module_name or not spec or not reason:
+            print("Error: module_name, spec (proposed_changes) and reason are required for apply_rewrite mode.")
+            return
+        success = engine.apply_rewrite(module_name, spec, reason)
+        if success:
+            print(f"✅ Rewrite applied for contract {module_name}.")
+        else:
+            print(f"❌ Failed to apply rewrite for {module_name}.")
+    elif mode == "suggest_rewrite":
+        if not module_name:
+            print("Error: module_name is required for suggest_rewrite mode.")
+            return
+        suggestions = engine.analyze_and_suggest_rewrite(module_name)
+        if suggestions:
+            print(f"✅ Suggested changes for {module_name}: {json.dumps(suggestions, indent=2, ensure_ascii=False)}")
+        else:
+            print(f"ℹ️ No rewrite suggestions for {module_name} at this time.")
     elif mode == "list":
-        print(list_contracts())
+        contracts_list = [{"name": c.get('name'), "version": c.get('version')} for c in engine.contracts]
+        print(json.dumps(contracts_list, indent=2, ensure_ascii=False))
+    elif mode == "get":
+        if not module_name:
+            print("Error: module_name is required for get mode.")
+            return
+        contract = engine.get_contract(module_name)
+        if contract:
+            print(json.dumps(contract, indent=2, ensure_ascii=False))
+        else:
+            print(f"❌ Contract for {module_name} not found.")
+    else:
+        print(f"Unknown meta-contract mode: {mode}")
 
 def run_impact_analysis(target_file: str):
     result = analyze_impact(target_file)
     print(json.dumps(result, ensure_ascii=False, indent=2))
     print(suggest_repair(result))
 
-from collections import namedtuple
-
 # A named tuple to hold all the initialized components for the workflow.
 WorkflowComponents = namedtuple('WorkflowComponents', [
     'context_manager', 'contract_registry', 'context_validator',
     'policy_manager', 'insight_monitor', 'auto_fix_executor',
-    'alert_dispatcher', 'learner', 'feedback_loop'
+    'alert_dispatcher', 'learner', 'feedback_loop',
+    'meta_contract_engine' # Add MetaContractEngine here
 ])
 
 def _initialize_workflow_components(user_input: str) -> WorkflowComponents:
@@ -106,6 +149,11 @@ def _initialize_workflow_components(user_input: str) -> WorkflowComponents:
     auto_fix_executor = AutoFixExecutor()
     alert_dispatcher = AlertDispatcher()
     
+    # v3.0: Initialize MetaContractEngine
+    meta_contract_engine = MetaContractEngine()
+    meta_contract_engine.load_contracts()
+    log_manager.info("MetaContractEngine initialized and contracts loaded.")
+
     qdrant_client = QdrantClient(url=os.getenv("QDRANT_URL", "http://127.0.0.1:6333"))
     learner = Learner(context_manager, qdrant_client)
     feedback_loop = FeedbackLoop(context_manager, contract_registry, insight_monitor, policy_manager)
@@ -124,7 +172,8 @@ def _initialize_workflow_components(user_input: str) -> WorkflowComponents:
         auto_fix_executor=auto_fix_executor,
         alert_dispatcher=alert_dispatcher,
         learner=learner,
-        feedback_loop=feedback_loop
+        feedback_loop=feedback_loop,
+        meta_contract_engine=meta_contract_engine # Pass the instance
     )
 
 def _handle_anomaly(anomaly: Dict[str, Any], components: WorkflowComponents, stable_snapshot_path: str, user_input: str) -> bool:
@@ -147,7 +196,7 @@ def _handle_anomaly(anomaly: Dict[str, Any], components: WorkflowComponents, sta
             strategy="soft" if impact_report.get("impact_score") < 0.6 else "rebuild",
             target=impact_report.get("affected_modules", [])
         )
-        log_manager.info(f"Auto-Repair completed with result: {repair_result}")
+        log_manager.info(f"Auto-repair completed with result: {repair_result}")
         auto_repair.verify_after_repair()
         
         if not repair_result.get("success"):
@@ -268,9 +317,23 @@ def _handle_critical_exception(e: Exception, components: WorkflowComponents, sta
 
 def run_context_evolution_cycle(user_input: str = "初期の自己評価を開始します。"):
     """Runs the full context evolution cycle with self-healing and learning capabilities."""
-    log_manager.info("========= Starting SSP Workflow v2.5 (Context Evolution Cycle) ==========")
+    log_manager.info("========= Starting SSP Workflow v3.0 (Meta-Contract System) ==========")
     
     components = _initialize_workflow_components(user_input)
+    
+    # v3.0: Meta-Contract Engine Integration
+    log_manager.info("--- Running v3.0 Meta-Contract Analysis ---")
+    all_modules = [c.get('name') for c in components.meta_contract_engine.contracts if c.get('name')]
+    for module_name in all_modules:
+        suggestions = components.meta_contract_engine.analyze_and_suggest_rewrite(module_name)
+        if suggestions:
+            log_manager.info(f"Applying suggested rewrite for {module_name} based on initial analysis.")
+            components.meta_contract_engine.apply_rewrite(module_name, suggestions, "Initial auto-rewrite on cycle start")
+    
+    # Re-validate contracts after potential rewrites
+    components.meta_contract_engine.load_contracts()
+    log_manager.info("Contracts re-loaded after initial rewrite phase.")
+
     stable_snapshot_path = components.insight_monitor.trigger_snapshot("pre_evolution_cycle")
     components.context_manager.set("system.last_stable_snapshot_id", stable_snapshot_path, reason="Set stable snapshot ID")
     
@@ -294,105 +357,9 @@ def run_context_evolution_cycle(user_input: str = "初期の自己評価を開�
 
         _run_test_impact_analysis(components)
 
-        log_manager.info("========= SSP Workflow v2.5 (Context Evolution Cycle) Completed Successfully =========")
-        components.context_manager.history.record_change("system", "workflow", "running", "completed", "V2.5 cycle finished")
-
+        log_manager.info("========= SSP Workflow v3.0 (Meta-Contract System) Completed Successfully =========")
     except Exception as e:
+        log_manager.critical(f"A critical unhandled exception occurred in the main workflow: {e}", exc_info=True)
         _handle_critical_exception(e, components, stable_snapshot_path)
-
     finally:
-        # Log the final state of the context for inspection
-        final_context_snapshot = components.context_manager.snapshot_to_file(snapshot_dir="logs/context_evolution_snapshots")
-        log_manager.info(f"Final context snapshot saved to: {final_context_snapshot}")
-        print(f"\nFinal Context State:\n{json.dumps(components.context_manager.get_full_context(), indent=2, ensure_ascii=False)}")
-
-async def handle_chat_message(user_input: str) -> str:
-    """Handles an incoming chat message, runs a simplified feedback loop, and returns an AI response."""
-    context_manager = ContextManager(history_path="logs/context_history.json", context_filepath=os.path.join(os.getcwd(), 'data', 'test_context.json'))
-    contract_registry = ContractRegistry()
-    insight_monitor = InsightMonitor(context_manager, RecoveryPolicyManager())
-    qdrant_client = QdrantClient(url=os.getenv("QDRANT_URL", "http://127.0.0.1:6333"))
-    learner = Learner(context_manager, qdrant_client)
-    feedback_loop = FeedbackLoop(context_manager, contract_registry, insight_monitor, RecoveryPolicyManager())
-
-    context_manager.set("short_term.user_input", user_input, reason="User input from chat interface")
-    context_manager.set("long_term.config.qdrant_url", os.getenv("QDRANT_URL", "http://127.0.0.1:6333"), reason="Qdrant URL config")
-
-    try:
-        ai_response = feedback_loop.run_feedback_loop(user_input) # Use the existing feedback loop
-        context_manager.set("mid_term.final_answer", ai_response, reason="AI response for chat")
-        log_manager.info(f"[ChatHandler] AI Response: {ai_response[:100]}...")
-        return ai_response
-    except Exception as e:
-        log_manager.error(f"[ChatHandler] Error during chat message processing: {e}")
-        return "I'm sorry, but I encountered an error while processing your request."
-
-async def get_current_context() -> Dict[str, Any]:
-    """Retrieves the current full context from the ContextManager."""
-    context_manager = ContextManager(history_path="logs/context_history.json", context_filepath=os.path.join(os.getcwd(), 'data', 'test_context.json'))
-    return context_manager.get_full_context()
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="SSP Orchestrator CLI")
-    parser.add_argument("--analyze", type=str, help="Run impact analysis on the specified file.")
-    parser.add_argument("--contract", nargs='+', help="Run meta-contract operations. Usage: --contract [generate|negotiate|list] [module_name] [spec_json]")
-    parser.add_argument("--graph", nargs='+', help="Run cognitive graph operations. Usage: --graph [add|path] [args...]")
-    parser.add_argument("--reason", type=int, help="Run self-reasoning loop for a number of cycles.")
-    parser.add_argument("--fabric", nargs=2, type=int, help="Run persona fabric simulation. Usage: --fabric [cycles] [personas]")
-    parser.add_argument("--collective", nargs=2, type=int, help="Run collective intelligence simulation. Usage: --collective [personas] [cycles]")
-    parser.add_argument("--mirror", nargs='+', help="Run Evolution Mirror operations. Usage: --mirror [observe|reflect] [event_name] [data_json]")
-    parser.add_argument("--scheduler", action="store_true", help="Run nightly predictive scheduler")
-    args = parser.parse_args()
-
-    if args.analyze:
-        run_impact_analysis(args.analyze)
-    elif args.contract:
-        mode = args.contract[0]
-        module_name = args.contract[1] if len(args.contract) > 1 else None
-        spec_str = args.contract[2] if len(args.contract) > 2 else None
-        
-        spec = None
-        if spec_str:
-            try:
-                spec = json.loads(spec_str)
-            except json.JSONDecodeError:
-                print("Error: Invalid JSON format for spec.")
-                sys.exit(1)
-
-        if not module_name and mode != 'list':
-            print("Error: module_name is required for generate/negotiate modes.")
-            sys.exit(1)
-
-        run_meta_contract(mode, module_name, spec)
-    elif args.graph:
-        mode = args.graph[0]
-        if mode == 'add' and len(args.graph) == 4:
-            run_cognitive_graph(mode, src=args.graph[1], rel=args.graph[2], tgt=args.graph[3])
-        elif mode == 'path' and len(args.graph) == 3:
-            run_cognitive_graph(mode, src=args.graph[1], tgt=args.graph[2])
-        else:
-            print("Usage: --graph add <src> <rel> <tgt> | --graph path <src> <tgt>")
-    elif args.reason:
-        run_self_reasoning(args.reason)
-    elif args.fabric:
-        run_persona_fabric(cycles=args.fabric[0], personas=args.fabric[1])
-    elif args.collective:
-        run_collective_intelligence(personas=args.collective[0], cycles=args.collective[1])
-    elif args.mirror:
-        mode = args.mirror[0]
-        event = args.mirror[1] if len(args.mirror) > 1 else None
-        data_str = args.mirror[2] if len(args.mirror) > 2 else None
-        
-        data = None
-        if data_str:
-            try:
-                data = json.loads(data_str)
-            except json.JSONDecodeError:
-                print("Error: Invalid JSON format for data.")
-                sys.exit(1)
-
-        run_evolution_mirror(mode, event, data)
-    elif args.scheduler:
-        asyncio.run(start_predictive_scheduler())
-    else:
-        run_context_evolution_cycle()
+        log_manager.info("========= SSP Workflow v3.0 (Meta-Contract System) Cycle Finished =========)")

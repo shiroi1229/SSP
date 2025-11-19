@@ -4,7 +4,7 @@
 Gemini恒常性デーモン
 全体を継続監視し、異常時に自動修復サイクルを起動。
 """
-import subprocess, time, os, json, datetime, logging
+import subprocess, time, os, json, datetime, logging, sys
 
 # Configure logging to output JSON to self_healing_daemon.log
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -13,7 +13,6 @@ LOGS_DIR = os.path.join(PROJECT_ROOT, 'logs')
 REPORTS_DIR = os.path.join(PROJECT_ROOT, 'reports')
 log_file_path = os.path.join(LOGS_DIR, "self_healing_daemon.log")
 os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
-logging.basicConfig(filename=log_file_path, level=logging.INFO, format='%(message)s')
 
 def log_json(entry):
     logging.info(json.dumps(entry, ensure_ascii=False))

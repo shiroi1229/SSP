@@ -10,8 +10,6 @@ import os, json, statistics, datetime, logging
 import numpy as np
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 COLLECTIVE_LOG = "./logs/collective_log.json"
 OPT_LOG = "./logs/optimization_log.json"
 PERSONA_FILE = "./config/persona_profile.json"

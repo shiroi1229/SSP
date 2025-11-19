@@ -12,8 +12,6 @@ import re
 import numpy as np
 import statistics
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 LOG_PATH = "./logs/introspection_trace.log"
 PERSONA_PROFILE_PATH = "./config/persona_profile.json" # Moved up for visibility
 MAX_ENTRIES = 5000

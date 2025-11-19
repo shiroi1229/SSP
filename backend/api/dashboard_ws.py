@@ -1,8 +1,8 @@
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Depends
-from typing import List, Dict, Any
 import asyncio
-import logging
+import aiohttp
 import json
+import os
+import logging
 from datetime import datetime
 import psutil # For system metrics
 
@@ -10,9 +10,11 @@ import psutil # For system metrics
 from modules.persona_manager import get_current_persona_state
 from modules.metacognition import get_latest_introspection_log, get_cognitive_graph_data
 
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Depends
+from typing import List, Dict, Any
+
 router = APIRouter()
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class ConnectionManager:

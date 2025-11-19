@@ -11,7 +11,6 @@ from pydantic import BaseModel, Field
 
 router = APIRouter(prefix="/roadmap")
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class RoadmapTreeItem(RoadmapItem):
