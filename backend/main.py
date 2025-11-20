@@ -3,13 +3,15 @@
 import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.api import persona_state, logs_recent, evaluate, context, analyze_sessions, sessions, chat, get_context, status, emotion, tts, osc, roadmap, roadmap_tree, dashboard_ws, system_health, modules, collective_mind, robustness_firewall, robustness_self_healing, robustness_loop_health, robustness_loop_config, robustness_load_balancer, robustness_recovery, robustness_akashic, robustness_resilience, robustness_luminous, awareness, internal_dialogue, security
+from backend.api import persona_state, logs_recent, evaluate, context, analyze_sessions, knowledge, sessions, chat, get_context, status, emotion, tts, osc, roadmap, roadmap_tree, dashboard_ws, system_health, modules, collective_mind, robustness_firewall, robustness_self_healing, robustness_loop_health, robustness_loop_config, robustness_load_balancer, robustness_recovery, robustness_akashic, robustness_resilience, robustness_luminous, awareness, internal_dialogue, security
 from backend.api import timeline_restore, context_rollback, causal_trace, causal_verify, causal_events, causal_insight, causal_report, meta_causal_feedback, meta_causal_bias, auto_actions, meta_causal_bias_history, meta_causal_report, meta_optimizer, world_timeline
 from backend.api import system_forecast # Import the new forecast router
 from backend.api.cluster import router as cluster_router
 from backend.api.system import router as system_router
 from backend.api.continuum.state import router as continuum_state_router
 from backend.api.continuum.stream import router as continuum_stream_router
+from backend.api.metrics_v0_1 import router as metrics_v0_1_router
+from backend.api.error_summary import router as error_summary_router
 from backend.api.module_stats import router as module_stats_router
 from backend.api.recovery import router as recovery_router
 from backend.api.logs import recent
@@ -28,11 +30,13 @@ from orchestrator.recovery_policy_manager import RecoveryPolicyManager
 from orchestrator.insight_monitor import InsightMonitor
 from modules.log_manager import log_manager
 from modules.api_interface import router as insight_router
+from backend.middleware.metrics_logger import setup_metrics_middleware
 
 # Configure logging once at the application's entry point
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 app = FastAPI(title="Shiroi System Platform", version="0.1.0")
+setup_metrics_middleware(app)
 
 # Add CORS middleware
 app.add_middleware(
@@ -81,8 +85,9 @@ app.include_router(module_stats_router, prefix="/api")
 app.include_router(status.router, prefix="/api")
 app.include_router(emotion.router, prefix="/api")
 app.include_router(tts.router, prefix="/api")
+app.include_router(knowledge.router, prefix="/api")
 app.include_router(osc.router, prefix="/api")
-app.include_router(roadmap_tree.router, prefix="/api")
+# app.include_router(roadmap_tree.router, prefix="/api")
 app.include_router(roadmap.router, prefix="/api")
 app.include_router(dashboard_ws.router, prefix="/api")
 app.include_router(system_health.router, prefix="/api")
@@ -90,6 +95,8 @@ app.include_router(system_forecast.router, prefix="/api")
 app.include_router(system_router, prefix="/api")
 app.include_router(continuum_state_router, prefix="/api")
 app.include_router(continuum_stream_router, prefix="/api")
+app.include_router(metrics_v0_1_router, prefix="/api")
+app.include_router(error_summary_router, prefix="/api")
 app.include_router(cluster_router, prefix="/api")
 app.include_router(ws_forecast_router, prefix="/api") # Assuming this should also be under /api
 app.include_router(stage_controller_router, prefix="/api")

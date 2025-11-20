@@ -143,6 +143,13 @@ def update_session_logs_table():
             connection.execute(text("ALTER TABLE session_logs ADD COLUMN IF NOT EXISTS commit_hash VARCHAR(40)"))
             connection.execute(text("ALTER TABLE session_logs ADD COLUMN IF NOT EXISTS env_snapshot TEXT"))
             connection.execute(text("ALTER TABLE session_logs ADD COLUMN IF NOT EXISTS ai_comment TEXT"))
+            connection.execute(text("ALTER TABLE session_logs ADD COLUMN IF NOT EXISTS error_tag VARCHAR"))
+            connection.execute(text("ALTER TABLE session_logs ADD COLUMN IF NOT EXISTS impact_level VARCHAR"))
+            connection.execute(text("ALTER TABLE session_logs ADD COLUMN IF NOT EXISTS status_code INTEGER"))
+            connection.execute(text("ALTER TABLE session_logs ADD COLUMN IF NOT EXISTS response_time_ms INTEGER"))
+            connection.execute(text("ALTER TABLE session_logs ADD COLUMN IF NOT EXISTS log_persist_failed INTEGER DEFAULT 0"))
+            connection.execute(text("ALTER TABLE session_logs ADD COLUMN IF NOT EXISTS regeneration_attempts INTEGER DEFAULT 0"))
+            connection.execute(text("ALTER TABLE session_logs ADD COLUMN IF NOT EXISTS regeneration_success BOOLEAN DEFAULT FALSE"))
             # Commit the transaction to make the changes persistent
             connection.commit()
             log_manager.info("Updated table session_logs with new columns.")

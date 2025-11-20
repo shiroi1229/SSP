@@ -17,7 +17,7 @@ class RebalanceRequest(BaseModel):
     task_priorities: List[Dict[str, object]] | None = None
 
 
-router = APIRouter(tags=["System"], prefix="/api/system")
+router = APIRouter(tags=["System"], prefix="/system")
 
 
 @router.post("/rebalance")

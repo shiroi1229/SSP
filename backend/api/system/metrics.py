@@ -7,7 +7,7 @@ from fastapi import APIRouter
 from backend.modules.load_balancer import load_balancer_service
 from backend.modules.perf_monitor import perf_monitor
 
-router = APIRouter(tags=["System"], prefix="/api/system")
+router = APIRouter(tags=["System"], prefix="/system")
 
 
 @router.get("/metrics")

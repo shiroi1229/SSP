@@ -2,6 +2,7 @@ import json
 import os
 import psycopg2
 import datetime
+from collections import Counter
 from threading import Lock
 from psycopg2.extensions import connection as PGConnection
 from qdrant_client import QdrantClient
@@ -202,7 +203,7 @@ class RAGEngine:
         if not ids:
             log_manager.debug("No IDs provided for PostgreSQL text retrieval.")
             return []
-        
+
         cur = conn.cursor()
         try:
             id_list = ','.join(map(str, ids))
@@ -212,6 +213,57 @@ class RAGEngine:
             return texts
         finally:
             cur.close()
+
+    def _format_hit(self, hit, score_hint=None):
+        payload = getattr(hit, "payload", {}) or {}
+        text = payload.get("answer") or payload.get("result") or payload.get("text") or payload.get("user_input") or ""
+        created_at = payload.get("created_at") or payload.get("timestamp") or datetime.datetime.now().isoformat()
+        source = payload.get("source") or payload.get("module") or payload.get("source_name") or "unknown"
+        score = score_hint if score_hint is not None else payload.get("rating") or payload.get("score") or 0.0
+        return {
+            "id": str(getattr(hit, "id", payload.get("id", ""))),
+            "text": text,
+            "score": float(score),
+            "source": source,
+            "created_at": created_at,
+        }
+
+    def _parse_datetime(self, value: str):
+        try:
+            return datetime.datetime.fromisoformat(value)
+        except Exception:
+            try:
+                return datetime.datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+            except Exception:
+                return datetime.datetime.min
+
+    def _build_score_summary(self, scores: list[float]):
+        cleaned = [score for score in scores if isinstance(score, (int, float))]
+        if not cleaned:
+            return {"min": None, "max": None, "avg": None, "p95": None}
+        cleaned.sort()
+        avg = sum(cleaned) / len(cleaned)
+        p95_index = min(max(int(len(cleaned) * 0.95) - 1, 0), len(cleaned) - 1)
+        return {
+            "min": cleaned[0],
+            "max": cleaned[-1],
+            "avg": avg,
+            "p95": cleaned[p95_index],
+        }
+
+    def _apply_sort(self, entries: list[dict], order_by: str, descending: bool):
+        reverse = descending
+        if order_by == "score":
+            entries.sort(key=lambda entry: entry["score"], reverse=reverse)
+        else:
+            entries.sort(
+                key=lambda entry: self._parse_datetime(entry["created_at"]),
+                reverse=reverse,
+            )
+        return entries
+
+    def _collect_source_counts(self, entries: list[dict]):
+        return dict(Counter(entry["source"] for entry in entries))
 
     def get_context(self, query: str) -> str: # Reverted to get_context
         if not self.qdrant_client or not self.embedding_model or not self._ensure_pg_connection():
@@ -244,36 +296,160 @@ class RAGEngine:
 
         return context
 
-    def list_embeddings(self, limit: int = 50) -> list:
+    def list_embeddings(
+        self,
+        limit: int = 50,
+        offset: int = 0,
+        order_by: str = "created_at",
+        descending: bool = True,
+    ) -> dict:
         if not self.qdrant_client:
             log_manager.error("Cannot list embeddings: RAGEngine is not available.")
-            return []
-        log_manager.debug(f"Listing {limit} embeddings from Qdrant.")
+            return {
+                "items": [],
+                "total": 0,
+                "limit": limit,
+                "offset": offset,
+                "source_counts": {},
+                "score_summary": self._build_score_summary([]),
+            }
+        log_manager.debug(f"Listing embeddings from Qdrant (limit={limit}, offset={offset}).")
+
+        total_count = 0
+        try:
+            total_count = self.qdrant_client.count(collection_name=self.qdrant_collection_name).count
+        except Exception as e:
+            log_manager.warning(f"Failed to count collection '{self.qdrant_collection_name}': {e}")
+
         try:
             scroll_result, _ = self.qdrant_client.scroll(
                 collection_name=self.qdrant_collection_name,
                 limit=limit,
+                offset=offset,
                 with_payload=True,
-                with_vectors=False
+                with_vectors=False,
             )
-            
-            results = []
+            entries = []
             for hit in scroll_result:
-                payload = hit.payload
-                text = payload.get('answer') or payload.get('result') or payload.get('user_input') or ""
-                
-                results.append({
-                    "id": str(hit.id),
-                    "text": text,
-                    "score": payload.get('rating', 0.0),
-                    "source": payload.get('source', 'unknown'),
-                    "created_at": payload.get('created_at', datetime.datetime.now().isoformat())
-                })
-            log_manager.debug(f"Listed {len(results)} embeddings.")
-            return results
+                try:
+                    entries.append(self._format_hit(hit))
+                except Exception as err:
+                    log_manager.warning(f"Skipping hit due to formatting error: {err}")
+            entries = self._apply_sort(entries, order_by if order_by in {"score", "created_at"} else "created_at", descending)
+            source_counts = self._collect_source_counts(entries)
+            score_summary = self._build_score_summary([entry["score"] for entry in entries])
+            log_manager.debug(f"Listed {len(entries)} embeddings (total={total_count}).")
+            return {
+                "items": entries,
+                "total": total_count,
+                "limit": limit,
+                "offset": offset,
+                "source_counts": source_counts,
+                "score_summary": score_summary,
+            }
         except Exception as e:
             log_manager.exception(f"Error listing embeddings from Qdrant: {e}")
-            return []
+            return {
+                "items": [],
+                "total": total_count,
+                "limit": limit,
+                "offset": offset,
+                "source_counts": {},
+                "score_summary": self._build_score_summary([]),
+            }
+
+    def search(
+        self,
+        query: str,
+        limit: int = 10,
+        offset: int = 0,
+        order_by: str = "score",
+        descending: bool = True,
+    ) -> dict:
+        if not self.qdrant_client or not self.embedding_model:
+            log_manager.error("Cannot search embeddings: RAGEngine is not available.")
+            return {
+                "items": [],
+                "total": 0,
+                "source_counts": {},
+                "score_summary": self._build_score_summary([]),
+                "query": query,
+                "limit": limit,
+                "offset": offset,
+            }
+
+    def get_by_id(self, entry_id: str):
+        if not self.qdrant_client:
+            log_manager.error("Cannot retrieve entry: RAGEngine is not available.")
+            return None
+        try:
+            point = self.qdrant_client.retrieve(
+                collection_name=self.qdrant_collection_name,
+                point_id=entry_id,
+                with_payload=True,
+            )
+            if not point or not getattr(point, "payload", None):
+                return None
+            return self._format_hit(point)
+        except Exception as exc:
+            log_manager.exception(f"Failed to fetch entry {entry_id}: {exc}")
+            return None
+
+        log_manager.debug(f"Searching RAG for query='{query}' (limit={limit}, offset={offset}).")
+        query_vector = self._vectorize_query(query)
+        if not query_vector:
+            return {
+                "items": [],
+                "total": 0,
+                "source_counts": {},
+                "score_summary": self._build_score_summary([]),
+                "query": query,
+                "limit": limit,
+                "offset": offset,
+            }
+
+        try:
+            search_limit = max(limit + offset, 1)
+            search_result = self.qdrant_client.search(
+                collection_name=self.qdrant_collection_name,
+                query_vector=query_vector,
+                limit=search_limit,
+                with_payload=True,
+            )
+            entries = []
+            for hit in search_result:
+                try:
+                    entries.append(self._format_hit(hit, score_hint=getattr(hit, "score", None)))
+                except Exception as err:
+                    log_manager.warning(f"Skipping hit during search formatting: {err}")
+            entries = self._apply_sort(
+                entries,
+                order_by if order_by in {"score", "created_at"} else "score",
+                descending,
+            )
+            total_hits = len(entries)
+            paged = entries[offset: offset + limit]
+            score_summary = self._build_score_summary([entry["score"] for entry in entries])
+            return {
+                "items": paged,
+                "total": total_hits,
+                "limit": limit,
+                "offset": offset,
+                "query": query,
+                "source_counts": self._collect_source_counts(entries),
+                "score_summary": score_summary,
+            }
+        except Exception as e:
+            log_manager.exception(f"Error running search for '{query}': {e}")
+            return {
+                "items": [],
+                "total": 0,
+                "source_counts": {},
+                "score_summary": self._build_score_summary([]),
+                "query": query,
+                "limit": limit,
+                "offset": offset,
+            }
 
     def _ensure_qdrant_collection_exists(self, vector_size: int):
         if not self.qdrant_client:

@@ -1,6 +1,6 @@
 # path: backend/db/models.py
 # version: v0.30
-from sqlalchemy import Column, Integer, DateTime, Text, Float, JSON, String # String をインポート
+from sqlalchemy import Column, Integer, DateTime, Text, Float, JSON, String, Boolean # String をインポート
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 from sqlalchemy.dialects.postgresql import ARRAY # Import ARRAY for PostgreSQL specific types
@@ -23,6 +23,13 @@ class SessionLog(Base):
     commit_hash = Column(String(40))
     env_snapshot = Column(Text)
     ai_comment = Column(Text)
+    status_code = Column(Integer, nullable=True)
+    response_time_ms = Column(Integer, nullable=True)
+    log_persist_failed = Column(Integer, default=0)
+    regeneration_attempts = Column(Integer, default=0)
+    regeneration_success = Column(Boolean, default=False)
+    error_tag = Column(String, nullable=True)
+    impact_level = Column(String, nullable=True)
 
     def __repr__(self):
         return f"<SessionLog(id={self.id}, timestamp={self.created_at}, user_input='{self.user_input[:30]}...')>"

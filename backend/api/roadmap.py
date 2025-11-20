@@ -195,6 +195,321 @@ def _coerce_progress(value) -> int:
         return 0
 
 
+
+# @router.get("/stats", response_model=RoadmapStatsResponse)
+# def get_roadmap_stats(
+#     focus_prefix: str = Query("A", description="Prefix to surface in the delayed list."),
+#     db: Session = Depends(get_db),
+# ):
+#     log_manager.info("Generating roadmap prefix summary.")
+#     try:
+#         db_items = db.query(DBRoadmapItem).all()
+#     except Exception as exc:
+#         log_manager.error(f"Failed to fetch roadmap stats: {exc}", exc_info=True)
+#         raise HTTPException(status_code=500, detail=f"Database error: {exc}")
+
+#     aggregates: Dict[str, Dict[str, int]] = defaultdict(lambda: {"count": 0, "completed": 0, "in_progress": 0, "not_started": 0})
+#     delayed_items: List[RoadmapDelayedItem] = []
+
+#     for item in db_items:
+#         prefix = _get_prefix_from_version(item.version)
+#         progress_value = _coerce_progress(item.progress)
+#         bucket = aggregates[prefix]
+#         bucket["count"] += 1
+#         if progress_value >= 100:
+#             bucket["completed"] += 1
+#         elif progress_value > 0:
+#             bucket["in_progress"] += 1
+#         else:
+#             bucket["not_started"] += 1
+
+#         if prefix == focus_prefix and progress_value < 100:
+#             delayed_items.append(
+#                 RoadmapDelayedItem(
+#                     version=item.version,
+#                     codename=item.codename,
+#                     progress=item.progress,
+#                     status=item.status,
+#                 )
+#             )
+
+#     ordered_summary = [
+#         RoadmapPrefixSummary(
+#             prefix=prefix,
+#             count=bucket["count"],
+#             completed=bucket["completed"],
+#             in_progress=bucket["in_progress"],
+#             not_started=bucket["not_started"],
+#         )
+#         for prefix, bucket in sorted(aggregates.items(), key=lambda kv: kv[0])
+#     ]
+
+#     return RoadmapStatsResponse(summary=ordered_summary, delayed=delayed_items)
+
+
+# @router.get("/current", response_model=RoadmapData)
+# def get_current_roadmap(db: Session = Depends(get_db)):
+#     """
+#     Retrieve all roadmap items, categorized and sorted by version.
+#     """
+#     log_manager.info("Attempting to retrieve all roadmap items from the database.")
+#     try:
+#         db_items = db.query(DBRoadmapItem).all()
+#         # Sort items using the custom version sort key
+#         db_items.sort(key=lambda item: parse_version_sort_key(item.version))
+#         log_manager.info(f"Retrieved and sorted {len(db_items)} roadmap items.")
+#     except Exception as e:
+#         log_manager.error(f"Error retrieving roadmap items from DB: {e}", exc_info=True)
+#         raise HTTPException(status_code=500, detail=f"Database error: {e}")
+    
+#     categorized_items: Dict[str, List[RoadmapItem]] = defaultdict(list)
+#     for item in db_items:
+#         try:
+#             log_manager.debug(f"Processing item ID: {item.id}, Version: {item.version}")
+#             pydantic_item = RoadmapItem.model_validate(item)
+#             category = categorize_version(pydantic_item.version)
+#             categorized_items[category].append(pydantic_item)
+#         except Exception as e:
+#             log_manager.error(f"Error processing roadmap item ID {item.id}, Version {item.version}: {e}", exc_info=True)
+#             continue
+
+#     log_manager.info("Roadmap items categorized successfully.")
+#     return RoadmapData(
+#         backend=categorized_items["backend"],
+#         frontend=categorized_items["frontend"],
+#         robustness=categorized_items["robustness"],
+#         Awareness_Engine=categorized_items["Awareness_Engine"]
+#     )
+
+# @router.get("/{version}", response_model=RoadmapItem)
+# def get_roadmap_item_by_version(version: str, db: Session = Depends(get_db)):
+#     """
+#     Retrieve a single roadmap item by its version.
+#     """
+#     log_manager.info(f"Attempting to retrieve roadmap item by version: {version}")
+#     db_item = db.query(DBRoadmapItem).filter(DBRoadmapItem.version == version).first()
+#     if db_item is None:
+#         log_manager.warning(f"Roadmap item {version} not found.")
+#         raise HTTPException(status_code=404, detail="Roadmap item not found")
+    
+#     try:
+#         # Manually construct the Pydantic model to ensure all fields are correctly mapped,
+#         # especially array types like keyFeatures.
+#         pydantic_item = RoadmapItem(
+#             id=db_item.id,
+#             version=db_item.version,
+#             codename=db_item.codename,
+#             goal=db_item.goal,
+#             status=db_item.status,
+#             description=db_item.description,
+#             startDate=db_item.startDate,
+#             endDate=db_item.endDate,
+#             progress=db_item.progress,
+#             keyFeatures=_split_and_clean_list_field(db_item.keyFeatures),
+#             dependencies=_split_and_clean_list_field(db_item.dependencies),
+#             metrics=_split_and_clean_list_field(db_item.metrics),
+#             owner=db_item.owner,
+#             documentationLink=db_item.documentationLink,
+#             prLink=db_item.prLink,
+#             development_details=db_item.development_details,
+#             parent_id=db_item.parent_id
+#         )
+#         log_manager.info(f"Successfully retrieved and validated roadmap item: {version}")
+#         return pydantic_item
+#     except Exception as e:
+#         log_manager.error(f"Error validating roadmap item {version}: {e}", exc_info=True)
+#         raise HTTPException(status_code=500, detail=f"Error processing roadmap item: {e}")
+
+# @router.patch("/{version}", response_model=RoadmapItem)
+# def update_roadmap_item_by_version(
+#     version: str,
+#     item_update: RoadmapItemUpdateByVersion,
+#     db: Session = Depends(get_db)
+# ):
+#     """
+#     Partially update an existing roadmap item by its version.
+#     """
+#     log_manager.info(f"Attempting to partially update roadmap item by version: {version}")
+#     db_item = db.query(DBRoadmapItem).filter(DBRoadmapItem.version == version).first()
+#     if not db_item:
+#         log_manager.warning(f"Update failed: Roadmap item with version {version} not found.")
+#         raise HTTPException(status_code=404, detail="Roadmap item not found")
+
+#     update_data = item_update.model_dump(exclude_unset=True, by_alias=True)
+#     _normalize_payload_fields(update_data, fill_missing=False)
+#     if "dependencies" in update_data:
+#         _validate_dependencies(update_data["dependencies"], db)
+#     for key, value in update_data.items():
+#         setattr(db_item, key, value)
+
+#     try:
+#         db.commit()
+#         db.refresh(db_item)
+#         log_manager.info(f"Successfully updated roadmap item version: {version}")
+#         return RoadmapItem.model_validate(db_item)
+#     except Exception as e:
+#         db.rollback()
+#         log_manager.error(f"Error updating roadmap item version {version}: {e}", exc_info=True)
+@router.post("/", response_model=RoadmapItem)
+def create_roadmap_item(item: RoadmapItemCreate, db: Session = Depends(get_db)):
+    """
+    Create a new roadmap item.
+    """
+    log_manager.info(f"Attempting to create a new roadmap item with version: {item.version}")
+    try:
+        payload = _normalize_payload_fields(item.model_dump(by_alias=True), fill_missing=True)
+        _validate_dependencies(payload.get("dependencies", []), db)
+        db_item = DBRoadmapItem(**payload)
+        db.add(db_item)
+        db.commit()
+        db.refresh(db_item)
+        log_manager.info(f"Successfully created roadmap item: {db_item.version}")
+        _sync_docs_or_log("creating roadmap item")
+        return RoadmapItem.model_validate(db_item)
+    except Exception as e:
+        db.rollback()
+        log_manager.error(f"Error creating roadmap item: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to create roadmap item: {e}")
+
+# @router.put("/{item_id}", response_model=RoadmapItem)
+# def update_roadmap_item(item_id: int, item: RoadmapItemUpdate, db: Session = Depends(get_db)):
+#     """
+#     Update an existing roadmap item by its ID.
+#     """
+#     log_manager.info(f"Attempting to update roadmap item with ID: {item_id}")
+#     db_item = db.query(DBRoadmapItem).filter(DBRoadmapItem.id == item_id).first()
+#     if not db_item:
+#         log_manager.warning(f"Update failed: Roadmap item with ID {item_id} not found.")
+#         raise HTTPException(status_code=404, detail="Roadmap item not found")
+
+#     update_data = _normalize_payload_fields(item.model_dump(by_alias=True, exclude_unset=True), fill_missing=False)
+#     if "dependencies" in update_data:
+#         _validate_dependencies(update_data.get("dependencies", []), db)
+#     for key, value in update_data.items():
+#         setattr(db_item, key, value)
+
+#     try:
+#         db.commit()
+#         db.refresh(db_item)
+#         log_manager.info(f"Successfully updated roadmap item ID: {item_id}")
+#         _sync_docs_or_log("updating roadmap item")
+#         return RoadmapItem.model_validate(db_item)
+#     except Exception as e:
+#         db.rollback()
+#         log_manager.error(f"Error updating roadmap item ID {item_id}: {e}", exc_info=True)
+#         raise HTTPException(status_code=500, detail=f"Failed to update roadmap item: {e}")
+
+# @router.post("/import-text", response_model=RoadmapItem)
+# def import_roadmap_item_from_text(payload: RoadmapImportText, db: Session = Depends(get_db)):
+#     """
+#     Parses a raw text block to create a new roadmap item.
+#     """
+#     log_manager.info("Attempting to import roadmap item from text block.")
+#     try:
+#         # Extract the 'text' field from the decoded payload
+#         text_to_parse = payload.text # Use payload.text directly
+#         if not text_to_parse:
+#             raise HTTPException(status_code=400, detail="Request body must contain a 'text' field.")
+
+#         parsed_data = parse_roadmap_text(text_to_parse)
+
+#         # Validate required fields
+#         required_fields = ['version', 'codename', 'goal', 'description', 'status']
+#         for field in required_fields:
+#             if field not in parsed_data or not parsed_data[field]:
+#                 raise HTTPException(status_code=400, detail=f"Parsing error: Missing required field '{field}'")
+
+#         roadmap_item_create = RoadmapItemCreate(**parsed_data)
+#         payload = _normalize_payload_fields(roadmap_item_create.model_dump(by_alias=True), fill_missing=True)
+#         _validate_dependencies(payload.get("dependencies", []), db)
+#         db_item = DBRoadmapItem(**payload)
+#         db.add(db_item)
+#         db.commit()
+#         db.refresh(db_item)
+        
+#         log_manager.info(f"Successfully imported and created roadmap item: {db_item.version}")
+#         _sync_docs_or_log("importing roadmap item from text")
+#         return RoadmapItem.model_validate(db_item)
+
+#     except HTTPException as he:
+#         log_manager.error(f"HTTP exception during text import: {he.detail}")
+#         raise he
+#     except Exception as e:
+#         db.rollback()
+#         log_manager.error(f"Error importing roadmap item from text: {e}", exc_info=True)
+#         raise HTTPException(status_code=500, detail=f"Failed to import roadmap item from text: {e}")
+
+# @router.delete("/{item_id}", response_model=Dict[str, str])
+# def delete_roadmap_item(item_id: int, db: Session = Depends(get_db)):
+#     """
+#     Delete a roadmap item by its ID.
+#     """
+#     log_manager.info(f"Attempting to delete roadmap item with ID: {item_id}")
+#     db_item = db.query(DBRoadmapItem).filter(DBRoadmapItem.id == item_id).first()
+#     if not db_item:
+#         log_manager.warning(f"Delete failed: Roadmap item with ID {item_id} not found.")
+#         raise HTTPException(status_code=404, detail="Roadmap item not found")
+
+#     try:
+#         db.delete(db_item)
+#         db.commit()
+#         log_manager.info(f"Successfully deleted roadmap item ID: {item_id}")
+#         _sync_docs_or_log("deleting roadmap item")
+#         return {"message": "Roadmap item deleted successfully"}
+#     except Exception as e:
+#         db.rollback()
+#         log_manager.error(f"Error deleting roadmap item ID {item_id}: {e}", exc_info=True)
+#         raise HTTPException(status_code=500, detail=f"Failed to delete roadmap item: {e}")
+
+@router.post("/", response_model=RoadmapItem)
+def create_roadmap_item(item: RoadmapItemCreate, db: Session = Depends(get_db)):
+    """
+    Create a new roadmap item.
+    """
+    log_manager.info(f"Attempting to create a new roadmap item with version: {item.version}")
+    try:
+        payload = _normalize_payload_fields(item.model_dump(by_alias=True), fill_missing=True)
+        _validate_dependencies(payload.get("dependencies", []), db)
+        db_item = DBRoadmapItem(**payload)
+        db.add(db_item)
+        db.commit()
+        db.refresh(db_item)
+        log_manager.info(f"Successfully created roadmap item: {db_item.version}")
+        _sync_docs_or_log("creating roadmap item")
+        return RoadmapItem.model_validate(db_item)
+    except Exception as e:
+        db.rollback()
+        log_manager.error(f"Error creating roadmap item: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to create roadmap item: {e}")
+
+@router.put("/{item_id}", response_model=RoadmapItem)
+def update_roadmap_item(item_id: int, item: RoadmapItemUpdate, db: Session = Depends(get_db)):
+    """
+    Update an existing roadmap item by its ID.
+    """
+    log_manager.info(f"Attempting to update roadmap item with ID: {item_id}")
+    db_item = db.query(DBRoadmapItem).filter(DBRoadmapItem.id == item_id).first()
+    if not db_item:
+        log_manager.warning(f"Update failed: Roadmap item with ID {item_id} not found.")
+        raise HTTPException(status_code=404, detail="Roadmap item not found")
+
+    update_data = _normalize_payload_fields(item.model_dump(by_alias=True, exclude_unset=True), fill_missing=False)
+    if "dependencies" in update_data:
+        _validate_dependencies(update_data.get("dependencies", []), db)
+    for key, value in update_data.items():
+        setattr(db_item, key, value)
+
+    try:
+        db.commit()
+        db.refresh(db_item)
+        log_manager.info(f"Successfully updated roadmap item ID: {item_id}")
+        _sync_docs_or_log("updating roadmap item")
+        return RoadmapItem.model_validate(db_item)
+    except Exception as e:
+        db.rollback()
+        log_manager.error(f"Error updating roadmap item ID {item_id}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to update roadmap item: {e}")
+
 @router.get("/stats", response_model=RoadmapStatsResponse)
 def get_roadmap_stats(
     focus_prefix: str = Query("A", description="Prefix to surface in the delayed list."),
@@ -349,55 +664,6 @@ def update_roadmap_item_by_version(
     except Exception as e:
         db.rollback()
         log_manager.error(f"Error updating roadmap item version {version}: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Failed to update roadmap item: {e}")
-
-@router.post("/", response_model=RoadmapItem)
-def create_roadmap_item(item: RoadmapItemCreate, db: Session = Depends(get_db)):
-    """
-    Create a new roadmap item.
-    """
-    log_manager.info(f"Attempting to create a new roadmap item with version: {item.version}")
-    try:
-        payload = _normalize_payload_fields(item.model_dump(by_alias=True), fill_missing=True)
-        _validate_dependencies(payload.get("dependencies", []), db)
-        db_item = DBRoadmapItem(**payload)
-        db.add(db_item)
-        db.commit()
-        db.refresh(db_item)
-        log_manager.info(f"Successfully created roadmap item: {db_item.version}")
-        _sync_docs_or_log("creating roadmap item")
-        return RoadmapItem.model_validate(db_item)
-    except Exception as e:
-        db.rollback()
-        log_manager.error(f"Error creating roadmap item: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Failed to create roadmap item: {e}")
-
-@router.put("/{item_id}", response_model=RoadmapItem)
-def update_roadmap_item(item_id: int, item: RoadmapItemUpdate, db: Session = Depends(get_db)):
-    """
-    Update an existing roadmap item by its ID.
-    """
-    log_manager.info(f"Attempting to update roadmap item with ID: {item_id}")
-    db_item = db.query(DBRoadmapItem).filter(DBRoadmapItem.id == item_id).first()
-    if not db_item:
-        log_manager.warning(f"Update failed: Roadmap item with ID {item_id} not found.")
-        raise HTTPException(status_code=404, detail="Roadmap item not found")
-
-    update_data = _normalize_payload_fields(item.model_dump(by_alias=True, exclude_unset=True), fill_missing=False)
-    if "dependencies" in update_data:
-        _validate_dependencies(update_data.get("dependencies", []), db)
-    for key, value in update_data.items():
-        setattr(db_item, key, value)
-
-    try:
-        db.commit()
-        db.refresh(db_item)
-        log_manager.info(f"Successfully updated roadmap item ID: {item_id}")
-        _sync_docs_or_log("updating roadmap item")
-        return RoadmapItem.model_validate(db_item)
-    except Exception as e:
-        db.rollback()
-        log_manager.error(f"Error updating roadmap item ID {item_id}: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Failed to update roadmap item: {e}")
 
 @router.post("/import-text", response_model=RoadmapItem)

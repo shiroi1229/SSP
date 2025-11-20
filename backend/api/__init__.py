@@ -31,3 +31,5 @@ from . import awareness
 from .system import router as system_router
 from .continuum.state import router as continuum_state_router
 from .continuum.stream import router as continuum_stream_router
+from .metrics_v0_1 import router as metrics_v0_1_router
+from .error_summary import router as error_summary_router

@@ -264,6 +264,37 @@ detailed_roadmap_data = {
       "prLink": ""
     },
   ],
+  "Awareness_Engine": [
+    {
+      "version": "A-v0.1.1",
+      "codename": "Awareness Architecture Refinement",
+      "goal": "A-v0.1で構築した観測・分析基盤の堅牢性と保守性を向上させ、将来の機能拡張に耐えうる恒久的なアーキテクチャへと進化させる。",
+      "status": "⚪",
+      "description": "依存性注入の導入、構造化ロギングへの移行、設定ファイルの外部化、イベントストリーミング化の検討など、A-v0.1のプロトタイプ実装を製品レベルの品質に引き上げるためのリファクタリングを中心に行う。",
+      "startDate": "2025-11-20",
+      "endDate": null,
+      "progress": 0,
+      "keyFeatures": [
+          "Dependency Injection framework integration",
+          "Structured Logging (JSON) adoption",
+          "Configuration externalization",
+          "Performance analysis (for event streaming)"
+      ],
+      "dependencies": [
+          "A-v0.1"
+      ],
+      "metrics": [
+          "テストカバレッジ 80%以上",
+          "主要コンポーネントのモック化によるテスト容易性向上",
+          "設定変更容易性（リデプロイなし）",
+          "主要ログのJSON形式化率 100%"
+      ],
+      "owner": "Awareness Division / Meta-Layer Team",
+      "documentationLink": null,
+      "development_details": "A-v0.1で指摘されたアーキテクチャ上の課題（密結合、ログ解析の脆弱性、ハードコード値）を解決することを目的とする。具体的には、既存モジュールへのDI導入、ログ出力箇所のJSON構造化、設定値の外部ファイルまたはDBからの読み込み方式への変更、Redis Streamなどリアルタイム処理基盤への移行可能性調査を進める。",
+      "parent_id": 133
+    }
+  ]
 }
 
 def populate_roadmap_data():
