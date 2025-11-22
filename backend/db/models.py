@@ -1,8 +1,8 @@
 # path: backend/db/models.py
 # version: v0.30
 from sqlalchemy import Column, Integer, DateTime, Text, Float, JSON, String, Boolean # String をインポート
-from sqlalchemy.ext.declarative import declarative_base
-from datetime import datetime
+from sqlalchemy.orm import declarative_base
+from datetime import datetime, UTC
 from sqlalchemy.dialects.postgresql import ARRAY # Import ARRAY for PostgreSQL specific types
 
 Base = declarative_base()
@@ -11,7 +11,7 @@ class SessionLog(Base):
     __tablename__ = "session_logs"
 
     id = Column(String, primary_key=True, index=True) # Integer から String に変更
-    created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
     user_input = Column(Text)
     final_output = Column(Text)
     evaluation_score = Column(Float)
@@ -38,7 +38,7 @@ class Sample(Base):
     __tablename__ = "samples"
 
     id = Column(Integer, primary_key=True, index=True)
-    created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
     prompt = Column(Text)
     result = Column(Text)
 
@@ -49,7 +49,7 @@ class DevLog(Base):
     __tablename__ = "dev_logs"
 
     id = Column(String(64), primary_key=True, index=True)
-    timestamp = Column(DateTime(timezone=True), default=datetime.utcnow)
+    timestamp = Column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
     type = Column(String(32))
     summary = Column(Text)
     file_path = Column(Text)
@@ -82,6 +82,7 @@ class RoadmapItem(Base):
     documentationLink = Column(String)
     prLink = Column(String)
     development_details = Column(Text)
+    interaction_notes = Column(Text)  # シロイとのやり取りなどの自由記述欄
     parent_id = Column(Integer, nullable=True) # New column for hierarchical relationships
 
 
@@ -89,7 +90,7 @@ class AwarenessSnapshot(Base):
     __tablename__ = "awareness_snapshots"
 
     id = Column(Integer, primary_key=True, index=True)
-    created_at = Column(DateTime(timezone=True), default=datetime.utcnow, index=True)
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(UTC), index=True)
     backend_state = Column(JSON)
     frontend_state = Column(JSON)
     robustness_state = Column(JSON)
@@ -101,7 +102,7 @@ class InternalDialogue(Base):
     __tablename__ = "internal_dialogues"
 
     id = Column(Integer, primary_key=True, index=True)
-    created_at = Column(DateTime(timezone=True), default=datetime.utcnow, index=True)
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(UTC), index=True)
     participants = Column(JSON)  # e.g., ["創造","理性","感情","意志"]
     transcript = Column(JSON)    # list of {"speaker": str, "message": str}
     insights = Column(Text)
@@ -113,8 +114,8 @@ class Chronicle(Base):
     __tablename__ = "chronicles"
 
     id = Column(String, primary_key=True, index=True)
-    created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
-    updated_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
+    updated_at = Column(DateTime(timezone=True), default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC))
     
     event_date_str = Column(String, nullable=False, index=True) # e.g., "王国暦 105年", "古代魔法時代"
     event_year = Column(Integer, nullable=True, index=True) # For sorting and filtering

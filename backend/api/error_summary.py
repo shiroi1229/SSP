@@ -1,9 +1,11 @@
 ﻿"""Error summary APIs for MVP Core quality tracking."""
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 from typing import Any, Dict, Optional
 
 from fastapi import APIRouter, Depends
+from backend.api.common import envelope_ok
+from backend.api.schemas import Envelope
 from sqlalchemy import func
 
 from backend.db.connection import get_db
@@ -13,7 +15,7 @@ router = APIRouter(prefix="/metrics/v0_1/error_summary", tags=["Metrics"])
 
 
 def _window_start(hours: int) -> datetime:
-    return datetime.utcnow() - timedelta(hours=hours)
+    return datetime.now(UTC) - timedelta(hours=hours)
 
 
 def _apply_path_filter(query: Any, path: Optional[str]) -> Any:
@@ -22,7 +24,7 @@ def _apply_path_filter(query: Any, path: Optional[str]) -> Any:
     return query.filter(SessionLog.user_input.ilike(f"{path}%"))
 
 
-@router.get("/")
+@router.get("/", response_model=Envelope[dict])
 def summary(
     hours: int = 24,
     path: Optional[str] = None,
@@ -66,7 +68,7 @@ def summary(
 
     failure_rate = round(total_errors / total_sessions, 3) if total_sessions else 0.0
 
-    return {
+    return envelope_ok({
         "period_hours": hours,
         "total_sessions": total_sessions,
         "total_errors": total_errors,
@@ -83,4 +85,4 @@ def summary(
             {"endpoint": endpoint, "count": count}
             for endpoint, count in endpoint_counts
         ],
-    }
+    })

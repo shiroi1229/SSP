@@ -1,6 +1,7 @@
 # path: backend/main.py
 # version: v0.30
 import logging
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.api import persona_state, logs_recent, evaluate, context, analyze_sessions, knowledge, sessions, chat, get_context, status, emotion, tts, osc, roadmap, roadmap_tree, dashboard_ws, system_health, modules, collective_mind, robustness_firewall, robustness_self_healing, robustness_loop_health, robustness_loop_config, robustness_load_balancer, robustness_recovery, robustness_akashic, robustness_resilience, robustness_luminous, awareness, internal_dialogue, security
@@ -35,7 +36,19 @@ from backend.middleware.metrics_logger import setup_metrics_middleware
 # Configure logging once at the application's entry point
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-app = FastAPI(title="Shiroi System Platform", version="0.1.0")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    log_manager.info("Initializing ContextManager and InsightMonitor (app.state)...")
+    ctx = ContextManager()
+    rpm = RecoveryPolicyManager()
+    insight = InsightMonitor(ctx, rpm)
+    app.state.context_manager = ctx
+    app.state.insight_monitor = insight
+    log_manager.info("Context services registered in app.state.")
+    yield
+
+
+app = FastAPI(title="Shiroi System Platform", version="0.1.0", lifespan=lifespan)
 setup_metrics_middleware(app)
 
 # Add CORS middleware
@@ -47,25 +60,9 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
-# Global instances for ContextManager and InsightMonitor
-# These will be initialized on startup
-global_context_manager: ContextManager = None
-global_insight_monitor: InsightMonitor = None
+ 
 
-@app.on_event("startup")
-async def startup_event():
-    global global_context_manager, global_insight_monitor
-    log_manager.info("Initializing global ContextManager and InsightMonitor...")
-    global_context_manager = ContextManager()
-    # RecoveryPolicyManager is a dependency for InsightMonitor
-    # For now, we'll create a dummy one if not already managed elsewhere
-    # In a full system, this would be a properly configured instance
-    recovery_policy_manager = RecoveryPolicyManager() 
-    global_insight_monitor = InsightMonitor(global_context_manager, recovery_policy_manager)
-    
-    # Assign the global ContextManager to the system_health module
-    system_health.context_manager_instance = global_context_manager
-    log_manager.info("Global ContextManager and InsightMonitor initialized.")
+ 
 
 
 # ✁Erouter登録�E�Erefix持E��！E# app.include_router(persona_state.router, prefix="/api")
@@ -87,11 +84,11 @@ app.include_router(emotion.router, prefix="/api")
 app.include_router(tts.router, prefix="/api")
 app.include_router(knowledge.router, prefix="/api")
 app.include_router(osc.router, prefix="/api")
-# app.include_router(roadmap_tree.router, prefix="/api")
+app.include_router(roadmap_tree.router, prefix="/api")
 app.include_router(roadmap.router, prefix="/api")
 app.include_router(dashboard_ws.router, prefix="/api")
-app.include_router(system_health.router, prefix="/api")
 app.include_router(system_forecast.router, prefix="/api")
+app.include_router(system_health.router, prefix="/api")
 app.include_router(system_router, prefix="/api")
 app.include_router(continuum_state_router, prefix="/api")
 app.include_router(continuum_stream_router, prefix="/api")
@@ -139,3 +136,8 @@ app.include_router(meta_contracts.router, prefix="/api")
 @app.get("/")
 def read_root():
     return {"message": "SSP API root active"}
+
+import uvicorn
+
+if __name__ == "__main__":
+    uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)
