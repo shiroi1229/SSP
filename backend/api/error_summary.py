@@ -1,4 +1,8 @@
-﻿"""Error summary APIs for MVP Core quality tracking."""
+﻿# path: backend/api/error_summary.py
+# version: v0.30
+# purpose: エラーサマリAPI（Envelope出力・UTC時間窓での集計）
+
+"""Error summary APIs for MVP Core quality tracking."""
 
 from datetime import datetime, timedelta, UTC
 from typing import Any, Dict, Optional

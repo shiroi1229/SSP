@@ -1,5 +1,6 @@
 # path: backend/main.py
 # version: v0.30
+# purpose: FastAPIアプリの初期化・lifespanでの依存初期化・全APIルータの集約
 import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI

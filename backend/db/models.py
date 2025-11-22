@@ -1,5 +1,6 @@
 # path: backend/db/models.py
 # version: v0.30
+# purpose: アプリ全体で用いるDBモデル定義（副作用なし、スキーマのみ）
 from sqlalchemy import Column, Integer, DateTime, Text, Float, JSON, String, Boolean # String をインポート
 from sqlalchemy.orm import declarative_base
 from datetime import datetime, UTC
