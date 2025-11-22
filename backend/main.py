@@ -33,6 +33,7 @@ from orchestrator.insight_monitor import InsightMonitor
 from modules.log_manager import log_manager
 from modules.api_interface import router as insight_router
 from backend.middleware.metrics_logger import setup_metrics_middleware
+from backend.middleware.envelope_enforcer import EnvelopeEnforcerMiddleware
 
 # Configure logging once at the application's entry point
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -51,6 +52,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Shiroi System Platform", version="0.1.0", lifespan=lifespan)
 setup_metrics_middleware(app)
+app.add_middleware(EnvelopeEnforcerMiddleware)
 
 # Add CORS middleware
 app.add_middleware(
