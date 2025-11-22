@@ -25,6 +25,9 @@ class EnvelopeEnforcerMiddleware(BaseHTTPMiddleware):
         # 対象は /api 配下のみ
         if not request.url.path.startswith("/api"):
             return await call_next(request)
+        # Known raw endpoints that must remain non-enveloped
+        if request.url.path.startswith("/api/system/forecast/raw"):
+            return await call_next(request)
 
         response = await call_next(request)
 

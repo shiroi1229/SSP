@@ -34,6 +34,10 @@ from modules.log_manager import log_manager
 from modules.api_interface import router as insight_router
 from backend.middleware.metrics_logger import setup_metrics_middleware
 from backend.middleware.envelope_enforcer import EnvelopeEnforcerMiddleware
+from backend.api.common import envelope_error
+from fastapi import Request
+from fastapi.responses import JSONResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 # Configure logging once at the application's entry point
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -62,6 +66,19 @@ app.add_middleware(
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
 )
+
+
+# Global error handlers -> Envelope[error]
+@app.exception_handler(StarletteHTTPException)
+async def http_exception_handler(request: Request, exc: StarletteHTTPException):
+    payload = envelope_error(exc.status_code, exc.detail if isinstance(exc.detail, str) else str(exc.detail))
+    return JSONResponse(status_code=exc.status_code, content=payload)
+
+
+@app.exception_handler(Exception)
+async def unhandled_exception_handler(request: Request, exc: Exception):
+    payload = envelope_error(500, "Internal Server Error")
+    return JSONResponse(status_code=500, content=payload)
 
  
 
