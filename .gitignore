@@ -1,5 +1,26 @@
 .venv/
 __pycache__/
 *.pyc
-logs/*.log
+logs/
+reports/change_log/
+reports/self_analysis/
+data/audio_outputs/
+data/stage_runs/
+data/stage_logs/
+recent_logs.json
+scan_results.json
+diff_patch.txt
+diff_roadmap.txt
+codex.mcp.json
+mcp/*
+!mcp/git-mcp/
+!mcp/git-mcp/**
+models/
+servers/
 logs/context_evolution_snapshots/
+node_modules
+
+# Local MCP / server clones & caches
+.python-version
+.mcp.json
+.npmrc
