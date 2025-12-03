@@ -1,0 +1,107 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run backend main",
+			"type": "shell",
+			"command": "C:/Python313/python.exe",
+			"args": [
+				"-m",
+				"backend.main"
+			],
+			"isBackground": false,
+			"group": "build",
+			"options": {
+				"env": {
+					"PYTHONUTF8": "1"
+				}
+			}
+		},
+		{
+			"label": "Run uvicorn direct",
+			"type": "shell",
+			"command": "C:/Python313/python.exe",
+			"args": [
+				"-m",
+				"uvicorn",
+				"backend.main:app",
+				"--host",
+				"127.0.0.1",
+				"--port",
+				"8000"
+			],
+			"isBackground": false,
+			"group": "build",
+			"options": {
+				"env": {
+					"PYTHONUTF8": "1",
+					"DISABLE_METRICS_MIDDLEWARE": "1"
+				}
+			}
+		},
+		{
+			"label": "Run uvicorn 8016 (middleware off)",
+			"type": "shell",
+			"command": "C:/Python313/python.exe",
+			"args": [
+				"-m",
+				"uvicorn",
+				"backend.main:app",
+				"--host",
+				"127.0.0.1",
+				"--port",
+				"8016"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run uvicorn 8020 (middleware off)",
+			"type": "shell",
+			"command": "C:/Python313/python.exe",
+			"args": [
+				"-m",
+				"uvicorn",
+				"backend.main:app",
+				"--host",
+				"127.0.0.1",
+				"--port",
+				"8020",
+				"--reload"
+			],
+			"isBackground": false,
+			"group": "build",
+			"options": {
+				"env": {
+					"PYTHONUTF8": "1",
+					"DISABLE_METRICS_MIDDLEWARE": "1"
+				}
+			}
+		},
+		{
+			"label": "Run header checks",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"-m",
+				"scripts.header_checks"
+			],
+			"isBackground": false,
+			"group": "test",
+			"problemMatcher": []
+		},
+		{
+			"label": "Run CI pipeline",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"-m",
+				"scripts.ci_pipeline"
+			],
+			"isBackground": false,
+			"group": "test",
+			"problemMatcher": []
+		}
+	]
+}

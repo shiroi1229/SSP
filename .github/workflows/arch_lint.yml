@@ -1,0 +1,46 @@
+# path: .github/workflows/arch_lint.yml
+# version: v0.1
+# purpose: CI workflow to run SSP architecture lints (non-blocking for now)
+
+name: Architecture Lint
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run architecture linter (warnings only)
+        env:
+          ARCH_STRICT: '0'
+        run: |
+          python scripts/lint_architecture.py || true
+
+      - name: Run architecture linter (strict, scoped, allowed to fail)
+        continue-on-error: false
+        env:
+          ARCH_STRICT: '1'
+          ARCH_ENFORCE: 'headers,forbidden'
+          ARCH_PATHS: >-
+            backend/api
+        run: |
+          python scripts/lint_architecture.py
+
+      - name: Enforce headers on orchestrator (strict)
+        env:
+          ARCH_STRICT: '1'
+          ARCH_ENFORCE: 'headers'
+          ARCH_PATHS: >-
+            orchestrator
+        run: |
+          python scripts/lint_architecture.py
