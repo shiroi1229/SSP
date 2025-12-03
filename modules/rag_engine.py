@@ -1,9 +1,12 @@
 import json
 import os
+import re
+import uuid
 import psycopg2
 import datetime
 from collections import Counter
 from threading import Lock
+from typing import Iterable, Optional
 from psycopg2.extensions import connection as PGConnection
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
@@ -155,6 +158,143 @@ class RAGEngine:
             log_manager.info(f"Successfully upserted text with ID {doc_id} to collection '{self.qdrant_collection_name}'.")
         except Exception as e:
             log_manager.exception(f"Error upserting text with ID {doc_id}: {e}")
+
+    def _split_paragraphs(self, text: str) -> list[str]:
+        normalized = text.replace("\r\n", "\n")
+        paragraphs = [block.strip() for block in normalized.split("\n\n") if block.strip()]
+        if paragraphs:
+            return paragraphs
+        return [normalized.strip()] if normalized.strip() else []
+
+    def _split_chat_turns(self, text: str) -> list[str]:
+        normalized = text.replace("\r\n", "\n")
+        speaker_pattern = re.compile(r"^\s*[^:：]+[:：]\s*")
+        turns: list[str] = []
+        buffer: list[str] = []
+
+        for raw_line in normalized.split("\n"):
+            line = raw_line.strip()
+            if not line:
+                continue
+            if speaker_pattern.match(line):
+                if buffer:
+                    turns.append(" ".join(buffer))
+                    buffer = []
+                turns.append(line)
+            else:
+                buffer.append(line)
+
+        if buffer:
+            turns.append(" ".join(buffer))
+        return turns
+
+    def _chunk_segments(self, segments: Iterable[str], chunk_size: int, overlap: int) -> list[str]:
+        chunks: list[str] = []
+        current = ""
+
+        for segment in segments:
+            if not segment:
+                continue
+            segment = segment.strip()
+            while segment:
+                available_space = chunk_size - len(current) - (1 if current else 0)
+                if available_space <= 0:
+                    if current:
+                        chunks.append(current.strip())
+                    overlap_tail = current[-overlap:] if overlap > 0 else ""
+                    current = overlap_tail
+                    available_space = chunk_size - len(current) - (1 if current else 0)
+
+                if len(segment) <= available_space:
+                    current = f"{current}\n{segment}".strip() if current else segment
+                    segment = ""
+                else:
+                    head = segment[:available_space]
+                    segment = segment[available_space:]
+                    current = f"{current}\n{head}".strip() if current else head
+                    chunks.append(current.strip())
+                    overlap_tail = current[-overlap:] if overlap > 0 else ""
+                    current = overlap_tail
+
+        if current.strip():
+            chunks.append(current.strip())
+        return chunks
+
+    def ingest_text(
+        self,
+        text: str,
+        *,
+        source: str = "manual_paste",
+        treat_as_chat: bool = False,
+        chunk_size: int = 800,
+        overlap: int = 120,
+        title: Optional[str] = None,
+        tags: Optional[list[str]] = None,
+    ) -> dict:
+        if not self.qdrant_client or not self.embedding_model:
+            log_manager.error("Cannot ingest text: RAGEngine is not available.")
+            return {"ingested": 0, "chunks": []}
+
+        cleaned = text.strip()
+        if not cleaned:
+            log_manager.warning("Cannot ingest text: provided content is empty.")
+            return {"ingested": 0, "chunks": []}
+
+        segments = self._split_chat_turns(cleaned) if treat_as_chat else self._split_paragraphs(cleaned)
+        if not segments:
+            log_manager.warning("No segments produced during ingestion.")
+            return {"ingested": 0, "chunks": []}
+
+        overlap = max(0, min(overlap, chunk_size // 2))
+        chunk_size = max(200, chunk_size)
+        chunks = self._chunk_segments(segments, chunk_size, overlap)
+
+        ingested_chunks: list[dict] = []
+        created_at = datetime.datetime.now().isoformat()
+        base_metadata = {
+            "source": source,
+            "created_at": created_at,
+            "title": title,
+            "tags": tags or [],
+            "type": "chat" if treat_as_chat else "document",
+        }
+
+        for idx, chunk in enumerate(chunks):
+            doc_id = f"{uuid.uuid4()}-{idx}"
+            metadata = {
+                **base_metadata,
+                "chunk_index": idx,
+                "text_length": len(chunk),
+            }
+            vector = self._vectorize_query(chunk)
+            if not vector:
+                log_manager.warning(f"Skipping chunk {idx} due to failed vectorization.")
+                continue
+            try:
+                self._ensure_qdrant_collection_exists(len(vector))
+                self.qdrant_client.upsert(
+                    collection_name=self.qdrant_collection_name,
+                    wait=True,
+                    points=[{
+                        "id": doc_id,
+                        "vector": vector,
+                        "payload": {"text": chunk, **metadata},
+                    }]
+                )
+                ingested_chunks.append({"id": doc_id, "text": chunk})
+            except Exception as exc:
+                log_manager.exception(f"Failed to upsert chunk {idx}: {exc}")
+
+        log_manager.info(
+            "Ingested %s/%s chunks into collection '%s' (source=%s, chat=%s)",
+            len(ingested_chunks),
+            len(chunks),
+            self.qdrant_collection_name,
+            source,
+            treat_as_chat,
+        )
+
+        return {"ingested": len(ingested_chunks), "chunks": ingested_chunks}
 
     def query_text(self, query: str, top_k: int = 3) -> list[dict]:
         """Queries the collection for similar texts and returns their payloads."""
