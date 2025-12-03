@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Knowledge Base Overview</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --accent: #22d3ee;
+      --muted: #94a3b8;
+      --text: #e2e8f0;
+      --danger: #f87171;
+      --success: #34d399;
+    }
+    body {
+      margin: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(34,211,238,0.12), transparent 25%),
+                  radial-gradient(circle at 80% 0%, rgba(109,40,217,0.16), transparent 30%),
+                  var(--bg);
+      color: var(--text);
+      font-family: "Inter", "Noto Sans JP", system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+    }
+    header {
+      padding: 32px 24px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 0.4px;
+    }
+    .pill {
+      background: rgba(34,211,238,0.16);
+      color: var(--accent);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .description {
+      color: var(--muted);
+      max-width: 720px;
+      line-height: 1.6;
+      margin: 0;
+    }
+    main {
+      padding: 0 24px 36px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0)),
+                  var(--card);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.32);
+      backdrop-filter: blur(4px);
+    }
+    .card h2 {
+      margin: 0 0 6px;
+      font-size: 17px;
+      letter-spacing: 0.3px;
+    }
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      margin: 6px 0 4px;
+    }
+    .stat-sub {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    canvas {
+      width: 100% !important;
+      height: 260px !important;
+    }
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 420px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+    .list-item {
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 10px;
+    }
+    .list-item .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .text-snippet {
+      color: var(--text);
+      margin: 0;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .status .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 5px rgba(52,211,153,0.16);
+    }
+    .status.offline .dot {
+      background: var(--danger);
+      box-shadow: 0 0 0 5px rgba(248,113,113,0.12);
+    }
+    .error {
+      color: var(--danger);
+      font-weight: 600;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title-row">
+      <h1>Knowledge Base Growth Monitor</h1>
+      <span class="pill">Visibility &amp; Gaps</span>
+    </div>
+    <p class="description">
+      ドメイン知識ベースへの取り込み状況を視覚化し、ソースの偏りやスコア分布を即座に把握できます。
+      下のカードとチャートで、蓄積ペース・品質の過不足・最近の追加内容を確認してください。
+    </p>
+    <div class="status" id="status-indicator">
+      <span class="dot"></span>
+      <span id="status-text">最新のデータを取得中...</span>
+    </div>
+  </header>
+
+  <main>
+    <div class="card">
+      <h2>取り込み件数</h2>
+      <div class="stat-value" id="total-items">-</div>
+      <div class="stat-sub">サンプリング上限内で取得できたエントリ数</div>
+      <div class="error" id="error-text" style="display:none;"></div>
+    </div>
+
+    <div class="card">
+      <h2>ソース別分布</h2>
+      <canvas id="sourceChart"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>時系列の蓄積量</h2>
+      <canvas id="timelineChart"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>スコア分布</h2>
+      <canvas id="scoreChart"></canvas>
+    </div>
+
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2>最近の追加 (最新15件)</h2>
+      <div class="list" id="recent-list"></div>
+    </div>
+  </main>
+
+  <script>
+    const statusIndicator = document.getElementById('status-indicator');
+    const statusText = document.getElementById('status-text');
+    const totalItemsEl = document.getElementById('total-items');
+    const errorText = document.getElementById('error-text');
+    const recentList = document.getElementById('recent-list');
+
+    let charts = {};
+
+    function setStatus(online, message) {
+      statusIndicator.classList.toggle('offline', !online);
+      statusText.textContent = message;
+    }
+
+    function renderChart(id, type, data, options = {}) {
+      const ctx = document.getElementById(id).getContext('2d');
+      if (charts[id]) charts[id].destroy();
+      charts[id] = new Chart(ctx, { type, data, options });
+    }
+
+    function renderSourceChart(sources) {
+      const labels = Object.keys(sources);
+      const values = Object.values(sources);
+      renderChart('sourceChart', 'doughnut', {
+        labels,
+        datasets: [{
+          data: values,
+          backgroundColor: [
+            '#22d3ee', '#60a5fa', '#a855f7', '#f472b6', '#f59e0b',
+            '#10b981', '#f87171', '#6ee7b7', '#c084fc', '#fde68a'
+          ],
+          borderWidth: 1,
+        }]
+      }, {
+        plugins: { legend: { labels: { color: '#e2e8f0' } } }
+      });
+    }
+
+    function renderTimelineChart(timeline) {
+      const labels = timeline.map(item => item.date);
+      const values = timeline.map(item => item.count);
+      renderChart('timelineChart', 'line', {
+        labels,
+        datasets: [{
+          label: '日次追加件数',
+          data: values,
+          fill: true,
+          tension: 0.35,
+          borderColor: '#22d3ee',
+          backgroundColor: 'rgba(34,211,238,0.12)',
+          pointRadius: 3,
+        }]
+      }, {
+        scales: {
+          x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+          y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+        },
+        plugins: { legend: { labels: { color: '#e2e8f0' } } }
+      });
+    }
+
+    function renderScoreChart(scoreDistribution) {
+      const labels = scoreDistribution.bins.slice(0, -1).map((bin, idx) => `${bin}〜${scoreDistribution.bins[idx + 1]}`);
+      renderChart('scoreChart', 'bar', {
+        labels,
+        datasets: [{
+          label: 'スコア件数',
+          data: scoreDistribution.counts,
+          backgroundColor: 'rgba(96,165,250,0.45)',
+          borderColor: '#60a5fa',
+          borderWidth: 1,
+        }]
+      }, {
+        scales: {
+          x: { ticks: { color: '#94a3b8' } },
+          y: { ticks: { color: '#94a3b8' }, beginAtZero: true },
+        },
+        plugins: { legend: { labels: { color: '#e2e8f0' } } }
+      });
+    }
+
+    function renderRecent(recent) {
+      recentList.innerHTML = '';
+      recent.forEach(item => {
+        const wrap = document.createElement('div');
+        wrap.className = 'list-item';
+        const meta = document.createElement('div');
+        meta.className = 'meta';
+        const date = document.createElement('span');
+        date.textContent = new Date(item.created_at).toLocaleString();
+        const source = document.createElement('span');
+        source.textContent = item.source;
+        meta.appendChild(date);
+        meta.appendChild(source);
+        const text = document.createElement('p');
+        text.className = 'text-snippet';
+        text.textContent = item.text?.slice(0, 220) || '(no text)';
+        wrap.appendChild(meta);
+        wrap.appendChild(text);
+        recentList.appendChild(wrap);
+      });
+    }
+
+    async function loadOverview() {
+      setStatus(true, '最新のデータを取得中...');
+      errorText.style.display = 'none';
+      try {
+        const res = await fetch('/api/knowledge/overview?max_items=800');
+        if (!res.ok) throw new Error(`API error ${res.status}`);
+        const data = await res.json();
+        totalItemsEl.textContent = data.fetched?.toLocaleString() ?? '-';
+        renderSourceChart(data.sources || {});
+        renderTimelineChart(data.timeline || []);
+        renderScoreChart(data.score_distribution || { bins: [], counts: [] });
+        renderRecent(data.recent || []);
+        const healthy = (data.sources && Object.keys(data.sources).length > 0);
+        setStatus(healthy, healthy ? 'データ取得に成功しました' : 'データが見つかりません');
+      } catch (err) {
+        console.error(err);
+        totalItemsEl.textContent = '-';
+        errorText.textContent = 'データ取得に失敗しました。バックエンドを確認してください。';
+        errorText.style.display = 'block';
+        setStatus(false, '取得エラー');
+      }
+    }
+
+    loadOverview();
+  </script>
+</body>
+</html>

@@ -3,7 +3,40 @@
 import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.api import persona_state, logs_recent, evaluate, context, analyze_sessions, knowledge, sessions, chat, get_context, status, emotion, tts, osc, roadmap, roadmap_tree, dashboard_ws, system_health, modules, collective_mind, robustness_firewall, robustness_self_healing, robustness_loop_health, robustness_loop_config, robustness_load_balancer, robustness_recovery, robustness_akashic, robustness_resilience, robustness_luminous, awareness, internal_dialogue, security
+from backend.api import (
+    persona_state,
+    logs_recent,
+    evaluate,
+    context,
+    analyze_sessions,
+    knowledge,
+    knowledge_overview,
+    sessions,
+    chat,
+    get_context,
+    status,
+    emotion,
+    tts,
+    osc,
+    roadmap,
+    roadmap_tree,
+    dashboard_ws,
+    system_health,
+    modules,
+    collective_mind,
+    robustness_firewall,
+    robustness_self_healing,
+    robustness_loop_health,
+    robustness_loop_config,
+    robustness_load_balancer,
+    robustness_recovery,
+    robustness_akashic,
+    robustness_resilience,
+    robustness_luminous,
+    awareness,
+    internal_dialogue,
+    security,
+)
 from backend.api import timeline_restore, context_rollback, causal_trace, causal_verify, causal_events, causal_insight, causal_report, meta_causal_feedback, meta_causal_bias, auto_actions, meta_causal_bias_history, meta_causal_report, meta_optimizer, world_timeline
 from backend.api import system_forecast # Import the new forecast router
 from backend.api.cluster import router as cluster_router
@@ -86,6 +119,7 @@ app.include_router(status.router, prefix="/api")
 app.include_router(emotion.router, prefix="/api")
 app.include_router(tts.router, prefix="/api")
 app.include_router(knowledge.router, prefix="/api")
+app.include_router(knowledge_overview.router, prefix="/api")
 app.include_router(osc.router, prefix="/api")
 # app.include_router(roadmap_tree.router, prefix="/api")
 app.include_router(roadmap.router, prefix="/api")
