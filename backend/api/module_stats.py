@@ -1,11 +1,17 @@
+# path: backend/api/module_stats.py
+# version: v0.2
+# purpose: Module-level status provider for UI-v1.0 (UTC-safe)
+
 """Module-level status provider for UI-v1.0."""
 
-from datetime import datetime
+from datetime import datetime, UTC
 import logging
 from typing import List, Dict
 
 import psutil
 from fastapi import APIRouter, Depends
+from backend.api.common import envelope_ok
+from backend.api.schemas import Envelope
 from sqlalchemy.orm import Session
 
 from backend.api.session_summary import build_session_summary
@@ -31,7 +37,7 @@ def _get_system_metrics() -> Dict[str, float]:
     net_io = psutil.net_io_counters()
     return {
         "type": "system_metrics",
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(UTC).isoformat(),
         "cpu_percent": round(cpu_percent, 2),
         "memory_percent": round(memory_percent, 2),
         "disk_percent": round(disk_percent, 2),
@@ -70,14 +76,18 @@ def _build_module_stats(system_metrics: Dict[str, float], summary: Dict[str, obj
     return stats
 
 
-@router.get("/module_stats")
+@router.get(
+    "/module_stats",
+    response_model=Envelope[dict],
+    operation_id="module_stats_overview",
+)
 def module_stats(db: Session = Depends(get_db)):
     system_metrics = _get_system_metrics()
     session_summary = build_session_summary(db.query(models.SessionLog).all())
     module_stats_list = _build_module_stats(system_metrics, session_summary)
     logger.debug("Compiled module stats for UI-v1.0 dashboard.")
-    return {
+    return envelope_ok({
         "system_metrics": system_metrics,
         "module_stats": module_stats_list,
         "session_summary": session_summary,
-    }
+    })
