@@ -220,11 +220,14 @@ class RAGEngine:
             chunks.append(current.strip())
         return chunks
 
+    ALLOWED_VISIBILITIES = {"internal", "limited", "public"}
+
     def ingest_text(
         self,
         text: str,
         *,
         source: str = "manual_paste",
+        visibility: Optional[str] = None,
         treat_as_chat: bool = False,
         chunk_size: int = 800,
         overlap: int = 120,
@@ -238,6 +241,14 @@ class RAGEngine:
         cleaned = text.strip()
         if not cleaned:
             log_manager.warning("Cannot ingest text: provided content is empty.")
+            return {"ingested": 0, "chunks": []}
+
+        normalized_visibility = (visibility or "").lower()
+        if normalized_visibility not in self.ALLOWED_VISIBILITIES:
+            allowed_values = ", ".join(sorted(self.ALLOWED_VISIBILITIES))
+            log_manager.warning(
+                f"Cannot ingest text: visibility is required and must be one of {allowed_values} (received={visibility}). Skipping."
+            )
             return {"ingested": 0, "chunks": []}
 
         segments = self._split_chat_turns(cleaned) if treat_as_chat else self._split_paragraphs(cleaned)
@@ -257,6 +268,7 @@ class RAGEngine:
             "title": title,
             "tags": tags or [],
             "type": "chat" if treat_as_chat else "document",
+            "visibility": normalized_visibility,
         }
 
         for idx, chunk in enumerate(chunks):
@@ -360,12 +372,18 @@ class RAGEngine:
         created_at = payload.get("created_at") or payload.get("timestamp") or datetime.datetime.now().isoformat()
         source = payload.get("source") or payload.get("module") or payload.get("source_name") or "unknown"
         score = score_hint if score_hint is not None else payload.get("rating") or payload.get("score") or 0.0
+        visibility = payload.get("visibility") or "unknown"
+        title = payload.get("title")
+        tags = payload.get("tags") or []
         return {
             "id": str(getattr(hit, "id", payload.get("id", ""))),
             "text": text,
             "score": float(score),
             "source": source,
             "created_at": created_at,
+            "visibility": visibility,
+            "title": title,
+            "tags": tags,
         }
 
     def _parse_datetime(self, value: str):

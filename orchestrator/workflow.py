@@ -8,6 +8,7 @@ import json
 from backend.dev_recorder import record_action
 from modules.log_manager import LogManager
 from orchestrator.context_manager import ContextManager
+from orchestrator.query_processor import QueryProcessor
 from modules.rag_engine import RAGEngine
 from modules.generator import generate_response
 from modules.evaluator import evaluate_output
@@ -35,7 +36,9 @@ def _run_rag_engine(context_manager: ContextManager):
     log_manager.info("[Workflow] --- RAG Engine: Start ---")
     try:
         rag_engine = RAGEngine()
-        context = rag_engine.get_context(user_input)
+        user_scope = context_manager.get("short_term.user.visibility", "public")
+        processor = QueryProcessor(rag_engine, user_scope=user_scope)
+        context = processor.build_context(user_input)
         context_manager.set("short_term.context", context)
         record_action("RAG", "get_context", {"user_input": user_input, "context": context})
     except Exception as e:
