@@ -24,6 +24,9 @@ class KnowledgeIngestRequest(BaseModel):
     tags: Optional[list[str]] = Field(
         None, description="Optional tags to attach to the ingested payload"
     )
+    permission_label: str = Field(
+        "public", description="Permission label to control downstream visibility"
+    )
 
 
 def log_interaction(log_data: dict):
@@ -132,6 +135,7 @@ def ingest_knowledge(request: KnowledgeIngestRequest):
             overlap=request.overlap,
             title=request.title,
             tags=request.tags,
+            permission_label=request.permission_label,
         )
     except Exception as exc:
         log_interaction(
@@ -140,6 +144,7 @@ def ingest_knowledge(request: KnowledgeIngestRequest):
                 "timestamp": datetime.now().isoformat(),
                 "source": request.source,
                 "treat_as_chat": request.treat_as_chat,
+                "permission_label": request.permission_label,
                 "error": str(exc),
             }
         )
@@ -153,6 +158,7 @@ def ingest_knowledge(request: KnowledgeIngestRequest):
             "treat_as_chat": request.treat_as_chat,
             "ingested": result.get("ingested", 0),
             "chunks": len(result.get("chunks", [])),
+            "permission_label": request.permission_label,
         }
     )
 
