@@ -4,11 +4,26 @@ from datetime import datetime
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Query
+from pydantic import BaseModel, Field
 
 from modules.rag_engine import RAGEngine
 
 router = APIRouter()
 rag = RAGEngine()
+
+
+class KnowledgeIngestRequest(BaseModel):
+    text: str = Field(..., description="Raw text or chat transcript to ingest")
+    source: str = Field("manual_paste", description="Source label for the content")
+    treat_as_chat: bool = Field(
+        False, description="Parse the input as chat turns to preserve speaker context"
+    )
+    chunk_size: int = Field(800, ge=200, le=4000, description="Chunk size in characters")
+    overlap: int = Field(120, ge=0, le=1000, description="Overlap between chunks")
+    title: Optional[str] = Field(None, description="Optional title for the document")
+    tags: Optional[list[str]] = Field(
+        None, description="Optional tags to attach to the ingested payload"
+    )
 
 
 def log_interaction(log_data: dict):
@@ -100,6 +115,53 @@ def search_knowledge(
         }
     )
     return response
+
+
+@router.post("/knowledge/ingest")
+def ingest_knowledge(request: KnowledgeIngestRequest):
+    cleaned = request.text.strip()
+    if not cleaned:
+        raise HTTPException(status_code=400, detail="Input text cannot be empty.")
+
+    try:
+        result = rag.ingest_text(
+            cleaned,
+            source=request.source,
+            treat_as_chat=request.treat_as_chat,
+            chunk_size=request.chunk_size,
+            overlap=request.overlap,
+            title=request.title,
+            tags=request.tags,
+        )
+    except Exception as exc:
+        log_interaction(
+            {
+                "type": "knowledge_ingest",
+                "timestamp": datetime.now().isoformat(),
+                "source": request.source,
+                "treat_as_chat": request.treat_as_chat,
+                "error": str(exc),
+            }
+        )
+        raise HTTPException(status_code=500, detail="Knowledge ingestion failed.")
+
+    log_interaction(
+        {
+            "type": "knowledge_ingest",
+            "timestamp": datetime.now().isoformat(),
+            "source": request.source,
+            "treat_as_chat": request.treat_as_chat,
+            "ingested": result.get("ingested", 0),
+            "chunks": len(result.get("chunks", [])),
+        }
+    )
+
+    if result.get("ingested", 0) == 0:
+        raise HTTPException(
+            status_code=503, detail="No chunks were ingested. RAG may be unavailable."
+        )
+
+    return result
 
 
 @router.get("/knowledge/{id}")
