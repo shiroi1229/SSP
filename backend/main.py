@@ -26,6 +26,7 @@ from backend.api.stage_memory import router as stage_memory_router # Import the 
 from backend.api.stage_runs import router as stage_runs_router
 from backend.api.persona_routes import router as persona_routes_router # Import the new persona_routes router
 from backend.api import meta_contracts
+from backend.api import feedback
 
 from orchestrator.context_manager import ContextManager
 from orchestrator.recovery_policy_manager import RecoveryPolicyManager
@@ -92,13 +93,13 @@ app.include_router(context.router, prefix="/api")
 app.include_router(analyze_sessions.router, prefix="/api")
 app.include_router(sessions.router, prefix="/api")
 app.include_router(chat.router, prefix="/api")
+app.include_router(feedback.router, prefix="/api")
 app.include_router(get_context.router, prefix="/api")
 app.include_router(recent.router, prefix="/api")
 app.include_router(roadmap_sync.router, prefix="/api")
 app.include_router(predictive_self_correction.router, prefix="/api")
 app.include_router(module_stats_router, prefix="/api")
 app.include_router(recovery_router, prefix="/api")
-app.include_router(module_stats_router, prefix="/api")
 app.include_router(status.router, prefix="/api")
 app.include_router(emotion.router, prefix="/api")
 app.include_router(tts.router, prefix="/api")
