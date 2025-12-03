@@ -1,17 +1,18 @@
 import json
 import os
-import re
 import uuid
 import psycopg2
 import datetime
 from collections import Counter
 from threading import Lock
 from typing import Iterable, Optional
+from pathlib import Path
 from psycopg2.extensions import connection as PGConnection
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
 from modules.config_manager import load_environment
 from modules.log_manager import log_manager
+from modules.knowledge_pipeline import KnowledgePipeline, KnowledgeChunk
 
 _resource_lock = Lock()
 _shared_qdrant_clients: dict[tuple[str, int], QdrantClient] = {}
@@ -81,6 +82,7 @@ class RAGEngine:
         self.qdrant_client = None
         self.embedding_model = None
         self.pg_conn = None
+        self.pipeline = KnowledgePipeline()
 
         try:
             self.qdrant_client = _get_shared_qdrant_client(self.qdrant_host, self.qdrant_port)
@@ -127,6 +129,31 @@ class RAGEngine:
         log_manager.debug(f"Vectorizing query: {query[:50]}...")
         return self.embedding_model.encode(query).tolist()
 
+    def _upsert_chunk(self, chunk: KnowledgeChunk) -> Optional[str]:
+        try:
+            vector = self._vectorize_query(chunk.text)
+            if not vector:
+                log_manager.warning(
+                    f"Skipping chunk {chunk.metadata.get('chunk_index')} due to failed vectorization."
+                )
+                return None
+            self._ensure_qdrant_collection_exists(len(vector))
+            self.qdrant_client.upsert(
+                collection_name=self.qdrant_collection_name,
+                wait=True,
+                points=[{
+                    "id": chunk.id,
+                    "vector": vector,
+                    "payload": {"text": chunk.text, **chunk.metadata},
+                }]
+            )
+            return chunk.id
+        except Exception as exc:
+            log_manager.exception(
+                f"Failed to upsert chunk {chunk.id} into collection {self.qdrant_collection_name}: {exc}"
+            )
+            return None
+
     def upsert_text(self, doc_id: str, text: str, metadata: dict = None):
         """Vectorizes and upserts a single text document into the collection."""
         if not self.qdrant_client:
@@ -159,70 +186,9 @@ class RAGEngine:
         except Exception as e:
             log_manager.exception(f"Error upserting text with ID {doc_id}: {e}")
 
-    def _split_paragraphs(self, text: str) -> list[str]:
-        normalized = text.replace("\r\n", "\n")
-        paragraphs = [block.strip() for block in normalized.split("\n\n") if block.strip()]
-        if paragraphs:
-            return paragraphs
-        return [normalized.strip()] if normalized.strip() else []
-
-    def _split_chat_turns(self, text: str) -> list[str]:
-        normalized = text.replace("\r\n", "\n")
-        speaker_pattern = re.compile(r"^\s*[^:：]+[:：]\s*")
-        turns: list[str] = []
-        buffer: list[str] = []
-
-        for raw_line in normalized.split("\n"):
-            line = raw_line.strip()
-            if not line:
-                continue
-            if speaker_pattern.match(line):
-                if buffer:
-                    turns.append(" ".join(buffer))
-                    buffer = []
-                turns.append(line)
-            else:
-                buffer.append(line)
-
-        if buffer:
-            turns.append(" ".join(buffer))
-        return turns
-
-    def _chunk_segments(self, segments: Iterable[str], chunk_size: int, overlap: int) -> list[str]:
-        chunks: list[str] = []
-        current = ""
-
-        for segment in segments:
-            if not segment:
-                continue
-            segment = segment.strip()
-            while segment:
-                available_space = chunk_size - len(current) - (1 if current else 0)
-                if available_space <= 0:
-                    if current:
-                        chunks.append(current.strip())
-                    overlap_tail = current[-overlap:] if overlap > 0 else ""
-                    current = overlap_tail
-                    available_space = chunk_size - len(current) - (1 if current else 0)
-
-                if len(segment) <= available_space:
-                    current = f"{current}\n{segment}".strip() if current else segment
-                    segment = ""
-                else:
-                    head = segment[:available_space]
-                    segment = segment[available_space:]
-                    current = f"{current}\n{head}".strip() if current else head
-                    chunks.append(current.strip())
-                    overlap_tail = current[-overlap:] if overlap > 0 else ""
-                    current = overlap_tail
-
-        if current.strip():
-            chunks.append(current.strip())
-        return chunks
-
     def ingest_text(
         self,
-        text: str,
+        text: str | Iterable[str] | os.PathLike,
         *,
         source: str = "manual_paste",
         treat_as_chat: bool = False,
@@ -230,71 +196,74 @@ class RAGEngine:
         overlap: int = 120,
         title: Optional[str] = None,
         tags: Optional[list[str]] = None,
+        permission_label: str = "public",
     ) -> dict:
-        if not self.qdrant_client or not self.embedding_model:
-            log_manager.error("Cannot ingest text: RAGEngine is not available.")
-            return {"ingested": 0, "chunks": []}
-
-        cleaned = text.strip()
-        if not cleaned:
-            log_manager.warning("Cannot ingest text: provided content is empty.")
-            return {"ingested": 0, "chunks": []}
-
-        segments = self._split_chat_turns(cleaned) if treat_as_chat else self._split_paragraphs(cleaned)
-        if not segments:
-            log_manager.warning("No segments produced during ingestion.")
-            return {"ingested": 0, "chunks": []}
-
-        overlap = max(0, min(overlap, chunk_size // 2))
-        chunk_size = max(200, chunk_size)
-        chunks = self._chunk_segments(segments, chunk_size, overlap)
-
+        output_path = self.pipeline.make_output_path(source)
         ingested_chunks: list[dict] = []
-        created_at = datetime.datetime.now().isoformat()
-        base_metadata = {
-            "source": source,
-            "created_at": created_at,
-            "title": title,
-            "tags": tags or [],
-            "type": "chat" if treat_as_chat else "document",
-        }
+        written = 0
+        vectorization_enabled = bool(self.qdrant_client and self.embedding_model)
 
-        for idx, chunk in enumerate(chunks):
-            doc_id = f"{uuid.uuid4()}-{idx}"
-            metadata = {
-                **base_metadata,
-                "chunk_index": idx,
-                "text_length": len(chunk),
-            }
-            vector = self._vectorize_query(chunk)
-            if not vector:
-                log_manager.warning(f"Skipping chunk {idx} due to failed vectorization.")
-                continue
-            try:
-                self._ensure_qdrant_collection_exists(len(vector))
-                self.qdrant_client.upsert(
-                    collection_name=self.qdrant_collection_name,
-                    wait=True,
-                    points=[{
-                        "id": doc_id,
-                        "vector": vector,
-                        "payload": {"text": chunk, **metadata},
-                    }]
-                )
-                ingested_chunks.append({"id": doc_id, "text": chunk})
-            except Exception as exc:
-                log_manager.exception(f"Failed to upsert chunk {idx}: {exc}")
+        if isinstance(text, str) and not text.strip():
+            log_manager.warning("Cannot ingest text: provided content is empty.")
+            return {"ingested": 0, "chunks": [], "jsonl_path": str(output_path)}
+
+        try:
+            chunk_iterator = self.pipeline.iter_chunks(
+                text,
+                source=source,
+                treat_as_chat=treat_as_chat,
+                chunk_size=chunk_size,
+                overlap=overlap,
+                title=title,
+                tags=tags,
+                permission_label=permission_label,
+            )
+
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            futures: dict = {}
+            with output_path.open("w", encoding="utf-8") as jsonl_file:
+                if vectorization_enabled:
+                    from concurrent.futures import ThreadPoolExecutor, as_completed
+                    with ThreadPoolExecutor(max_workers=self.pipeline.max_workers) as executor:
+                        for chunk in chunk_iterator:
+                            written += 1
+                            jsonl_file.write(json.dumps(chunk.to_jsonl(), ensure_ascii=False) + "\n")
+                            futures[executor.submit(self._upsert_chunk, chunk)] = chunk
+                        for future in as_completed(futures):
+                            chunk = futures[future]
+                            chunk_id = future.result()
+                            if chunk_id:
+                                ingested_chunks.append({"id": chunk_id, "text": chunk.text})
+                else:
+                    for chunk in chunk_iterator:
+                        written += 1
+                        jsonl_file.write(json.dumps(chunk.to_jsonl(), ensure_ascii=False) + "\n")
+
+            if not written:
+                log_manager.warning("No segments produced during ingestion.")
+        except Exception as exc:
+            log_manager.exception(f"Failed to ingest text: {exc}")
+
+        if not vectorization_enabled and written:
+            log_manager.error(
+                f"Embeddings were not generated because RAGEngine is unavailable. JSONL saved to {output_path}."
+            )
 
         log_manager.info(
-            "Ingested %s/%s chunks into collection '%s' (source=%s, chat=%s)",
-            len(ingested_chunks),
-            len(chunks),
-            self.qdrant_collection_name,
-            source,
-            treat_as_chat,
+            f"Ingested {len(ingested_chunks)}/{written} chunks into collection "
+            f"'{self.qdrant_collection_name}' (source={source}, chat={treat_as_chat})"
         )
 
-        return {"ingested": len(ingested_chunks), "chunks": ingested_chunks}
+        return {"ingested": len(ingested_chunks), "chunks": ingested_chunks, "jsonl_path": str(output_path)}
+
+    def ingest_file(self, file_path: os.PathLike, **kwargs) -> dict:
+        resolved = Path(file_path)
+        source = kwargs.pop("source", resolved.stem)
+        return self.ingest_text(
+            resolved,
+            source=source,
+            **kwargs,
+        )
 
     def query_text(self, query: str, top_k: int = 3) -> list[dict]:
         """Queries the collection for similar texts and returns their payloads."""
@@ -357,15 +326,22 @@ class RAGEngine:
     def _format_hit(self, hit, score_hint=None):
         payload = getattr(hit, "payload", {}) or {}
         text = payload.get("answer") or payload.get("result") or payload.get("text") or payload.get("user_input") or ""
-        created_at = payload.get("created_at") or payload.get("timestamp") or datetime.datetime.now().isoformat()
+        created_at = (
+            payload.get("created_at")
+            or payload.get("ingested_at")
+            or payload.get("timestamp")
+            or datetime.datetime.now().isoformat()
+        )
         source = payload.get("source") or payload.get("module") or payload.get("source_name") or "unknown"
         score = score_hint if score_hint is not None else payload.get("rating") or payload.get("score") or 0.0
+        permission_label = payload.get("permission_label") or payload.get("permission")
         return {
             "id": str(getattr(hit, "id", payload.get("id", ""))),
             "text": text,
             "score": float(score),
             "source": source,
             "created_at": created_at,
+            "permission_label": permission_label,
         }
 
     def _parse_datetime(self, value: str):
