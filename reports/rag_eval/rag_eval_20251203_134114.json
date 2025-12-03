@@ -1,0 +1,73 @@
+{
+  "generated_at": "2025-12-03T13:41:14.529819",
+  "dataset": "data/eval/qa_pairs.jsonl",
+  "metrics": {
+    "hit_rate": 0.0,
+    "ndcg": 0.0,
+    "context_precision": 0.0,
+    "answer_usefulness": 0.513,
+    "evaluated": 5
+  },
+  "per_sample": [
+    {
+      "sample_id": "eval_rag_connectivity",
+      "tag_list": [
+        "rag",
+        "operations",
+        "postgres"
+      ],
+      "hit": 0.0,
+      "ndcg": 0.0,
+      "precision": 0.0,
+      "usefulness": 0.519
+    },
+    {
+      "sample_id": "eval_knowledge_search",
+      "tag_list": [
+        "rag",
+        "api",
+        "backend"
+      ],
+      "hit": 0.0,
+      "ndcg": 0.0,
+      "precision": 0.0,
+      "usefulness": 0.428
+    },
+    {
+      "sample_id": "eval_feedback_logging",
+      "tag_list": [
+        "feedback",
+        "rag",
+        "learning"
+      ],
+      "hit": 0.0,
+      "ndcg": 0.0,
+      "precision": 0.0,
+      "usefulness": 0.426
+    },
+    {
+      "sample_id": "eval_scheduler_hooks",
+      "tag_list": [
+        "scheduler",
+        "rag",
+        "operations"
+      ],
+      "hit": 0.0,
+      "ndcg": 0.0,
+      "precision": 0.0,
+      "usefulness": 0.592
+    },
+    {
+      "sample_id": "eval_context_window",
+      "tag_list": [
+        "rag",
+        "context",
+        "safety"
+      ],
+      "hit": 0.0,
+      "ndcg": 0.0,
+      "precision": 0.0,
+      "usefulness": 0.598
+    }
+  ]
+}
