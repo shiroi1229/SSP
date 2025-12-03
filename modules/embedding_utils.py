@@ -11,6 +11,9 @@ API_URL = os.getenv("LM_STUDIO_URL", "http://127.0.0.1:1234")
 
 def get_embedding(text: str) -> list[float]:
     payload = {"model": EMBED_MODEL, "input": text}
-    r = requests.post(f"{API_URL}/v1/embeddings", json=payload)
-    r.raise_for_status()
-    return r.json()["data"][0]["embedding"]
+    try:
+        r = requests.post(f"{API_URL}/v1/embeddings", json=payload)
+        r.raise_for_status()
+        return r.json()["data"][0]["embedding"]
+    except requests.exceptions.RequestException as e:
+        raise RuntimeError(f"Embedding API request failed: {e}")

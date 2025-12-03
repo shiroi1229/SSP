@@ -68,22 +68,27 @@ class LogManager:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         return LOG_DIR / f"ssp_log_{timestamp}{suffix}"
 
-    def info(self, message, extra=None):
-        self.logger.info(message, extra=extra)
+    def info(self, message, *args, extra=None):
+        self.logger.info(message, *args, extra=extra)
 
-    def debug(self, message, extra=None):
-        self.logger.debug(message, extra=extra)
+    def debug(self, message, *args, extra=None):
+        self.logger.debug(message, *args, extra=extra)
 
-    def warning(self, message, extra=None):
-        self.logger.warning(message, extra=extra)
+    def warning(self, message, *args, extra=None):
+        self.logger.warning(message, *args, extra=extra)
 
-    def error(self, message, exc_info=False, extra=None):
+    def error(self, message, *args, exc_info=False, extra=None):
         """exc_info=True を受け取れるよう修正"""
-        self.logger.error(message, exc_info=exc_info, extra=extra)
+        self.logger.error(message, *args, exc_info=exc_info, extra=extra)
 
-    def exception(self, message, extra=None):
+
+    def critical(self, message, *args, exc_info=False, extra=None):
+        """Logs a critical error message. Supports exc_info."""
+        self.logger.critical(message, *args, exc_info=exc_info, extra=extra)
+
+    def exception(self, message, *args, extra=None):
         """Logs a message with exception information. Automatically sets exc_info=True."""
-        self.logger.exception(message, extra=extra)
+        self.logger.exception(message, *args, extra=extra)
 
 class JsonFormatter(logging.Formatter):
     def format(self, record):

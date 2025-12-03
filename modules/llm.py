@@ -24,6 +24,12 @@ PARAM_FILE = "./config/model_params.json"
 PERSONA_FILE = "./config/persona_profile.json"
 _TRANSFORMERS_PIPELINE = None
 _TRANSFORMERS_PIPELINE_KEY = None
+SUPPORTED_LLM_PROVIDERS = {"TRANSFORMERS", "HTTP", "HYBRID"}
+DEFAULT_HTTP_BASE_URL = os.getenv("LOCAL_LLM_API_URL") or "http://127.0.0.1:1234"
+DEFAULT_HTTP_CHAT_PATH = os.getenv("LLM_HTTP_CHAT_PATH", "/v1/chat/completions")
+DEFAULT_HTTP_MODELS_PATH = os.getenv("LLM_HTTP_MODELS_PATH", "/v1/models")
+HTTP_CHAT_TIMEOUT = float(os.getenv("LLM_HTTP_TIMEOUT", "45"))
+HTTP_MODELS_TIMEOUT = float(os.getenv("LLM_HTTP_MODELS_TIMEOUT", "5"))
 
 # Ensure .env settings are loaded before any LLM calls
 try:
@@ -59,6 +65,22 @@ def _resolve_transformers_model(model_params: dict) -> Tuple[bool, Optional[str]
     env_model = os.getenv("TRANSFORMERS_MODEL")
     selected_model = override_model or env_model
     return bool(selected_model), selected_model
+
+
+def _determine_provider(model_params: dict) -> Tuple[str, str]:
+    raw_value = model_params.get("llm_provider")
+    source = "model_params"
+    if not raw_value:
+        raw_value = os.getenv("LLM_PROVIDER")
+        source = "env"
+    if not raw_value:
+        raw_value = "HYBRID"
+        source = "default"
+    provider = raw_value.strip().upper()
+    if provider not in SUPPORTED_LLM_PROVIDERS:
+        provider = "HYBRID"
+        source = "default"
+    return provider, source
 
 
 def _normalize_transformers_device(device_value: Optional[str]):
@@ -151,6 +173,120 @@ def _build_error_response(message: str, suggestion: str, source: str = "Actual L
     return json.dumps(payload, ensure_ascii=False, indent=2)
 
 
+def _normalize_http_base_url(raw_url: Optional[str]) -> str:
+    base = (raw_url or os.getenv("LOCAL_LLM_API_URL") or DEFAULT_HTTP_BASE_URL).strip()
+    if not base:
+        return DEFAULT_HTTP_BASE_URL
+    return base.rstrip("/")
+
+
+def _build_http_url(base: str, path: str) -> str:
+    normalized_base = (base or "").rstrip("/")
+    normalized_path = path or ""
+    if not normalized_path.startswith("/"):
+        normalized_path = f"/{normalized_path}"
+    return f"{normalized_base}{normalized_path}"
+
+
+def _resolve_timeout(value: Optional[object], fallback: float) -> float:
+    if value is None:
+        return fallback
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return fallback
+
+
+def _call_http_llm(augmented_prompt: str, text: str, model_params: dict) -> str:
+    base_url = _normalize_http_base_url(model_params.get("llm_url"))
+    chat_path = (
+        model_params.get("llm_chat_path")
+        or os.getenv("LLM_HTTP_CHAT_PATH")
+        or DEFAULT_HTTP_CHAT_PATH
+    )
+    models_path = (
+        model_params.get("llm_models_path")
+        or os.getenv("LLM_HTTP_MODELS_PATH")
+        or DEFAULT_HTTP_MODELS_PATH
+    )
+    chat_timeout = _resolve_timeout(model_params.get("http_timeout"), HTTP_CHAT_TIMEOUT)
+    models_timeout = _resolve_timeout(
+        model_params.get("http_models_timeout"), HTTP_MODELS_TIMEOUT
+    )
+    models_url = _build_http_url(base_url, models_path)
+    chat_url = _build_http_url(base_url, chat_path)
+    log_introspection("llm_url_selected", f"Using endpoint: {chat_url}", confidence=0.9)
+
+    headers = {"Content-Type": "application/json"}
+    configured_model = (
+        os.getenv("SSP_LOCAL_LLM_MODEL_NAME")
+        or model_params.get("llm_model")
+        or "Meta-Llama-3-8B-Instruct-Q4_K_M-GGUF"
+    )
+
+    try:
+        resp_models = requests.get(models_url, timeout=models_timeout)
+        if resp_models.ok:
+            available = [m.get("id") for m in resp_models.json().get("data", []) if isinstance(m, dict)]
+            if configured_model not in available and available:
+                preferred = next((m for m in available if "llama" in m.lower() and "instruct" in m.lower()), None)
+                configured_model = preferred or available[0]
+    except requests.exceptions.RequestException as exc:
+        logging.debug(f"[LLM] Failed to probe models at {models_url}: {exc}")
+
+    data = {
+        "model": configured_model,
+        "messages": [
+            {"role": "system", "content": augmented_prompt},
+            {"role": "user", "content": text},
+        ],
+        "temperature": model_params["temperature"],
+        "top_p": model_params["top_p"],
+        "max_tokens": model_params["max_tokens"],
+    }
+    if "response_format" in model_params:
+        data["response_format"] = model_params["response_format"]
+
+    try:
+        response = requests.post(chat_url, headers=headers, json=data, timeout=chat_timeout)
+        response.raise_for_status()
+        response_json = response.json()
+    except requests.exceptions.RequestException as exc:
+        logging.error(f"[LLM] Error calling HTTP backend at {chat_url}: {exc}")
+        log_introspection("llm_call_failed", f"HTTP backend error: {exc}", confidence=0.0)
+        return _build_error_response(
+            "LLM analysis failed due to connection error.",
+            f"Please check LLM service at {chat_url}. Error: {str(exc)}",
+            source="HTTP LLM",
+        )
+
+    choices = response_json.get("choices")
+    if not choices:
+        error_details = response_json.get("error") or response_json
+        message = "LLM HTTP response did not include 'choices'."
+        logging.error(f"{message} Payload: {error_details}")
+        log_introspection("llm_call_failed", f"{message} Payload: {error_details}", confidence=0.0)
+        return _build_error_response(
+            message,
+            f"Unexpected HTTP response from {chat_url}. Details: {error_details}",
+            source="HTTP LLM",
+        )
+
+    llm_response_content = choices[0].get("message", {}).get("content")
+    if not llm_response_content:
+        message = "LLM HTTP response missing message content."
+        logging.error(f"{message} Payload: {response_json}")
+        log_introspection("llm_call_failed", f"{message} Payload: {response_json}", confidence=0.0)
+        return _build_error_response(
+            message,
+            f"Incomplete response from {chat_url}. Details: {response_json}",
+            source="HTTP LLM",
+        )
+
+    log_introspection("final_output_actual", f"Actual LLM response: {llm_response_content[:50]}...")
+    return llm_response_content
+
+
 def analyze_text(text: str, prompt: str, model_params_override: dict = None) -> str:
     """
     Calls a local LLM (Transformers backend or LM Studio/Ollama-compatible HTTP) or runs in simulation mode.
@@ -170,6 +306,13 @@ def analyze_text(text: str, prompt: str, model_params_override: dict = None) -> 
     if model_params_override:
         model_params.update(model_params_override)
 
+    provider, provider_source = _determine_provider(model_params)
+    log_introspection(
+        "llm_provider_selected",
+        f"Provider: {provider} (source: {provider_source})",
+        confidence=0.8,
+    )
+
     # --- Persona を付与 ---
     augmented_prompt = apply_persona_to_prompt(prompt)
     log_introspection("prompt_augmented", f"Augmented prompt: {augmented_prompt[:100]}...")
@@ -186,9 +329,15 @@ def analyze_text(text: str, prompt: str, model_params_override: dict = None) -> 
         log_introspection("final_output", f"Simulated LLM response: {simulated_response['trend'][:50]}...")
         return json.dumps(simulated_response, ensure_ascii=False, indent=2)
 
-    # --- Transformers backend (任意) ---
+    # --- バックエンド選択 ---
     use_transformers, transformers_model = _resolve_transformers_model(model_params)
-    if use_transformers:
+    transformer_allowed = provider in {"TRANSFORMERS", "HYBRID"}
+    http_allowed = provider in {"HTTP", "HYBRID"}
+    if not use_transformers and provider == "TRANSFORMERS":
+        logging.warning("[LLM] TRANSFORMERS provider selected but no model configured. Falling back to HTTP backend.")
+        http_allowed = True
+
+    if use_transformers and transformer_allowed:
         try:
             log_introspection("transformers_backend_selected", f"Using HF model: {transformers_model}", confidence=0.95)
             prompt_text = _compose_transformers_prompt(augmented_prompt, text)
@@ -198,62 +347,17 @@ def analyze_text(text: str, prompt: str, model_params_override: dict = None) -> 
         except Exception as e:
             logging.error(f"Error running transformers backend: {e}", exc_info=True)
             log_introspection("llm_transformers_failed", f"Error: {e}", confidence=0.0)
-            # Transformers利用が失敗した場合はHTTPバックエンドにフォールバック
+            # transformers 例外時は HTTP フォールバックせず、エラー内容を直接返す
+            return _build_error_response(
+                f"Transformers backend error: {e}",
+                "Transformers モデルのロードまたは推論でエラーが発生しました。モデル名・環境・依存関係をご確認ください。",
+                source="Transformers",
+            )
 
-    # --- HTTPバックエンド (LM Studio / Ollama互換) ---
-    llm_url = (
-        model_params.get("llm_url")
-        or os.getenv("LOCAL_LLM_API_URL")
-        or "http://127.0.0.1:1234/v1"
+    if http_allowed or not use_transformers:
+        return _call_http_llm(augmented_prompt, text, model_params)
+
+    return _build_error_response(
+        "LLM backend not configured.",
+        "Set TRANSFORMERS_MODEL or LOCAL_LLM_API_URL to enable at least one provider.",
     )
-    log_introspection("llm_url_selected", f"Using endpoint: {llm_url}", confidence=0.9)
-
-    headers = {"Content-Type": "application/json"}
-    data = {
-        "model": os.getenv("SSP_LOCAL_LLM_MODEL_NAME", "Meta-Llama-3-8B-Instruct-Q4_K_M-GGUF"),
-        "messages": [
-            {"role": "system", "content": augmented_prompt},
-            {"role": "user", "content": text}
-        ],
-        "temperature": model_params["temperature"],
-        "top_p": model_params["top_p"],
-        "max_tokens": model_params["max_tokens"]
-    }
-
-    if "response_format" in model_params:
-        data["response_format"] = model_params["response_format"]
-
-    try:
-        response = requests.post(f"{llm_url}/chat/completions", headers=headers, json=data, timeout=30)
-        response.raise_for_status()
-        response_json = response.json()
-        choices = response_json.get("choices")
-        if not choices:
-            error_details = response_json.get("error") or response_json
-            message = "LLM HTTP response did not include 'choices'."
-            logging.error(f"{message} Payload: {error_details}")
-            log_introspection("llm_call_failed", f"{message} Payload: {error_details}", confidence=0.0)
-            return _build_error_response(
-                message,
-                f"Unexpected HTTP response from {llm_url}. Details: {error_details}",
-                source="HTTP LLM",
-            )
-        llm_response_content = choices[0].get("message", {}).get("content")
-        if not llm_response_content:
-            message = "LLM HTTP response missing message content."
-            logging.error(f"{message} Payload: {response_json}")
-            log_introspection("llm_call_failed", f"{message} Payload: {response_json}", confidence=0.0)
-            return _build_error_response(
-                message,
-                f"Incomplete response from {llm_url}. Details: {response_json}",
-                source="HTTP LLM",
-            )
-        log_introspection("final_output_actual", f"Actual LLM response: {llm_response_content[:50]}...")
-        return llm_response_content
-    except requests.exceptions.RequestException as e:
-        logging.error(f"Error calling local LLM: {e}")
-        log_introspection("llm_call_failed", f"Error: {e}", confidence=0.0)
-        return _build_error_response(
-            "LLM analysis failed due to connection error.",
-            f"Please check LLM service at {llm_url}. Error: {str(e)}",
-        )

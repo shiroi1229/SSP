@@ -1,70 +1,34 @@
+from __future__ import annotations
+
+import datetime
+import hashlib
 import json
 import os
-import psycopg2
-import datetime
-from collections import Counter
-from threading import Lock
-from psycopg2.extensions import connection as PGConnection
+from typing import List, Optional, Literal
+
 from qdrant_client import QdrantClient
-from sentence_transformers import SentenceTransformer
+from qdrant_client.http.models import FieldCondition, Filter, MatchValue
+
 from modules.config_manager import load_environment
 from modules.log_manager import log_manager
+from modules.rag_formatter import (
+    apply_sort,
+    build_context_text,
+    build_score_summary,
+    collect_source_counts,
+    format_hit,
+)
+from modules.rag_repository import RAGRepository
+from modules.rag_shared import GLOBAL_RAG_RESOURCES, SharedRAGResources
+from modules.rag_vectorizer import RagVectorizer
 
-_resource_lock = Lock()
-_shared_qdrant_clients: dict[tuple[str, int], QdrantClient] = {}
-_shared_embedding_models: dict[str, SentenceTransformer] = {}
-_shared_pg_connections: dict[tuple[str, int, str, str, str], PGConnection] = {}
-
-
-def _get_shared_qdrant_client(host: str, port: int) -> QdrantClient:
-    key = (host, port)
-    client = _shared_qdrant_clients.get(key)
-    if client:
-        return client
-    with _resource_lock:
-        client = _shared_qdrant_clients.get(key)
-        if client:
-            return client
-        client = QdrantClient(host=host, port=port)
-        _shared_qdrant_clients[key] = client
-        return client
-
-
-def _get_shared_embedding_model(model_name: str) -> SentenceTransformer:
-    model = _shared_embedding_models.get(model_name)
-    if model:
-        return model
-    with _resource_lock:
-        model = _shared_embedding_models.get(model_name)
-        if model:
-            return model
-        model = SentenceTransformer(model_name)
-        _shared_embedding_models[model_name] = model
-        return model
-
-
-def _get_shared_pg_connection(host: str, port: int, database: str, user: str, password: str):
-    key = (host, port, database, user, password)
-    conn = _shared_pg_connections.get(key)
-    if conn and getattr(conn, "closed", 1) == 0:
-        return conn
-    with _resource_lock:
-        conn = _shared_pg_connections.get(key)
-        if conn and getattr(conn, "closed", 1) == 0:
-            return conn
-        conn = psycopg2.connect(
-            host=host,
-            port=port,
-            database=database,
-            user=user,
-            password=password,
-            client_encoding='UTF8'
-        )
-        _shared_pg_connections[key] = conn
-        return conn
 
 class RAGEngine:
-    def __init__(self, collection_name: str = None):
+    def __init__(
+        self,
+        collection_name: Optional[str] = None,
+        resources: SharedRAGResources = GLOBAL_RAG_RESOURCES,
+    ) -> None:
         config = load_environment()
         self.qdrant_host = config.get("QDRANT_HOST", "localhost")
         self.qdrant_port = int(config.get("QDRANT_PORT", 6333))
@@ -73,60 +37,79 @@ class RAGEngine:
         self.pg_database = config.get("POSTGRES_DB", "ssp_memory")
         self.pg_user = config.get("POSTGRES_USER", "ssp_admin")
         self.pg_password = config.get("POSTGRES_PASSWORD", "Mizuho0824")
-        self.qdrant_collection_name = collection_name or config.get("QDRANT_COLLECTION", "world_knowledge")
-
-        self.qdrant_client = None
+        self.qdrant_collection_name = collection_name or config.get(
+            "QDRANT_COLLECTION",
+            "world_knowledge",
+        )
+        self._resources = resources
+        self.qdrant_client: Optional[QdrantClient] = None
         self.embedding_model = None
+        self.vectorizer: Optional[RagVectorizer] = None
+        self.repository: Optional[RAGRepository] = None
         self.pg_conn = None
 
         try:
-            self.qdrant_client = _get_shared_qdrant_client(self.qdrant_host, self.qdrant_port)
-            log_manager.info(f"Qdrant client ready for {self.qdrant_host}:{self.qdrant_port} (shared).")
+            self.qdrant_client = resources.get_qdrant_client(self.qdrant_host, self.qdrant_port)
+            log_manager.info(
+                "Qdrant client ready for %s:%s (shared).",
+                self.qdrant_host,
+                self.qdrant_port,
+            )
 
             embedding_name = config.get("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
-            self.embedding_model = _get_shared_embedding_model(embedding_name)
-            log_manager.info(f"Embedding model {embedding_name} loaded (shared).")
+            self.embedding_model = resources.get_embedding_model(embedding_name)
+            self.vectorizer = RagVectorizer(self.embedding_model)
+            log_manager.info("Embedding model %s loaded (shared).", embedding_name)
 
-            self.pg_conn = _get_shared_pg_connection(
+            self.pg_conn = resources.get_pg_connection(
                 self.pg_host,
                 self.pg_port,
                 self.pg_database,
                 self.pg_user,
-                self.pg_password
+                self.pg_password,
             )
-            log_manager.info(f"PostgreSQL connected to {self.pg_host}:{self.pg_port}/{self.pg_database} (shared).")
-        except Exception as e:
-            log_manager.exception(f"RAGEngine initialization error: {e}. RAG will be unavailable.")
+            log_manager.info(
+                "PostgreSQL connected to %s:%s/%s (shared).",
+                self.pg_host,
+                self.pg_port,
+                self.pg_database,
+            )
+
+            self.repository = RAGRepository(self.qdrant_client)
+        except Exception as exc:  # pragma: no cover - defensive logging
+            log_manager.exception("RAGEngine initialization error: %s", exc)
             self.qdrant_client = None
             self.embedding_model = None
+            self.vectorizer = None
             self.pg_conn = None
+            self.repository = None
 
     def _ensure_pg_connection(self):
         if self.pg_conn and getattr(self.pg_conn, "closed", 1) == 0:
             return self.pg_conn
         try:
-            self.pg_conn = _get_shared_pg_connection(
+            self.pg_conn = self._resources.get_pg_connection(
                 self.pg_host,
                 self.pg_port,
                 self.pg_database,
                 self.pg_user,
-                self.pg_password
+                self.pg_password,
             )
             log_manager.debug("PostgreSQL connection refreshed for RAGEngine instance.")
-        except Exception as e:
-            log_manager.exception(f"Failed to refresh PostgreSQL connection: {e}")
+        except Exception as exc:  # pragma: no cover - defensive logging
+            log_manager.exception("Failed to refresh PostgreSQL connection: %s", exc)
             self.pg_conn = None
         return self.pg_conn
 
-    def _vectorize_query(self, query: str):
-        if not self.embedding_model:
+    def _vectorize_query(self, query: str) -> List[float]:
+        if not self.vectorizer:
             return []
-        log_manager.debug(f"Vectorizing query: {query[:50]}...")
-        return self.embedding_model.encode(query).tolist()
+        log_manager.debug("Vectorizing query: %s...", query[:50])
+        return self.vectorizer.embed_text(query)
 
     def upsert_text(self, doc_id: str, text: str, metadata: dict = None):
         """Vectorizes and upserts a single text document into the collection."""
-        if not self.qdrant_client:
+        if not self.qdrant_client or not self.repository:
             log_manager.error("Cannot upsert text: RAGEngine is not available.")
             return
             
@@ -143,15 +126,16 @@ class RAGEngine:
             
             self._ensure_qdrant_collection_exists(len(vector))
             
-            self.qdrant_client.upsert(
-                collection_name=self.qdrant_collection_name,
-                wait=True,
-                points=[{
-                    "id": doc_id,
-                    "vector": vector,
-                    "payload": payload
-                }]
-            )
+            if self.repository:
+                self.repository.upsert(
+                    self.qdrant_collection_name,
+                    points=[{
+                        "id": doc_id,
+                        "vector": vector,
+                        "payload": payload
+                    }],
+                    wait=True,
+                )
             log_manager.info(f"Successfully upserted text with ID {doc_id} to collection '{self.qdrant_collection_name}'.")
         except Exception as e:
             log_manager.exception(f"Error upserting text with ID {doc_id}: {e}")
@@ -183,13 +167,13 @@ class RAGEngine:
             return []
 
     def _search_qdrant(self, query_vector: list):
-        if not self.qdrant_client:
+        if not self.repository or not self.qdrant_client:
             return []
         log_manager.debug(f"Searching Qdrant with vector (first 5 elements): {query_vector[:5]}...")
-        search_result = self.qdrant_client.search(
-            collection_name=self.qdrant_collection_name,
-            query_vector=query_vector,
-            limit=5
+        search_result = self.repository.search(
+            self.qdrant_collection_name,
+            query_vector,
+            limit=5,
         )
         log_manager.debug(f"Qdrant search returned {len(search_result)} hits.")
         return [hit.id for hit in search_result]
@@ -206,64 +190,27 @@ class RAGEngine:
 
         cur = conn.cursor()
         try:
-            id_list = ','.join(map(str, ids))
-            cur.execute(f"SELECT content FROM world_knowledge WHERE id IN ({id_list}) ORDER BY id;")
+            id_list = ",".join(map(str, ids))
+            cur.execute(
+                f"SELECT text FROM knowledge_chunks WHERE id IN ({id_list}) ORDER BY id;"
+            )
             texts = [row[0] for row in cur.fetchall()]
             log_manager.debug(f"Retrieved {len(texts)} texts from PostgreSQL.")
             return texts
         finally:
             cur.close()
 
-    def _format_hit(self, hit, score_hint=None):
-        payload = getattr(hit, "payload", {}) or {}
-        text = payload.get("answer") or payload.get("result") or payload.get("text") or payload.get("user_input") or ""
-        created_at = payload.get("created_at") or payload.get("timestamp") or datetime.datetime.now().isoformat()
-        source = payload.get("source") or payload.get("module") or payload.get("source_name") or "unknown"
-        score = score_hint if score_hint is not None else payload.get("rating") or payload.get("score") or 0.0
-        return {
-            "id": str(getattr(hit, "id", payload.get("id", ""))),
-            "text": text,
-            "score": float(score),
-            "source": source,
-            "created_at": created_at,
-        }
-
-    def _parse_datetime(self, value: str):
-        try:
-            return datetime.datetime.fromisoformat(value)
-        except Exception:
-            try:
-                return datetime.datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-            except Exception:
-                return datetime.datetime.min
-
-    def _build_score_summary(self, scores: list[float]):
-        cleaned = [score for score in scores if isinstance(score, (int, float))]
-        if not cleaned:
-            return {"min": None, "max": None, "avg": None, "p95": None}
-        cleaned.sort()
-        avg = sum(cleaned) / len(cleaned)
-        p95_index = min(max(int(len(cleaned) * 0.95) - 1, 0), len(cleaned) - 1)
-        return {
-            "min": cleaned[0],
-            "max": cleaned[-1],
-            "avg": avg,
-            "p95": cleaned[p95_index],
-        }
-
-    def _apply_sort(self, entries: list[dict], order_by: str, descending: bool):
-        reverse = descending
-        if order_by == "score":
-            entries.sort(key=lambda entry: entry["score"], reverse=reverse)
-        else:
-            entries.sort(
-                key=lambda entry: self._parse_datetime(entry["created_at"]),
-                reverse=reverse,
-            )
-        return entries
-
-    def _collect_source_counts(self, entries: list[dict]):
-        return dict(Counter(entry["source"] for entry in entries))
+    def _build_source_filter(self, source_filter: Optional[str]):
+        if not source_filter:
+            return None
+        return Filter(
+            must=[
+                FieldCondition(
+                    key="source",
+                    match=MatchValue(value=source_filter),
+                )
+            ]
+        )
 
     def get_context(self, query: str) -> str: # Reverted to get_context
         if not self.qdrant_client or not self.embedding_model or not self._ensure_pg_connection():
@@ -279,7 +226,8 @@ class RAGEngine:
             pg_texts = self._get_text_from_postgresql(qdrant_ids)
             
             if pg_texts:
-                context = "\n".join(pg_texts)
+                context_entries = [{"text": text, "source": "world_knowledge"} for text in pg_texts]
+                context = build_context_text(context_entries)
             else:
                 context = "情報不足"
 
@@ -302,8 +250,9 @@ class RAGEngine:
         offset: int = 0,
         order_by: str = "created_at",
         descending: bool = True,
+        source_filter: Optional[str] = None,
     ) -> dict:
-        if not self.qdrant_client:
+        if not self.qdrant_client or not self.repository:
             log_manager.error("Cannot list embeddings: RAGEngine is not available.")
             return {
                 "items": [],
@@ -311,33 +260,69 @@ class RAGEngine:
                 "limit": limit,
                 "offset": offset,
                 "source_counts": {},
-                "score_summary": self._build_score_summary([]),
+                "score_summary": build_score_summary([]),
             }
-        log_manager.debug(f"Listing embeddings from Qdrant (limit={limit}, offset={offset}).")
+        log_manager.debug(
+            f"Listing embeddings from Qdrant (limit={limit}, offset={offset}, filter={source_filter})."
+        )
 
         total_count = 0
+        qdrant_filter = self._build_source_filter(source_filter)
         try:
-            total_count = self.qdrant_client.count(collection_name=self.qdrant_collection_name).count
+            total_count = self.repository.count(
+                self.qdrant_collection_name,
+                filter=qdrant_filter,
+            )
+            if total_count == 0 and qdrant_filter is not None:
+                total_count = self.repository.count(
+                    self.qdrant_collection_name,
+                    scroll_filter=qdrant_filter,
+                )
         except Exception as e:
             log_manager.warning(f"Failed to count collection '{self.qdrant_collection_name}': {e}")
+            total_count = 0
 
         try:
-            scroll_result, _ = self.qdrant_client.scroll(
-                collection_name=self.qdrant_collection_name,
-                limit=limit,
-                offset=offset,
-                with_payload=True,
-                with_vectors=False,
-            )
+            # Newer clients accept 'filter'; some older require 'scroll_filter'. Also, 'offset' may not accept int.
+            try:
+                scroll_result, _ = self.repository.scroll(
+                    self.qdrant_collection_name,
+                    limit=limit,
+                    offset=offset,
+                    with_payload=True,
+                    with_vectors=False,
+                    filter=qdrant_filter,
+                )
+            except (AssertionError, TypeError) as arg_err:
+                # Retry with legacy argument names and without offset; emulate offset by slicing later
+                log_manager.debug(f"Qdrant scroll retry without offset/with legacy args due to: {arg_err}")
+                try:
+                    # Fetch more and slice locally to emulate offset
+                    fetch_limit = max(limit + (offset or 0), limit)
+                    scroll_result, _ = self.repository.scroll(
+                        self.qdrant_collection_name,
+                        limit=fetch_limit,
+                        with_payload=True,
+                        with_vectors=False,
+                        scroll_filter=qdrant_filter,  # type: ignore[call-arg]
+                    )
+                    # Emulate offset
+                    scroll_result = scroll_result[(offset or 0): (offset or 0) + limit]
+                except Exception as legacy_err:
+                    raise legacy_err
             entries = []
             for hit in scroll_result:
                 try:
-                    entries.append(self._format_hit(hit))
+                    entries.append(format_hit(hit))
                 except Exception as err:
                     log_manager.warning(f"Skipping hit due to formatting error: {err}")
-            entries = self._apply_sort(entries, order_by if order_by in {"score", "created_at"} else "created_at", descending)
-            source_counts = self._collect_source_counts(entries)
-            score_summary = self._build_score_summary([entry["score"] for entry in entries])
+            entries = apply_sort(
+                entries,
+                order_by if order_by in {"score", "created_at"} else "created_at",
+                descending,
+            )
+            source_counts = collect_source_counts(entries)
+            score_summary = build_score_summary([entry["score"] for entry in entries])
             log_manager.debug(f"Listed {len(entries)} embeddings (total={total_count}).")
             return {
                 "items": entries,
@@ -355,7 +340,7 @@ class RAGEngine:
                 "limit": limit,
                 "offset": offset,
                 "source_counts": {},
-                "score_summary": self._build_score_summary([]),
+                "score_summary": build_score_summary([]),
             }
 
     def search(
@@ -365,44 +350,29 @@ class RAGEngine:
         offset: int = 0,
         order_by: str = "score",
         descending: bool = True,
+        source_filter: Optional[str] = None,
     ) -> dict:
-        if not self.qdrant_client or not self.embedding_model:
+        if not self.qdrant_client or not self.embedding_model or not self.repository:
             log_manager.error("Cannot search embeddings: RAGEngine is not available.")
             return {
                 "items": [],
                 "total": 0,
                 "source_counts": {},
-                "score_summary": self._build_score_summary([]),
+                "score_summary": build_score_summary([]),
                 "query": query,
                 "limit": limit,
                 "offset": offset,
             }
 
-    def get_by_id(self, entry_id: str):
-        if not self.qdrant_client:
-            log_manager.error("Cannot retrieve entry: RAGEngine is not available.")
-            return None
-        try:
-            point = self.qdrant_client.retrieve(
-                collection_name=self.qdrant_collection_name,
-                point_id=entry_id,
-                with_payload=True,
-            )
-            if not point or not getattr(point, "payload", None):
-                return None
-            return self._format_hit(point)
-        except Exception as exc:
-            log_manager.exception(f"Failed to fetch entry {entry_id}: {exc}")
-            return None
-
         log_manager.debug(f"Searching RAG for query='{query}' (limit={limit}, offset={offset}).")
+        qdrant_filter = self._build_source_filter(source_filter)
         query_vector = self._vectorize_query(query)
         if not query_vector:
             return {
                 "items": [],
                 "total": 0,
                 "source_counts": {},
-                "score_summary": self._build_score_summary([]),
+                "score_summary": build_score_summary([]),
                 "query": query,
                 "limit": limit,
                 "offset": offset,
@@ -410,33 +380,60 @@ class RAGEngine:
 
         try:
             search_limit = max(limit + offset, 1)
-            search_result = self.qdrant_client.search(
-                collection_name=self.qdrant_collection_name,
-                query_vector=query_vector,
-                limit=search_limit,
-                with_payload=True,
-            )
+            try:
+                search_result = self.repository.search(
+                    self.qdrant_collection_name,
+                    query_vector,
+                    limit=search_limit,
+                    with_payload=True,
+                    filter=qdrant_filter,
+                )
+            except (AssertionError, TypeError) as arg_err:
+                log_manager.debug(f"Qdrant search retry with legacy 'query_filter' due to: {arg_err}")
+                search_result = self.repository.search(
+                    self.qdrant_collection_name,
+                    query_vector,
+                    limit=search_limit,
+                    with_payload=True,
+                    query_filter=qdrant_filter,
+                )
             entries = []
             for hit in search_result:
                 try:
-                    entries.append(self._format_hit(hit, score_hint=getattr(hit, "score", None)))
+                    base_score = getattr(hit, "score", None)
+                    formatted = format_hit(hit, score_hint=base_score)
+                    payload = getattr(hit, "payload", {}) or {}
+                    exp = payload.get("experience_score")
+                    if isinstance(exp, (int, float)):
+                        s = float(exp)
+                        # weight(s): s=0 で1, +10で(1+λ_pos), -10でmax(ε, 1-λ_neg)
+                        lambda_pos = 1.0
+                        lambda_neg = 2.0
+                        eps = 0.05
+                        if s >= 0:
+                            weight = 1.0 + lambda_pos * (s / 10.0)
+                        else:
+                            weight = max(eps, 1.0 + lambda_neg * (s / 10.0))
+                        base = float(formatted.get("score", 0.0))
+                        formatted["score"] = base * weight
+                    entries.append(formatted)
                 except Exception as err:
                     log_manager.warning(f"Skipping hit during search formatting: {err}")
-            entries = self._apply_sort(
+            entries = apply_sort(
                 entries,
                 order_by if order_by in {"score", "created_at"} else "score",
                 descending,
             )
             total_hits = len(entries)
             paged = entries[offset: offset + limit]
-            score_summary = self._build_score_summary([entry["score"] for entry in entries])
+            score_summary = build_score_summary([entry["score"] for entry in entries])
             return {
                 "items": paged,
                 "total": total_hits,
                 "limit": limit,
                 "offset": offset,
                 "query": query,
-                "source_counts": self._collect_source_counts(entries),
+                "source_counts": collect_source_counts(entries),
                 "score_summary": score_summary,
             }
         except Exception as e:
@@ -445,11 +442,28 @@ class RAGEngine:
                 "items": [],
                 "total": 0,
                 "source_counts": {},
-                "score_summary": self._build_score_summary([]),
+                "score_summary": build_score_summary([]),
                 "query": query,
                 "limit": limit,
                 "offset": offset,
             }
+
+    def get_by_id(self, entry_id: str):
+        if not self.qdrant_client or not self.repository:
+            log_manager.error("Cannot retrieve entry: RAGEngine is not available.")
+            return None
+        try:
+            point = self.repository.retrieve(
+                self.qdrant_collection_name,
+                entry_id,
+                with_payload=True,
+            )
+            if not point or not getattr(point, "payload", None):
+                return None
+            return format_hit(point)
+        except Exception as exc:
+            log_manager.exception(f"Failed to fetch entry {entry_id}: {exc}")
+            return None
 
     def _ensure_qdrant_collection_exists(self, vector_size: int):
         if not self.qdrant_client:
@@ -467,7 +481,7 @@ class RAGEngine:
             log_manager.info(f"Collection {self.qdrant_collection_name} created with vector size {vector_size}.")
 
     def inject_samples_to_qdrant(self) -> int:
-        if not self.qdrant_client:
+        if not self.qdrant_client or not self.repository:
             log_manager.error("Cannot inject samples: RAGEngine is not available.")
             return 0
         from backend.db.connection import get_latest_samples
@@ -501,13 +515,12 @@ class RAGEngine:
         if points:
             try:
                 self._ensure_qdrant_collection_exists(len(points[0]["vector"]))
-                operation_info = self.qdrant_client.upsert(
-                    collection_name=self.qdrant_collection_name,
+                self.repository.upsert(
+                    self.qdrant_collection_name,
+                    points=points,
                     wait=True,
-                    points=points
                 )
                 synced_count = len(points)
-                log_manager.info(f"Qdrant upsert operation info: {operation_info}")
             except Exception as e:
                 log_manager.exception(f"Error upserting samples to Qdrant: {e}")
         
@@ -515,32 +528,32 @@ class RAGEngine:
         return synced_count
 
     def _upsert_single_sample_to_qdrant(self, sample_id: int, vector: list, payload: dict):
-        if not self.qdrant_client:
+        if not self.qdrant_client or not self.repository:
             return
         log_manager.debug(f"Upserting single sample {sample_id} to Qdrant.")
         try:
             self._ensure_qdrant_collection_exists(len(vector))
-            self.qdrant_client.upsert(
-                collection_name=self.qdrant_collection_name,
-                wait=True,
+            self.repository.upsert(
+                self.qdrant_collection_name,
                 points=[{
                     "id": sample_id,
                     "vector": vector,
                     "payload": payload
-                }]
+                }],
+                wait=True,
             )
             log_manager.debug(f"Successfully upserted sample {sample_id}.")
         except Exception as e:
             log_manager.exception(f"Error upserting single sample {sample_id} to Qdrant: {e}")
 
     def optimize_rag_memory(self, top_n: int = 50):
-        if not self.qdrant_client:
+        if not self.qdrant_client or not self.repository:
             log_manager.error("Cannot optimize memory: RAGEngine is not available.")
             return
         log_manager.info("🧠 RAGメモリ最適化を開始します...")
         try:
-            all_points, _ = self.qdrant_client.scroll(
-                collection_name=self.qdrant_collection_name,
+            all_points, _ = self.repository.scroll(
+                self.qdrant_collection_name,
                 limit=10000,
                 with_payload=True,
                 with_vectors=True
@@ -573,7 +586,6 @@ def register_high_score_sample(user_input: str, answer: str, rating: float, feed
                 "feedback": feedback,
                 "created_at": datetime.datetime.now().isoformat()
             }
-            import hashlib
             sample_id = int(hashlib.sha256(answer.encode('utf-8')).hexdigest(), 16) % (10**9)
 
             rag._upsert_single_sample_to_qdrant(sample_id, vector, payload)
@@ -606,7 +618,6 @@ def reinforce_rag_with_feedback(feedback_path="data/feedback_log.json", min_scor
             combined_text = f"Q: {entry['user_input']}\nA: {entry['final_output']}"
             vector = rag_engine._vectorize_query(combined_text)
 
-            import hashlib
             sample_id = int(hashlib.sha256(combined_text.encode('utf-8')).hexdigest(), 16) % (10**9)
 
             payload = {
