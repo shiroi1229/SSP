@@ -1,7 +1,7 @@
 import json
 import os
 from datetime import datetime
-from typing import Optional
+from typing import Literal, Optional
 
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
@@ -15,6 +15,9 @@ rag = RAGEngine()
 class KnowledgeIngestRequest(BaseModel):
     text: str = Field(..., description="Raw text or chat transcript to ingest")
     source: str = Field("manual_paste", description="Source label for the content")
+    visibility: Literal["internal", "limited", "public"] = Field(
+        ..., description="Document visibility scope"
+    )
     treat_as_chat: bool = Field(
         False, description="Parse the input as chat turns to preserve speaker context"
     )
@@ -127,6 +130,7 @@ def ingest_knowledge(request: KnowledgeIngestRequest):
         result = rag.ingest_text(
             cleaned,
             source=request.source,
+            visibility=request.visibility,
             treat_as_chat=request.treat_as_chat,
             chunk_size=request.chunk_size,
             overlap=request.overlap,
