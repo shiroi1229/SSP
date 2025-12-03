@@ -21,6 +21,7 @@ from modules.auto_sync_monitor import monitor_roadmap_sync
 from modules.awareness_observer import collect_awareness_snapshot
 from modules.internal_dialogue import generate_internal_dialogue
 from modules.akashic_integration import collect_and_persist_akashic_state
+from tools.rag_eval_runner import run_weekly_rag_eval
 
 log_manager = LogManager()
 
@@ -163,6 +164,7 @@ def start_scheduler():
     schedule.every().monday.at("02:00").do(run_job, "reinforce_rag", reinforce_rag_with_feedback)
     schedule.every().day.at("02:00").do(run_job, "reinforce_dev_knowledge", reinforce_dev_knowledge)
     schedule.every().day.at("02:10").do(run_job, "sync_to_qdrant", sync_to_qdrant)
+    schedule.every().monday.at("03:30").do(run_job, "weekly_rag_eval", run_weekly_rag_eval)
     schedule.every().monday.at("09:00").do(run_job, "adaptive_optimization", job_adaptive_optimization)
     schedule.every().sunday.at("03:00").do(run_job, "collective_optimization", merge_ai_insights)
     schedule.every().sunday.at("04:00").do(run_job, "persona_evolution", evolve_persona_profile)
