@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, BackgroundTasks, HTTPException
 from pydantic import BaseModel
 import logging
 
@@ -7,20 +7,29 @@ from orchestrator.main import run_context_evolution_cycle
 
 router = APIRouter()
 
+logger = logging.getLogger(__name__)
+
 class ChatRequest(BaseModel):
     user_input: str
 
 class ChatResponse(BaseModel):
     ai_response: str
 
-@router.post("/chat", response_model=ChatResponse)
-async def chat_endpoint(request: ChatRequest):
-    logging.info(f"Received chat message: {request.user_input}")
+
+def _run_context_cycle(user_input: str) -> None:
+    """Execute the context evolution cycle with error handling."""
     try:
-        # This is a fire-and-forget call now
-        run_context_evolution_cycle(request.user_input)
-        ai_response = "Processing your request."
-        return ChatResponse(ai_response=ai_response)
-    except Exception as e:
-        logging.error(f"Error handling chat message: {e}")
+        run_context_evolution_cycle(user_input)
+    except Exception as exc:  # pragma: no cover - defensive logging
+        logger.exception("Error running context evolution cycle", exc_info=exc)
+
+
+@router.post("/chat", response_model=ChatResponse)
+async def chat_endpoint(request: ChatRequest, background_tasks: BackgroundTasks):
+    logger.info("Received chat message: %s", request.user_input)
+    try:
+        background_tasks.add_task(_run_context_cycle, request.user_input)
+        return ChatResponse(ai_response="Processing your request.")
+    except Exception as exc:
+        logger.exception("Error scheduling chat message", exc_info=exc)
         raise HTTPException(status_code=500, detail="Internal Server Error")
