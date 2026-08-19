@@ -1,8 +1,18 @@
-﻿import psycopg2
-from psycopg2.extras import execute_values
-from datetime import datetime
+import os
 
-DSN = dict(host='172.25.208.1', dbname='ssp_memory', user='ssp_admin', password='Mizuho0824')
+import psycopg2
+from dotenv import load_dotenv
+from psycopg2.extras import Json, execute_values
+
+load_dotenv()
+DSN = {
+    "host": os.getenv("POSTGRES_HOST", "172.25.208.1"),
+    "port": int(os.getenv("POSTGRES_PORT", "5432")),
+    "dbname": os.getenv("POSTGRES_DB", "ssp_memory"),
+    "user": os.getenv("POSTGRES_USER", "ssp_admin"),
+    "password": os.environ["POSTGRES_PASSWORD"],
+}
+
 DDL = """
 CREATE TABLE IF NOT EXISTS world_timeline_events (
     id SERIAL PRIMARY KEY,
@@ -18,6 +28,7 @@ CREATE TABLE IF NOT EXISTS world_timeline_events (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 """
+
 SAMPLES = [
     {
         "title": "黎明評議会の結成",
@@ -91,8 +102,8 @@ with psycopg2.connect(**DSN) as conn:
                 sample['start_year'],
                 sample['end_year'],
                 sample['importance'],
-                psycopg2.extras.Json(sample.get('tags', [])),
-                psycopg2.extras.Json(sample.get('metadata', {}))
+                Json(sample.get('tags', [])),
+                Json(sample.get('metadata', {}))
             ) for sample in SAMPLES]
             insert_sql = """
                 INSERT INTO world_timeline_events
