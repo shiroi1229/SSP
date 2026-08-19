@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-import os
 import re
 import subprocess
 import sys
@@ -24,12 +23,36 @@ TOKEN_PATTERNS = {
     "Private key": re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
 }
 
-GENERIC_SECRET_ASSIGNMENT = re.compile(
-    r"(?im)^\s*(?:export\s+)?"
-    r"([A-Z0-9_]*(?:PASSWORD|SECRET|TOKEN|API_KEY|PRIVATE_KEY|ACCESS_KEY|CREDENTIAL)[A-Z0-9_]*)"
-    r"\s*[:=]\s*['\"]?"
-    r"(?!\$\{|<|CHANGE_ME|INSERT_|REPLACE_|example|dummy|null|none)"
-    r"([^'\"\s#]{8,})"
+SENSITIVE_ASSIGNMENT = re.compile(
+    r"^\s*['\"]?"
+    r"([A-Za-z0-9_]*(?:password|secret|token|api_key|private_key|access_key|credential)[A-Za-z0-9_]*)"
+    r"['\"]?\s*[:=]\s*(.+?)\s*$",
+    re.IGNORECASE,
+)
+
+REFERENCE_MARKERS = (
+    "${",
+    "os.environ",
+    "os.getenv",
+    "getenv(",
+    "process.env",
+    "config.get(",
+    "secrets.",
+    "env.",
+)
+
+PLACEHOLDER_MARKERS = (
+    "<redacted>",
+    "<insert_",
+    "change_me",
+    "replace_me",
+    "your-password",
+    "your_password",
+    "example",
+    "placeholder",
+    "dummy",
+    "null",
+    "none",
 )
 
 ALLOWED_ENV_FILES = {".env.example", ".env.sample", ".env.template"}
@@ -61,6 +84,26 @@ def read_text_if_scannable(path: Path) -> str | None:
         return None
 
 
+def find_generic_secret(text: str) -> str | None:
+    for line in text.splitlines():
+        match = SENSITIVE_ASSIGNMENT.match(line)
+        if not match:
+            continue
+
+        key = match.group(1)
+        rhs = match.group(2).strip().rstrip(",")
+        rhs_lower = rhs.lower()
+        if any(marker in rhs_lower for marker in REFERENCE_MARKERS):
+            continue
+        if any(marker in rhs_lower for marker in PLACEHOLDER_MARKERS):
+            continue
+
+        value = rhs.strip("'\"")
+        if len(value) >= 8 and not value.startswith(("$", "{", "[")):
+            return key
+    return None
+
+
 def main() -> int:
     findings: list[str] = []
 
@@ -79,9 +122,9 @@ def main() -> int:
                 findings.append(f"{rel}: possible {label}")
 
         if path.name not in ALLOWED_ENV_FILES:
-            match = GENERIC_SECRET_ASSIGNMENT.search(text)
-            if match:
-                findings.append(f"{rel}: possible hardcoded secret in {match.group(1)}")
+            key = find_generic_secret(text)
+            if key:
+                findings.append(f"{rel}: possible hardcoded secret in {key}")
 
     if findings:
         print("Secret scan FAILED:\n", file=sys.stderr)
