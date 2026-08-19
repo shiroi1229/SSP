@@ -24,7 +24,7 @@ TOKEN_PATTERNS = {
 }
 
 SENSITIVE_ASSIGNMENT = re.compile(
-    r"^\s*['\"]?"
+    r"^\s*(?:-\s*)?['\"]?"
     r"([A-Za-z0-9_]*(?:password|secret|token|api_key|private_key|access_key|credential)[A-Za-z0-9_]*)"
     r"['\"]?\s*[:=]\s*(.+?)\s*$",
     re.IGNORECASE,
@@ -98,7 +98,15 @@ def find_generic_secret(text: str) -> str | None:
         if any(marker in rhs_lower for marker in PLACEHOLDER_MARKERS):
             continue
 
-        value = rhs.strip("'\"")
+        quoted_literal = len(rhs) >= 2 and rhs[0] in "'\"" and rhs[-1] == rhs[0]
+        # Lowercase/mixed-case names are commonly Python/JS variables such as
+        # password=password or password=new_password. Only treat those as a
+        # generic hardcoded secret when the right-hand side is a quoted literal.
+        # Uppercase names are typically env/config keys, so plain literals count.
+        if key != key.upper() and not quoted_literal:
+            continue
+
+        value = rhs[1:-1] if quoted_literal else rhs
         if len(value) >= 8 and not value.startswith(("$", "{", "[")):
             return key
     return None
