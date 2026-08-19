@@ -110,6 +110,7 @@ def _connect(config: dict[str, str], password: str):
 
 def main() -> int:
     staged_path: Path | None = None
+    db_rotated = False
     try:
         config = _load_config()
         new_password = secrets.token_urlsafe(48)
@@ -124,6 +125,7 @@ def main() -> int:
                     )
                 )
             conn.commit()
+        db_rotated = True
 
         # The DB now uses the new credential. Make the local config switch atomic.
         os.replace(staged_path, ENV_PATH)
@@ -143,14 +145,26 @@ def main() -> int:
     except Exception as exc:
         print(f"Rotation failed: {exc}", file=sys.stderr)
         if staged_path and staged_path.exists():
-            # If rotation failed before DB modification, this staged file is unnecessary.
-            try:
-                staged_path.unlink()
-            except OSError:
+            if db_rotated:
+                # The database already accepted the replacement password. Preserve the
+                # staged .env so the operator can recover without exposing the secret.
                 print(
-                    f"Warning: remove temporary credential file manually: {staged_path}",
+                    "Database password changed, but .env replacement failed. "
+                    f"Recovery file preserved at: {staged_path}",
                     file=sys.stderr,
                 )
+                print(
+                    "Move that file to .env on this host before restarting SSP.",
+                    file=sys.stderr,
+                )
+            else:
+                try:
+                    staged_path.unlink()
+                except OSError:
+                    print(
+                        f"Warning: remove temporary credential file manually: {staged_path}",
+                        file=sys.stderr,
+                    )
         return 1
 
 
