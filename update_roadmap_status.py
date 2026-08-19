@@ -1,6 +1,16 @@
-import psycopg2
+import os
 
-dsn = "host=172.25.208.1 dbname=ssp_memory user=ssp_admin password=Mizuho0824"
+import psycopg2
+from dotenv import load_dotenv
+
+load_dotenv()
+DB_CONFIG = {
+    "host": os.getenv("POSTGRES_HOST", "172.25.208.1"),
+    "port": int(os.getenv("POSTGRES_PORT", "5432")),
+    "dbname": os.getenv("POSTGRES_DB", "ssp_memory"),
+    "user": os.getenv("POSTGRES_USER", "ssp_admin"),
+    "password": os.environ["POSTGRES_PASSWORD"],
+}
 
 done_items = [
     ("v0.1", "MVP Core"),
@@ -18,9 +28,7 @@ done_items = [
     ("v2.5", "Impact Analyzer / Auto Repair"),
 ]
 
-in_progress_items = [
-    ("v3.0", "Meta Contract System"),
-]
+in_progress_items = [("v3.0", "Meta Contract System")]
 
 not_started_items = [
     ("v3.1", "Co-Evolution Bridge"),
@@ -44,7 +52,7 @@ def _rows(items, status, progress):
     return [(status, progress, version, codename) for version, codename in items]
 
 
-with psycopg2.connect(dsn) as conn:
+with psycopg2.connect(**DB_CONFIG) as conn:
     with conn.cursor() as cur:
         cur.executemany(
             "UPDATE roadmap_items SET status=%s, progress=%s WHERE version=%s AND codename=%s",
