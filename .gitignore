@@ -1,9 +1,12 @@
 .venv/
 __pycache__/
 *.pyc
-logs/*.log
-logs/context_evolution_snapshots/
 node_modules/
+
+# Generated runtime output
+logs/
+logs/context_evolution_snapshots/
+roadmap_dump.json
 
 # Local environment / secrets
 .env
@@ -13,3 +16,7 @@ config_snapshot.json
 secrets/
 *.key
 *.pem
+
+# Generated development logs may contain runtime configuration
+devlogs/*.log
+devlogs/**/*.log
