@@ -43,6 +43,7 @@ def _get_shared_embedding_model(model_name: str) -> SentenceTransformer:
         if model:
             return model
         model = SentenceTransformer(model_name)
+        tokenizer = getattr(model, "tokenizer", None)
         _shared_embedding_models[model_name] = model
         return model
 
@@ -67,6 +68,7 @@ def _get_shared_pg_connection(host: str, port: int, database: str, user: str, pa
         _shared_pg_connections[key] = conn
         return conn
 
+
 class RAGEngine:
     def __init__(self, collection_name: str = None):
         config = load_environment()
@@ -76,7 +78,7 @@ class RAGEngine:
         self.pg_port = int(config.get("POSTGRES_PORT", 5432))
         self.pg_database = config.get("POSTGRES_DB", "ssp_memory")
         self.pg_user = config.get("POSTGRES_USER", "ssp_admin")
-        self.pg_password = config.get("POSTGRES_PASSWORD", "Mizuho0824")
+        self.pg_password = config.get("POSTGRES_PASSWORD")
         self.qdrant_collection_name = collection_name or config.get("QDRANT_COLLECTION", "world_knowledge")
 
         self.qdrant_client = None
@@ -92,6 +94,8 @@ class RAGEngine:
             self.embedding_model = _get_shared_embedding_model(embedding_name)
             log_manager.info(f"Embedding model {embedding_name} loaded (shared).")
 
+            if not self.pg_password:
+                raise RuntimeError("POSTGRES_PASSWORD must be configured in the environment")
             self.pg_conn = _get_shared_pg_connection(
                 self.pg_host,
                 self.pg_port,
@@ -110,6 +114,8 @@ class RAGEngine:
         if self.pg_conn and getattr(self.pg_conn, "closed", 1) == 0:
             return self.pg_conn
         try:
+            if not self.pg_password:
+                raise RuntimeError("POSTGRES_PASSWORD must be configured in the environment")
             self.pg_conn = _get_shared_pg_connection(
                 self.pg_host,
                 self.pg_port,
@@ -159,7 +165,7 @@ class RAGEngine:
         if not self.qdrant_client:
             log_manager.error("Cannot upsert text: RAGEngine is not available.")
             return
-            
+
         log_manager.debug(f"Upserting text to collection '{self.qdrant_collection_name}' with ID: {doc_id}")
         try:
             vector = self._vectorize_query(text)
@@ -170,9 +176,9 @@ class RAGEngine:
             payload = {"text": text}
             if metadata:
                 payload.update(metadata)
-            
+
             self._ensure_qdrant_collection_exists(len(vector))
-            
+
             self.qdrant_client.upsert(
                 collection_name=self.qdrant_collection_name,
                 wait=True,
@@ -381,7 +387,7 @@ class RAGEngine:
     def _collect_source_counts(self, entries: list[dict]):
         return dict(Counter(entry["source"] for entry in entries))
 
-    def get_context(self, query: str) -> str: # Reverted to get_context
+    def get_context(self, query: str) -> str:
         if not self.qdrant_client or not self.embedding_model or not self._ensure_pg_connection():
             log_manager.error("Cannot get context: RAGEngine is not available.")
             return "RAG Engine is currently unavailable."
@@ -393,22 +399,19 @@ class RAGEngine:
             query_vector = self._vectorize_query(query)
             qdrant_ids = self._search_qdrant(query_vector)
             pg_texts = self._get_text_from_postgresql(qdrant_ids)
-            
+
             if pg_texts:
                 context = "\n".join(pg_texts)
             else:
                 context = "情報不足"
 
             log_data["context"] = context
-            
-            # Log query and context
             log_manager.info("RAG context retrieved.", extra=log_data)
 
         except Exception as e:
             context = f"RAG Engine エラー: {e}"
             log_data["context"] = context
             log_manager.exception("RAG context retrieval failed.", extra=log_data)
-            # Do not re-raise, return the error message in the context
 
         return context
 
@@ -494,23 +497,6 @@ class RAGEngine:
                 "offset": offset,
             }
 
-    def get_by_id(self, entry_id: str):
-        if not self.qdrant_client:
-            log_manager.error("Cannot retrieve entry: RAGEngine is not available.")
-            return None
-        try:
-            point = self.qdrant_client.retrieve(
-                collection_name=self.qdrant_collection_name,
-                point_id=entry_id,
-                with_payload=True,
-            )
-            if not point or not getattr(point, "payload", None):
-                return None
-            return self._format_hit(point)
-        except Exception as exc:
-            log_manager.exception(f"Failed to fetch entry {entry_id}: {exc}")
-            return None
-
         log_manager.debug(f"Searching RAG for query='{query}' (limit={limit}, offset={offset}).")
         query_vector = self._vectorize_query(query)
         if not query_vector:
@@ -567,6 +553,24 @@ class RAGEngine:
                 "offset": offset,
             }
 
+    def get_by_id(self, entry_id: str):
+        if not self.qdrant_client:
+            log_manager.error("Cannot retrieve entry: RAGEngine is not available.")
+            return None
+        try:
+            points = self.qdrant_client.retrieve(
+                collection_name=self.qdrant_collection_name,
+                ids=[entry_id],
+                with_payload=True,
+                with_vectors=False,
+            )
+            if not points:
+                return None
+            return self._format_hit(points[0])
+        except Exception as exc:
+            log_manager.exception(f"Failed to fetch entry {entry_id}: {exc}")
+            return None
+
     def _ensure_qdrant_collection_exists(self, vector_size: int):
         if not self.qdrant_client:
             return
@@ -587,7 +591,7 @@ class RAGEngine:
             log_manager.error("Cannot inject samples: RAGEngine is not available.")
             return 0
         from backend.db.connection import get_latest_samples
-        
+
         log_manager.info("Injecting samples to Qdrant...")
         samples = get_latest_samples(limit=50)
         synced_count = 0
@@ -600,7 +604,8 @@ class RAGEngine:
         for sample in samples:
             try:
                 vector = self._vectorize_query(sample.result)
-                if not vector: continue
+                if not vector:
+                    continue
                 points.append({
                     "id": sample.id,
                     "vector": vector,
@@ -613,7 +618,7 @@ class RAGEngine:
             except Exception as e:
                 log_manager.error(f"Error vectorizing sample {sample.id}: {e}")
                 continue
-        
+
         if points:
             try:
                 self._ensure_qdrant_collection_exists(len(points[0]["vector"]))
@@ -626,7 +631,7 @@ class RAGEngine:
                 log_manager.info(f"Qdrant upsert operation info: {operation_info}")
             except Exception as e:
                 log_manager.exception(f"Error upserting samples to Qdrant: {e}")
-        
+
         log_manager.info(f"Finished injecting {synced_count} samples to Qdrant.")
         return synced_count
 
@@ -661,7 +666,7 @@ class RAGEngine:
                 with_payload=True,
                 with_vectors=True
             )
-            
+
             sorted_records = sorted(all_points, key=lambda x: x.payload.get('rating', 0.0), reverse=True)
             records_to_optimize = sorted_records[:top_n]
 
@@ -676,10 +681,11 @@ class RAGEngine:
         except Exception as e:
             log_manager.exception(f"❌ RAGメモリ最適化中にエラーが発生しました: {e}")
 
+
 def register_high_score_sample(user_input: str, answer: str, rating: float, feedback: str, threshold: float = 0.7):
     log_manager.debug(f"Attempting to register high score sample with rating: {rating}")
     if rating >= threshold:
-        rag = RAGEngine() # Initialize RAGEngine
+        rag = RAGEngine()
         try:
             vector = rag._vectorize_query(answer)
             payload = {
@@ -698,6 +704,7 @@ def register_high_score_sample(user_input: str, answer: str, rating: float, feed
             log_manager.exception(f"❌ 高スコア応答のRAG登録中にエラーが発生しました: {e}")
     else:
         log_manager.info(f"⚠️ スコアが閾値未満のためRAG登録をスキップしました（スコア: {rating}）")
+
 
 def reinforce_rag_with_feedback(feedback_path="data/feedback_log.json", min_score=0.8):
     log_manager.info(f"🧠 RAG再学習を開始します... ({datetime.datetime.now()})")
