@@ -1,5 +1,5 @@
 # path: modules/config_manager.py
-# version: v0.30
+# version: v0.31
 import os
 import json
 from dotenv import load_dotenv
@@ -8,19 +8,42 @@ import logging
 
 CONFIG_SNAPSHOT_PATH = Path(__file__).resolve().parent.parent / "config_snapshot.json"
 _LAST_SNAPSHOT_DATA = None
+_SENSITIVE_MARKERS = (
+    "PASSWORD",
+    "SECRET",
+    "TOKEN",
+    "API_KEY",
+    "PRIVATE_KEY",
+    "ACCESS_KEY",
+    "CREDENTIAL",
+)
+
+
+def _sanitize_config_for_snapshot(config: dict) -> dict:
+    """Return a snapshot-safe copy with secret-like values redacted."""
+    sanitized = {}
+    for key, value in config.items():
+        upper_key = key.upper()
+        if any(marker in upper_key for marker in _SENSITIVE_MARKERS):
+            sanitized[key] = "<redacted>" if value else None
+        else:
+            sanitized[key] = value
+    return sanitized
 
 
 def _write_config_snapshot_if_needed(config: dict):
-    """config_snapshot.json を不要に書き換えないよう差分を確認してから保存する。"""
+    """Persist only a redacted diagnostic snapshot and avoid needless rewrites."""
     global _LAST_SNAPSHOT_DATA
-    if _LAST_SNAPSHOT_DATA == config:
+    safe_config = _sanitize_config_for_snapshot(config)
+
+    if _LAST_SNAPSHOT_DATA == safe_config:
         return
 
     if CONFIG_SNAPSHOT_PATH.exists():
         try:
             existing_data = json.loads(CONFIG_SNAPSHOT_PATH.read_text(encoding="utf-8"))
-            if existing_data == config:
-                _LAST_SNAPSHOT_DATA = config.copy()
+            if existing_data == safe_config:
+                _LAST_SNAPSHOT_DATA = safe_config.copy()
                 return
         except json.JSONDecodeError:
             logging.warning("Existing config_snapshot.json is invalid JSON. It will be replaced.")
@@ -30,11 +53,12 @@ def _write_config_snapshot_if_needed(config: dict):
 
     try:
         with open(CONFIG_SNAPSHOT_PATH, "w", encoding="utf-8") as f:
-            json.dump(config, f, indent=2)
-        _LAST_SNAPSHOT_DATA = config.copy()
-        logging.info(f"Configuration snapshot saved to {CONFIG_SNAPSHOT_PATH}")
+            json.dump(safe_config, f, indent=2)
+        _LAST_SNAPSHOT_DATA = safe_config.copy()
+        logging.info(f"Redacted configuration snapshot saved to {CONFIG_SNAPSHOT_PATH}")
     except IOError as e:
         logging.error(f"Failed to write config_snapshot.json: {e}")
+
 
 def load_environment():
     project_root = Path(__file__).resolve().parent.parent
@@ -53,7 +77,7 @@ def load_environment():
     transformers_model = os.getenv("TRANSFORMERS_MODEL")
     gemini_model = os.getenv("GEMINI_MODEL")
     lm_studio_url = os.getenv("LM_STUDIO_URL")
-    
+
     active_llm_config = {}
     if transformers_model:
         active_llm_config["LLM_PROVIDER"] = "TRANSFORMERS"
@@ -84,14 +108,14 @@ def load_environment():
         "QDRANT_COLLECTION": os.getenv("QDRANT_COLLECTION", "world_knowledge"),
         "EMBEDDING_MODEL": os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2"),
         "LOCAL_LLM_API_URL": os.getenv("LOCAL_LLM_API_URL", "http://172.25.208.1:1234/v1"),
-        **active_llm_config, # Merge active LLM config
+        **active_llm_config,
         "PYTHONUTF8": os.environ.get("PYTHONUTF8"),
         "PYTHONIOENCODING": os.environ.get("PYTHONIOENCODING"),
     }
 
-    # Log sensitive information with caution (e.g., mask it)
+    # Never log secret values. Password length is intentionally not exposed either.
     logging.debug(f"Loaded POSTGRES_USER: {config.get('POSTGRES_USER')}")
-    logging.debug(f"Loaded POSTGRES_PASSWORD: {'*' * len(config.get('POSTGRES_PASSWORD', ''))}") # Mask password
+    logging.debug("Loaded POSTGRES_PASSWORD: <redacted>")
     logging.debug(f"Loaded POSTGRES_DB: {config.get('POSTGRES_DB')}")
     logging.debug(f"Loaded POSTGRES_HOST: {config.get('POSTGRES_HOST')}")
     logging.debug(f"Loaded POSTGRES_PORT: {config.get('POSTGRES_PORT')}")
@@ -99,8 +123,3 @@ def load_environment():
     _write_config_snapshot_if_needed(config)
 
     return config
-
-# The config can be loaded once and passed around, or re-loaded as needed.
-# For a CLI tool, loading once at startup is usually sufficient.
-# For a web server, it might be loaded per request context or once globally.
-# For now, we'll just define the function.
