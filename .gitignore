@@ -4,3 +4,12 @@ __pycache__/
 logs/*.log
 logs/context_evolution_snapshots/
 node_modules/
+
+# Local environment / secrets
+.env
+.env.*
+!.env.example
+config_snapshot.json
+secrets/
+*.key
+*.pem
