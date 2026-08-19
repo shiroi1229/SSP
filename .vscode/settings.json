@@ -11,7 +11,7 @@
             "name": "ssp_memory",
             "username": "ssp_admin",
             "database": "ssp_memory",
-            "password": "Mizuho0824"
+            "askForPassword": true
         }
     ]
 }
