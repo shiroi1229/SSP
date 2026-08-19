@@ -1,58 +1,92 @@
-import os
-import json
 import datetime
-
-import os
 import json
-import datetime
+import os
 import subprocess
+import uuid
+
+from qdrant_client import QdrantClient
+from qdrant_client.models import PointStruct
+
+from backend.db.connection import save_dev_log_to_db
+from modules.embedding_utils import get_embedding
 
 DEFAULT_LOG_DIR = "logs"
+COLLECTION_NAME = "ssp_dev_knowledge"
+_SENSITIVE_ENV_MARKERS = (
+    "PASSWORD",
+    "SECRET",
+    "TOKEN",
+    "API_KEY",
+    "PRIVATE_KEY",
+    "ACCESS_KEY",
+    "CREDENTIAL",
+)
+
 
 def _get_commit_hash():
     try:
-        return subprocess.check_output(["git", "rev-parse", "HEAD"]).decode('ascii').strip()
+        return subprocess.check_output(["git", "rev-parse", "HEAD"]).decode("ascii").strip()
     except (subprocess.CalledProcessError, FileNotFoundError):
         return None
 
+
+def _redact_env_line(line: str) -> str:
+    stripped = line.strip()
+    if not stripped or stripped.startswith("#") or "=" not in line:
+        return line
+
+    key, _ = line.split("=", 1)
+    normalized_key = key.strip().upper()
+    if any(marker in normalized_key for marker in _SENSITIVE_ENV_MARKERS):
+        newline = "\n" if line.endswith("\n") else ""
+        return f"{key}=<redacted>{newline}"
+    return line
+
+
 def _get_env_snapshot():
+    """Return a diagnostic .env snapshot with credential-like values redacted."""
     env_path = ".env"
-    if os.path.exists(env_path):
-        with open(env_path, 'r', encoding='utf-8') as f:
-            return f.read()
-    return None
+    if not os.path.exists(env_path):
+        return None
 
-def record_action(module_name, action_name, details, log_dir=DEFAULT_LOG_DIR, tags: list = None, author: str = "Shiroi", commit_hash: str = None, env_snapshot: str = None, execution_trace: dict = None, ai_comment: str = None):
-    """
-    Record an action performed by a module as a standalone function.
+    with open(env_path, "r", encoding="utf-8") as env_file:
+        return "".join(_redact_env_line(line) for line in env_file)
 
-    :param module_name: Name of the module (e.g., RAG, Generator, Evaluator).
-    :param action_name: Name of the action performed.
-    :param details: Additional details about the action (dict).
-    :param log_dir: Optional. The directory to save the logs. Defaults to "logs/dev_actions".
-    """
+
+def record_action(
+    module_name,
+    action_name,
+    details,
+    log_dir=DEFAULT_LOG_DIR,
+    tags: list = None,
+    author: str = "Shiroi",
+    commit_hash: str = None,
+    env_snapshot: str = None,
+    execution_trace: dict = None,
+    ai_comment: str = None,
+):
+    """Record an action performed by a module and persist redacted metadata."""
     os.makedirs(log_dir, exist_ok=True)
     timestamp = datetime.datetime.now().isoformat()
     log_entry = {
         "timestamp": timestamp,
         "module": module_name,
         "action": action_name,
-        "details": details
+        "details": details,
     }
 
     log_filename = f"action_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S_%f')}.json"
     log_path = os.path.join(log_dir, log_filename)
 
-    with open(log_path, 'w', encoding='utf-8') as log_file:
+    with open(log_path, "w", encoding="utf-8") as log_file:
         json.dump(log_entry, log_file, ensure_ascii=False, indent=2)
 
     print(f"[DevRecorder] Action recorded: {log_path}")
 
-    # Save metadata to PostgreSQL
     log_id = log_filename.replace(".json", "")
     summary = f"{module_name}: {action_name} - {details.get('summary', str(details))}"
     tags = [module_name, action_name]
-    
+
     commit_hash = _get_commit_hash()
     env_snapshot = _get_env_snapshot()
 
@@ -66,41 +100,33 @@ def record_action(module_name, action_name, details, log_dir=DEFAULT_LOG_DIR, ta
         commit_hash=commit_hash,
         env_snapshot=env_snapshot,
         execution_trace=execution_trace,
-        ai_comment=ai_comment
+        ai_comment=ai_comment,
     )
 
-from modules.embedding_utils import get_embedding
-from qdrant_client import QdrantClient
-from qdrant_client.models import PointStruct
-import uuid
-
-COLLECTION_NAME = "ssp_dev_knowledge"
 
 def sync_to_qdrant():
-    """
-    Synchronize development action logs to Qdrant.
-    """
+    """Synchronize development action logs to Qdrant."""
     print(f"🧠 DevRecorderのQdrant同期を開始 ({datetime.datetime.now()})")
-    
+
     log_dir = DEFAULT_LOG_DIR
     if not os.path.exists(log_dir):
         print(f"⚠️ ログディレクトリが見つかりません: {log_dir}")
         return 0
 
     client = QdrantClient(url=os.getenv("QDRANT_URL", "http://127.0.0.1:6333"))
-    
+
     points = []
     for filename in os.listdir(log_dir):
         if not filename.endswith(".json"):
             continue
-        
+
         filepath = os.path.join(log_dir, filename)
-        with open(filepath, 'r', encoding='utf-8') as f:
+        with open(filepath, "r", encoding="utf-8") as file_handle:
             try:
-                log_entries = json.load(f)
+                log_entries = json.load(file_handle)
                 if not isinstance(log_entries, list):
                     log_entries = [log_entries]
-                
+
                 for entry in log_entries:
                     text_to_embed = entry.get("summary", "")
                     if not text_to_embed:
@@ -119,26 +145,30 @@ def sync_to_qdrant():
         return 0
 
     if not client.collection_exists(collection_name=COLLECTION_NAME):
-        if points:
-            vector_size = len(points[0].vector)
-            client.recreate_collection(
-                collection_name=COLLECTION_NAME,
-                vectors_config={"size": vector_size, "distance": "Cosine"}
-            )
-        else:
-            print("⚠️ ログデータがないため、Qdrantコレクションを作成できませんでした。")
-            return 0
+        vector_size = len(points[0].vector)
+        client.recreate_collection(
+            collection_name=COLLECTION_NAME,
+            vectors_config={"size": vector_size, "distance": "Cosine"},
+        )
 
     client.upsert(collection_name=COLLECTION_NAME, points=points, wait=True)
     print(f"✅ Qdrant登録完了: {len(points)}件")
     return len(points)
 
-from backend.db.connection import save_dev_log_to_db # Import the DB saving function
 
-def save_dev_log_metadata_to_db(log_id: str, log_type: str, summary: str, file_path: str, tags: list = None, author: str = "Shiroi", commit_hash: str = None, env_snapshot: str = None, execution_trace: dict = None, ai_comment: str = None):
-    """
-    Saves metadata of a development log to the PostgreSQL dev_logs table.
-    """
+def save_dev_log_metadata_to_db(
+    log_id: str,
+    log_type: str,
+    summary: str,
+    file_path: str,
+    tags: list = None,
+    author: str = "Shiroi",
+    commit_hash: str = None,
+    env_snapshot: str = None,
+    execution_trace: dict = None,
+    ai_comment: str = None,
+):
+    """Save metadata of a development log to the PostgreSQL dev_logs table."""
     dev_log_dict = {
         "id": log_id,
         "timestamp": datetime.datetime.now().isoformat(),
@@ -154,14 +184,14 @@ def save_dev_log_metadata_to_db(log_id: str, log_type: str, summary: str, file_p
     }
     save_dev_log_to_db(dev_log_dict)
 
-# Example usage
+
 if __name__ == "__main__":
     record_action(
         module_name="Generator",
         action_name="generate_answer",
         details={
             "input": "What is the capital of France?",
-            "output": "The capital of France is Paris."
-        }
+            "output": "The capital of France is Paris.",
+        },
     )
     sync_to_qdrant()
