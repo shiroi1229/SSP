@@ -2,8 +2,8 @@
 """Create and optionally push a sanitized mirror of SSP history.
 
 This tool is intentionally destructive only with --execute. It never prints the
-compromised credential. It should be run from a trusted local clone that has
-push access to shiroi1229/SSP after rotating the live PostgreSQL password.
+compromised credential. Run it from a trusted local clone with push access to
+shiroi1229/SSP after rotating the live PostgreSQL password.
 
 Requirements:
   - git
@@ -19,7 +19,6 @@ from __future__ import annotations
 import argparse
 import os
 import re
-import shutil
 import stat
 import subprocess
 import sys
@@ -28,30 +27,6 @@ from pathlib import Path
 
 REPO_FULL_NAME = "shiroi1229/SSP"
 INITIAL_COMPROMISED_COMMIT = "550a05994cf521d749b155163e28d2054e519cad"
-SAFE_BRANCHES = [
-    "main",
-    "claude/improve-completion-rate-wZ6ND",
-    "codex/add-chat-answer-typing-animation",
-    "codex/add-visual-page-for-domain-knowledge-overview",
-    "codex/evaluate-chat-functionality",
-    "codex/evaluate-chat-screen-ui",
-    "codex/evaluate-orchestration",
-    "codex/make-document-visibility-mandatory-during-import",
-    "codex/optimize-and-integrate-chat-conversations",
-    "codex/organize-inquiry-and-response-pairs",
-    "codex/standardize-processing-pipeline-steps",
-    "codex/visualize-kb-source-and-update-process",
-    "codex-ipc8pp",
-    "codex-whmhhn",
-    "copilot/code-review-session",
-    "feat/ssp-arch-100pt-lifespan-utc-di",
-    "security/clean-root",
-    "security/history-sanitization-backup",
-    "security/history-sanitization-work",
-    "security/history-sanitize-trigger",
-    "security/old-history-hold",
-    "security/sanitized-root-candidate",
-]
 KNOWN_MERGED_PRS_REQUIRING_GITHUB_SUPPORT = (6, 7, 8, 11, 13)
 
 
@@ -108,18 +83,30 @@ def extract_compromised_password(mirror: Path) -> str:
     return secret
 
 
-def write_secret_file(directory: Path, secret: str) -> Path:
-    path = directory / "replace-text.txt"
+def write_private_file(path: Path, content: str) -> Path:
     fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, stat.S_IRUSR | stat.S_IWUSR)
     try:
         with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as handle:
-            handle.write(f"literal:{secret}==><REDACTED>\n")
+            handle.write(content)
             handle.flush()
             os.fsync(handle.fileno())
     except Exception:
         path.unlink(missing_ok=True)
         raise
     return path
+
+
+def write_secret_files(directory: Path, secret: str) -> tuple[Path, Path]:
+    replace_path = write_private_file(
+        directory / "replace-text.txt",
+        f"literal:{secret}==><REDACTED>\n",
+    )
+    try:
+        verify_path = write_private_file(directory / "verify-secret.txt", f"{secret}\n")
+    except Exception:
+        replace_path.unlink(missing_ok=True)
+        raise
+    return replace_path, verify_path
 
 
 def rewrite_history(mirror: Path, replace_file: Path, log_path: Path) -> None:
@@ -149,12 +136,15 @@ def rewrite_history(mirror: Path, replace_file: Path, log_path: Path) -> None:
         raise RuntimeError(f"git-filter-repo failed; diagnostic log: {log_path}")
 
 
-def verify_no_secret(mirror: Path, secret_file: Path) -> None:
+def verify_no_secret(mirror: Path, verify_secret_file: Path) -> None:
     refs_result = run(["git", "for-each-ref", "--format=%(refname)"], cwd=mirror, capture=True)
     refs = [line.strip() for line in refs_result.stdout.splitlines() if line.strip()]
+    if not refs:
+        raise RuntimeError("No refs were found after rewrite")
+
     for ref in refs:
         grep = subprocess.run(
-            ["git", "grep", "-q", "-F", "-f", str(secret_file), ref, "--", "."],
+            ["git", "grep", "-q", "-F", "-f", str(verify_secret_file), ref, "--", "."],
             cwd=mirror,
             text=True,
             stdout=subprocess.DEVNULL,
@@ -165,11 +155,14 @@ def verify_no_secret(mirror: Path, secret_file: Path) -> None:
         if grep.returncode not in (0, 1):
             raise RuntimeError(f"Could not verify rewritten ref: {ref}")
 
-    for ref in refs:
         tree = run(["git", "ls-tree", "-r", "--name-only", ref], cwd=mirror, capture=True)
         tracked = set(tree.stdout.splitlines())
         if ".env" in tracked or "config_snapshot.json" in tracked:
             raise RuntimeError(f"Sensitive config path still exists in rewritten ref: {ref}")
+        if any(path == "logs" or path.startswith("logs/") for path in tracked):
+            raise RuntimeError(f"Generated log history still exists in rewritten ref: {ref}")
+        if any(path == "devlogs" or path.startswith("devlogs/") for path in tracked):
+            raise RuntimeError(f"Generated development-log history still exists in rewritten ref: {ref}")
 
 
 def restore_origin(mirror: Path, origin: str) -> None:
@@ -183,14 +176,23 @@ def restore_origin(mirror: Path, origin: str) -> None:
 def push_regular_refs(mirror: Path) -> None:
     # refs/pull/* are intentionally not pushed: GitHub makes them read-only.
     run(["git", "push", "--force", "origin", "refs/heads/*:refs/heads/*"], cwd=mirror)
-    run(["git", "push", "--force", "origin", "refs/tags/*:refs/tags/*"], cwd=mirror)
+
+    tags = run(["git", "for-each-ref", "--format=%(refname)", "refs/tags/"], cwd=mirror, capture=True)
+    if tags.stdout.strip():
+        run(["git", "push", "--force", "origin", "refs/tags/*:refs/tags/*"], cwd=mirror)
+
+
+def filter_metadata_dir(mirror: Path) -> Path:
+    # A --mirror clone is bare, so GIT_DIR is the repository directory itself.
+    direct = mirror / "filter-repo"
+    if direct.exists():
+        return direct
+    nested = mirror / ".git" / "filter-repo"
+    return nested
 
 
 def print_support_handoff(mirror: Path, log_path: Path) -> None:
-    filter_dir = mirror / "filter-repo"
-    if not filter_dir.exists():
-        filter_dir = mirror / ".git" / "filter-repo"
-
+    filter_dir = filter_metadata_dir(mirror)
     changed_refs = filter_dir / "changed-refs"
     first_changed = filter_dir / "first-changed-commits"
     orphaned_lfs = filter_dir / "orphaned_lfs_objects"
@@ -202,7 +204,7 @@ def print_support_handoff(mirror: Path, log_path: Path) -> None:
             if match:
                 affected_prs.append(match.group(1))
 
-    print("History rewrite and regular-ref push completed.")
+    print("History rewrite, verification, and regular-ref push completed.")
     print(f"Diagnostic log: {log_path}")
     if first_changed.exists():
         print(f"GitHub Support 'First Changed Commit(s)' file: {first_changed}")
@@ -223,7 +225,7 @@ def main() -> int:
     parser.add_argument(
         "--execute",
         action="store_true",
-        help="Actually rewrite history and force-push branches/tags. Without this flag, only prerequisites are checked.",
+        help="Rewrite history and force-push branches/tags. Without this flag, only prerequisites are checked.",
     )
     args = parser.parse_args()
 
@@ -243,18 +245,21 @@ def main() -> int:
         mirror = temp_root / "SSP.git"
         log_path = temp_root / "git-filter-repo.log"
         replace_file: Path | None = None
+        verify_file: Path | None = None
         try:
             run(["git", "clone", "--mirror", origin, str(mirror)])
             compromised = extract_compromised_password(mirror)
-            replace_file = write_secret_file(temp_root, compromised)
+            replace_file, verify_file = write_secret_files(temp_root, compromised)
             rewrite_history(mirror, replace_file, log_path)
-            verify_no_secret(mirror, replace_file)
+            verify_no_secret(mirror, verify_file)
             restore_origin(mirror, origin)
             push_regular_refs(mirror)
             print_support_handoff(mirror, log_path)
         finally:
             if replace_file:
                 replace_file.unlink(missing_ok=True)
+            if verify_file:
+                verify_file.unlink(missing_ok=True)
             # Keep the sanitized mirror and non-secret diagnostic files for Support.
             print(f"Sanitized mirror workspace retained at: {temp_root}")
         return 0
