@@ -1,0 +1,63 @@
+2025-11-06 00:05:08,296 - modules.log_manager - INFO - Qdrant client initialized for localhost:6333
+2025-11-06 00:05:11,506 - modules.log_manager - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-06 00:05:11,512 - modules.log_manager - INFO - PostgreSQL connected to 127.0.0.1:5432/ssp_memory
+2025-11-06 00:05:11,540 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:05:11,540 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:05:11,550 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:05:11,559 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:05:11,560 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:05:11,560 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:05:16,060 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:05:16,060 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:05:16,060 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:05:21,060 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:05:21,061 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:05:21,061 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:05:21,814 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:05:21,815 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:05:21,815 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:05:21,815 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-06 00:05:21,817 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-06 00:05:21,818 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-06 00:05:21,819 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-06 00:05:21,820 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-06 00:05:21,821 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-06 00:05:21,822 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 00:05:21,822 - modules.log_manager - INFO - [PolicyScheduler] Initialized.
+2025-11-06 00:05:21,822 - modules.log_manager - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-06 00:05:22,279 - modules.log_manager - INFO - [Learner] Initialized with v2.4 components.
+2025-11-06 00:05:22,313 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 00:05:22,314 - modules.log_manager - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-06 00:05:22,315 - modules.log_manager - INFO - [FeedbackLoop] Starting feedback loop for session: 20251106_000522
+2025-11-06 00:05:22,316 - modules.log_manager - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251106_000522_316535.json
+2025-11-06 00:05:22,316 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-06 00:05:22,317 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 00:05:22,317 - modules.log_manager - DEBUG - Getting context for query: Current Context
+2025-11-06 00:05:22,317 - modules.log_manager - DEBUG - Vectorizing query: Current Context...
+2025-11-06 00:05:22,441 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [-0.030314071103930473, 0.024333275854587555, -0.0028326099272817373, -0.03554349020123482, 0.09597336500883102]...
+2025-11-06 00:05:22,470 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 00:05:22,471 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [968028292, 802849252, 904476628, 69387297, 814712257]
+2025-11-06 00:05:22,473 - modules.log_manager - DEBUG - Retrieved 0 texts from PostgreSQL.
+2025-11-06 00:05:22,473 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 00:05:22,474 - modules.log_manager - INFO - [FeedbackLoop] Context: èÓïÒïsë´...
+2025-11-06 00:05:22,474 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 00:05:22,474 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 00:05:22,474 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 00:05:22,474 - modules.log_manager - ERROR - [Generator] No prompt found in context.
+2025-11-06 00:05:22,474 - modules.log_manager - INFO - [FeedbackLoop] Answer: None
+2025-11-06 00:05:22,475 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 00:05:22,475 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 00:05:22,475 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 00:05:22,477 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 00:05:22,477 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 00:05:22,477 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 00:05:22,545 - modules.log_manager - ERROR - [ChatHandler] Error during chat message processing: 'ContextManager' object has no attribute 'rollback_to_snapshot'
+2025-11-06 00:05:26,077 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:05:26,077 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:05:26,078 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:05:31,059 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:05:31,060 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:05:31,060 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:05:36,074 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:05:36,074 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:05:36,074 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.

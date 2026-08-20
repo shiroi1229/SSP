@@ -1,0 +1,127 @@
+{"timestamp": "2025-11-08 14:03:18,483", "name": "ssp_logger", "levelname": "INFO", "message": "Qdrant client initialized for localhost:6333"}
+{"timestamp": "2025-11-08 14:03:22,070", "name": "ssp_logger", "levelname": "INFO", "message": "Embedding model all-MiniLM-L6-v2 loaded."}
+{"timestamp": "2025-11-08 14:03:22,076", "name": "ssp_logger", "levelname": "INFO", "message": "PostgreSQL connected to 172.25.208.1:5432/ssp_memory"}
+{"timestamp": "2025-11-08 14:05:38,919", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-08 14:05:38,919", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-08 14:05:38,935", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-08 14:05:38,935", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-08 14:05:38,942", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: evaluator"}
+{"timestamp": "2025-11-08 14:05:38,948", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: generator"}
+{"timestamp": "2025-11-08 14:05:38,955", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: persona_manager"}
+{"timestamp": "2025-11-08 14:05:38,962", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: self_optimizer"}
+{"timestamp": "2025-11-08 14:05:38,968", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded meta-links graph."}
+{"timestamp": "2025-11-08 14:05:38,975", "name": "ssp_logger", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-08 14:05:38,976", "name": "ssp_logger", "levelname": "INFO", "message": "[PolicyScheduler] Initialized."}
+{"timestamp": "2025-11-08 14:05:38,976", "name": "ssp_logger", "levelname": "INFO", "message": "[TimeSeriesBuffer] Initialized with window size 50"}
+{"timestamp": "2025-11-08 14:05:39,465", "name": "ssp_logger", "levelname": "INFO", "message": "[Learner] Initialized with v2.4 components."}
+{"timestamp": "2025-11-08 14:05:39,484", "name": "ssp_logger", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-08 14:05:39,484", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Initialized with v2.4 components."}
+{"timestamp": "2025-11-08 14:05:39,514", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Starting feedback loop for session: 20251108_140539"}
+{"timestamp": "2025-11-08 14:05:39,562", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\\context_snapshot_20251108_140539_562225.json"}
+{"timestamp": "2025-11-08 14:05:39,563", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Attempt 1 --- "}
+{"timestamp": "2025-11-08 14:05:39,563", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: Start ---"}
+{"timestamp": "2025-11-08 14:05:39,563", "name": "ssp_logger", "levelname": "DEBUG", "message": "Getting context for query: はろー"}
+{"timestamp": "2025-11-08 14:05:39,563", "name": "ssp_logger", "levelname": "DEBUG", "message": "Vectorizing query: はろー..."}
+{"timestamp": "2025-11-08 14:05:39,729", "name": "ssp_logger", "levelname": "DEBUG", "message": "Searching Qdrant with vector (first 5 elements): [0.006518457550555468, 0.06028406694531441, -0.04099569097161293, -0.06866268068552017, -0.07891977578401566]..."}
+{"timestamp": "2025-11-08 14:05:39,758", "name": "ssp_logger", "levelname": "DEBUG", "message": "Qdrant search returned 5 hits."}
+{"timestamp": "2025-11-08 14:05:39,758", "name": "ssp_logger", "levelname": "DEBUG", "message": "Fetching texts from PostgreSQL for IDs: [18, 16, 17, 20, 19]"}
+{"timestamp": "2025-11-08 14:05:39,762", "name": "ssp_logger", "levelname": "DEBUG", "message": "Retrieved 5 texts from PostgreSQL."}
+{"timestamp": "2025-11-08 14:05:39,762", "name": "ssp_logger", "levelname": "INFO", "message": "RAG context retrieved."}
+{"timestamp": "2025-11-08 14:05:39,780", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。..."}
+{"timestamp": "2025-11-08 14:05:39,781", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: End ---"}
+{"timestamp": "2025-11-08 14:05:39,781", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: Start ---"}
+{"timestamp": "2025-11-08 14:05:39,781", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Starting context-aware generation..."}
+{"timestamp": "2025-11-08 14:05:39,787", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Calling centralized llm.analyze_text..."}
+{"timestamp": "2025-11-08 14:05:41,182", "name": "ssp_logger", "levelname": "INFO", "message": "[Generator] Answer generated: シロイ: はろー！お元気ですか？火星でコールドスリープ中のナノ博士と軌道エレベータの修復状況を把握しています。新たなAIプラットフォーム、シロイシステムプラット..."}
+{"timestamp": "2025-11-08 14:05:41,199", "name": "ssp_logger", "levelname": "INFO", "message": "[Generator] Successfully generated response and saved to context."}
+{"timestamp": "2025-11-08 14:05:41,218", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Answer: シロイ: はろー！お元気ですか？火星でコールドスリープ中のナノ博士と軌道エレベータの修復状況を把握しています。新たなAIプラットフォーム、シロイシステムプラットフォーム（SSP）が完成しています。シパス計画での火星移住プロジェクトは、将来の宇宙開拓の重要なステップです。現在、軌道エレベータの修復が進捗中であり、地球と宇宙を結ぶ重要なインフラを確保することができます。新しい挑戦に臨みますか？"}
+{"timestamp": "2025-11-08 14:05:41,219", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: End ---"}
+{"timestamp": "2025-11-08 14:05:41,236", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Evaluator: Start ---"}
+{"timestamp": "2025-11-08 14:05:41,236", "name": "ssp_logger", "levelname": "DEBUG", "message": "Starting context-aware evaluation..."}
+{"timestamp": "2025-11-08 14:05:41,236", "name": "ssp_logger", "levelname": "INFO", "message": "[Evaluator] Using LLM endpoint: http://172.25.208.1:1234/v1"}
+{"timestamp": "2025-11-08 14:05:42,073", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Evaluator] LLM evaluation response: {\n  \"worldview_consistency\": 0.8,\n  \"specificity\": 0.9,\n  \"style_consistency\": 0.6,\n  \"rating\": 0.8,\n  \"feedback\": \"世界観の整合性は高く、具体的な回答を提供しています。しかし、文体の一貫性が少し欠けています。\"\n}..."}
+{"timestamp": "2025-11-08 14:05:42,073", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Evaluator] Parsed evaluation JSON: {'worldview_consistency': 0.8, 'specificity': 0.9, 'style_consistency': 0.6, 'rating': 0.8, 'feedback': '世界観の整合性は高く、具体的な回答を提供しています。しかし、文体の一貫性が少し欠けています。'}"}
+{"timestamp": "2025-11-08 14:05:42,121", "name": "ssp_logger", "levelname": "INFO", "message": "[Evaluator] Evaluation successful. Score: 0.77"}
+{"timestamp": "2025-11-08 14:05:42,121", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Rating: 0.77, Feedback: 世界観の整合性は高く、具体的な回答を提供しています。しかし、文体の一貫性が少し欠けています。"}
+{"timestamp": "2025-11-08 14:05:42,122", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Evaluator: End ---"}
+{"timestamp": "2025-11-08 14:05:42,122", "name": "ssp_logger", "levelname": "DEBUG", "message": "[TimeSeriesBuffer] Updated evaluation_score: [0.77]"}
+{"timestamp": "2025-11-08 14:05:42,122", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Feedback Loop completed successfully."}
+{"timestamp": "2025-11-08 14:05:42,122", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Memory Store: Start ---"}
+{"timestamp": "2025-11-08 14:05:42,151", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Final session data saved to context."}
+{"timestamp": "2025-11-08 14:05:42,151", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Memory Store: End ---"}
+{"timestamp": "2025-11-08 14:05:42,166", "name": "ssp_logger", "levelname": "INFO", "message": "[ChatHandler] AI Response: シロイ: はろー！お元気ですか？火星でコールドスリープ中のナノ博士と軌道エレベータの修復状況を把握しています。新たなAIプラットフォーム、シロイシステムプラットフォーム（SSP）が完成しています。シパ..."}
+{"timestamp": "2025-11-08 14:06:26,013", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-08 14:06:26,013", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-08 14:06:26,013", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-08 14:06:26,013", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-08 14:06:26,015", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: evaluator"}
+{"timestamp": "2025-11-08 14:06:26,015", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: generator"}
+{"timestamp": "2025-11-08 14:06:26,016", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: persona_manager"}
+{"timestamp": "2025-11-08 14:06:26,017", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: self_optimizer"}
+{"timestamp": "2025-11-08 14:06:26,018", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded meta-links graph."}
+{"timestamp": "2025-11-08 14:06:26,019", "name": "ssp_logger", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-08 14:06:26,019", "name": "ssp_logger", "levelname": "INFO", "message": "[PolicyScheduler] Initialized."}
+{"timestamp": "2025-11-08 14:06:26,019", "name": "ssp_logger", "levelname": "INFO", "message": "[TimeSeriesBuffer] Initialized with window size 50"}
+{"timestamp": "2025-11-08 14:06:26,477", "name": "ssp_logger", "levelname": "INFO", "message": "[Learner] Initialized with v2.4 components."}
+{"timestamp": "2025-11-08 14:06:26,483", "name": "ssp_logger", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-08 14:06:26,483", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Initialized with v2.4 components."}
+{"timestamp": "2025-11-08 14:06:26,524", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Starting feedback loop for session: 20251108_140626"}
+{"timestamp": "2025-11-08 14:06:26,563", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\\context_snapshot_20251108_140626_563527.json"}
+{"timestamp": "2025-11-08 14:06:26,564", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Attempt 1 --- "}
+{"timestamp": "2025-11-08 14:06:26,564", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: Start ---"}
+{"timestamp": "2025-11-08 14:06:26,564", "name": "ssp_logger", "levelname": "DEBUG", "message": "Getting context for query: 喋れる？"}
+{"timestamp": "2025-11-08 14:06:26,564", "name": "ssp_logger", "levelname": "DEBUG", "message": "Vectorizing query: 喋れる？..."}
+{"timestamp": "2025-11-08 14:06:26,572", "name": "ssp_logger", "levelname": "DEBUG", "message": "Searching Qdrant with vector (first 5 elements): [-0.01801818422973156, 0.054991837590932846, 0.03733907267451286, -0.014116901904344559, -0.04158175364136696]..."}
+{"timestamp": "2025-11-08 14:06:26,584", "name": "ssp_logger", "levelname": "DEBUG", "message": "Qdrant search returned 5 hits."}
+{"timestamp": "2025-11-08 14:06:26,585", "name": "ssp_logger", "levelname": "DEBUG", "message": "Fetching texts from PostgreSQL for IDs: [18, 16, 17, 19, 20]"}
+{"timestamp": "2025-11-08 14:06:26,586", "name": "ssp_logger", "levelname": "DEBUG", "message": "Retrieved 5 texts from PostgreSQL."}
+{"timestamp": "2025-11-08 14:06:26,586", "name": "ssp_logger", "levelname": "INFO", "message": "RAG context retrieved."}
+{"timestamp": "2025-11-08 14:06:26,607", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。..."}
+{"timestamp": "2025-11-08 14:06:26,607", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: End ---"}
+{"timestamp": "2025-11-08 14:06:26,607", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: Start ---"}
+{"timestamp": "2025-11-08 14:06:26,608", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Starting context-aware generation..."}
+{"timestamp": "2025-11-08 14:06:26,608", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Calling centralized llm.analyze_text..."}
+{"timestamp": "2025-11-08 14:06:34,627", "name": "ssp_logger", "levelname": "INFO", "message": "[Generator] Answer generated: シロイ: なるほど、喋れる！しかし、話すことができるのは、システムプラットフォーム（SSP）を通じてなrijrjrjrjrjrjrjrjrjrjrjrjrjrj..."}
+{"timestamp": "2025-11-08 14:06:34,642", "name": "ssp_logger", "levelname": "INFO", "message": "[Generator] Successfully generated response and saved to context."}
+{"timestamp": "2025-11-08 14:06:34,660", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Answer: シロイ: なるほど、喋れる！しかし、話すことができるのは、システムプラットフォーム（SSP）を通じてなrijrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjrjr"}
+{"timestamp": "2025-11-08 14:06:34,661", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: End ---"}
+{"timestamp": "2025-11-08 14:06:34,679", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Evaluator: Start ---"}
+{"timestamp": "2025-11-08 14:06:34,679", "name": "ssp_logger", "levelname": "DEBUG", "message": "Starting context-aware evaluation..."}
+{"timestamp": "2025-11-08 14:06:34,679", "name": "ssp_logger", "levelname": "INFO", "message": "[Evaluator] Using LLM endpoint: http://172.25.208.1:1234/v1"}
+{"timestamp": "2025-11-08 14:06:36,005", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Evaluator] LLM evaluation response: {  \n   \"worldview_consistency\": 0.7,  \n   \"specificity\": 0.6,  \n   \"style_consistency\": 0.8,  \n   \"rating\": 0.7,  \n   \"feedback\": \"世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。\"..."}
+{"timestamp": "2025-11-08 14:06:36,006", "name": "ssp_logger", "levelname": "ERROR", "message": "[Evaluator] Could not extract JSON from LLM response: {  \n   \"worldview_consistency\": 0.7,  \n   \"specificity\": 0.6,  \n   \"style_consistency\": 0.8,  \n   \"rating\": 0.7,  \n   \"feedback\": \"世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。\""}
+{"timestamp": "2025-11-08 14:06:36,006", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Rating: None, Feedback: None"}
+{"timestamp": "2025-11-08 14:06:36,006", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Evaluator: End ---"}
+{"timestamp": "2025-11-08 14:06:36,007", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Score None < 0.7. Defaulting to retry... (Attempt 1/2)"}
+{"timestamp": "2025-11-08 14:06:36,007", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\\context_snapshot_20251108_140626_563527.json"}
+{"timestamp": "2025-11-08 14:06:36,011", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Context successfully rolled back."}
+{"timestamp": "2025-11-08 14:06:36,011", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Attempt 2 --- "}
+{"timestamp": "2025-11-08 14:06:36,012", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: Start ---"}
+{"timestamp": "2025-11-08 14:06:36,012", "name": "ssp_logger", "levelname": "DEBUG", "message": "Getting context for query: 喋れる？"}
+{"timestamp": "2025-11-08 14:06:36,012", "name": "ssp_logger", "levelname": "DEBUG", "message": "Vectorizing query: 喋れる？..."}
+{"timestamp": "2025-11-08 14:06:36,020", "name": "ssp_logger", "levelname": "DEBUG", "message": "Searching Qdrant with vector (first 5 elements): [-0.01801818422973156, 0.054991837590932846, 0.03733907267451286, -0.014116901904344559, -0.04158175364136696]..."}
+{"timestamp": "2025-11-08 14:06:36,042", "name": "ssp_logger", "levelname": "DEBUG", "message": "Qdrant search returned 5 hits."}
+{"timestamp": "2025-11-08 14:06:36,042", "name": "ssp_logger", "levelname": "DEBUG", "message": "Fetching texts from PostgreSQL for IDs: [18, 16, 17, 19, 20]"}
+{"timestamp": "2025-11-08 14:06:36,043", "name": "ssp_logger", "levelname": "DEBUG", "message": "Retrieved 5 texts from PostgreSQL."}
+{"timestamp": "2025-11-08 14:06:36,043", "name": "ssp_logger", "levelname": "INFO", "message": "RAG context retrieved."}
+{"timestamp": "2025-11-08 14:06:36,062", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。..."}
+{"timestamp": "2025-11-08 14:06:36,062", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: End ---"}
+{"timestamp": "2025-11-08 14:06:36,062", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: Start ---"}
+{"timestamp": "2025-11-08 14:06:36,063", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Starting context-aware generation..."}
+{"timestamp": "2025-11-08 14:06:36,063", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Calling centralized llm.analyze_text..."}
+{"timestamp": "2025-11-08 14:06:37,027", "name": "ssp_logger", "levelname": "INFO", "message": "[Generator] Answer generated: シロイ: すいません、私は喋れるようです。ただし、私が話す内容には、ナノ博士やシロイシステムプラットフォーム（SSP）などの情報を基にしたものになる可能性があり..."}
+{"timestamp": "2025-11-08 14:06:37,043", "name": "ssp_logger", "levelname": "INFO", "message": "[Generator] Successfully generated response and saved to context."}
+{"timestamp": "2025-11-08 14:06:37,058", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Answer: シロイ: すいません、私は喋れるようです。ただし、私が話す内容には、ナノ博士やシロイシステムプラットフォーム（SSP）などの情報を基にしたものになる可能性があります。シパス計画に関しては、私の世界観では火星移住プロジェクトとして描かれています。現在、軌道エレベータの修復が進んでいるため、私は地球と宇宙との繋ぎを維持することができます。"}
+{"timestamp": "2025-11-08 14:06:37,059", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: End ---"}
+{"timestamp": "2025-11-08 14:06:37,078", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Evaluator: Start ---"}
+{"timestamp": "2025-11-08 14:06:37,078", "name": "ssp_logger", "levelname": "DEBUG", "message": "Starting context-aware evaluation..."}
+{"timestamp": "2025-11-08 14:06:37,078", "name": "ssp_logger", "levelname": "INFO", "message": "[Evaluator] Using LLM endpoint: http://172.25.208.1:1234/v1"}
+{"timestamp": "2025-11-08 14:06:37,987", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Evaluator] LLM evaluation response: {\n   \"worldview_consistency\": 0.85,\n   \"specificity\": 0.9,\n   \"style_consistency\": 0.8,\n   \"rating\": 0.87,\n   \"feedback\": \"世界観の整合性が高く、具体的な回答でした。文体は統一しているが、より多くの情報を盛り込むと良くなります。\"..."}
+{"timestamp": "2025-11-08 14:06:37,988", "name": "ssp_logger", "levelname": "ERROR", "message": "[Evaluator] Could not extract JSON from LLM response: {\n   \"worldview_consistency\": 0.85,\n   \"specificity\": 0.9,\n   \"style_consistency\": 0.8,\n   \"rating\": 0.87,\n   \"feedback\": \"世界観の整合性が高く、具体的な回答でした。文体は統一しているが、より多くの情報を盛り込むと良くなります。\""}
+{"timestamp": "2025-11-08 14:06:37,988", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Rating: None, Feedback: None"}
+{"timestamp": "2025-11-08 14:06:37,988", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Evaluator: End ---"}
+{"timestamp": "2025-11-08 14:06:37,988", "name": "ssp_logger", "levelname": "WARNING", "message": "[FeedbackLoop] Max retries (1) reached. Halting loop."}
+{"timestamp": "2025-11-08 14:06:37,988", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Memory Store: Start ---"}
+{"timestamp": "2025-11-08 14:06:38,041", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Final session data saved to context."}
+{"timestamp": "2025-11-08 14:06:38,041", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Memory Store: End ---"}
+{"timestamp": "2025-11-08 14:06:38,067", "name": "ssp_logger", "levelname": "INFO", "message": "[ChatHandler] AI Response: シロイ: すいません、私は喋れるようです。ただし、私が話す内容には、ナノ博士やシロイシステムプラットフォーム（SSP）などの情報を基にしたものになる可能性があります。シパス計画に関しては、私の世界観で..."}

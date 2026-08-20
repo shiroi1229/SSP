@@ -1,0 +1,7 @@
+{
+  "modes": [
+    {"name": "normal", "cpu_max": 0.65, "mem_max": 0.7, "action": "full"},
+    {"name": "degraded", "cpu_max": 0.8, "mem_max": 0.85, "action": "reduce_parallelism"},
+    {"name": "throttle", "cpu_max": 0.95, "mem_max": 0.95, "action": "pause_heavy_jobs"}
+  ]
+}

@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+pydantic
+pydantic-settings
+qdrant-client
+psutil
+numpy
+torch
+transformers
+sentencepiece
+pandas
+apscheduler
+playsound
+python-osc

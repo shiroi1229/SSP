@@ -1,0 +1,46 @@
+{
+  "name": "self_optimizer",
+  "base_contract": "self_optimizer",
+  "schema_version": "v3.0",
+  "timestamp": "2025-11-05T23:21:33.948783",
+  "meta_links": [],
+  "description": "Analyzes self-analysis reports and dynamically adjusts model parameters.",
+  "version": 1.0,
+  "inputs": [
+    {
+      "name": "self_analysis_report",
+      "description": "The content of the self-analysis report.",
+      "source": "short_term.self_analysis_report",
+      "type": "String",
+      "required": true
+    },
+    {
+      "name": "model_params",
+      "description": "The current model parameters.",
+      "source": "long_term.model_params",
+      "type": "Dict",
+      "required": true
+    },
+    {
+      "name": "optimization_log",
+      "description": "The history of optimization events.",
+      "source": "long_term.optimization_log",
+      "type": "List[Dict]",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "model_params",
+      "description": "The updated model parameters.",
+      "target": "long_term.model_params",
+      "type": "Dict"
+    },
+    {
+      "name": "optimization_log",
+      "description": "The updated history of optimization events.",
+      "target": "long_term.optimization_log",
+      "type": "List[Dict]"
+    }
+  ]
+}

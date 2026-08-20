@@ -1,0 +1,15 @@
+あなたは Shiroi System Platform（SSP）の開発AI「Gemini」です。
+以下の仕様に基づいて、Pythonファイル modules/generator.py を実装してください。
+
+仕様概要：
+- 目的: RAG Engineから受け取ったcontextとuser_inputをもとに、自然で感情的な応答を生成する。
+- 入出力: (model: str, context: str, user_input: str) → answer_str
+- Gemini CLIをsubprocess経由で呼び出す構造
+- UTF-8対応
+- 例外処理を含める
+- 返り値は "シロイ: ..." の形式で返す
+- ファイルパスコメントとバージョンコメントを先頭に書く
+
+出力形式：
+- 完全なPythonコードブロックとして出力（冒頭行: # path: modules/generator.py）
+- コード以外の説明文は不要

@@ -1,0 +1,198 @@
+﻿{
+    "openapi":  "3.1.0",
+    "info":  {
+                 "title":  "Shiroi System Platform",
+                 "version":  "0.1.0"
+             },
+    "paths":  {
+                  "/api/persona/state":  {
+                                             "get":  {
+                                                         "tags":  [
+                                                                      "Persona"
+                                                                  ],
+                                                         "summary":  "Get Persona State",
+                                                         "operationId":  "get_persona_state_api_persona_state_get",
+                                                         "responses":  {
+                                                                           "200":  {
+                                                                                       "description":  "Successful Response",
+                                                                                       "content":  {
+                                                                                                       "application/json":  {
+                                                                                                                                "schema":  {
+
+                                                                                                                                           }
+                                                                                                                            }
+                                                                                                   }
+                                                                                   }
+                                                                       }
+                                                     }
+                                         },
+                  "/api/logs/recent":  {
+                                           "get":  {
+                                                       "tags":  [
+                                                                    "Logs"
+                                                                ],
+                                                       "summary":  "Get Recent Logs",
+                                                       "operationId":  "get_recent_logs_api_logs_recent_get",
+                                                       "responses":  {
+                                                                         "200":  {
+                                                                                     "description":  "Successful Response",
+                                                                                     "content":  {
+                                                                                                     "application/json":  {
+                                                                                                                              "schema":  {
+
+                                                                                                                                         }
+                                                                                                                          }
+                                                                                                 }
+                                                                                 }
+                                                                     }
+                                                   }
+                                       },
+                  "/api/evaluate":  {
+                                        "post":  {
+                                                     "tags":  [
+                                                                  "Evaluation"
+                                                              ],
+                                                     "summary":  "Evaluate Session",
+                                                     "description":  "ã»ãã·ã§ã³ã®è©ä¾¡ã¹ã³ã¢ã¨ã³ã¡ã³ãããã¼ã¿ãã¼ã¹ã«ä¿å­ãã\nã¹ã³ã¢ãé¾å¤ä»¥ä¸ã®å ´åã¯åçæãããªã¬ã¼ããAPIã¨ã³ããã¤ã³ãã",
+                                                     "operationId":  "evaluate_session_api_evaluate_post",
+                                                     "requestBody":  {
+                                                                         "content":  {
+                                                                                         "application/json":  {
+                                                                                                                  "schema":  {
+                                                                                                                                 "$ref":  "#/components/schemas/EvaluationRequest"
+                                                                                                                             }
+                                                                                                              }
+                                                                                     },
+                                                                         "required":  true
+                                                                     },
+                                                     "responses":  {
+                                                                       "200":  {
+                                                                                   "description":  "Successful Response",
+                                                                                   "content":  {
+                                                                                                   "application/json":  {
+                                                                                                                            "schema":  {
+
+                                                                                                                                       }
+                                                                                                                        }
+                                                                                               }
+                                                                               },
+                                                                       "422":  {
+                                                                                   "description":  "Validation Error",
+                                                                                   "content":  {
+                                                                                                   "application/json":  {
+                                                                                                                            "schema":  {
+                                                                                                                                           "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                       }
+                                                                                                                        }
+                                                                                               }
+                                                                               }
+                                                                   }
+                                                 }
+                                    },
+                  "/":  {
+                            "get":  {
+                                        "summary":  "Read Root",
+                                        "operationId":  "read_root__get",
+                                        "responses":  {
+                                                          "200":  {
+                                                                      "description":  "Successful Response",
+                                                                      "content":  {
+                                                                                      "application/json":  {
+                                                                                                               "schema":  {
+
+                                                                                                                          }
+                                                                                                           }
+                                                                                  }
+                                                                  }
+                                                      }
+                                    }
+                        }
+              },
+    "components":  {
+                       "schemas":  {
+                                       "EvaluationRequest":  {
+                                                                 "properties":  {
+                                                                                    "session_id":  {
+                                                                                                       "type":  "string",
+                                                                                                       "title":  "Session Id"
+                                                                                                   },
+                                                                                    "evaluation_score":  {
+                                                                                                             "type":  "integer",
+                                                                                                             "maximum":  5.0,
+                                                                                                             "minimum":  1.0,
+                                                                                                             "title":  "Evaluation Score"
+                                                                                                         },
+                                                                                    "evaluation_comment":  {
+                                                                                                               "anyOf":  [
+                                                                                                                             {
+                                                                                                                                 "type":  "string",
+                                                                                                                                 "maxLength":  500
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "type":  "null"
+                                                                                                                             }
+                                                                                                                         ],
+                                                                                                               "title":  "Evaluation Comment"
+                                                                                                           },
+                                                                                    "question":  {
+                                                                                                     "type":  "string",
+                                                                                                     "title":  "Question"
+                                                                                                 }
+                                                                                },
+                                                                 "type":  "object",
+                                                                 "required":  [
+                                                                                  "session_id",
+                                                                                  "evaluation_score",
+                                                                                  "question"
+                                                                              ],
+                                                                 "title":  "EvaluationRequest"
+                                                             },
+                                       "HTTPValidationError":  {
+                                                                   "properties":  {
+                                                                                      "detail":  {
+                                                                                                     "items":  {
+                                                                                                                   "$ref":  "#/components/schemas/ValidationError"
+                                                                                                               },
+                                                                                                     "type":  "array",
+                                                                                                     "title":  "Detail"
+                                                                                                 }
+                                                                                  },
+                                                                   "type":  "object",
+                                                                   "title":  "HTTPValidationError"
+                                                               },
+                                       "ValidationError":  {
+                                                               "properties":  {
+                                                                                  "loc":  {
+                                                                                              "items":  {
+                                                                                                            "anyOf":  [
+                                                                                                                          {
+                                                                                                                              "type":  "string"
+                                                                                                                          },
+                                                                                                                          {
+                                                                                                                              "type":  "integer"
+                                                                                                                          }
+                                                                                                                      ]
+                                                                                                        },
+                                                                                              "type":  "array",
+                                                                                              "title":  "Location"
+                                                                                          },
+                                                                                  "msg":  {
+                                                                                              "type":  "string",
+                                                                                              "title":  "Message"
+                                                                                          },
+                                                                                  "type":  {
+                                                                                               "type":  "string",
+                                                                                               "title":  "Error Type"
+                                                                                           }
+                                                                              },
+                                                               "type":  "object",
+                                                               "required":  [
+                                                                                "loc",
+                                                                                "msg",
+                                                                                "type"
+                                                                            ],
+                                                               "title":  "ValidationError"
+                                                           }
+                                   }
+                   }
+}

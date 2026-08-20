@@ -1,0 +1,17 @@
+{
+  "id": "workflow_execution_20251102_174228",
+  "timestamp": "2025-11-02T17:42:28.430285",
+  "type": "workflow_execution",
+  "data": {
+    "user_input": "火星の夜ってどんな感じ？",
+    "model": "Meta-Llama-3-8B-Instruct-Q4_K_M",
+    "modules_used": [
+      "RAGEngine",
+      "Generator",
+      "Evaluator"
+    ],
+    "evaluation_score": 0.92,
+    "evaluation_comment": "世界観が美しい"
+  },
+  "signature": "f2adddb605bcf09a7d05c401804e080331db2cba3d30ea33807057483bb6c8c6"
+}

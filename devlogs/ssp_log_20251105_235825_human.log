@@ -1,0 +1,184 @@
+2025-11-05 23:58:31,340 - modules.log_manager - INFO - Qdrant client initialized for localhost:6333
+2025-11-05 23:58:34,524 - modules.log_manager - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-05 23:58:34,554 - modules.log_manager - INFO - PostgreSQL connected to 127.0.0.1:5432/ssp_memory
+2025-11-05 23:58:34,581 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:58:34,581 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:58:34,585 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:58:34,598 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:58:34,598 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:58:34,598 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:58:34,843 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:58:34,843 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:58:34,843 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:58:39,852 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:58:39,852 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:58:39,853 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:58:44,856 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:58:44,856 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:58:44,856 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:58:48,066 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:58:48,066 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:58:48,066 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:58:48,067 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-05 23:58:48,068 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-05 23:58:48,070 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-05 23:58:48,071 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-05 23:58:48,072 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-05 23:58:48,073 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-05 23:58:48,074 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-05 23:58:48,074 - modules.log_manager - INFO - [PolicyScheduler] Initialized.
+2025-11-05 23:58:48,074 - modules.log_manager - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-05 23:58:48,554 - modules.log_manager - INFO - [Learner] Initialized with v2.4 components.
+2025-11-05 23:58:48,576 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-05 23:58:48,577 - modules.log_manager - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-05 23:58:48,578 - modules.log_manager - INFO - [FeedbackLoop] Starting feedback loop for session: 20251105_235848
+2025-11-05 23:58:48,579 - modules.log_manager - ERROR - [ChatHandler] Error during chat message processing: 'ContextManager' object has no attribute 'snapshot_to_file'
+2025-11-05 23:58:49,866 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:58:49,867 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:58:49,867 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:58:54,856 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:58:54,857 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:58:54,857 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:58:59,856 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:58:59,857 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:58:59,857 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:59:04,848 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:59:04,848 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:59:04,849 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:59:09,852 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:59:09,852 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:59:09,853 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:59:14,846 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:59:14,846 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:59:14,846 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:59:19,851 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:59:19,851 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:59:19,852 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:59:24,842 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:59:24,842 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:59:24,843 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:59:29,850 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:59:29,850 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:59:29,850 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:59:34,849 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:59:34,849 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:59:34,849 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:59:39,847 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:59:39,847 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:59:39,848 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:59:44,850 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:59:44,850 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:59:44,850 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:59:49,846 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:59:49,846 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:59:49,847 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:59:54,847 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:59:54,847 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:59:54,847 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:59:59,856 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:59:59,857 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:59:59,857 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:00:04,844 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:00:04,844 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:00:04,845 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:00:09,855 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:00:09,855 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:00:09,855 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:00:14,849 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:00:14,850 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:00:14,850 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:00:19,850 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:00:19,850 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:00:19,850 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:00:24,853 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:00:24,853 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:00:24,853 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:00:29,849 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:00:29,850 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:00:29,850 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:00:34,858 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:00:34,858 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:00:34,858 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:00:39,850 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:00:39,851 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:00:39,851 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:00:44,848 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:00:44,848 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:00:44,848 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:00:49,843 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:00:49,843 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:00:49,844 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:00:52,721 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:00:52,722 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:00:52,722 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:00:52,722 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-06 00:00:52,723 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-06 00:00:52,724 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-06 00:00:52,726 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-06 00:00:52,728 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-06 00:00:52,728 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-06 00:00:52,729 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 00:00:52,729 - modules.log_manager - INFO - [PolicyScheduler] Initialized.
+2025-11-06 00:00:52,730 - modules.log_manager - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-06 00:00:53,195 - modules.log_manager - INFO - [Learner] Initialized with v2.4 components.
+2025-11-06 00:00:53,212 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 00:00:53,212 - modules.log_manager - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-06 00:00:53,214 - modules.log_manager - INFO - [FeedbackLoop] Starting feedback loop for session: 20251106_000053
+2025-11-06 00:00:53,215 - modules.log_manager - ERROR - [ChatHandler] Error during chat message processing: 'ContextManager' object has no attribute 'snapshot_to_file'
+2025-11-06 00:00:54,861 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:00:54,861 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:00:54,862 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:00:59,848 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:00:59,848 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:00:59,848 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:01:04,849 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:01:04,850 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:01:04,850 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:01:09,851 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:01:09,852 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:01:09,852 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:01:14,856 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:01:14,856 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:01:14,856 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:01:19,848 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:01:19,848 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:01:19,848 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:01:24,849 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:01:24,849 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:01:24,849 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:01:29,849 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:01:29,849 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:01:29,849 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:01:34,843 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:01:34,843 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:01:34,844 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:01:39,847 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:01:39,848 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:01:39,848 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:01:44,842 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:01:44,842 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:01:44,843 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:01:49,851 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:01:49,851 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:01:49,851 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:01:54,849 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:01:54,849 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:01:54,849 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:01:59,843 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:01:59,844 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:01:59,844 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:02:04,856 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:02:04,856 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:02:04,856 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:02:09,846 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:02:09,846 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:02:09,846 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:02:14,844 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:02:14,844 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:02:14,845 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:02:17,136 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:02:17,136 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:02:17,136 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 00:02:18,050 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 00:02:18,051 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 00:02:18,051 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.

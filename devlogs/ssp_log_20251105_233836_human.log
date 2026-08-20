@@ -1,0 +1,14 @@
+2025-11-05 23:38:36,742 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-05 23:38:36,744 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-05 23:38:36,745 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-05 23:38:36,745 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-05 23:38:36,746 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-05 23:38:36,754 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-05 23:38:36,754 - modules.log_manager - INFO - [ContractRegistry] Starting meta-contract generation and registration...
+2025-11-05 23:38:36,761 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-05 23:38:36,763 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-05 23:38:36,764 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-05 23:38:36,765 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-05 23:38:36,766 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-05 23:38:36,772 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-05 23:38:36,772 - modules.log_manager - INFO - [ContractRegistry] Meta-contract generation and registration complete.

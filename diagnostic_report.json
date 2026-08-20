@@ -1,0 +1,45 @@
+{
+  "timestamp": "2025-11-04T20:58:38.051810",
+  "checks": [
+    {
+      "item": "Environment variable POSTGRES_USER",
+      "status": "PASSED"
+    },
+    {
+      "item": "Environment variable POSTGRES_PASSWORD",
+      "status": "PASSED"
+    },
+    {
+      "item": "Environment variable LM_STUDIO_URL",
+      "status": "PASSED"
+    },
+    {
+      "item": "Module modules.generator",
+      "status": "PASSED"
+    },
+    {
+      "item": "Module modules.evaluator",
+      "status": "PASSED"
+    },
+    {
+      "item": "Module backend.db.connection",
+      "status": "PASSED"
+    },
+    {
+      "item": "Module modules.rag_engine",
+      "status": "PASSED"
+    },
+    {
+      "item": "Module backend.dev_recorder",
+      "status": "PASSED"
+    },
+    {
+      "item": "Module modules.log_manager",
+      "status": "PASSED"
+    },
+    {
+      "item": "Module modules.config_manager",
+      "status": "PASSED"
+    }
+  ]
+}

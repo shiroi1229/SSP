@@ -1,0 +1,7 @@
+2025-11-05 23:00:31,333 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-05 23:00:31,334 - modules.log_manager - INFO - [ContractRegistry] Loaded contract: evaluator
+2025-11-05 23:00:31,335 - modules.log_manager - INFO - [ContractRegistry] Loaded contract: generator
+2025-11-05 23:00:31,336 - modules.log_manager - INFO - [ContractRegistry] Loaded contract: persona_manager
+2025-11-05 23:00:31,337 - modules.log_manager - INFO - [ContractRegistry] Loaded contract: self_optimizer
+2025-11-05 23:00:31,338 - modules.log_manager - INFO - [ContractReinforcement] Starting contract reinforcement cycle...
+2025-11-05 23:00:31,338 - modules.log_manager - WARNING - [ContractReinforcement] Contract 'evaluator' has low stability (0.2). Proposing reinforcement.

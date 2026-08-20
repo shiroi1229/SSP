@@ -1,0 +1,3 @@
+2025-11-05 22:45:23,967 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_drift/history.json
+2025-11-05 22:45:23,967 - modules.log_manager - INFO - [ContextManager] Loading context from file: data/test_context.json
+2025-11-05 22:45:23,967 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.

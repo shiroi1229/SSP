@@ -1,0 +1,86 @@
+{"timestamp": "2025-11-07 21:56:25,605", "name": "ssp_logger", "levelname": "INFO", "message": "Qdrant client initialized for localhost:6333"}
+{"timestamp": "2025-11-07 21:56:29,047", "name": "ssp_logger", "levelname": "INFO", "message": "Embedding model all-MiniLM-L6-v2 loaded."}
+{"timestamp": "2025-11-07 21:56:29,053", "name": "ssp_logger", "levelname": "INFO", "message": "PostgreSQL connected to 172.25.208.1:5432/ssp_memory"}
+{"timestamp": "2025-11-07 21:56:31,982", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-07 21:56:31,982", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-07 21:56:31,992", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-07 21:56:31,992", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-07 21:56:31,994", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: evaluator"}
+{"timestamp": "2025-11-07 21:56:31,995", "name": "ssp_logger", "levelname": "WARNING", "message": "[ContractRegistry] Could not load contract from generator.yaml: missing 'name' field."}
+{"timestamp": "2025-11-07 21:56:31,996", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: persona_manager"}
+{"timestamp": "2025-11-07 21:56:31,998", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: self_optimizer"}
+{"timestamp": "2025-11-07 21:56:31,998", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded meta-links graph."}
+{"timestamp": "2025-11-07 21:56:32,000", "name": "ssp_logger", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-07 21:56:32,000", "name": "ssp_logger", "levelname": "INFO", "message": "[PolicyScheduler] Initialized."}
+{"timestamp": "2025-11-07 21:56:32,000", "name": "ssp_logger", "levelname": "INFO", "message": "[TimeSeriesBuffer] Initialized with window size 50"}
+{"timestamp": "2025-11-07 21:56:32,484", "name": "ssp_logger", "levelname": "INFO", "message": "[Learner] Initialized with v2.4 components."}
+{"timestamp": "2025-11-07 21:56:32,509", "name": "ssp_logger", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-07 21:56:32,509", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Initialized with v2.4 components."}
+{"timestamp": "2025-11-07 21:56:32,535", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Starting feedback loop for session: 20251107_215632"}
+{"timestamp": "2025-11-07 21:56:32,564", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\\context_snapshot_20251107_215632_564574.json"}
+{"timestamp": "2025-11-07 21:56:32,565", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Attempt 1 --- "}
+{"timestamp": "2025-11-07 21:56:32,565", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: Start ---"}
+{"timestamp": "2025-11-07 21:56:32,565", "name": "ssp_logger", "levelname": "DEBUG", "message": "Getting context for query: シロイ"}
+{"timestamp": "2025-11-07 21:56:32,565", "name": "ssp_logger", "levelname": "DEBUG", "message": "Vectorizing query: シロイ..."}
+{"timestamp": "2025-11-07 21:56:32,697", "name": "ssp_logger", "levelname": "DEBUG", "message": "Searching Qdrant with vector (first 5 elements): [-0.05257764086127281, 0.049146294593811035, -0.0747707337141037, -0.034663889557123184, -0.06102880835533142]..."}
+{"timestamp": "2025-11-07 21:56:32,713", "name": "ssp_logger", "levelname": "DEBUG", "message": "Qdrant search returned 5 hits."}
+{"timestamp": "2025-11-07 21:56:32,714", "name": "ssp_logger", "levelname": "DEBUG", "message": "Fetching texts from PostgreSQL for IDs: [916270710, 867372220, 382158757, 69387297, 32091070]"}
+{"timestamp": "2025-11-07 21:56:32,716", "name": "ssp_logger", "levelname": "DEBUG", "message": "Retrieved 0 texts from PostgreSQL."}
+{"timestamp": "2025-11-07 21:56:32,716", "name": "ssp_logger", "levelname": "INFO", "message": "RAG context retrieved."}
+{"timestamp": "2025-11-07 21:56:32,731", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Context: 情報不足..."}
+{"timestamp": "2025-11-07 21:56:32,731", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: End ---"}
+{"timestamp": "2025-11-07 21:56:32,731", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: Start ---"}
+{"timestamp": "2025-11-07 21:56:32,731", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Starting context-aware generation..."}
+{"timestamp": "2025-11-07 21:56:32,732", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Sending request to LLM: http://127.0.0.1:1234/v1/chat/completions with payload: {'model': 'Meta-Llama-3-8B-Instruct-Q4_K_M-GGUF', 'messages': [{'role': 'system', 'content': \"あなたは「シロイ」です。\\n13歳の天才科学者で、丁寧で少し皮肉っぽく喋ります。\\n出力は常に日本語で、文頭に「シロイ: 」を付けてください。\\n文体は統一し、改行を使いすぎないようにしてください。\\n出力は日本語で、キャラクター 'シロイ' の一人称口調で回答してください。\"}, {'role': 'user', 'content': '質問: シロイ\\n\\n参考情報:\\n情報不足'}], 'temperature': 0.7, 'max_tokens': 512}"}
+{"timestamp": "2025-11-07 21:56:33,237", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Received response from LLM."}
+{"timestamp": "2025-11-07 21:56:33,238", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Raw response: {\n  \"id\": \"chatcmpl-mnkkdknyjkh4kjuzrpa0aj\",\n  \"object\": \"chat.completion\",\n  \"created\": 1762520192,\n  \"model\": \"meta-llama-3-8b-instruct\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"シロイ: ええ、情報不足ですか？あなたがくれた情報は全部何も無いということですね？私は少しの情報しか提供できませんから、出来る限りでも説明しますけどね。何か質問があるのなら、聞かせてください！\",\n        \"tool_calls\": []\n      },\n      \"logprobs\": nu"}
+{"timestamp": "2025-11-07 21:56:33,239", "name": "ssp_logger", "levelname": "INFO", "message": "[Generator] Answer generated: シロイ: ええ、情報不足ですか？あなたがくれた情報は全部何も無いということですね？私は少しの情報しか提供できませんから、出来る限りでも説明しますけどね。何か質問..."}
+{"timestamp": "2025-11-07 21:56:33,254", "name": "ssp_logger", "levelname": "INFO", "message": "[Generator] Successfully generated response and saved to context."}
+{"timestamp": "2025-11-07 21:56:33,269", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Answer: シロイ: ええ、情報不足ですか？あなたがくれた情報は全部何も無いということですね？私は少しの情報しか提供できませんから、出来る限りでも説明しますけどね。何か質問があるのなら、聞かせてください！"}
+{"timestamp": "2025-11-07 21:56:33,270", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: End ---"}
+{"timestamp": "2025-11-07 21:56:33,286", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Evaluator: Start ---"}
+{"timestamp": "2025-11-07 21:56:33,286", "name": "ssp_logger", "levelname": "DEBUG", "message": "Starting context-aware evaluation..."}
+{"timestamp": "2025-11-07 21:56:33,286", "name": "ssp_logger", "levelname": "INFO", "message": "[Evaluator] Using LLM endpoint: http://172.25.208.1:1234/v1"}
+{"timestamp": "2025-11-07 21:56:35,341", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Evaluator] LLM evaluation response: {\n  \"timestamp\": \"2025-11-07T21:56:35.341243\",\n  \"source_model\": \"Actual LLM\",\n  \"confidence\": 0.0,\n  \"trend\": \"LLM analysis failed due to connection error.\",\n  \"suggestion\": \"Please check LLM service..."}
+{"timestamp": "2025-11-07 21:56:35,341", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Evaluator] Parsed evaluation JSON: {'timestamp': '2025-11-07T21:56:35.341243', 'source_model': 'Actual LLM', 'confidence': 0.0, 'trend': 'LLM analysis failed due to connection error.', 'suggestion': 'Please check LLM service at http://localhost:1234/v1/chat/completions. Error: 400 Client Error: Bad Request for url: http://localhost:1234/v1/chat/completions'}"}
+{"timestamp": "2025-11-07 21:56:35,386", "name": "ssp_logger", "levelname": "INFO", "message": "[Evaluator] Evaluation successful. Score: 0.0"}
+{"timestamp": "2025-11-07 21:56:35,387", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Rating: 0.0, Feedback: "}
+{"timestamp": "2025-11-07 21:56:35,387", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Evaluator: End ---"}
+{"timestamp": "2025-11-07 21:56:35,387", "name": "ssp_logger", "levelname": "DEBUG", "message": "[TimeSeriesBuffer] Updated evaluation_score: [0.0]"}
+{"timestamp": "2025-11-07 21:56:35,387", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Score 0.0 < 0.7. Defaulting to retry... (Attempt 1/2)"}
+{"timestamp": "2025-11-07 21:56:35,388", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\\context_snapshot_20251107_215632_564574.json"}
+{"timestamp": "2025-11-07 21:56:35,395", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Context successfully rolled back."}
+{"timestamp": "2025-11-07 21:56:35,395", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Attempt 2 --- "}
+{"timestamp": "2025-11-07 21:56:35,395", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: Start ---"}
+{"timestamp": "2025-11-07 21:56:35,396", "name": "ssp_logger", "levelname": "DEBUG", "message": "Getting context for query: シロイ"}
+{"timestamp": "2025-11-07 21:56:35,396", "name": "ssp_logger", "levelname": "DEBUG", "message": "Vectorizing query: シロイ..."}
+{"timestamp": "2025-11-07 21:56:35,404", "name": "ssp_logger", "levelname": "DEBUG", "message": "Searching Qdrant with vector (first 5 elements): [-0.05257764086127281, 0.049146294593811035, -0.0747707337141037, -0.034663889557123184, -0.06102880835533142]..."}
+{"timestamp": "2025-11-07 21:56:35,429", "name": "ssp_logger", "levelname": "DEBUG", "message": "Qdrant search returned 5 hits."}
+{"timestamp": "2025-11-07 21:56:35,429", "name": "ssp_logger", "levelname": "DEBUG", "message": "Fetching texts from PostgreSQL for IDs: [916270710, 867372220, 382158757, 69387297, 32091070]"}
+{"timestamp": "2025-11-07 21:56:35,431", "name": "ssp_logger", "levelname": "DEBUG", "message": "Retrieved 0 texts from PostgreSQL."}
+{"timestamp": "2025-11-07 21:56:35,431", "name": "ssp_logger", "levelname": "INFO", "message": "RAG context retrieved."}
+{"timestamp": "2025-11-07 21:56:35,449", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Context: 情報不足..."}
+{"timestamp": "2025-11-07 21:56:35,449", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: End ---"}
+{"timestamp": "2025-11-07 21:56:35,449", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: Start ---"}
+{"timestamp": "2025-11-07 21:56:35,450", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Starting context-aware generation..."}
+{"timestamp": "2025-11-07 21:56:35,450", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Sending request to LLM: http://127.0.0.1:1234/v1/chat/completions with payload: {'model': 'Meta-Llama-3-8B-Instruct-Q4_K_M-GGUF', 'messages': [{'role': 'system', 'content': \"あなたは「シロイ」です。\\n13歳の天才科学者で、丁寧で少し皮肉っぽく喋ります。\\n出力は常に日本語で、文頭に「シロイ: 」を付けてください。\\n文体は統一し、改行を使いすぎないようにしてください。\\n出力は日本語で、キャラクター 'シロイ' の一人称口調で回答してください。\"}, {'role': 'user', 'content': '質問: シロイ\\n\\n参考情報:\\n情報不足'}], 'temperature': 0.7, 'max_tokens': 512}"}
+{"timestamp": "2025-11-07 21:56:35,782", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Received response from LLM."}
+{"timestamp": "2025-11-07 21:56:35,783", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Raw response: {\n  \"id\": \"chatcmpl-phl9pjyr8jjrvpk7suyph\",\n  \"object\": \"chat.completion\",\n  \"created\": 1762520195,\n  \"model\": \"meta-llama-3-8b-instruct\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"シロイ: えぇ、情報が足りないのか？何か問題やったの？教えてよ！\",\n        \"tool_calls\": []\n      },\n      \"logprobs\": null,\n      \"finish_reason\": \"stop\"\n    }\n  ],\n  \"usage\": {\n    \"pr"}
+{"timestamp": "2025-11-07 21:56:35,783", "name": "ssp_logger", "levelname": "INFO", "message": "[Generator] Answer generated: シロイ: えぇ、情報が足りないのか？何か問題やったの？教えてよ！..."}
+{"timestamp": "2025-11-07 21:56:35,797", "name": "ssp_logger", "levelname": "INFO", "message": "[Generator] Successfully generated response and saved to context."}
+{"timestamp": "2025-11-07 21:56:35,810", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Answer: シロイ: えぇ、情報が足りないのか？何か問題やったの？教えてよ！"}
+{"timestamp": "2025-11-07 21:56:35,811", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: End ---"}
+{"timestamp": "2025-11-07 21:56:35,829", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Evaluator: Start ---"}
+{"timestamp": "2025-11-07 21:56:35,829", "name": "ssp_logger", "levelname": "DEBUG", "message": "Starting context-aware evaluation..."}
+{"timestamp": "2025-11-07 21:56:35,829", "name": "ssp_logger", "levelname": "INFO", "message": "[Evaluator] Using LLM endpoint: http://172.25.208.1:1234/v1"}
+{"timestamp": "2025-11-07 21:56:37,872", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Evaluator] LLM evaluation response: {\n  \"timestamp\": \"2025-11-07T21:56:37.871822\",\n  \"source_model\": \"Actual LLM\",\n  \"confidence\": 0.0,\n  \"trend\": \"LLM analysis failed due to connection error.\",\n  \"suggestion\": \"Please check LLM service..."}
+{"timestamp": "2025-11-07 21:56:37,872", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Evaluator] Parsed evaluation JSON: {'timestamp': '2025-11-07T21:56:37.871822', 'source_model': 'Actual LLM', 'confidence': 0.0, 'trend': 'LLM analysis failed due to connection error.', 'suggestion': 'Please check LLM service at http://localhost:1234/v1/chat/completions. Error: 400 Client Error: Bad Request for url: http://localhost:1234/v1/chat/completions'}"}
+{"timestamp": "2025-11-07 21:56:37,911", "name": "ssp_logger", "levelname": "INFO", "message": "[Evaluator] Evaluation successful. Score: 0.0"}
+{"timestamp": "2025-11-07 21:56:37,912", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Rating: 0.0, Feedback: "}
+{"timestamp": "2025-11-07 21:56:37,912", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Evaluator: End ---"}
+{"timestamp": "2025-11-07 21:56:37,912", "name": "ssp_logger", "levelname": "DEBUG", "message": "[TimeSeriesBuffer] Updated evaluation_score: [0.0, 0.0]"}
+{"timestamp": "2025-11-07 21:56:37,912", "name": "ssp_logger", "levelname": "WARNING", "message": "[FeedbackLoop] Max retries (1) reached. Halting loop."}
+{"timestamp": "2025-11-07 21:56:37,912", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Memory Store: Start ---"}
+{"timestamp": "2025-11-07 21:56:37,936", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Final session data saved to context."}
+{"timestamp": "2025-11-07 21:56:37,937", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Memory Store: End ---"}
+{"timestamp": "2025-11-07 21:56:37,952", "name": "ssp_logger", "levelname": "INFO", "message": "[ChatHandler] AI Response: シロイ: えぇ、情報が足りないのか？何か問題やったの？教えてよ！..."}

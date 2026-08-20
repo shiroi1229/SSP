@@ -1,0 +1,16 @@
+{"timestamp": "2025-11-05 23:46:36,231", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-05 23:46:36,231", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-05 23:46:36,231", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-05 23:46:36,232", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: evaluator"}
+{"timestamp": "2025-11-05 23:46:36,233", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: generator"}
+{"timestamp": "2025-11-05 23:46:36,238", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: persona_manager"}
+{"timestamp": "2025-11-05 23:46:36,239", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: self_optimizer"}
+{"timestamp": "2025-11-05 23:46:36,240", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded meta-links graph."}
+{"timestamp": "2025-11-05 23:46:36,240", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Starting meta-contract generation and registration..."}
+{"timestamp": "2025-11-05 23:46:36,249", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-05 23:46:36,250", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: evaluator"}
+{"timestamp": "2025-11-05 23:46:36,252", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: generator"}
+{"timestamp": "2025-11-05 23:46:36,253", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: persona_manager"}
+{"timestamp": "2025-11-05 23:46:36,254", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: self_optimizer"}
+{"timestamp": "2025-11-05 23:46:36,255", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded meta-links graph."}
+{"timestamp": "2025-11-05 23:46:36,255", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Meta-contract generation and registration complete."}

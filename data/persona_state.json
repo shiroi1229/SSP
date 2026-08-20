@@ -1,0 +1,14 @@
+{
+  "persona_id": "shiroi_core",
+  "emotion_state": {
+    "joy": 0.54,
+    "sad": 0.57,
+    "neutral": 0.23
+  },
+  "tone": "柔らかい科学口調",
+  "logic_ratio": 0.46,
+  "creativity_ratio": 0.76,
+  "memory_usage": 0.58,
+  "context_sync_rate": 0.94,
+  "last_update": "2025-11-09T14:18:43.689552"
+}

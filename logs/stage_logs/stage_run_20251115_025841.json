@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "source_timeline": "data/timeline_sample.json",
+    "label": "test_run",
+    "tags": [
+      "demo"
+    ],
+    "event_count": 1
+  },
+  "events": [
+    {
+      "timestamp": "2025-11-15T02:58:39.586843",
+      "character": "Shiroi",
+      "emotion": "calm",
+      "text": "こんにちは、今日の火星は静かね。",
+      "duration": 1.5
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "timestamp": "2025-11-01T22:27:56.927552",
+  "error": "Unexpected Response: 404 (Not Found)\nRaw response content:\nb'{\"status\":{\"error\":\"Not found: Collection `world_knowledge` doesn\\'t exist!\"},\"time\":0.000025171}'",
+  "user_input": "ナノ博士が火星で眠ってる理由は？"
+}

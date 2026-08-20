@@ -1,0 +1,9 @@
+{
+  "intent_profile": {
+    "self_preservation": 0.7,
+    "knowledge_acquisition": 0.9,
+    "social_harmony": 0.6,
+    "curiosity_drive": 0.85,
+    "efficiency_optimization": 0.75
+  }
+}

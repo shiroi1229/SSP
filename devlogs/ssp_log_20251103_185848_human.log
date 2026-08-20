@@ -1,0 +1,15 @@
+2025-11-03 18:58:53,152 - modules.log_manager - INFO - Starting diagnostic check...
+2025-11-03 18:58:53,152 - modules.log_manager - DEBUG - Diagnostic Check: POSTGRES_USER is set.
+2025-11-03 18:58:53,153 - modules.log_manager - DEBUG - Diagnostic Check: POSTGRES_PASSWORD is set.
+2025-11-03 18:58:53,153 - modules.log_manager - DEBUG - Diagnostic Check: LM_STUDIO_URL is set.
+2025-11-03 18:58:53,153 - modules.log_manager - DEBUG - Diagnostic Check: Module modules.generator imported successfully.
+2025-11-03 18:58:53,162 - modules.log_manager - DEBUG - Diagnostic Check: Module modules.evaluator imported successfully.
+2025-11-03 18:58:53,162 - modules.log_manager - DEBUG - Diagnostic Check: Module backend.db.connection imported successfully.
+2025-11-03 18:58:53,163 - modules.log_manager - DEBUG - Diagnostic Check: Module modules.rag_engine imported successfully.
+2025-11-03 18:58:53,163 - modules.log_manager - DEBUG - Diagnostic Check: Module backend.dev_recorder imported successfully.
+2025-11-03 18:58:53,163 - modules.log_manager - DEBUG - Diagnostic Check: Module modules.log_manager imported successfully.
+2025-11-03 18:58:53,163 - modules.log_manager - DEBUG - Diagnostic Check: Module modules.config_manager imported successfully.
+2025-11-03 18:58:53,164 - modules.log_manager - INFO - Diagnostic report saved to D:\gemini\diagnostic_report.json
+2025-11-03 18:58:53,164 - modules.log_manager - INFO - Diagnostic check complete.
+2025-11-03 18:58:53,165 - modules.log_manager - DEBUG - Starting run_orchestrator_workflow with user_input: diagnostic_check --summary
+2025-11-03 18:58:53,165 - modules.log_manager - INFO - 🧭 セッションID: 20251103_185853

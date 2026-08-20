@@ -1,0 +1,32 @@
+Detailed Summary of Development Status (SSP WebUI v0.20 Implementation):
+
+**1. Initial Setup & Goal:**
+*   **Goal**: Implement a Next.js + FastAPI WebUI for SSP v0.20 to view session logs (`logs/*.json`).
+*   **Initial Steps**: Scaffolded Next.js frontend (`frontend/`), set up FastAPI backend (`backend/`), and created initial API endpoints (`backend/api/get_sessions.py`, `backend/api/get_session_detail.py`). Implemented basic Next.js pages (`frontend/app/page.tsx`, `frontend/app/session/[id]/page.tsx`) and configured TailwindCSS.
+
+**2. Automating Docker Compose Startup:**
+*   **Challenge**: User initially had to manually start frontend and backend.
+*   **Solution**: Modified `docker-compose.yml` to include `backend` and `frontend` services, along with their `Dockerfile`s and `backend/requirements.txt`. This allowed for a single `docker-compose up -d` command to start all services.
+
+**3. Backend `ModuleNotFoundError`:**
+*   **Challenge**: `backend` service failed to start in Docker with `ModuleNotFoundError: No module named 'backend'`.
+*   **Cause**: Incorrect relative import `from backend.api import ...` in `backend/main.py` when `uvicorn` was running `main.py` as a script, not as part of a package.
+*   **Resolution**: Changed import in `backend/main.py` to `from api import ...` (absolute import relative to `/app` within the container).
+
+**4. Backend `FileNotFoundError` for `logs` directory:**
+*   **Challenge**: `backend` service started but returned `Internal Server Error` when accessing `/sessions`, with `FileNotFoundError: [Errno 2] No such file or directory: '/app/api/../../logs'` in logs.
+*   **Cause**: The `LOGS_DIR` path in `backend/api/get_sessions.py` and `get_session_detail.py` was incorrectly calculated relative to the Python file's location within the container, not the actual mounted `logs` directory.
+*   **Resolution**: Modified `backend/api/get_sessions.py` and `get_session_detail.py` to set `LOGS_DIR = "/logs"`. Updated `docker-compose.yml` to mount the host's `./logs` directory to `/logs` inside the `backend` container.
+
+**5. Frontend "Error: Failed to fetch" (Persistent `net::ERR_NAME_NOT_RESOLVED`):**
+*   **Challenge**: Frontend loaded, but API calls to backend failed with `net::ERR_NAME_NOT_RESOLVED` for `http://backend:8000/sessions`. This was the most persistent and challenging issue.
+*   **Initial Attempt (Incorrect)**: Modified frontend to use `http://backend:8000` directly, assuming client-side code would resolve it. This failed because the host browser cannot resolve `backend`.
+*   **Second Attempt (Next.js Rewrites)**: Configured `frontend/next.config.mjs` with `rewrites` to proxy `/api/:path*` to `http://backend:8000`. Modified frontend `fetch` calls to `/api/sessions`.
+*   **Issue with Rewrites**: Browser developer console showed `Request URL: http://backend:8000/sessions`, indicating the browser was *still* trying to resolve `backend` directly. This revealed that Next.js `rewrites` do not apply to client-side `fetch` calls in the browser.
+*   **Third Attempt (Environment Variable `NEXT_PUBLIC_BACKEND_URL`)**: 
+    *   **Problem**: `process.env.NEXT_PUBLIC_BACKEND_URL` was not being correctly picked up or used by the client-side JavaScript in the browser, even after setting it as a `build-arg` in `docker-compose.yml` and rebuilding. The browser was still trying to resolve `http://backend:8000`.
+    *   **Root Cause**: The `http://backend:8000` URL, while valid *inside* the Docker network, is not resolvable by the *host machine's browser*. Next.js client-side environment variables are inlined at build time. If the inlined value is `http://backend:8000`, the host browser will fail to resolve it.
+    *   **Final Resolution**: Changed the `NEXT_PUBLIC_BACKEND_URL` build argument in `docker-compose.yml` for the `frontend` service to **`http://localhost:8000`**. This ensures that the client-side JavaScript bundle contains `http://localhost:8000`, which the host browser can correctly resolve to the backend container's exposed port.
+
+**6. Final Verification:**
+*   After applying the final fix and rebuilding/restarting, the WebUI successfully loaded and displayed the session logs, confirming that the frontend can now correctly communicate with the backend.

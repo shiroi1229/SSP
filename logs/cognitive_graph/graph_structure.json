@@ -1,0 +1,349 @@
+{
+    "edges": [
+        {
+            "relation": "has_value",
+            "source": "context.short_term.session.state",
+            "target": "value.active_purchase"
+        },
+        {
+            "relation": "has_value",
+            "source": "context.short_term.user.intent",
+            "target": "value.purchase"
+        },
+        {
+            "relation": "has_value",
+            "source": "context.short_term.user.feedback_score",
+            "target": "value.0.95"
+        },
+        {
+            "relation": "has_value",
+            "source": "context.mid_term.session.state",
+            "target": "value.active_purchase"
+        },
+        {
+            "relation": "has_value",
+            "source": "context.mid_term.user.feedback_score",
+            "target": "value.0.95"
+        },
+        {
+            "relation": "has_value",
+            "source": "context.mid_term.user.intent",
+            "target": "value.purchase"
+        },
+        {
+            "relation": "has_value",
+            "source": "context.long_term.session.state",
+            "target": "value.active_purchase"
+        },
+        {
+            "relation": "has_value",
+            "source": "context.long_term.user.feedback_score",
+            "target": "value.0.95"
+        },
+        {
+            "relation": "has_value",
+            "source": "context.long_term.user.intent",
+            "target": "value.purchase_history"
+        },
+        {
+            "relation": "has_inputs_field",
+            "source": "module.evaluator",
+            "target": "contract_field.evaluator.short_term.response"
+        },
+        {
+            "relation": "has_inputs_field",
+            "source": "module.evaluator",
+            "target": "contract_field.evaluator.long_term.model_params"
+        },
+        {
+            "relation": "has_outputs_field",
+            "source": "module.evaluator",
+            "target": "contract_field.evaluator.mid_term.evaluation_score"
+        },
+        {
+            "relation": "has_outputs_field",
+            "source": "module.evaluator",
+            "target": "contract_field.evaluator.long_term.optimization_log"
+        },
+        {
+            "relation": "semantically_linked",
+            "source": "module.evaluator",
+            "target": "module.generator"
+        },
+        {
+            "relation": "has_inputs_field",
+            "source": "module.generator",
+            "target": "contract_field.generator.short_term.prompt"
+        },
+        {
+            "relation": "has_inputs_field",
+            "source": "module.generator",
+            "target": "contract_field.generator.short_term.rag_context"
+        },
+        {
+            "relation": "has_inputs_field",
+            "source": "module.generator",
+            "target": "contract_field.generator.long_term.model_params"
+        },
+        {
+            "relation": "has_outputs_field",
+            "source": "module.generator",
+            "target": "contract_field.generator.mid_term.generated_output"
+        },
+        {
+            "relation": "semantically_linked",
+            "source": "module.generator",
+            "target": "module.evaluator"
+        },
+        {
+            "relation": "has_outputs_field",
+            "source": "module.persona_manager",
+            "target": "contract_field.persona_manager.short_term.persona_state"
+        },
+        {
+            "relation": "has_outputs_field",
+            "source": "module.persona_manager",
+            "target": "contract_field.persona_manager.long_term.persona_profile"
+        },
+        {
+            "relation": "has_inputs_field",
+            "source": "module.self_optimizer",
+            "target": "contract_field.self_optimizer.self_analysis_report"
+        },
+        {
+            "relation": "has_inputs_field",
+            "source": "module.self_optimizer",
+            "target": "contract_field.self_optimizer.model_params"
+        },
+        {
+            "relation": "has_inputs_field",
+            "source": "module.self_optimizer",
+            "target": "contract_field.self_optimizer.optimization_log"
+        }
+    ],
+    "nodes": [
+        {
+            "id": "context.short_term.session.state",
+            "tags": [
+                "short_term"
+            ],
+            "type": "context_key"
+        },
+        {
+            "id": "value.active_purchase",
+            "tags": [
+                "short_term"
+            ],
+            "type": "value"
+        },
+        {
+            "id": "context.short_term.user.intent",
+            "tags": [
+                "short_term"
+            ],
+            "type": "context_key"
+        },
+        {
+            "id": "value.purchase",
+            "tags": [
+                "short_term"
+            ],
+            "type": "value"
+        },
+        {
+            "id": "context.short_term.user.feedback_score",
+            "tags": [
+                "short_term"
+            ],
+            "type": "context_key"
+        },
+        {
+            "id": "value.0.95",
+            "tags": [
+                "short_term"
+            ],
+            "type": "value"
+        },
+        {
+            "id": "context.mid_term.session.state",
+            "tags": [
+                "mid_term"
+            ],
+            "type": "context_key"
+        },
+        {
+            "id": "context.mid_term.user.feedback_score",
+            "tags": [
+                "mid_term"
+            ],
+            "type": "context_key"
+        },
+        {
+            "id": "context.mid_term.user.intent",
+            "tags": [
+                "mid_term"
+            ],
+            "type": "context_key"
+        },
+        {
+            "id": "context.long_term.session.state",
+            "tags": [
+                "long_term"
+            ],
+            "type": "context_key"
+        },
+        {
+            "id": "context.long_term.user.feedback_score",
+            "tags": [
+                "long_term"
+            ],
+            "type": "context_key"
+        },
+        {
+            "id": "context.long_term.user.intent",
+            "tags": [
+                "long_term"
+            ],
+            "type": "context_key"
+        },
+        {
+            "id": "value.purchase_history",
+            "tags": [
+                "long_term"
+            ],
+            "type": "value"
+        },
+        {
+            "id": "module.evaluator",
+            "tags": [
+                "contract"
+            ],
+            "type": "module"
+        },
+        {
+            "id": "contract_field.evaluator.short_term.response",
+            "tags": [
+                "inputs",
+                "evaluator"
+            ],
+            "type": "contract_field"
+        },
+        {
+            "id": "contract_field.evaluator.long_term.model_params",
+            "tags": [
+                "inputs",
+                "evaluator"
+            ],
+            "type": "contract_field"
+        },
+        {
+            "id": "contract_field.evaluator.mid_term.evaluation_score",
+            "tags": [
+                "outputs",
+                "evaluator"
+            ],
+            "type": "contract_field"
+        },
+        {
+            "id": "contract_field.evaluator.long_term.optimization_log",
+            "tags": [
+                "outputs",
+                "evaluator"
+            ],
+            "type": "contract_field"
+        },
+        {
+            "id": "module.generator",
+            "tags": [
+                "contract"
+            ],
+            "type": "module"
+        },
+        {
+            "id": "contract_field.generator.short_term.prompt",
+            "tags": [
+                "inputs",
+                "generator"
+            ],
+            "type": "contract_field"
+        },
+        {
+            "id": "contract_field.generator.short_term.rag_context",
+            "tags": [
+                "inputs",
+                "generator"
+            ],
+            "type": "contract_field"
+        },
+        {
+            "id": "contract_field.generator.long_term.model_params",
+            "tags": [
+                "inputs",
+                "generator"
+            ],
+            "type": "contract_field"
+        },
+        {
+            "id": "contract_field.generator.mid_term.generated_output",
+            "tags": [
+                "outputs",
+                "generator"
+            ],
+            "type": "contract_field"
+        },
+        {
+            "id": "module.persona_manager",
+            "tags": [
+                "contract"
+            ],
+            "type": "module"
+        },
+        {
+            "id": "contract_field.persona_manager.short_term.persona_state",
+            "tags": [
+                "outputs",
+                "persona_manager"
+            ],
+            "type": "contract_field"
+        },
+        {
+            "id": "contract_field.persona_manager.long_term.persona_profile",
+            "tags": [
+                "outputs",
+                "persona_manager"
+            ],
+            "type": "contract_field"
+        },
+        {
+            "id": "module.self_optimizer",
+            "tags": [
+                "contract"
+            ],
+            "type": "module"
+        },
+        {
+            "id": "contract_field.self_optimizer.self_analysis_report",
+            "tags": [
+                "inputs",
+                "self_optimizer"
+            ],
+            "type": "contract_field"
+        },
+        {
+            "id": "contract_field.self_optimizer.model_params",
+            "tags": [
+                "inputs",
+                "self_optimizer"
+            ],
+            "type": "contract_field"
+        },
+        {
+            "id": "contract_field.self_optimizer.optimization_log",
+            "tags": [
+                "inputs",
+                "self_optimizer"
+            ],
+            "type": "contract_field"
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "snap_5",
+  "created_at": "2025-11-05T12:00:00",
+  "short_term": {
+    "persona_state": {
+      "emotion": "Confident",
+      "harmony": 0.83,
+      "focus": 0.86
+    },
+    "prompt": "最新の自己分析を反映した返答"
+  },
+  "mid_term": {
+    "evaluation_score": 0.80,
+    "last_summary": "回答の具体性が向上し、安定している"
+  },
+  "long_term": {
+    "persona": "v5",
+    "goals": ["高精度回答の維持", "応答速度の最適化"]
+  },
+  "introspection_logs": [
+    "evaluator: 具体性スコア上昇を確認",
+    "self_optimizer: レイテンシ最適化タスクを追加"
+  ]
+}

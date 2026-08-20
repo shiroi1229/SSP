@@ -1,0 +1,39 @@
+{
+    "name": "self_optimizer",
+    "description": "Analyzes self-analysis reports and dynamically adjusts model parameters.",
+    "version": "3.0",
+    "original_version": 1.0,
+    "evolution_flag": false,
+    "fields": {
+        "inputs": [
+            {
+                "name": "self_analysis_report",
+                "type": "String",
+                "description": "The content of the self-analysis report."
+            },
+            {
+                "name": "model_params",
+                "type": "Dict",
+                "description": "The current model parameters."
+            },
+            {
+                "name": "optimization_log",
+                "type": "List[Dict]",
+                "description": "The history of optimization events."
+            }
+        ],
+        "outputs": [
+            {
+                "name": "model_params",
+                "type": "Dict",
+                "description": "The updated model parameters."
+            },
+            {
+                "name": "optimization_log",
+                "type": "List[Dict]",
+                "description": "The updated history of optimization events."
+            }
+        ]
+    },
+    "missing_fields": []
+}

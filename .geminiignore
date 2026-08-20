@@ -1,0 +1,26 @@
+# --- .geminiignore ---
+# virtual envs
+.venv/
+env/
+__pycache__/
+# node
+node_modules/
+# logs / snapshots / cache
+# logs/
+snapshots/
+# reports/
+cache/
+tmp/
+# model checkpoints / configs
+*.ckpt
+*.pt
+*.bin
+# *.json
+*.log
+# compiled
+*.pyc
+*.pyo
+*.so
+# system
+.DS_Store
+Thumbs.db

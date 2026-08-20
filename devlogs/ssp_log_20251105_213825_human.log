@@ -1,0 +1,14 @@
+2025-11-05 21:38:25,126 - modules.log_manager - INFO - ========= Starting SSP v2.5 Diagnostic Scan =========
+2025-11-05 21:38:25,126 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-05 21:38:25,133 - modules.log_manager - INFO - [ContractRegistry] Loaded contract: evaluator
+2025-11-05 21:38:25,135 - modules.log_manager - INFO - [ContractRegistry] Loaded contract: generator
+2025-11-05 21:38:25,136 - modules.log_manager - INFO - [ContractRegistry] Loaded contract: persona_manager
+2025-11-05 21:38:25,141 - modules.log_manager - INFO - [ContractRegistry] Loaded contract: self_optimizer
+2025-11-05 21:38:25,141 - modules.log_manager - INFO - Found 4 contracts to validate.
+2025-11-05 21:38:25,141 - modules.log_manager - WARNING - [ContextManager] Invalid layer name in key: self_analysis_report
+2025-11-05 21:38:25,141 - modules.log_manager - WARNING - [ContextManager] Invalid layer name in key: model_params
+2025-11-05 21:38:25,141 - modules.log_manager - WARNING - [ContextManager] Invalid layer name in key: optimization_log
+2025-11-05 21:38:25,142 - modules.log_manager - WARNING - [ContextManager] Invalid layer name in key: model_params
+2025-11-05 21:38:25,142 - modules.log_manager - WARNING - [ContextManager] Invalid layer name in key: optimization_log
+2025-11-05 21:38:25,142 - modules.log_manager - INFO - ========= Diagnostic Scan Complete =========
+2025-11-05 21:38:25,143 - modules.log_manager - INFO - Summary of inconsistencies saved to: logs/diagnostic_summary.json
