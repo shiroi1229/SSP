@@ -1,0 +1,67 @@
+[
+  {
+    "id": "snap_1",
+    "created_at": "2025-11-01T12:00:00",
+    "short_term": {
+      "prompt": "サンプル1"
+    },
+    "mid_term": {
+      "evaluation_score": 0.6
+    },
+    "long_term": {
+      "persona": "v1"
+    }
+  },
+  {
+    "id": "snap_2",
+    "created_at": "2025-11-02T12:00:00",
+    "short_term": {
+      "prompt": "サンプル2"
+    },
+    "mid_term": {
+      "evaluation_score": 0.65
+    },
+    "long_term": {
+      "persona": "v2"
+    }
+  },
+  {
+    "id": "snap_3",
+    "created_at": "2025-11-03T12:00:00",
+    "short_term": {
+      "prompt": "サンプル3"
+    },
+    "mid_term": {
+      "evaluation_score": 0.7
+    },
+    "long_term": {
+      "persona": "v3"
+    }
+  },
+  {
+    "id": "snap_4",
+    "created_at": "2025-11-04T12:00:00",
+    "short_term": {
+      "prompt": "サンプル4"
+    },
+    "mid_term": {
+      "evaluation_score": 0.75
+    },
+    "long_term": {
+      "persona": "v4"
+    }
+  },
+  {
+    "id": "snap_5",
+    "created_at": "2025-11-05T12:00:00",
+    "short_term": {
+      "prompt": "サンプル5"
+    },
+    "mid_term": {
+      "evaluation_score": 0.8
+    },
+    "long_term": {
+      "persona": "v5"
+    }
+  }
+]

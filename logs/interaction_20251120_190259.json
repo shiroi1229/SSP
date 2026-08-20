@@ -1,0 +1,10 @@
+{
+  "type": "knowledge_list",
+  "timestamp": "2025-11-20T19:02:59.957877",
+  "limit": 10,
+  "page": 1,
+  "order_by": "created_at",
+  "sort_direction": "desc",
+  "source_filter": null,
+  "result_count": 5
+}

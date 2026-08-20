@@ -1,0 +1,14 @@
+2025-11-05 23:04:37,432 - modules.log_manager - INFO - ========= Starting SSP v2.7 Global Diagnostic Scan =========
+2025-11-05 23:04:37,432 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-05 23:04:37,433 - modules.log_manager - INFO - [ContractRegistry] Loaded contract: evaluator
+2025-11-05 23:04:37,434 - modules.log_manager - INFO - [ContractRegistry] Loaded contract: generator
+2025-11-05 23:04:37,435 - modules.log_manager - INFO - [ContractRegistry] Loaded contract: persona_manager
+2025-11-05 23:04:37,436 - modules.log_manager - INFO - [ContractRegistry] Loaded contract: self_optimizer
+2025-11-05 23:04:37,436 - modules.log_manager - INFO - Found 4 contracts to validate.
+2025-11-05 23:04:37,436 - modules.log_manager - INFO - Contract validation step skipped for this test.
+2025-11-05 23:04:37,436 - modules.log_manager - INFO - --- Starting Cross-Context Drift Check ---
+2025-11-05 23:04:37,436 - modules.log_manager - INFO - [ContextManager] Loading context from file: data/test_context.json
+2025-11-05 23:04:37,437 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:04:37,438 - modules.log_manager - INFO - [CrossContextSync] Validation complete. No drift detected.
+2025-11-05 23:04:37,438 - modules.log_manager - INFO - --- Cross-Context Drift Check Finished ---
+2025-11-05 23:04:37,438 - modules.log_manager - INFO - ========= Global Diagnostic Scan Complete =========

@@ -1,0 +1,23 @@
+# path: config/auto_fix_scripts.yaml
+# version: R-v1.0
+
+# This file defines scripts to be executed by the AutoFixExecutor
+# Each entry maps an anomaly_type to a command.
+
+auto_fix_scripts:
+  # Example: Restart backend service if a critical API error is detected
+  api_critical_error:
+    command: "systemctl restart ssp-backend.service" # Placeholder command for Linux
+    description: "Restarts the main SSP backend service."
+
+  # Example: Clear cache if memory usage is too high
+  high_memory_usage:
+    command: "bash scripts/clear_cache.sh" # Placeholder script
+    description: "Clears application caches to free up memory."
+
+  # Example: Restart a specific module if it's consistently failing
+  module_failure:
+    command: "python scripts/restart_module.py --module {module_name}" # Placeholder, {module_name} would be passed via metadata
+    description: "Restarts a specific failing module."
+
+  # Add more auto-fix scripts as needed

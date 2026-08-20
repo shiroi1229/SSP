@@ -1,0 +1,6 @@
+{
+  "total_affected_modules": 8,
+  "highest_impact_module": "modules/llm.py",
+  "recovery_policy_triggered": false,
+  "timestamp": "2025-11-05T22:11:56.333838"
+}

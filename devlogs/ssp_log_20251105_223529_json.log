@@ -1,0 +1,16 @@
+{"timestamp": "2025-11-05 22:35:29,059", "name": "modules.log_manager", "levelname": "INFO", "message": "========= Starting SSP v2.7 Global Diagnostic Scan ========="}
+{"timestamp": "2025-11-05 22:35:29,059", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-05 22:35:29,060", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: evaluator"}
+{"timestamp": "2025-11-05 22:35:29,061", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: generator"}
+{"timestamp": "2025-11-05 22:35:29,062", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: persona_manager"}
+{"timestamp": "2025-11-05 22:35:29,073", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: self_optimizer"}
+{"timestamp": "2025-11-05 22:35:29,073", "name": "modules.log_manager", "levelname": "INFO", "message": "Found 4 contracts to validate."}
+{"timestamp": "2025-11-05 22:35:29,074", "name": "modules.log_manager", "levelname": "WARNING", "message": "[ContextManager] Invalid layer name in key: self_analysis_report"}
+{"timestamp": "2025-11-05 22:35:29,074", "name": "modules.log_manager", "levelname": "WARNING", "message": "[ContextManager] Invalid layer name in key: model_params"}
+{"timestamp": "2025-11-05 22:35:29,074", "name": "modules.log_manager", "levelname": "WARNING", "message": "[ContextManager] Invalid layer name in key: optimization_log"}
+{"timestamp": "2025-11-05 22:35:29,074", "name": "modules.log_manager", "levelname": "WARNING", "message": "[ContextManager] Invalid layer name in key: model_params"}
+{"timestamp": "2025-11-05 22:35:29,074", "name": "modules.log_manager", "levelname": "WARNING", "message": "[ContextManager] Invalid layer name in key: optimization_log"}
+{"timestamp": "2025-11-05 22:35:29,075", "name": "modules.log_manager", "levelname": "INFO", "message": "Contract validation complete. Summary saved to: logs/diagnostic_summary.json"}
+{"timestamp": "2025-11-05 22:35:29,075", "name": "modules.log_manager", "levelname": "INFO", "message": "--- Starting Cross-Context Drift Check ---"}
+{"timestamp": "2025-11-05 22:35:29,080", "name": "modules.log_manager", "levelname": "INFO", "message": "--- Cross-Context Drift Check Finished ---"}
+{"timestamp": "2025-11-05 22:35:29,080", "name": "modules.log_manager", "levelname": "INFO", "message": "========= Global Diagnostic Scan Complete ========="}

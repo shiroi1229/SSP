@@ -1,0 +1,9 @@
+inputs:
+- input
+module: generator
+name: generator
+outputs:
+- output
+status: active
+timestamp: '2025-11-06T22:09:52.475202'
+version: v1

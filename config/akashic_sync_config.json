@@ -1,0 +1,11 @@
+{
+  "sync_nodes": [
+    {"name": "primary", "role": "core", "status": "aligned"},
+    {"name": "backup-east", "role": "mirror", "status": "monitoring"},
+    {"name": "backup-west", "role": "mirror", "status": "monitoring"}
+  ],
+  "thresholds": {
+    "latency_ms": 500,
+    "error_rate": 0.05
+  }
+}

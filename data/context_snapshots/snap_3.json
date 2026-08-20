@@ -1,0 +1,24 @@
+{
+  "id": "snap_3",
+  "created_at": "2025-11-03T12:00:00",
+  "short_term": {
+    "persona_state": {
+      "emotion": "Focused",
+      "harmony": 0.78,
+      "focus": 0.82
+    },
+    "prompt": "タスク指向の応答が増加"
+  },
+  "mid_term": {
+    "evaluation_score": 0.70,
+    "last_summary": "指示遵守率向上、創造性は標準"
+  },
+  "long_term": {
+    "persona": "v3",
+    "goals": ["指示遵守の精度向上", "創造性バランス調整"]
+  },
+  "introspection_logs": [
+    "analyzer: 指示遵守率: 0.82",
+    "self_optimizer: 創造性ペナルティを緩和"
+  ]
+}

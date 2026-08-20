@@ -1,0 +1,67 @@
+
+[
+  {
+    "name": "コアAI機能 (RAG・対話生成)",
+    "modules": [
+      { "name": "llm.py", "description": "大規模言語モデル（LLM）との直接的な通信を担当する中心的なモジュールです。" },
+      { "name": "rag_engine.py", "description": "ユーザーの質問に関連する情報を知識ベースから検索します (Retrieval-Augmented Generation)。" },
+      { "name": "generator.py", "description": "rag_engineが検索した情報と対話履歴を元に、LLMを使って応答文を生成します。" },
+      { "name": "evaluator.py", "description": "生成された応答の品質を、別のLLMを使って多角的に評価します。" },
+      { "name": "memory_store.py", "description": "対話履歴や短期的な記憶を管理します。" }
+    ]
+  },
+  {
+    "name": "自己進化・最適化",
+    "modules": [
+      { "name": "self_optimizer.py", "description": "evaluatorからの評価フィードバックに基づき、LLMのパラメータ（例: 創造性の度合い）を自動で調整します。" },
+      { "name": "collective_optimizer.py", "description": "長期的な対話データから全体的な傾向を分析し、システム全体の振る舞いを最適化します。" },
+      { "name": "self_intent.py", "description": "システム自身の行動目的や価値観を定義・進化させます。" },
+      { "name": "self_reasoning_loop.py", "description": "自己評価と自己修正のサイクルを実行し、継続的な改善を促します。" },
+      { "name": "predictive_analyzer.py", "description": "将来の対話の質を予測し、問題が発生する前に対処します。" }
+    ]
+  },
+  {
+    "name": "ペルソナ・感情",
+    "modules": [
+      { "name": "persona_manager.py", "description": "AIキャラクター「シロイ」の基本的なペルソナ（性格、口調）を管理します。" },
+      { "name": "persona_evolver.py", "description": "対話を通じてペルソナを動的に進化させます。" },
+      { "name": "emotion_engine.py", "description": "対話内容から感情を推定し、応答の感情表現を決定します。" },
+      { "name": "distributed_persona_fabric.py", "description": "複数のペルソナ要素を統合し、一貫性のあるキャラクターを形成します。" }
+    ]
+  },
+  {
+    "name": "メタ認知・内省",
+    "modules": [
+        { "name": "metacognition.py", "description": "AI自身の「思考プロセス」を監視・記録し、自己認識能力を担います。" },
+        { "name": "cognitive_graph_engine.py", "description": "思考の関連性をグラフ構造で可視化・分析します。" },
+        { "name": "impact_analyzer.py", "description": "ある応答や判断が、その後の対話にどのような影響を与えたかを分析します。" }
+    ]
+  },
+  {
+    "name": "自動監視・修復",
+    "modules": [
+        { "name": "anomaly_detector.py", "description": "システムの異常な振る舞いやパフォーマンス低下を検知します。" },
+        { "name": "auto_repair.py / auto_fix_executor.py", "description": "検知された問題を自動的に修正しようと試みます。" },
+        { "name": "alert_dispatcher.py", "description": "重大な問題を開発者に通知します。" }
+    ]
+  },
+  {
+    "name": "外部連携・ユーティリティ",
+    "modules": [
+        { "name": "config_manager.py", "description": "システム全体の設定ファイルを読み込み・管理します。" },
+        { "name": "log_manager.py", "description": "すべてのモジュールからのログを収集し、一元管理します。" },
+        { "name": "embedding_utils.py", "description": "テキストをベクトル化するための共通関数を提供します。" },
+        { "name": "script_parser.py", "description": "特定のスクリプトや命令を解釈して実行します。" },
+        { "name": "osc_bridge.py / tts_manager.py", "description": "音声合成(TTS)やOSC (Open Sound Control)など、外部の音響・映像システムと連携します。" }
+    ]
+  },
+  {
+    "name": "3Dモデル・モーション関連",
+    "modules": [
+        { "name": "adaptive_physics.py", "description": "3Dモデルの物理演算を適応的に調整します。" },
+        { "name": "auto_pose_correction.py", "description": "3Dモデルのポーズを自動的に補正します。" },
+        { "name": "motion_translator.py", "description": "ある形式のモーションデータを別の形式に変換します。" },
+        { "name": "voice_performance_synthesizer.py", "description": "声の調子に合わせて、リアルタイムで表情やモーションを生成します。" }
+    ]
+  }
+]

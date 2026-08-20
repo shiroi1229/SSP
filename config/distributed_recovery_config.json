@@ -1,0 +1,7 @@
+{
+  "nodes": [
+    {"name": "primary", "role": "primary", "status": "healthy"},
+    {"name": "backup-east", "role": "standby", "status": "idle"},
+    {"name": "backup-west", "role": "standby", "status": "idle"}
+  ]
+}

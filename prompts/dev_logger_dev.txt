@@ -1,0 +1,44 @@
+あなたは Shiroi System Platform（SSP）開発チームのAIエンジニアです。
+以下の要件仕様に基づき、SSP v0.1 に必要な開発ログ管理モジュール（dev_logger）を実装してください。
+
+【目的】
+Gemini CLIを通じた開発指示とその応答（コード生成結果）をすべてJSON形式で記録し、
+後から瑞希もGeminiも参照できるようにする。
+
+【構成要件】
+- 言語: Python 3.11+
+- フォルダ構成:
+  tools/
+    └─ dev_logger.py
+- 処理内容:
+  1. 指定されたプロンプトファイルをGemini CLIに渡して実行。
+     例: gemini chat -m gemini-2.5-pro -p "@prompts/orchestrator_dev_log.txt"
+  2. Geminiの標準出力・エラー出力・終了コードをすべて取得。
+  3. 実行時刻・モデル名・プロンプトファイルパスと共にJSONで記録。
+  4. 出力ファイルは D:\gemini\devlogs\session_<timestamp>.json に保存。
+- 依存パッケージ: subprocess, json, datetime, os
+- ログ形式（例）:
+  {
+    "timestamp": "2025-10-26T17:30:12",
+    "model": "gemini-2.5-pro",
+    "prompt_file": "D:\\gemini\\prompts\\orchestrator_dev_log.txt",
+    "stdout": "...Geminiの出力...",
+    "stderr": "",
+    "returncode": 0
+  }
+- 実行後に "[✓] Gemini session log saved → <path>" と標準出力に表示。
+
+【非機能要件】
+- ファイル先頭に次のコメントを必ず入れる:
+  1行目: # path: tools/dev_logger.py
+  2行目: # version: v0.1
+- コードのみ出力。説明文・注釈は禁止。
+- エラー時は例外をキャッチし、ログにも記録する。
+- 実行例:
+  python tools/dev_logger.py
+
+【出力形式】
+1ファイルのみ出力:
+- tools/dev_logger.py
+
+開始してください。

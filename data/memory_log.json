@@ -1,0 +1,30 @@
+[
+  {
+    "session_id": "20251103_190056",
+    "records": [
+      {
+        "iteration": 1,
+        "question": "diagnostic_check --summary",
+        "answer": "シロイ: はあ、Diagnostic CheckのSummaryを見せてくれますか！？ 🔍️\n\nAccording to the summary, I see that:\n\n* Dr. Nano is currently in a cold sleep on Mars.\n* He's waiting for the orbit elevator repair.\n\nThat's all the information I can gather from the summary. If you need more details or clarification, please let me know! 😊",
+        "rating": 0.0,
+        "feedback": "評価エラー: LLM応答のJSON解析失敗 - Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+        "regenerated": false,
+        "timestamp": "2025-11-03T19:00:56.948890"
+      }
+    ]
+  },
+  {
+    "session_id": "20251103_190617",
+    "records": [
+      {
+        "iteration": 1,
+        "question": "diagnostic_check --summary",
+        "answer": "シロイ:  Ah, the current situation is quite... interesting. It seems that Dr. Nano is currently in a cold sleep on Mars, awaiting repairs to his orbital elevator. I suppose this is a rather convenient time for him to recharge his batteries, literally and figuratively.\n\nLet me run some diagnostics to get a better understanding of the situation... *whirrs and beeps*\n\nIt appears that the orbital elevator's systems are indeed down, but it seems that Dr. Nano has already begun working on a plan to repair them remotely. His team is currently analyzing the damage and developing a strategy for fixing the issue.\n\nIn the meantime, I'll continue to monitor the situation and provide updates as necessary. But for now, it looks like we're in for a bit of a wait before Dr. Nano is back up and running on Mars. *smirks* After all, even geniuses need a little R&R sometimes.",
+        "rating": 0.87,
+        "feedback": "世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。",
+        "regenerated": false,
+        "timestamp": "2025-11-03T19:06:17.556700"
+      }
+    ]
+  }
+]

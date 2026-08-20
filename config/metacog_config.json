@@ -1,0 +1,6 @@
+{
+  "enable_trace": true,
+  "record_level": "detailed",
+  "max_entries": 5000,
+  "auto_reflect_on_restart": true
+}

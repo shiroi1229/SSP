@@ -1,0 +1,15 @@
+{
+  "id": "evaluation_20251102_154443",
+  "timestamp": "2025-11-02T15:44:43.479476",
+  "type": "evaluation_feedback",
+  "context": {
+    "session_id": "20251102_223718"
+  },
+  "output": {
+    "score": 4.0,
+    "comment": "世界観の整合性が高く、具体的な回答でした。文体をもう少し統一すると、さらに良くなります。"
+  },
+  "commit_hash": null,
+  "env_snapshot": null,
+  "ai_comment": "Feedback received."
+}

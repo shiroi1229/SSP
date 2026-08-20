@@ -1,0 +1,32 @@
+[
+  {
+    "timestamp": "2025-11-02T11:51:03.582240",
+    "user_input": "日本の首都はどこ？",
+    "context": "ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。",
+    "retry_attempt": 0,
+    "generator_response": "シロイ: LM Studio API エラーが発生しました。詳細: Bad Request",
+    "evaluation_score": 0.0,
+    "evaluation_comment": "Answer contains error or insufficient info.",
+    "final_output": null
+  },
+  {
+    "timestamp": "2025-11-02T11:51:14.966913",
+    "user_input": "日本の首都はどこ？",
+    "context": "ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。",
+    "retry_attempt": 1,
+    "generator_response": "シロイ: LM Studio API エラーが発生しました。詳細: Bad Request",
+    "evaluation_score": 0.0,
+    "evaluation_comment": "Answer contains error or insufficient info.",
+    "final_output": null
+  },
+  {
+    "timestamp": "2025-11-02T11:51:27.961641",
+    "user_input": "日本の首都はどこ？",
+    "context": "ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。",
+    "retry_attempt": 2,
+    "generator_response": "シロイ: LM Studio API エラーが発生しました。詳細: Bad Request",
+    "evaluation_score": 0.0,
+    "evaluation_comment": "Answer contains error or insufficient info.",
+    "final_output": "シロイ: LM Studio API エラーが発生しました。詳細: Bad Request"
+  }
+]

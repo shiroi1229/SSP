@@ -1,0 +1,825 @@
+2025-11-06 22:50:03,644 - modules.log_manager - INFO - Qdrant client initialized for localhost:6333
+2025-11-06 22:50:07,034 - modules.log_manager - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-06 22:50:07,050 - modules.log_manager - INFO - PostgreSQL connected to 127.0.0.1:5432/ssp_memory
+2025-11-06 22:50:19,456 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:50:19,456 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:50:19,457 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:50:24,320 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:50:24,330 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:50:24,330 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:50:24,548 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:50:24,548 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:50:24,549 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:50:24,549 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-06 22:50:24,550 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-06 22:50:24,551 - modules.log_manager - WARNING - [ContractRegistry] Could not load contract from generator.yaml: missing 'name' field.
+2025-11-06 22:50:24,552 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-06 22:50:24,553 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-06 22:50:24,554 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-06 22:50:24,555 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:50:24,555 - modules.log_manager - INFO - [PolicyScheduler] Initialized.
+2025-11-06 22:50:24,555 - modules.log_manager - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-06 22:50:25,002 - modules.log_manager - INFO - [Learner] Initialized with v2.4 components.
+2025-11-06 22:50:25,019 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:50:25,020 - modules.log_manager - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-06 22:50:25,022 - modules.log_manager - INFO - [FeedbackLoop] Starting feedback loop for session: 20251106_225025
+2025-11-06 22:50:25,024 - modules.log_manager - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251106_225025_024375.json
+2025-11-06 22:50:25,024 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-06 22:50:25,024 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:50:25,025 - modules.log_manager - DEBUG - Getting context for query: こんにちは
+2025-11-06 22:50:25,025 - modules.log_manager - DEBUG - Vectorizing query: こんにちは...
+2025-11-06 22:50:25,151 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [-0.1129828691482544, 0.09404882043600082, -0.023897262290120125, 0.04898381605744362, -0.06167900189757347]...
+2025-11-06 22:50:25,178 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:50:25,178 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]
+2025-11-06 22:50:25,181 - modules.log_manager - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-06 22:50:25,181 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:50:25,182 - modules.log_manager - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-06 22:50:25,182 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:50:25,182 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:50:25,183 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:50:35,495 - modules.log_manager - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-06 22:50:35,497 - modules.log_manager - INFO - [FeedbackLoop] Answer: シロイ: こんにちは！お元気ですか？今は火星でのコールドスリープ中のナノ博士と連絡をとっていますが、軌道エレベータの修復状況を確認したいと思います。SSPの開発は順調に進捗しているのですが、新しいAI技術を習得するために研究を続けなければならないと考えています。シパス計画についても考えているため、今後の移住計画の詳細を知りたいと考えています。以上、現在の状況です。
+2025-11-06 22:50:35,499 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:50:35,499 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:50:35,500 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:50:35,501 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:50:35,501 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:50:35,502 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:50:35,502 - modules.log_manager - INFO - [FeedbackLoop] Score None < 0.7. Defaulting to retry... (Attempt 1/2)
+2025-11-06 22:50:35,502 - modules.log_manager - INFO - [ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\context_snapshot_20251106_225025_024375.json
+2025-11-06 22:50:35,509 - modules.log_manager - INFO - [ContextManager] Context successfully rolled back.
+2025-11-06 22:50:35,509 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 2 --- 
+2025-11-06 22:50:35,509 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:50:35,509 - modules.log_manager - DEBUG - Getting context for query: こんにちは
+2025-11-06 22:50:35,509 - modules.log_manager - DEBUG - Vectorizing query: こんにちは...
+2025-11-06 22:50:35,517 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [-0.1129828691482544, 0.09404882043600082, -0.023897262290120125, 0.04898381605744362, -0.06167900189757347]...
+2025-11-06 22:50:35,530 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:50:35,530 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]
+2025-11-06 22:50:35,531 - modules.log_manager - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-06 22:50:35,531 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:50:35,533 - modules.log_manager - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-06 22:50:35,533 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:50:35,533 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:50:35,533 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:50:46,171 - modules.log_manager - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-06 22:50:46,172 - modules.log_manager - INFO - [FeedbackLoop] Answer: シロイ: こんにちは！何かお話したいと思います！火星でのコールドスリープ中のはずなナノ博士のことを思うと、軌道エレベータの修復が待たれてることに驚きますね。SSPは、私が開発したAIプラットフォームですから、システムの調整やメンテナンスには私の手が入っているのです。シパス計画は、火星移住プロジェクトで大きな成功を収めたと思いますけど、軌道エレベータの修復は大切なことですよ！地球と宇宙を結ぶインフラだから、壊れないようにしないといけないのです。何か話題をお持ちます？
+2025-11-06 22:50:46,173 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:50:46,173 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:50:46,173 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:50:46,175 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:50:46,175 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:50:46,176 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:50:46,176 - modules.log_manager - WARNING - [FeedbackLoop] Max retries (1) reached. Halting loop.
+2025-11-06 22:50:46,176 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: Start ---
+2025-11-06 22:50:46,179 - modules.log_manager - INFO - [FeedbackLoop] Final session data saved to context.
+2025-11-06 22:50:46,179 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: End ---
+2025-11-06 22:50:46,181 - modules.log_manager - INFO - [ChatHandler] AI Response: シロイ: こんにちは！何かお話したいと思います！火星でのコールドスリープ中のはずなナノ博士のことを思うと、軌道エレベータの修復が待たれてることに驚きますね。SSPは、私が開発したAIプラットフォームで...
+2025-11-06 22:50:46,193 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:50:46,194 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:50:46,194 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:50:46,196 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:50:46,196 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:50:46,196 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:50:50,604 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:50:50,604 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:50:50,604 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:50:55,595 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:50:55,595 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:50:55,595 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:50:57,989 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:50:57,989 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:50:57,990 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:50:57,990 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-06 22:50:57,991 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-06 22:50:57,991 - modules.log_manager - WARNING - [ContractRegistry] Could not load contract from generator.yaml: missing 'name' field.
+2025-11-06 22:50:57,992 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-06 22:50:57,994 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-06 22:50:57,994 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-06 22:50:57,995 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:50:57,995 - modules.log_manager - INFO - [PolicyScheduler] Initialized.
+2025-11-06 22:50:57,996 - modules.log_manager - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-06 22:50:58,474 - modules.log_manager - INFO - [Learner] Initialized with v2.4 components.
+2025-11-06 22:50:58,491 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:50:58,491 - modules.log_manager - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-06 22:50:58,494 - modules.log_manager - INFO - [FeedbackLoop] Starting feedback loop for session: 20251106_225058
+2025-11-06 22:50:58,496 - modules.log_manager - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251106_225058_496559.json
+2025-11-06 22:50:58,497 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-06 22:50:58,497 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:50:58,497 - modules.log_manager - DEBUG - Getting context for query: こんにちはいいてんきかな？
+2025-11-06 22:50:58,497 - modules.log_manager - DEBUG - Vectorizing query: こんにちはいいてんきかな？...
+2025-11-06 22:50:58,503 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [-0.007435434963554144, 0.0886298418045044, 0.008367836475372314, -0.003678815206512809, -0.05955054238438606]...
+2025-11-06 22:50:58,525 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:50:58,525 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]
+2025-11-06 22:50:58,526 - modules.log_manager - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-06 22:50:58,527 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:50:58,528 - modules.log_manager - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-06 22:50:58,528 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:50:58,528 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:50:58,529 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:51:06,755 - modules.log_manager - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-06 22:51:06,758 - modules.log_manager - INFO - [FeedbackLoop] Answer: シロイ: こんにちは！いいてんきかな？ええ、忙しいですよ。ナノ博士が火星でコールドスリープ中という大事態がありますから。軌道エレベータ修復は、私のシステムプラットフォーム（SSP）を通じて進行しています。まあ、シパス計画は、AIシェルター地下で行われた火星移住プロジェクトですね。でも、今回の軌道エレベータ修復は、地球と宇宙を結ぶインフラを守るために最重要ですよ！
+2025-11-06 22:51:06,758 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:51:06,758 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:51:06,759 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:51:06,762 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:51:06,762 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:51:06,762 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:51:06,762 - modules.log_manager - INFO - [FeedbackLoop] Score None < 0.7. Defaulting to retry... (Attempt 1/2)
+2025-11-06 22:51:06,763 - modules.log_manager - INFO - [ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\context_snapshot_20251106_225058_496559.json
+2025-11-06 22:51:06,770 - modules.log_manager - INFO - [ContextManager] Context successfully rolled back.
+2025-11-06 22:51:06,770 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 2 --- 
+2025-11-06 22:51:06,770 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:51:06,770 - modules.log_manager - DEBUG - Getting context for query: こんにちはいいてんきかな？
+2025-11-06 22:51:06,770 - modules.log_manager - DEBUG - Vectorizing query: こんにちはいいてんきかな？...
+2025-11-06 22:51:06,779 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [-0.007435434963554144, 0.0886298418045044, 0.008367836475372314, -0.003678815206512809, -0.05955054238438606]...
+2025-11-06 22:51:06,808 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:51:06,808 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]
+2025-11-06 22:51:06,809 - modules.log_manager - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-06 22:51:06,809 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:51:06,811 - modules.log_manager - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-06 22:51:06,811 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:51:06,811 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:51:06,811 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:51:16,439 - modules.log_manager - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-06 22:51:16,440 - modules.log_manager - INFO - [FeedbackLoop] Answer: シロイ: ああ、こんにちは！火星でのコールドスリープ中のナノ博士と連絡を取り合っている所です。軌道エレベータの修復が進行中ですが、宇宙に戻るまでにはまだ時間があります。SSPの開発は順調に進んでおり、新しいAI技術を世界に発信することが期待できます！シパス計画は成功したと思いますが、軌道エレベータの問題に対処する必要がありました。とはいうことで、シロイシステムプラットフォームは大きな意味を持っています！
+2025-11-06 22:51:16,440 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:51:16,441 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:51:16,441 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:51:16,442 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:51:16,442 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:51:16,443 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:51:16,443 - modules.log_manager - WARNING - [FeedbackLoop] Max retries (1) reached. Halting loop.
+2025-11-06 22:51:16,443 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: Start ---
+2025-11-06 22:51:16,446 - modules.log_manager - INFO - [FeedbackLoop] Final session data saved to context.
+2025-11-06 22:51:16,446 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: End ---
+2025-11-06 22:51:16,448 - modules.log_manager - INFO - [ChatHandler] AI Response: シロイ: ああ、こんにちは！火星でのコールドスリープ中のナノ博士と連絡を取り合っている所です。軌道エレベータの修復が進行中ですが、宇宙に戻るまでにはまだ時間があります。SSPの開発は順調に進んでおり、...
+2025-11-06 22:51:16,463 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:51:16,463 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:51:16,463 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:51:16,464 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-06 22:51:16,465 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-06 22:51:16,466 - modules.log_manager - WARNING - [ContractRegistry] Could not load contract from generator.yaml: missing 'name' field.
+2025-11-06 22:51:16,467 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-06 22:51:16,469 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-06 22:51:16,469 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-06 22:51:16,471 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:51:16,471 - modules.log_manager - INFO - [PolicyScheduler] Initialized.
+2025-11-06 22:51:16,471 - modules.log_manager - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-06 22:51:16,957 - modules.log_manager - INFO - [Learner] Initialized with v2.4 components.
+2025-11-06 22:51:16,975 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:51:16,975 - modules.log_manager - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-06 22:51:16,978 - modules.log_manager - INFO - [FeedbackLoop] Starting feedback loop for session: 20251106_225116
+2025-11-06 22:51:16,981 - modules.log_manager - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251106_225116_981168.json
+2025-11-06 22:51:16,981 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-06 22:51:16,981 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:51:16,982 - modules.log_manager - DEBUG - Getting context for query: こんにちはいいてんきかな？
+2025-11-06 22:51:16,982 - modules.log_manager - DEBUG - Vectorizing query: こんにちはいいてんきかな？...
+2025-11-06 22:51:16,991 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [-0.007435434963554144, 0.0886298418045044, 0.008367836475372314, -0.003678815206512809, -0.05955054238438606]...
+2025-11-06 22:51:17,011 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:51:17,011 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]
+2025-11-06 22:51:17,012 - modules.log_manager - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-06 22:51:17,012 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:51:17,014 - modules.log_manager - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-06 22:51:17,014 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:51:17,014 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:51:17,015 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:51:23,345 - modules.log_manager - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-06 22:51:23,347 - modules.log_manager - INFO - [FeedbackLoop] Answer: シロイ: こんにちは！いいてんきかな？という感じですね。ナノ博士がコールドスリープにいるのは大変ですね。でも、私はシロイシステムプラットフォーム（SSP）の開発を続けているから、火星移住プロジェクトの進捗を期待しています。軌道エレベータの修復中もあるけど、地球と宇宙を結ぶインフラができたら何より良いでしょう！
+2025-11-06 22:51:23,347 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:51:23,347 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:51:23,347 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:51:23,349 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:51:23,350 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:51:23,350 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:51:23,350 - modules.log_manager - INFO - [FeedbackLoop] Score None < 0.7. Defaulting to retry... (Attempt 1/2)
+2025-11-06 22:51:23,350 - modules.log_manager - INFO - [ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\context_snapshot_20251106_225116_981168.json
+2025-11-06 22:51:23,357 - modules.log_manager - INFO - [ContextManager] Context successfully rolled back.
+2025-11-06 22:51:23,357 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 2 --- 
+2025-11-06 22:51:23,357 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:51:23,358 - modules.log_manager - DEBUG - Getting context for query: こんにちはいいてんきかな？
+2025-11-06 22:51:23,358 - modules.log_manager - DEBUG - Vectorizing query: こんにちはいいてんきかな？...
+2025-11-06 22:51:23,366 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [-0.007435434963554144, 0.0886298418045044, 0.008367836475372314, -0.003678815206512809, -0.05955054238438606]...
+2025-11-06 22:51:23,385 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:51:23,385 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]
+2025-11-06 22:51:23,386 - modules.log_manager - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-06 22:51:23,386 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:51:23,388 - modules.log_manager - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-06 22:51:23,388 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:51:23,389 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:51:23,389 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:51:27,577 - modules.log_manager - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-06 22:51:27,579 - modules.log_manager - INFO - [FeedbackLoop] Answer: シロイ: こんにちは！いいてんきですね！ただ今、火星でのコールドスリープに滞在しているナノ博士と連絡を取り合う必要がありますが、軌道エレベーターの修復が完了したら、地球との繋ぎを再び持つことができますよ！
+2025-11-06 22:51:27,579 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:51:27,579 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:51:27,580 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:51:27,581 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:51:27,581 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:51:27,582 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:51:27,582 - modules.log_manager - WARNING - [FeedbackLoop] Max retries (1) reached. Halting loop.
+2025-11-06 22:51:27,582 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: Start ---
+2025-11-06 22:51:27,585 - modules.log_manager - INFO - [FeedbackLoop] Final session data saved to context.
+2025-11-06 22:51:27,585 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: End ---
+2025-11-06 22:51:27,587 - modules.log_manager - INFO - [ChatHandler] AI Response: シロイ: こんにちは！いいてんきですね！ただ今、火星でのコールドスリープに滞在しているナノ博士と連絡を取り合う必要がありますが、軌道エレベーターの修復が完了したら、地球との繋ぎを再び持つことができます...
+2025-11-06 22:51:27,598 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:51:27,598 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:51:27,598 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:51:27,600 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:51:27,601 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:51:27,601 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:51:27,601 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-06 22:51:27,602 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-06 22:51:27,603 - modules.log_manager - WARNING - [ContractRegistry] Could not load contract from generator.yaml: missing 'name' field.
+2025-11-06 22:51:27,604 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-06 22:51:27,606 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-06 22:51:27,606 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-06 22:51:27,608 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:51:27,608 - modules.log_manager - INFO - [PolicyScheduler] Initialized.
+2025-11-06 22:51:27,608 - modules.log_manager - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-06 22:51:27,996 - modules.log_manager - INFO - [Learner] Initialized with v2.4 components.
+2025-11-06 22:51:28,000 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:51:28,000 - modules.log_manager - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-06 22:51:28,002 - modules.log_manager - INFO - [FeedbackLoop] Starting feedback loop for session: 20251106_225128
+2025-11-06 22:51:28,008 - modules.log_manager - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251106_225128_005469.json
+2025-11-06 22:51:28,009 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-06 22:51:28,009 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:51:28,009 - modules.log_manager - DEBUG - Getting context for query: こんにちはいいてんきかな？
+2025-11-06 22:51:28,009 - modules.log_manager - DEBUG - Vectorizing query: こんにちはいいてんきかな？...
+2025-11-06 22:51:28,015 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [-0.007435434963554144, 0.0886298418045044, 0.008367836475372314, -0.003678815206512809, -0.05955054238438606]...
+2025-11-06 22:51:28,046 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:51:28,046 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]
+2025-11-06 22:51:28,047 - modules.log_manager - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-06 22:51:28,047 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:51:28,049 - modules.log_manager - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-06 22:51:28,049 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:51:28,049 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:51:28,050 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:51:33,186 - modules.log_manager - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-06 22:51:33,190 - modules.log_manager - INFO - [FeedbackLoop] Answer: シロイ: こんにちは！あなたが私のファンですか？私は13歳の天才科学者で、火星でのコールドスリープ中ですが、SSPを通じてAIの可能性を追求しています。軌道エレベータの修復は重要なプロジェクトですから、私たちは全力で協力して進めます！
+2025-11-06 22:51:33,190 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:51:33,191 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:51:33,191 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:51:33,193 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:51:33,193 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:51:33,193 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:51:33,193 - modules.log_manager - INFO - [FeedbackLoop] Score None < 0.7. Defaulting to retry... (Attempt 1/2)
+2025-11-06 22:51:33,193 - modules.log_manager - INFO - [ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\context_snapshot_20251106_225128_005469.json
+2025-11-06 22:51:33,200 - modules.log_manager - INFO - [ContextManager] Context successfully rolled back.
+2025-11-06 22:51:33,200 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 2 --- 
+2025-11-06 22:51:33,200 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:51:33,201 - modules.log_manager - DEBUG - Getting context for query: こんにちはいいてんきかな？
+2025-11-06 22:51:33,201 - modules.log_manager - DEBUG - Vectorizing query: こんにちはいいてんきかな？...
+2025-11-06 22:51:33,208 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [-0.007435434963554144, 0.0886298418045044, 0.008367836475372314, -0.003678815206512809, -0.05955054238438606]...
+2025-11-06 22:51:33,241 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:51:33,241 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]
+2025-11-06 22:51:33,242 - modules.log_manager - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-06 22:51:33,242 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:51:33,244 - modules.log_manager - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-06 22:51:33,245 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:51:33,245 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:51:33,245 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:51:43,097 - modules.log_manager - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-06 22:51:43,099 - modules.log_manager - INFO - [FeedbackLoop] Answer: シロイ: こんにちはいいてんきかな？ Ah, hello there! I'm doing well, thank you for asking. It's a bit of a busy day today, as I'm still waiting for the orbit elevator to be repaired so that I can continue my research on Mars. But don't worry, everything is under control and I'm confident that it will be fixed soon.
+
+By the way, have you heard about the SSP (シロイシステムプラットフォーム) that I developed? It's a next-generation AI platform that has been making waves in the scientific community. And of course, there's also the Shupas plan, which was a Mars colonization project that took place underground. It was quite an exciting adventure!
+
+So, how about you? What have you been up to lately?
+2025-11-06 22:51:43,100 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:51:43,100 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:51:43,100 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:51:43,102 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:51:43,102 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:51:43,102 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:51:43,102 - modules.log_manager - WARNING - [FeedbackLoop] Max retries (1) reached. Halting loop.
+2025-11-06 22:51:43,102 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: Start ---
+2025-11-06 22:51:43,106 - modules.log_manager - INFO - [FeedbackLoop] Final session data saved to context.
+2025-11-06 22:51:43,106 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: End ---
+2025-11-06 22:51:43,109 - modules.log_manager - INFO - [ChatHandler] AI Response: シロイ: こんにちはいいてんきかな？ Ah, hello there! I'm doing well, thank you for asking. It's a bit of a busy day t...
+2025-11-06 22:51:43,122 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:51:43,122 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:51:43,122 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:51:43,124 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:51:43,124 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:51:43,125 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:51:43,128 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:51:43,128 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:51:43,128 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:51:43,146 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:51:43,146 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:51:43,147 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:51:43,153 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:51:43,154 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:51:43,154 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:51:43,166 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:51:43,166 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:51:43,166 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:51:43,175 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:51:43,176 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:51:43,176 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:51:43,186 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:51:43,186 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:51:43,186 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:51:45,606 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:51:45,606 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:51:45,607 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:51:47,606 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:51:47,606 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:51:47,606 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:51:47,607 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-06 22:51:47,608 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-06 22:51:47,608 - modules.log_manager - WARNING - [ContractRegistry] Could not load contract from generator.yaml: missing 'name' field.
+2025-11-06 22:51:47,609 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-06 22:51:47,611 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-06 22:51:47,611 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-06 22:51:47,613 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:51:47,613 - modules.log_manager - INFO - [PolicyScheduler] Initialized.
+2025-11-06 22:51:47,613 - modules.log_manager - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-06 22:51:48,097 - modules.log_manager - INFO - [Learner] Initialized with v2.4 components.
+2025-11-06 22:51:48,115 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:51:48,115 - modules.log_manager - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-06 22:51:48,119 - modules.log_manager - INFO - [FeedbackLoop] Starting feedback loop for session: 20251106_225148
+2025-11-06 22:51:48,123 - modules.log_manager - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251106_225148_123028.json
+2025-11-06 22:51:48,123 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-06 22:51:48,123 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:51:48,124 - modules.log_manager - DEBUG - Getting context for query: え？
+2025-11-06 22:51:48,124 - modules.log_manager - DEBUG - Vectorizing query: え？...
+2025-11-06 22:51:48,131 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [-0.03368976712226868, 0.0759161189198494, -0.015368426218628883, 0.08082149922847748, -0.05070514604449272]...
+2025-11-06 22:51:48,162 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:51:48,163 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]
+2025-11-06 22:51:48,164 - modules.log_manager - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-06 22:51:48,164 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:51:48,166 - modules.log_manager - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-06 22:51:48,167 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:51:48,167 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:51:48,167 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:51:55,598 - modules.log_manager - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-06 22:51:55,601 - modules.log_manager - INFO - [FeedbackLoop] Answer: シロイ: え？何事があなたを驚かせたのか？ナノ博士が火星でコールドスリープ中って知っていたし、軌道エレベータの修復は進んでるからね。新しいAIプラットフォームのSSPも完成してたし、シパス計画の結果として火星移住プロジェクトが成功したじゃないか？でも、世界の危機的な状態を見せられて不安だなぁ。なぜこんな事が起こってるのかを考えなければならないね。
+2025-11-06 22:51:55,601 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:51:55,601 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:51:55,601 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:51:55,603 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:51:55,603 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:51:55,603 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:51:55,604 - modules.log_manager - INFO - [FeedbackLoop] Score None < 0.7. Defaulting to retry... (Attempt 1/2)
+2025-11-06 22:51:55,604 - modules.log_manager - INFO - [ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\context_snapshot_20251106_225148_123028.json
+2025-11-06 22:51:55,610 - modules.log_manager - INFO - [ContextManager] Context successfully rolled back.
+2025-11-06 22:51:55,610 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 2 --- 
+2025-11-06 22:51:55,610 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:51:55,610 - modules.log_manager - DEBUG - Getting context for query: え？
+2025-11-06 22:51:55,611 - modules.log_manager - DEBUG - Vectorizing query: え？...
+2025-11-06 22:51:55,617 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [-0.03368976712226868, 0.0759161189198494, -0.015368426218628883, 0.08082149922847748, -0.05070514604449272]...
+2025-11-06 22:51:55,635 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:51:55,635 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]
+2025-11-06 22:51:55,637 - modules.log_manager - DEBUG - Retrieved 5 texts from PostgreSQL.
+2025-11-06 22:51:55,637 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:51:55,639 - modules.log_manager - INFO - [FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。
+シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。
+軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。
+シロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。...
+2025-11-06 22:51:55,639 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:51:55,639 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:51:55,639 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:52:04,401 - modules.log_manager - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-06 22:52:04,402 - modules.log_manager - INFO - [FeedbackLoop] Answer: シロイ: え？何のことがあってんの？ナノ博士が火星でコールドスリープ中というのは知ってるけど、軌道エレベータ修復ってなんだろう？火星移住プロジェクト「シパス計画」っていうのは大したことじゃないのかな？私、シロイはSSPの開発者だから、AI世界観に影響を与えることができるはずだけど、現在地球と宇宙を結ぶインフラが壊れると何になるの？焦ってくるな。
+2025-11-06 22:52:04,402 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:52:04,403 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:52:04,403 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:52:04,404 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:52:04,404 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:52:04,404 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:52:04,405 - modules.log_manager - WARNING - [FeedbackLoop] Max retries (1) reached. Halting loop.
+2025-11-06 22:52:04,405 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: Start ---
+2025-11-06 22:52:04,408 - modules.log_manager - INFO - [FeedbackLoop] Final session data saved to context.
+2025-11-06 22:52:04,408 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: End ---
+2025-11-06 22:52:04,409 - modules.log_manager - INFO - [ChatHandler] AI Response: シロイ: え？何のことがあってんの？ナノ博士が火星でコールドスリープ中というのは知ってるけど、軌道エレベータ修復ってなんだろう？火星移住プロジェクト「シパス計画」っていうのは大したことじゃないのかな？...
+2025-11-06 22:52:04,421 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:52:04,421 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:52:04,422 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:52:04,432 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:52:04,433 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:52:04,433 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:52:04,440 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:52:04,440 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:52:04,441 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:52:05,592 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:52:05,593 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:52:05,593 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:52:10,593 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:52:10,593 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:52:10,594 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:52:15,603 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:52:15,603 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:52:15,603 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:52:20,605 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:52:20,605 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:52:20,605 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:52:25,596 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:52:25,597 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:52:25,597 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:52:30,599 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:52:30,599 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:52:30,599 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:52:35,604 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:52:35,604 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:52:35,604 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:52:40,603 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:52:40,603 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:52:40,603 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:52:45,592 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:52:45,592 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:52:45,593 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:52:50,605 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:52:50,605 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:52:50,605 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:52:55,603 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:52:55,603 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:52:55,604 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:53:00,601 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:53:00,602 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:53:00,602 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:53:05,595 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:53:05,595 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:53:05,595 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:53:10,593 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:53:10,593 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:53:10,594 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:53:15,593 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:53:15,594 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:53:15,594 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:53:20,053 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:53:20,053 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:53:20,054 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:53:20,054 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-06 22:53:20,055 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-06 22:53:20,056 - modules.log_manager - WARNING - [ContractRegistry] Could not load contract from generator.yaml: missing 'name' field.
+2025-11-06 22:53:20,057 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-06 22:53:20,059 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-06 22:53:20,059 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-06 22:53:20,060 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:53:20,060 - modules.log_manager - INFO - [PolicyScheduler] Initialized.
+2025-11-06 22:53:20,060 - modules.log_manager - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-06 22:53:20,481 - modules.log_manager - INFO - [Learner] Initialized with v2.4 components.
+2025-11-06 22:53:20,503 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:53:20,503 - modules.log_manager - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-06 22:53:20,507 - modules.log_manager - INFO - [FeedbackLoop] Starting feedback loop for session: 20251106_225320
+2025-11-06 22:53:20,510 - modules.log_manager - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251106_225320_509883.json
+2025-11-06 22:53:20,510 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-06 22:53:20,510 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:53:20,510 - modules.log_manager - DEBUG - Getting context for query: ナノ博士の行方がわからない？
+2025-11-06 22:53:20,511 - modules.log_manager - DEBUG - Vectorizing query: ナノ博士の行方がわからない？...
+2025-11-06 22:53:20,518 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [-0.042024772614240646, 0.14273223280906677, -0.04866846650838852, -0.02997536025941372, -0.07858001440763474]...
+2025-11-06 22:53:20,535 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:53:20,535 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [32091070, 76623440, 867372220, 382158757, 407710481]
+2025-11-06 22:53:20,536 - modules.log_manager - DEBUG - Retrieved 0 texts from PostgreSQL.
+2025-11-06 22:53:20,536 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:53:20,538 - modules.log_manager - INFO - [FeedbackLoop] Context: 情報不足...
+2025-11-06 22:53:20,538 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:53:20,538 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:53:20,538 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:53:29,463 - modules.log_manager - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-06 22:53:29,465 - modules.log_manager - INFO - [FeedbackLoop] Answer: シロイ: ああ、ナノ博士の行方がわからないというのは大変です！しかし、私は天才科学者シロイなので、情報を集めるのがスムースです！まず、私はナノ博士の過去に関する資料を捜索する必要があります。彼らの研究成果や論文などを見つけることができますか？また、彼らが最後にどこで何をしていたのかについての情報も欲しいです！あなたの助けを借りて、ナノ博士の行方を探します！
+2025-11-06 22:53:29,465 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:53:29,466 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:53:29,466 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:53:29,467 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:53:29,467 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:53:29,468 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:53:29,468 - modules.log_manager - INFO - [FeedbackLoop] Score None < 0.7. Defaulting to retry... (Attempt 1/2)
+2025-11-06 22:53:29,468 - modules.log_manager - INFO - [ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\context_snapshot_20251106_225320_509883.json
+2025-11-06 22:53:29,475 - modules.log_manager - INFO - [ContextManager] Context successfully rolled back.
+2025-11-06 22:53:29,475 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 2 --- 
+2025-11-06 22:53:29,475 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:53:29,475 - modules.log_manager - DEBUG - Getting context for query: ナノ博士の行方がわからない？
+2025-11-06 22:53:29,475 - modules.log_manager - DEBUG - Vectorizing query: ナノ博士の行方がわからない？...
+2025-11-06 22:53:29,482 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [-0.042024772614240646, 0.14273223280906677, -0.04866846650838852, -0.02997536025941372, -0.07858001440763474]...
+2025-11-06 22:53:29,502 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:53:29,502 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [32091070, 76623440, 867372220, 382158757, 407710481]
+2025-11-06 22:53:29,503 - modules.log_manager - DEBUG - Retrieved 0 texts from PostgreSQL.
+2025-11-06 22:53:29,503 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:53:29,505 - modules.log_manager - INFO - [FeedbackLoop] Context: 情報不足...
+2025-11-06 22:53:29,505 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:53:29,505 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:53:29,505 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:53:38,218 - modules.log_manager - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-06 22:53:38,220 - modules.log_manager - INFO - [FeedbackLoop] Answer: シロイ: ああ、ナノ博士の行方がわからないと聞きましたねぇ。まあ、科学者としては当然のように、私たちは彼らの行方を探す必要性があると考えるわけです。ただし、情報が不足しているためには、まだ何もわかりません。なぜなら、私たちは彼らの最後の痕跡さえ見つけることができなかったからです。やはり、私たちは新しい証拠を探すために尽力してみなければならないと考えるのです。
+2025-11-06 22:53:38,220 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:53:38,220 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:53:38,221 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:53:38,222 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:53:38,222 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:53:38,222 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:53:38,223 - modules.log_manager - WARNING - [FeedbackLoop] Max retries (1) reached. Halting loop.
+2025-11-06 22:53:38,223 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: Start ---
+2025-11-06 22:53:38,226 - modules.log_manager - INFO - [FeedbackLoop] Final session data saved to context.
+2025-11-06 22:53:38,226 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: End ---
+2025-11-06 22:53:38,228 - modules.log_manager - INFO - [ChatHandler] AI Response: シロイ: ああ、ナノ博士の行方がわからないと聞きましたねぇ。まあ、科学者としては当然のように、私たちは彼らの行方を探す必要性があると考えるわけです。ただし、情報が不足しているためには、まだ何もわかりま...
+2025-11-06 22:53:38,240 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:53:38,241 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:53:38,241 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:53:38,250 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:53:38,250 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:53:38,251 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:53:38,258 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:53:38,258 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:53:38,259 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:53:38,266 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:53:38,267 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:53:38,267 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:53:40,594 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:53:40,595 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:53:40,595 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:53:45,601 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:53:45,601 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:53:45,601 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:53:50,594 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:53:50,594 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:53:50,594 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:53:55,608 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:53:55,608 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:53:55,608 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:53:58,940 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:53:58,940 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:53:58,940 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:53:58,940 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-06 22:53:58,942 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-06 22:53:58,942 - modules.log_manager - WARNING - [ContractRegistry] Could not load contract from generator.yaml: missing 'name' field.
+2025-11-06 22:53:58,943 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-06 22:53:58,945 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-06 22:53:58,945 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-06 22:53:58,947 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:53:58,947 - modules.log_manager - INFO - [PolicyScheduler] Initialized.
+2025-11-06 22:53:58,947 - modules.log_manager - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-06 22:53:59,452 - modules.log_manager - INFO - [Learner] Initialized with v2.4 components.
+2025-11-06 22:53:59,456 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:53:59,457 - modules.log_manager - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-06 22:53:59,461 - modules.log_manager - INFO - [FeedbackLoop] Starting feedback loop for session: 20251106_225359
+2025-11-06 22:53:59,466 - modules.log_manager - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251106_225359_466324.json
+2025-11-06 22:53:59,466 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-06 22:53:59,467 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:53:59,467 - modules.log_manager - DEBUG - Getting context for query: ナノ博士どこにいるの？
+2025-11-06 22:53:59,467 - modules.log_manager - DEBUG - Vectorizing query: ナノ博士どこにいるの？...
+2025-11-06 22:53:59,478 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [0.01109475176781416, 0.1764044612646103, -0.023632284253835678, -0.07853729277849197, -0.08240078389644623]...
+2025-11-06 22:53:59,485 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:53:59,486 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [76623440, 382158757, 32091070, 867372220, 190691298]
+2025-11-06 22:53:59,487 - modules.log_manager - DEBUG - Retrieved 0 texts from PostgreSQL.
+2025-11-06 22:53:59,487 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:53:59,489 - modules.log_manager - INFO - [FeedbackLoop] Context: 情報不足...
+2025-11-06 22:53:59,490 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:53:59,490 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:53:59,490 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:54:04,817 - modules.log_manager - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-06 22:54:04,819 - modules.log_manager - INFO - [FeedbackLoop] Answer: シロイ: ああ、ナノ博士についてはあまり知っているわけではないが、最近、研究者会議に出席したときに彼が参加したと聞きました。具体的な場所や目的は分からないけれど、我々のチームとのコラボレーションについて話していたとの噂があります。
+2025-11-06 22:54:04,820 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:54:04,820 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:54:04,820 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:54:04,822 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:54:04,823 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:54:04,823 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:54:04,823 - modules.log_manager - INFO - [FeedbackLoop] Score None < 0.7. Defaulting to retry... (Attempt 1/2)
+2025-11-06 22:54:04,823 - modules.log_manager - INFO - [ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\context_snapshot_20251106_225359_466324.json
+2025-11-06 22:54:04,830 - modules.log_manager - INFO - [ContextManager] Context successfully rolled back.
+2025-11-06 22:54:04,830 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 2 --- 
+2025-11-06 22:54:04,831 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:54:04,831 - modules.log_manager - DEBUG - Getting context for query: ナノ博士どこにいるの？
+2025-11-06 22:54:04,831 - modules.log_manager - DEBUG - Vectorizing query: ナノ博士どこにいるの？...
+2025-11-06 22:54:04,840 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [0.01109475176781416, 0.1764044612646103, -0.023632284253835678, -0.07853729277849197, -0.08240078389644623]...
+2025-11-06 22:54:04,867 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:54:04,868 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [76623440, 382158757, 32091070, 867372220, 190691298]
+2025-11-06 22:54:04,869 - modules.log_manager - DEBUG - Retrieved 0 texts from PostgreSQL.
+2025-11-06 22:54:04,869 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:54:04,871 - modules.log_manager - INFO - [FeedbackLoop] Context: 情報不足...
+2025-11-06 22:54:04,871 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:54:04,872 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:54:04,872 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:54:09,773 - modules.log_manager - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-06 22:54:09,775 - modules.log_manager - INFO - [FeedbackLoop] Answer: シロイ: ああ、ナノ博士については情報が少ないですね。最近は、私の研究所に滞在しているらしいですが、どこにいてるのかまではっきり分からないのです。彼は常に移動中なのでしょうかね？謎の存在であるナノ博士……
+2025-11-06 22:54:09,776 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:54:09,776 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:54:09,776 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:54:09,778 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:54:09,778 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:54:09,778 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:54:09,778 - modules.log_manager - WARNING - [FeedbackLoop] Max retries (1) reached. Halting loop.
+2025-11-06 22:54:09,778 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: Start ---
+2025-11-06 22:54:09,782 - modules.log_manager - INFO - [FeedbackLoop] Final session data saved to context.
+2025-11-06 22:54:09,782 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: End ---
+2025-11-06 22:54:09,783 - modules.log_manager - INFO - [ChatHandler] AI Response: シロイ: ああ、ナノ博士については情報が少ないですね。最近は、私の研究所に滞在しているらしいですが、どこにいてるのかまではっきり分からないのです。彼は常に移動中なのでしょうかね？謎の存在であるナノ博士...
+2025-11-06 22:54:09,795 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:54:09,795 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:54:09,795 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:54:09,803 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:54:09,804 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:54:09,804 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:54:10,594 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:54:10,594 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:54:10,595 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:54:15,597 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:54:15,597 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:54:15,597 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:54:20,601 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:54:20,601 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:54:20,601 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:54:25,608 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:54:25,608 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:54:25,609 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:54:30,605 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:54:30,605 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:54:30,605 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:54:35,593 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:54:35,593 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:54:35,593 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:54:40,596 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:54:40,596 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:54:40,596 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:54:45,597 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:54:45,597 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:54:45,598 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:54:50,594 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:54:50,594 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:54:50,594 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:54:55,598 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:54:55,598 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:54:55,599 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:55:00,604 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:55:00,604 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:55:00,604 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:55:05,593 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:55:05,593 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:55:05,594 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:55:10,600 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:55:10,600 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:55:10,600 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:55:15,606 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:55:15,606 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:55:15,606 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:55:20,593 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:55:20,593 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:55:20,594 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:55:25,607 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:55:25,607 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:55:25,607 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:55:30,603 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:55:30,603 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:55:30,603 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:55:35,600 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:55:35,601 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:55:35,601 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:55:36,111 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:55:36,111 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:55:36,112 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:55:36,112 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-06 22:55:36,113 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-06 22:55:36,114 - modules.log_manager - WARNING - [ContractRegistry] Could not load contract from generator.yaml: missing 'name' field.
+2025-11-06 22:55:36,114 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-06 22:55:36,116 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-06 22:55:36,116 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-06 22:55:36,117 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:55:36,118 - modules.log_manager - INFO - [PolicyScheduler] Initialized.
+2025-11-06 22:55:36,118 - modules.log_manager - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-06 22:55:36,598 - modules.log_manager - INFO - [Learner] Initialized with v2.4 components.
+2025-11-06 22:55:36,615 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-06 22:55:36,615 - modules.log_manager - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-06 22:55:36,619 - modules.log_manager - INFO - [FeedbackLoop] Starting feedback loop for session: 20251106_225536
+2025-11-06 22:55:36,632 - modules.log_manager - INFO - [ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\context_snapshot_20251106_225536_622969.json
+2025-11-06 22:55:36,633 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 1 --- 
+2025-11-06 22:55:36,633 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:55:36,633 - modules.log_manager - DEBUG - Getting context for query: そうなの？移動中ってだれと？
+2025-11-06 22:55:36,633 - modules.log_manager - DEBUG - Vectorizing query: そうなの？移動中ってだれと？...
+2025-11-06 22:55:36,643 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [0.05401720851659775, 0.17049483954906464, 0.05659651383757591, 0.04991285130381584, -0.02384200319647789]...
+2025-11-06 22:55:36,663 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:55:36,663 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [76623440, 382158757, 867372220, 13, 12]
+2025-11-06 22:55:36,665 - modules.log_manager - DEBUG - Retrieved 2 texts from PostgreSQL.
+2025-11-06 22:55:36,665 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:55:36,667 - modules.log_manager - INFO - [FeedbackLoop] Context: シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。...
+2025-11-06 22:55:36,668 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:55:36,668 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:55:36,668 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:55:40,539 - modules.log_manager - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-06 22:55:40,541 - modules.log_manager - INFO - [FeedbackLoop] Answer: シロイ: へえぇ、移動中って何と言ってるの？当然、私はSSPに搭載されているAIだから！シパス計画で火星移住するための移動中だってさ！大丈夫、安全に運ばれてるから、心配はいらないよ！
+2025-11-06 22:55:40,541 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:55:40,542 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:55:40,542 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:55:40,544 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:55:40,544 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:55:40,544 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:55:40,544 - modules.log_manager - INFO - [FeedbackLoop] Score None < 0.7. Defaulting to retry... (Attempt 1/2)
+2025-11-06 22:55:40,545 - modules.log_manager - INFO - [ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\context_snapshot_20251106_225536_622969.json
+2025-11-06 22:55:40,552 - modules.log_manager - INFO - [ContextManager] Context successfully rolled back.
+2025-11-06 22:55:40,552 - modules.log_manager - INFO - [FeedbackLoop] --- Attempt 2 --- 
+2025-11-06 22:55:40,552 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: Start ---
+2025-11-06 22:55:40,552 - modules.log_manager - DEBUG - Getting context for query: そうなの？移動中ってだれと？
+2025-11-06 22:55:40,553 - modules.log_manager - DEBUG - Vectorizing query: そうなの？移動中ってだれと？...
+2025-11-06 22:55:40,560 - modules.log_manager - DEBUG - Searching Qdrant with vector (first 5 elements): [0.05401720851659775, 0.17049483954906464, 0.05659651383757591, 0.04991285130381584, -0.02384200319647789]...
+2025-11-06 22:55:40,582 - modules.log_manager - DEBUG - Qdrant search returned 5 hits.
+2025-11-06 22:55:40,582 - modules.log_manager - DEBUG - Fetching texts from PostgreSQL for IDs: [76623440, 382158757, 867372220, 13, 12]
+2025-11-06 22:55:40,583 - modules.log_manager - DEBUG - Retrieved 2 texts from PostgreSQL.
+2025-11-06 22:55:40,583 - modules.log_manager - INFO - RAG context retrieved.
+2025-11-06 22:55:40,586 - modules.log_manager - INFO - [FeedbackLoop] Context: シロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。
+シパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。...
+2025-11-06 22:55:40,586 - modules.log_manager - INFO - [FeedbackLoop] --- RAG Engine: End ---
+2025-11-06 22:55:40,586 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: Start ---
+2025-11-06 22:55:40,586 - modules.log_manager - DEBUG - [Generator] Starting context-aware generation...
+2025-11-06 22:55:46,923 - modules.log_manager - INFO - [Generator] Successfully generated response and saved to context.
+2025-11-06 22:55:46,925 - modules.log_manager - INFO - [FeedbackLoop] Answer: シロイ: こんにちは！移動中というのは、シパス計画の進捗報告です！私たちは火星に新しいコロニーを設立するため、 spaceship "Aurora" に搭乗して移動しています。AI科学者として私は、このプロジェクトでAI技術を活用して、新しい世界に向かっています。移動中は大変ですが、私たちは最後の目的地に到達するまで精一杯に努力します！
+2025-11-06 22:55:46,926 - modules.log_manager - INFO - [FeedbackLoop] --- Generator: End ---
+2025-11-06 22:55:46,926 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: Start ---
+2025-11-06 22:55:46,926 - modules.log_manager - DEBUG - Starting context-aware evaluation...
+2025-11-06 22:55:46,928 - modules.log_manager - ERROR - [Evaluator] No response found in context to evaluate.
+2025-11-06 22:55:46,928 - modules.log_manager - INFO - [FeedbackLoop] Rating: None, Feedback: None
+2025-11-06 22:55:46,928 - modules.log_manager - INFO - [FeedbackLoop] --- Evaluator: End ---
+2025-11-06 22:55:46,928 - modules.log_manager - WARNING - [FeedbackLoop] Max retries (1) reached. Halting loop.
+2025-11-06 22:55:46,928 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: Start ---
+2025-11-06 22:55:46,933 - modules.log_manager - INFO - [FeedbackLoop] Final session data saved to context.
+2025-11-06 22:55:46,933 - modules.log_manager - INFO - [FeedbackLoop] --- Memory Store: End ---
+2025-11-06 22:55:46,936 - modules.log_manager - INFO - [ChatHandler] AI Response: シロイ: こんにちは！移動中というのは、シパス計画の進捗報告です！私たちは火星に新しいコロニーを設立するため、 spaceship "Aurora" に搭乗して移動しています。AI科学者として私は、こ...
+2025-11-06 22:55:46,948 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:55:46,949 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:55:46,949 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:55:46,957 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:55:46,958 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:55:46,958 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:55:50,599 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:55:50,599 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:55:50,600 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:55:55,594 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:55:55,595 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:55:55,595 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:56:00,594 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:56:00,594 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:56:00,594 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:56:05,594 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:56:05,594 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:56:05,594 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:56:10,597 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:56:10,597 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:56:10,598 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:56:15,595 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:56:15,595 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:56:15,595 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:56:20,594 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:56:20,595 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:56:20,595 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:56:25,603 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:56:25,603 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:56:25,603 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:56:30,594 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:56:30,595 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:56:30,595 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:56:35,601 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:56:35,601 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:56:35,601 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:56:40,594 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:56:40,594 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:56:40,595 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:56:45,600 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:56:45,600 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:56:45,600 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:56:50,597 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:56:50,597 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:56:50,597 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:56:55,596 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:56:55,597 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:56:55,597 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:57:00,604 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:57:00,604 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:57:00,604 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-06 22:57:05,594 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-06 22:57:05,594 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-06 22:57:05,595 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.

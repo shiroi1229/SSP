@@ -1,0 +1,87 @@
+2025-11-05 23:57:09,612 - modules.log_manager - INFO - Qdrant client initialized for localhost:6333
+2025-11-05 23:57:12,958 - modules.log_manager - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-05 23:57:12,963 - modules.log_manager - INFO - PostgreSQL connected to 127.0.0.1:5432/ssp_memory
+2025-11-05 23:57:14,724 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:57:14,724 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:57:14,734 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:57:16,188 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:57:16,199 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:57:16,199 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:57:20,496 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:57:20,496 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:57:20,496 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:57:21,192 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:57:21,193 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:57:21,193 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:57:24,779 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:57:24,779 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:57:24,779 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:57:24,779 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-05 23:57:24,780 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-05 23:57:24,781 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-05 23:57:24,782 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-05 23:57:24,784 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-05 23:57:24,784 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-05 23:57:24,785 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-05 23:57:24,785 - modules.log_manager - INFO - [PolicyScheduler] Initialized.
+2025-11-05 23:57:24,785 - modules.log_manager - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-05 23:57:25,250 - modules.log_manager - INFO - [Learner] Initialized with v2.4 components.
+2025-11-05 23:57:25,269 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-05 23:57:25,269 - modules.log_manager - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-05 23:57:25,270 - modules.log_manager - INFO - [FeedbackLoop] Starting feedback loop for session: 20251105_235725
+2025-11-05 23:57:25,271 - modules.log_manager - ERROR - [ChatHandler] Error during chat message processing: 'InsightMonitor' object has no attribute 'trigger_snapshot'
+2025-11-05 23:57:26,205 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:57:26,206 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:57:26,206 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:57:31,194 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:57:31,194 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:57:31,194 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:57:33,567 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:57:33,567 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:57:33,567 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:57:33,567 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-05 23:57:33,569 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-05 23:57:33,570 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-05 23:57:33,570 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-05 23:57:33,572 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-05 23:57:33,572 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-05 23:57:33,573 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-05 23:57:33,573 - modules.log_manager - INFO - [PolicyScheduler] Initialized.
+2025-11-05 23:57:33,574 - modules.log_manager - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-05 23:57:34,042 - modules.log_manager - INFO - [Learner] Initialized with v2.4 components.
+2025-11-05 23:57:34,047 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-05 23:57:34,047 - modules.log_manager - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-05 23:57:34,048 - modules.log_manager - INFO - [FeedbackLoop] Starting feedback loop for session: 20251105_235734
+2025-11-05 23:57:34,049 - modules.log_manager - ERROR - [ChatHandler] Error during chat message processing: 'InsightMonitor' object has no attribute 'trigger_snapshot'
+2025-11-05 23:57:36,209 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:57:36,209 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:57:36,209 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:57:36,921 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:57:36,921 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:57:36,922 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:57:36,922 - modules.log_manager - INFO - [ContractRegistry] Loading contracts from contracts...
+2025-11-05 23:57:36,923 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: evaluator
+2025-11-05 23:57:36,924 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: generator
+2025-11-05 23:57:36,925 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: persona_manager
+2025-11-05 23:57:36,926 - modules.log_manager - INFO - [ContractRegistry] Loaded base contract: self_optimizer
+2025-11-05 23:57:36,927 - modules.log_manager - INFO - [ContractRegistry] Loaded meta-links graph.
+2025-11-05 23:57:36,928 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-05 23:57:36,928 - modules.log_manager - INFO - [PolicyScheduler] Initialized.
+2025-11-05 23:57:36,928 - modules.log_manager - INFO - [TimeSeriesBuffer] Initialized with window size 50
+2025-11-05 23:57:37,403 - modules.log_manager - INFO - [Learner] Initialized with v2.4 components.
+2025-11-05 23:57:37,421 - modules.log_manager - INFO - Recovery policies loaded successfully from config/recovery_policies.yaml
+2025-11-05 23:57:37,421 - modules.log_manager - INFO - [FeedbackLoop] Initialized with v2.4 components.
+2025-11-05 23:57:37,422 - modules.log_manager - INFO - [FeedbackLoop] Starting feedback loop for session: 20251105_235737
+2025-11-05 23:57:37,423 - modules.log_manager - ERROR - [ChatHandler] Error during chat message processing: 'InsightMonitor' object has no attribute 'trigger_snapshot'
+2025-11-05 23:57:41,207 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:57:41,208 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:57:41,208 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:57:46,205 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:57:46,205 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:57:46,205 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:57:51,199 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:57:51,199 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:57:51,199 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.
+2025-11-05 23:57:56,199 - modules.log_manager - INFO - [ContextHistory] History loaded from logs/context_history.json
+2025-11-05 23:57:56,199 - modules.log_manager - INFO - [ContextManager] Loading context from file: D:\gemini\data\test_context.json
+2025-11-05 23:57:56,200 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.

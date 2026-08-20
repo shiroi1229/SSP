@@ -1,0 +1,29 @@
+## Phase 1.7: Self-Training Feedback Loop (自己再生成フィードバックループ) - Summary
+
+**Objective:** Implemented a self-improvement loop (Generator → Evaluator → Regenerator) to automatically enhance the quality of SSP's output.
+
+**Key Implementations:**
+
+*   **`modules/evaluator.py` (New File):**
+    *   Created `modules/evaluator.py` containing the `evaluate_output(answer: str, context: str)` function.
+    *   This function leverages the LLM (via `modules.generator.generate_answer`) to assess a generated answer against predefined criteria: "Worldview consistency", "Specificity of answer", and "Consistency of writing style".
+    *   It returns a JSON object encapsulating a calculated `rating` (derived as the average of the three criteria) and constructive `feedback` from the LLM.
+    *   Robust error handling for JSON parsing from the LLM response is included.
+
+*   **`modules/generator.py` (Modified):**
+    *   Introduced the `regenerate_with_feedback(context: str, feedback: str, user_input: str)` function.
+    *   This function intelligently reuses the existing `generate_answer` functionality.
+    *   It dynamically constructs a new `user_input` by prepending the provided `feedback` to the original `user_input`, thereby guiding the LLM to produce a higher-quality response based on the received critique.
+
+*   **`orchestrator/main.py` (Modified):**
+    *   The core feedback loop logic has been meticulously implemented within the `elif args.user_input:` block.
+    *   **Initial Generation:** Initiates the process by calling `generate_answer` to obtain the first response.
+    *   **Evaluation:** Proceeds to call `evaluate_output` to critically assess the initial answer, yielding a `rating` and actionable `feedback`.
+    *   **Conditional Regeneration:** If the `rating` falls below a configurable `EVALUATION_THRESHOLD` (currently set at 0.7) and the `MAX_ITERATIONS` (currently limited to 2) has not been exceeded, the system automatically invokes `regenerate_with_feedback`.
+    *   **Re-evaluation (after regeneration):** The regenerated answer undergoes a subsequent evaluation by `evaluate_output` to ascertain an updated `rating` and `feedback`.
+    *   **Session Logging:** The comprehensive details of the interaction, including the final `user_input`, `final_output` (representing the optimal answer after potential regeneration), `evaluation_score`, `evaluation_comment`, and a `workflow_trace`, are diligently saved to the PostgreSQL `session_logs` table utilizing `backend.db.connection.save_session_to_db`.
+    *   Detailed console output is provided for each distinct phase of the feedback loop, encompassing initial generation, evaluation, any regeneration attempts, and the ultimate score.
+
+*   **Dependencies & Integration:**
+    *   All requisite imports for the newly introduced functions and modules have been meticulously added to `orchestrator/main.py`.
+    *   The `RAGEngine` is appropriately initialized to furnish the necessary context for both the initial generation and subsequent evaluation processes.

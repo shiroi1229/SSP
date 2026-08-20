@@ -1,0 +1,6 @@
+{
+  "status": "WARN",
+  "issues": 2,
+  "trend": "（改善必要）",
+  "summary_excerpt": "# Shiroi System v2.0 総合テストレポート\n\n🕒 実行日時: 2025-11-10 19:19:02\n\n## persona_state\n```\n(200, {'persona_id': 'shiroi_core', 'emotion_state': {'joy': 0.54, 'sad': 0.57, 'neutral': 0.23}, 'tone': '柔らかい科学口調', 'logic_ratio': 0.46, 'creativity_ratio': 0.76, 'memory_usage': 0.58, 'context_sync_rate': 0.94, 'last_update': '2025-11-09T14:18:43.689552'})\n```\n\n## logs_recent\n```\n(404, {'detail': 'Not Found'})\n```\n\n## analysis\n```\n(200, {'summary': 'LLMからの応答を解析できませんでした。', 'insight': 'LLMはJSONではない応答を返しました: Here i"
+}

@@ -1,0 +1,11 @@
+{"timestamp": "2025-11-05 23:21:26,580", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-05 23:21:26,582", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: evaluator"}
+{"timestamp": "2025-11-05 23:21:26,583", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: generator"}
+{"timestamp": "2025-11-05 23:21:26,584", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: persona_manager"}
+{"timestamp": "2025-11-05 23:21:26,585", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: self_optimizer"}
+{"timestamp": "2025-11-05 23:21:26,586", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Starting meta-contract generation and registration..."}
+{"timestamp": "2025-11-05 23:21:26,588", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Registered meta-contract: self_optimizer"}
+{"timestamp": "2025-11-05 23:21:26,589", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Meta-contract generation and registration complete."}
+{"timestamp": "2025-11-05 23:21:33,981", "name": "modules.log_manager", "levelname": "INFO", "message": "Qdrant client initialized for localhost:6333"}
+{"timestamp": "2025-11-05 23:21:37,322", "name": "modules.log_manager", "levelname": "INFO", "message": "Embedding model all-MiniLM-L6-v2 loaded."}
+{"timestamp": "2025-11-05 23:21:37,327", "name": "modules.log_manager", "levelname": "INFO", "message": "PostgreSQL connected to 127.0.0.1:5432/ssp_memory"}

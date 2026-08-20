@@ -1,0 +1,3164 @@
+[
+  {
+    "id": "recent_logs_api_api_logs_recent_get",
+    "path": "/api/api/logs/recent",
+    "method": "GET",
+    "summary": "Recent Logs",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "evaluate_session_api_api_evaluate_post",
+    "path": "/api/api/evaluate",
+    "method": "POST",
+    "summary": "Evaluate Session",
+    "tags": [
+      "Evaluation"
+    ],
+    "input_schema": {
+      "properties": {
+        "session_id": {
+          "type": "string",
+          "title": "Session Id"
+        },
+        "evaluation_score": {
+          "type": "integer",
+          "maximum": 5.0,
+          "minimum": 1.0,
+          "title": "Evaluation Score"
+        },
+        "evaluation_comment": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 500
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Comment"
+        },
+        "question": {
+          "type": "string",
+          "title": "Question"
+        }
+      },
+      "type": "object",
+      "required": [
+        "session_id",
+        "evaluation_score",
+        "question"
+      ],
+      "title": "EvaluationRequest"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "get_context_state_api_context_state_get",
+    "path": "/api/context/state",
+    "method": "GET",
+    "summary": "Get Context State",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "list_context_snapshots_api_context_snapshots_get",
+    "path": "/api/context/snapshots",
+    "method": "GET",
+    "summary": "List Context Snapshots",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_context_snapshot_api_context_snapshots__snapshot_id__get",
+    "path": "/api/context/snapshots/{snapshot_id}",
+    "method": "GET",
+    "summary": "Get Context Snapshot",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "analyze_sessions_api_analyze_sessions_get",
+    "path": "/api/analyze_sessions",
+    "method": "GET",
+    "summary": "Analyze Sessions",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "generate_report_endpoint_api_generate_self_analysis_report_get",
+    "path": "/api/generate_self_analysis_report",
+    "method": "GET",
+    "summary": "Generate Report Endpoint",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_sessions_api_sessions_get",
+    "path": "/api/sessions",
+    "method": "GET",
+    "summary": "Get Sessions",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "create_session_log_api_sessions_post",
+    "path": "/api/sessions",
+    "method": "POST",
+    "summary": "Create Session Log",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Created At"
+        },
+        "user_input": {
+          "type": "string",
+          "title": "User Input"
+        },
+        "final_output": {
+          "type": "string",
+          "title": "Final Output"
+        },
+        "evaluation_score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Score"
+        },
+        "evaluation_comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Comment"
+        },
+        "workflow_trace": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Workflow Trace"
+        }
+      },
+      "type": "object",
+      "required": [
+        "user_input",
+        "final_output"
+      ],
+      "title": "SessionLogCreate"
+    },
+    "output_schema": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Created At"
+        },
+        "user_input": {
+          "type": "string",
+          "title": "User Input"
+        },
+        "final_output": {
+          "type": "string",
+          "title": "Final Output"
+        },
+        "evaluation_score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Score"
+        },
+        "evaluation_comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Comment"
+        },
+        "workflow_trace": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Workflow Trace"
+        }
+      },
+      "type": "object",
+      "required": [
+        "id",
+        "created_at",
+        "user_input",
+        "final_output"
+      ],
+      "title": "SessionLogResponse"
+    }
+  },
+  {
+    "id": "get_session_api_sessions__session_id__get",
+    "path": "/api/sessions/{session_id}",
+    "method": "GET",
+    "summary": "Get Session",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Created At"
+        },
+        "user_input": {
+          "type": "string",
+          "title": "User Input"
+        },
+        "final_output": {
+          "type": "string",
+          "title": "Final Output"
+        },
+        "evaluation_score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Score"
+        },
+        "evaluation_comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Comment"
+        },
+        "workflow_trace": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Workflow Trace"
+        }
+      },
+      "type": "object",
+      "required": [
+        "id",
+        "created_at",
+        "user_input",
+        "final_output"
+      ],
+      "title": "SessionLogResponse"
+    }
+  },
+  {
+    "id": "update_session_evaluation_api_sessions__session_id__patch",
+    "path": "/api/sessions/{session_id}",
+    "method": "PATCH",
+    "summary": "Update Session Evaluation",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "evaluation_score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Score"
+        },
+        "evaluation_comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Evaluation Comment"
+        }
+      },
+      "type": "object",
+      "required": [
+        "evaluation_score",
+        "evaluation_comment"
+      ],
+      "title": "SessionEvaluationUpdate"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "chat_endpoint_api_chat_post",
+    "path": "/api/chat",
+    "method": "POST",
+    "summary": "Chat Endpoint",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "user_input": {
+          "type": "string",
+          "title": "User Input"
+        }
+      },
+      "type": "object",
+      "required": [
+        "user_input"
+      ],
+      "title": "ChatRequest"
+    },
+    "output_schema": {
+      "properties": {
+        "ai_response": {
+          "type": "string",
+          "title": "Ai Response"
+        }
+      },
+      "type": "object",
+      "required": [
+        "ai_response"
+      ],
+      "title": "ChatResponse"
+    }
+  },
+  {
+    "id": "context_endpoint_api_api_context_get",
+    "path": "/api/api/context",
+    "method": "GET",
+    "summary": "Context Endpoint",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": {
+      "properties": {
+        "short_term": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Short Term"
+        },
+        "mid_term": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Mid Term"
+        },
+        "long_term": {
+          "additionalProperties": true,
+          "type": "object",
+          "title": "Long Term"
+        }
+      },
+      "type": "object",
+      "required": [
+        "short_term",
+        "mid_term",
+        "long_term"
+      ],
+      "title": "ContextResponse"
+    }
+  },
+  {
+    "id": "get_roadmap_sync_log_api_api_logs_roadmap_sync_get",
+    "path": "/api/api/logs/roadmap_sync",
+    "method": "GET",
+    "summary": "Get Roadmap Sync Log",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_predictive_self_correction_logs_api_logs_predictive_self_correction_get",
+    "path": "/api/logs/predictive-self-correction",
+    "method": "GET",
+    "summary": "Get Predictive Self Correction Logs",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "module_stats_api_module_stats_get",
+    "path": "/api/module_stats",
+    "method": "GET",
+    "summary": "Module Stats",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "restart_module_api_recovery_restart_post",
+    "path": "/api/recovery/restart",
+    "method": "POST",
+    "summary": "Restart Module",
+    "tags": [
+      "Recovery"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "resync_state_api_recovery_state_resync_post",
+    "path": "/api/recovery/state_resync",
+    "method": "POST",
+    "summary": "Resync State",
+    "tags": [
+      "Recovery"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_system_status_api_api_status_get",
+    "path": "/api/api/status",
+    "method": "GET",
+    "summary": "Get System Status",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "update_emotion_state_api_api_emotion_post",
+    "path": "/api/api/emotion",
+    "method": "POST",
+    "summary": "Update Emotion State",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "joy": {
+          "type": "number",
+          "title": "Joy"
+        },
+        "anger": {
+          "type": "number",
+          "title": "Anger"
+        },
+        "sadness": {
+          "type": "number",
+          "title": "Sadness"
+        },
+        "happiness": {
+          "type": "number",
+          "title": "Happiness"
+        },
+        "fear": {
+          "type": "number",
+          "title": "Fear"
+        },
+        "calm": {
+          "type": "number",
+          "title": "Calm"
+        }
+      },
+      "type": "object",
+      "required": [
+        "joy",
+        "anger",
+        "sadness",
+        "happiness",
+        "fear",
+        "calm"
+      ],
+      "title": "EmotionStateUpdate"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "generate_tts_endpoint_api_api_tts_post",
+    "path": "/api/api/tts",
+    "method": "POST",
+    "summary": "Generate Tts Endpoint",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "text": {
+          "type": "string",
+          "title": "Text"
+        },
+        "speaker_id": {
+          "type": "integer",
+          "title": "Speaker Id",
+          "default": 1
+        }
+      },
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "title": "TTSRequest"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "send_osc_emotion_api_api_osc_send_post",
+    "path": "/api/api/osc/send",
+    "method": "POST",
+    "summary": "Send Osc Emotion",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "emotion": {
+          "$ref": "#/components/schemas/EmotionPayload"
+        }
+      },
+      "type": "object",
+      "required": [
+        "emotion"
+      ],
+      "title": "OSCRequest"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "send_specific_osc_emotion_api_api_osc_send_emotion_post",
+    "path": "/api/api/osc/send-emotion",
+    "method": "POST",
+    "summary": "Send Specific Osc Emotion",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "emotion": {
+          "type": "string",
+          "title": "Emotion"
+        },
+        "intensity": {
+          "type": "number",
+          "title": "Intensity"
+        }
+      },
+      "type": "object",
+      "required": [
+        "emotion",
+        "intensity"
+      ],
+      "title": "OSCSendEmotionRequest"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "get_roadmap_tree_api_roadmap_tree_get",
+    "path": "/api/roadmap/tree",
+    "method": "GET",
+    "summary": "Get Roadmap Tree",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_roadmap_stats_api_roadmap_stats_get",
+    "path": "/api/roadmap/stats",
+    "method": "GET",
+    "summary": "Get Roadmap Stats",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": {
+      "properties": {
+        "summary": {
+          "items": {
+            "$ref": "#/components/schemas/RoadmapPrefixSummary"
+          },
+          "type": "array",
+          "title": "Summary"
+        },
+        "delayed": {
+          "items": {
+            "$ref": "#/components/schemas/RoadmapDelayedItem"
+          },
+          "type": "array",
+          "title": "Delayed"
+        }
+      },
+      "type": "object",
+      "required": [
+        "summary",
+        "delayed"
+      ],
+      "title": "RoadmapStatsResponse"
+    }
+  },
+  {
+    "id": "get_current_roadmap_api_roadmap_current_get",
+    "path": "/api/roadmap/current",
+    "method": "GET",
+    "summary": "Get Current Roadmap",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": {
+      "properties": {
+        "backend": {
+          "items": {
+            "$ref": "#/components/schemas/RoadmapItem"
+          },
+          "type": "array",
+          "title": "Backend"
+        },
+        "frontend": {
+          "items": {
+            "$ref": "#/components/schemas/RoadmapItem"
+          },
+          "type": "array",
+          "title": "Frontend"
+        },
+        "robustness": {
+          "items": {
+            "$ref": "#/components/schemas/RoadmapItem"
+          },
+          "type": "array",
+          "title": "Robustness"
+        },
+        "Awareness_Engine": {
+          "items": {
+            "$ref": "#/components/schemas/RoadmapItem"
+          },
+          "type": "array",
+          "title": "Awareness Engine",
+          "default": []
+        }
+      },
+      "type": "object",
+      "required": [
+        "backend",
+        "frontend",
+        "robustness"
+      ],
+      "title": "RoadmapData"
+    }
+  },
+  {
+    "id": "get_roadmap_item_by_version_api_roadmap__version__get",
+    "path": "/api/roadmap/{version}",
+    "method": "GET",
+    "summary": "Get Roadmap Item By Version",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": {
+      "properties": {
+        "version": {
+          "type": "string",
+          "title": "Version"
+        },
+        "codename": {
+          "type": "string",
+          "title": "Codename"
+        },
+        "goal": {
+          "type": "string",
+          "title": "Goal"
+        },
+        "status": {
+          "type": "string",
+          "title": "Status"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
+        "startDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Startdate"
+        },
+        "endDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Enddate"
+        },
+        "progress": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Progress"
+        },
+        "keyFeatures": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Keyfeatures"
+        },
+        "dependencies": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dependencies"
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Metrics"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Owner"
+        },
+        "documentationLink": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Documentationlink"
+        },
+        "development_details": {
+          "anyOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Development Details"
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Parent Id"
+        },
+        "id": {
+          "type": "integer",
+          "title": "Id"
+        }
+      },
+      "type": "object",
+      "required": [
+        "version",
+        "codename",
+        "goal",
+        "status",
+        "description",
+        "id"
+      ],
+      "title": "RoadmapItem"
+    }
+  },
+  {
+    "id": "update_roadmap_item_by_version_api_roadmap__version__patch",
+    "path": "/api/roadmap/{version}",
+    "method": "PATCH",
+    "summary": "Update Roadmap Item By Version",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "development_details": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Development Details"
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Parent Id"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Status"
+        },
+        "progress": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Progress"
+        },
+        "keyFeatures": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Keyfeatures"
+        },
+        "dependencies": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dependencies"
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Metrics"
+        }
+      },
+      "type": "object",
+      "title": "RoadmapItemUpdateByVersion"
+    },
+    "output_schema": {
+      "properties": {
+        "version": {
+          "type": "string",
+          "title": "Version"
+        },
+        "codename": {
+          "type": "string",
+          "title": "Codename"
+        },
+        "goal": {
+          "type": "string",
+          "title": "Goal"
+        },
+        "status": {
+          "type": "string",
+          "title": "Status"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
+        "startDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Startdate"
+        },
+        "endDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Enddate"
+        },
+        "progress": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Progress"
+        },
+        "keyFeatures": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Keyfeatures"
+        },
+        "dependencies": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dependencies"
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Metrics"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Owner"
+        },
+        "documentationLink": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Documentationlink"
+        },
+        "development_details": {
+          "anyOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Development Details"
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Parent Id"
+        },
+        "id": {
+          "type": "integer",
+          "title": "Id"
+        }
+      },
+      "type": "object",
+      "required": [
+        "version",
+        "codename",
+        "goal",
+        "status",
+        "description",
+        "id"
+      ],
+      "title": "RoadmapItem"
+    }
+  },
+  {
+    "id": "create_roadmap_item_api_roadmap__post",
+    "path": "/api/roadmap/",
+    "method": "POST",
+    "summary": "Create Roadmap Item",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "version": {
+          "type": "string",
+          "title": "Version"
+        },
+        "codename": {
+          "type": "string",
+          "title": "Codename"
+        },
+        "goal": {
+          "type": "string",
+          "title": "Goal"
+        },
+        "status": {
+          "type": "string",
+          "title": "Status"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
+        "startDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Startdate"
+        },
+        "endDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Enddate"
+        },
+        "progress": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Progress"
+        },
+        "keyFeatures": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Keyfeatures"
+        },
+        "dependencies": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dependencies"
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Metrics"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Owner"
+        },
+        "documentationLink": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Documentationlink"
+        },
+        "development_details": {
+          "anyOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Development Details"
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Parent Id"
+        }
+      },
+      "type": "object",
+      "required": [
+        "version",
+        "codename",
+        "goal",
+        "status",
+        "description"
+      ],
+      "title": "RoadmapItemCreate"
+    },
+    "output_schema": {
+      "properties": {
+        "version": {
+          "type": "string",
+          "title": "Version"
+        },
+        "codename": {
+          "type": "string",
+          "title": "Codename"
+        },
+        "goal": {
+          "type": "string",
+          "title": "Goal"
+        },
+        "status": {
+          "type": "string",
+          "title": "Status"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
+        "startDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Startdate"
+        },
+        "endDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Enddate"
+        },
+        "progress": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Progress"
+        },
+        "keyFeatures": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Keyfeatures"
+        },
+        "dependencies": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dependencies"
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Metrics"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Owner"
+        },
+        "documentationLink": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Documentationlink"
+        },
+        "development_details": {
+          "anyOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Development Details"
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Parent Id"
+        },
+        "id": {
+          "type": "integer",
+          "title": "Id"
+        }
+      },
+      "type": "object",
+      "required": [
+        "version",
+        "codename",
+        "goal",
+        "status",
+        "description",
+        "id"
+      ],
+      "title": "RoadmapItem"
+    }
+  },
+  {
+    "id": "update_roadmap_item_api_roadmap__item_id__put",
+    "path": "/api/roadmap/{item_id}",
+    "method": "PUT",
+    "summary": "Update Roadmap Item",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Version"
+        },
+        "codename": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Codename"
+        },
+        "goal": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Goal"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Status"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Description"
+        },
+        "startDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Startdate"
+        },
+        "endDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Enddate"
+        },
+        "progress": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Progress"
+        },
+        "keyFeatures": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Keyfeatures"
+        },
+        "dependencies": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dependencies"
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Metrics"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Owner"
+        },
+        "documentationLink": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Documentationlink"
+        },
+        "development_details": {
+          "anyOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Development Details"
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Parent Id"
+        }
+      },
+      "type": "object",
+      "title": "RoadmapItemUpdate"
+    },
+    "output_schema": {
+      "properties": {
+        "version": {
+          "type": "string",
+          "title": "Version"
+        },
+        "codename": {
+          "type": "string",
+          "title": "Codename"
+        },
+        "goal": {
+          "type": "string",
+          "title": "Goal"
+        },
+        "status": {
+          "type": "string",
+          "title": "Status"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
+        "startDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Startdate"
+        },
+        "endDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Enddate"
+        },
+        "progress": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Progress"
+        },
+        "keyFeatures": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Keyfeatures"
+        },
+        "dependencies": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dependencies"
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Metrics"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Owner"
+        },
+        "documentationLink": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Documentationlink"
+        },
+        "development_details": {
+          "anyOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Development Details"
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Parent Id"
+        },
+        "id": {
+          "type": "integer",
+          "title": "Id"
+        }
+      },
+      "type": "object",
+      "required": [
+        "version",
+        "codename",
+        "goal",
+        "status",
+        "description",
+        "id"
+      ],
+      "title": "RoadmapItem"
+    }
+  },
+  {
+    "id": "delete_roadmap_item_api_roadmap__item_id__delete",
+    "path": "/api/roadmap/{item_id}",
+    "method": "DELETE",
+    "summary": "Delete Roadmap Item",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "import_roadmap_item_from_text_api_roadmap_import_text_post",
+    "path": "/api/roadmap/import-text",
+    "method": "POST",
+    "summary": "Import Roadmap Item From Text",
+    "tags": [],
+    "input_schema": {
+      "properties": {
+        "text": {
+          "type": "string",
+          "title": "Text"
+        }
+      },
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "title": "RoadmapImportText"
+    },
+    "output_schema": {
+      "properties": {
+        "version": {
+          "type": "string",
+          "title": "Version"
+        },
+        "codename": {
+          "type": "string",
+          "title": "Codename"
+        },
+        "goal": {
+          "type": "string",
+          "title": "Goal"
+        },
+        "status": {
+          "type": "string",
+          "title": "Status"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
+        "startDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Startdate"
+        },
+        "endDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Enddate"
+        },
+        "progress": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Progress"
+        },
+        "keyFeatures": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Keyfeatures"
+        },
+        "dependencies": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dependencies"
+        },
+        "metrics": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Metrics"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Owner"
+        },
+        "documentationLink": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Documentationlink"
+        },
+        "development_details": {
+          "anyOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Development Details"
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Parent Id"
+        },
+        "id": {
+          "type": "integer",
+          "title": "Id"
+        }
+      },
+      "type": "object",
+      "required": [
+        "version",
+        "codename",
+        "goal",
+        "status",
+        "description",
+        "id"
+      ],
+      "title": "RoadmapItem"
+    }
+  },
+  {
+    "id": "get_system_health_api_system_health_get",
+    "path": "/api/system/health",
+    "method": "GET",
+    "summary": "Get System Health",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": {
+      "properties": {
+        "cpu_percent": {
+          "type": "number",
+          "title": "Cpu Percent"
+        },
+        "memory_percent": {
+          "type": "number",
+          "title": "Memory Percent"
+        },
+        "uptime_seconds": {
+          "type": "number",
+          "title": "Uptime Seconds"
+        },
+        "uptime_human": {
+          "type": "string",
+          "title": "Uptime Human"
+        },
+        "process_count": {
+          "type": "integer",
+          "title": "Process Count"
+        },
+        "disk_usage_percent": {
+          "type": "number",
+          "title": "Disk Usage Percent"
+        },
+        "boot_time": {
+          "type": "string",
+          "title": "Boot Time"
+        }
+      },
+      "type": "object",
+      "required": [
+        "cpu_percent",
+        "memory_percent",
+        "uptime_seconds",
+        "uptime_human",
+        "process_count",
+        "disk_usage_percent",
+        "boot_time"
+      ],
+      "title": "SystemHealth"
+    }
+  },
+  {
+    "id": "forecast_system_health_api_system_forecast_get",
+    "path": "/api/system/forecast",
+    "method": "GET",
+    "summary": "Forecast System Health",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_diagnostic_summary_api_api_system_diagnose_get",
+    "path": "/api/api/system/diagnose",
+    "method": "GET",
+    "summary": "Get Diagnostic Summary",
+    "tags": [
+      "System"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_system_metrics_api_api_system_metrics_get",
+    "path": "/api/api/system/metrics",
+    "method": "GET",
+    "summary": "Get System Metrics",
+    "tags": [
+      "System"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "rebalance_api_api_system_rebalance_post",
+    "path": "/api/api/system/rebalance",
+    "method": "POST",
+    "summary": "Rebalance",
+    "tags": [
+      "System"
+    ],
+    "input_schema": {
+      "properties": {
+        "modes": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Modes"
+        },
+        "task_priorities": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Task Priorities"
+        }
+      },
+      "type": "object",
+      "title": "RebalanceRequest"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "singularity_status_api_system_singularity_get",
+    "path": "/api/system/singularity",
+    "method": "GET",
+    "summary": "Singularity Status",
+    "tags": [
+      "System"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_state_api_continuum_state_get",
+    "path": "/api/continuum/state",
+    "method": "GET",
+    "summary": "Get State",
+    "tags": [
+      "Continuum"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "continuum_stream_api_continuum_stream_get",
+    "path": "/api/continuum/stream",
+    "method": "GET",
+    "summary": "Continuum Stream",
+    "tags": [
+      "Continuum"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_cluster_health_api_api_cluster_health_get",
+    "path": "/api/api/cluster/health",
+    "method": "GET",
+    "summary": "Get Cluster Health",
+    "tags": [
+      "Cluster"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "recover_node_api_api_cluster_recover_post",
+    "path": "/api/api/cluster/recover",
+    "method": "POST",
+    "summary": "Recover Node",
+    "tags": [
+      "Cluster"
+    ],
+    "input_schema": {
+      "properties": {
+        "node": {
+          "type": "string",
+          "title": "Node"
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "promote",
+            "heal",
+            "sync"
+          ],
+          "title": "Action"
+        },
+        "target": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target"
+        }
+      },
+      "type": "object",
+      "required": [
+        "node",
+        "action"
+      ],
+      "title": "RecoveryCommand"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "play_stage_api_api_stage_play_post",
+    "path": "/api/api/stage/play",
+    "method": "POST",
+    "summary": "Play Stage",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "stop_stage_api_api_stage_stop_post",
+    "path": "/api/api/stage/stop",
+    "method": "POST",
+    "summary": "Stop Stage",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_timeline_api_api_stage_timeline_get",
+    "path": "/api/api/stage/timeline",
+    "method": "GET",
+    "summary": "Get Timeline",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "list_stage_logs_api_api_stage_logs_get",
+    "path": "/api/api/stage/logs",
+    "method": "GET",
+    "summary": "List Stage Logs",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "replay_stage_endpoint_api_api_stage_replay_post",
+    "path": "/api/api/stage/replay",
+    "method": "POST",
+    "summary": "Replay Stage Endpoint",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "sync_stage_memory_api_api_stage_memory_sync_post",
+    "path": "/api/api/stage/memory/sync",
+    "method": "POST",
+    "summary": "Sync Stage Memory",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "search_stage_memory_api_api_stage_memory_search_get",
+    "path": "/api/api/stage/memory/search",
+    "method": "GET",
+    "summary": "Search Stage Memory",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "list_stage_runs_api_stage_runs_get",
+    "path": "/api/stage/runs",
+    "method": "GET",
+    "summary": "List Stage Runs",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_stage_run_api_stage_runs__run_id__get",
+    "path": "/api/stage/runs/{run_id}",
+    "method": "GET",
+    "summary": "Get Stage Run",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_persona_state_api_persona_state_get",
+    "path": "/api/persona/state",
+    "method": "GET",
+    "summary": "Get Persona State",
+    "tags": [
+      "Persona"
+    ],
+    "input_schema": null,
+    "output_schema": {
+      "properties": {
+        "persona_id": {
+          "type": "string",
+          "title": "Persona Id"
+        },
+        "emotion_state": {
+          "$ref": "#/components/schemas/EmotionState"
+        },
+        "tone": {
+          "type": "string",
+          "title": "Tone"
+        },
+        "logic_ratio": {
+          "type": "number",
+          "title": "Logic Ratio"
+        },
+        "creativity_ratio": {
+          "type": "number",
+          "title": "Creativity Ratio"
+        },
+        "memory_usage": {
+          "type": "number",
+          "title": "Memory Usage"
+        },
+        "context_sync_rate": {
+          "type": "number",
+          "title": "Context Sync Rate"
+        },
+        "last_update": {
+          "type": "string",
+          "title": "Last Update"
+        }
+      },
+      "type": "object",
+      "required": [
+        "persona_id",
+        "emotion_state",
+        "tone",
+        "logic_ratio",
+        "creativity_ratio",
+        "memory_usage",
+        "context_sync_rate",
+        "last_update"
+      ],
+      "title": "PersonaState"
+    }
+  },
+  {
+    "id": "update_persona_state_api_persona_update_state_post",
+    "path": "/api/persona/update_state",
+    "method": "POST",
+    "summary": "Update Persona State",
+    "tags": [
+      "Persona"
+    ],
+    "input_schema": {
+      "properties": {
+        "persona_id": {
+          "type": "string",
+          "title": "Persona Id"
+        },
+        "emotion_state": {
+          "$ref": "#/components/schemas/EmotionState"
+        },
+        "tone": {
+          "type": "string",
+          "title": "Tone"
+        },
+        "logic_ratio": {
+          "type": "number",
+          "title": "Logic Ratio"
+        },
+        "creativity_ratio": {
+          "type": "number",
+          "title": "Creativity Ratio"
+        },
+        "memory_usage": {
+          "type": "number",
+          "title": "Memory Usage"
+        },
+        "context_sync_rate": {
+          "type": "number",
+          "title": "Context Sync Rate"
+        },
+        "last_update": {
+          "type": "string",
+          "title": "Last Update"
+        }
+      },
+      "type": "object",
+      "required": [
+        "persona_id",
+        "emotion_state",
+        "tone",
+        "logic_ratio",
+        "creativity_ratio",
+        "memory_usage",
+        "context_sync_rate",
+        "last_update"
+      ],
+      "title": "PersonaState"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "get_memory_snapshot_api_persona_memory_snapshot_get",
+    "path": "/api/persona/memory_snapshot",
+    "method": "GET",
+    "summary": "Get Memory Snapshot",
+    "tags": [
+      "Persona"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_context_sync_status_api_persona_context_sync_get",
+    "path": "/api/persona/context_sync",
+    "method": "GET",
+    "summary": "Get Context Sync Status",
+    "tags": [
+      "Persona"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_modules_with_versions_api_modules_get",
+    "path": "/api/modules",
+    "method": "GET",
+    "summary": "Get Modules With Versions",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_insight_report_api_insight_report_get",
+    "path": "/api/insight/report",
+    "method": "GET",
+    "summary": "Get Insight Report",
+    "tags": [
+      "Insight"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_collective_mind_api_collective_mind_get",
+    "path": "/api/collective/mind",
+    "method": "GET",
+    "summary": "Get Collective Mind",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_awareness_insights_api_awareness_insights_get",
+    "path": "/api/awareness/insights",
+    "method": "GET",
+    "summary": "Get Awareness Insights",
+    "tags": [
+      "Awareness"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "list_internal_dialogues_api_internal_dialogue_logs_get",
+    "path": "/api/internal-dialogue/logs",
+    "method": "GET",
+    "summary": "List Internal Dialogues",
+    "tags": [
+      "InternalDialogue"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "trigger_internal_dialogue_api_internal_dialogue_generate_post",
+    "path": "/api/internal-dialogue/generate",
+    "method": "POST",
+    "summary": "Trigger Internal Dialogue",
+    "tags": [
+      "InternalDialogue"
+    ],
+    "input_schema": null,
+    "output_schema": {
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Created At"
+        },
+        "participants": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Participants"
+        },
+        "transcript": {
+          "anyOf": [
+            {
+              "items": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Transcript"
+        },
+        "insights": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Insights"
+        },
+        "source_snapshot_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Source Snapshot Id"
+        },
+        "meta": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Meta"
+        },
+        "id": {
+          "type": "integer",
+          "title": "Id"
+        }
+      },
+      "type": "object",
+      "required": [
+        "created_at",
+        "id"
+      ],
+      "title": "InternalDialogue"
+    }
+  },
+  {
+    "id": "get_cognitive_firewall_state_api_robustness_firewall_get",
+    "path": "/api/robustness/firewall",
+    "method": "GET",
+    "summary": "Get Cognitive Firewall State",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_self_healing_state_api_robustness_self_healing_get",
+    "path": "/api/robustness/self-healing",
+    "method": "GET",
+    "summary": "Get Self Healing State",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_loop_health_state_api_robustness_loop_health_get",
+    "path": "/api/robustness/loop-health",
+    "method": "GET",
+    "summary": "Get Loop Health State",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_loop_health_rules_api_robustness_loop_health_rules_get",
+    "path": "/api/robustness/loop-health/rules",
+    "method": "GET",
+    "summary": "Get Loop Health Rules",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_load_balancer_state_api_robustness_load_balancer_get",
+    "path": "/api/robustness/load-balancer",
+    "method": "GET",
+    "summary": "Get Load Balancer State",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "update_load_balancer_rules_api_robustness_load_balancer_rules_post",
+    "path": "/api/robustness/load-balancer/rules",
+    "method": "POST",
+    "summary": "Update Load Balancer Rules",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_recovery_state_api_robustness_distributed_recovery_get",
+    "path": "/api/robustness/distributed-recovery",
+    "method": "GET",
+    "summary": "Get Recovery State",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "promote_standby_api_robustness_distributed_recovery_promote_post",
+    "path": "/api/robustness/distributed-recovery/promote",
+    "method": "POST",
+    "summary": "Promote Standby",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "update_node_status_api_robustness_distributed_recovery_status_post",
+    "path": "/api/robustness/distributed-recovery/status",
+    "method": "POST",
+    "summary": "Update Node Status",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_akashic_sync_state_api_robustness_akashic_sync_get",
+    "path": "/api/robustness/akashic-sync",
+    "method": "GET",
+    "summary": "Get Akashic Sync State",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "update_thresholds_api_robustness_akashic_sync_thresholds_post",
+    "path": "/api/robustness/akashic-sync/thresholds",
+    "method": "POST",
+    "summary": "Update Thresholds",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_resilience_state_api_robustness_existential_resilience_get",
+    "path": "/api/robustness/existential-resilience",
+    "method": "GET",
+    "summary": "Get Resilience State",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "update_resilience_actions_api_robustness_existential_resilience_actions_post",
+    "path": "/api/robustness/existential-resilience/actions",
+    "method": "POST",
+    "summary": "Update Resilience Actions",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_luminous_state_api_robustness_luminous_nexus_get",
+    "path": "/api/robustness/luminous-nexus",
+    "method": "GET",
+    "summary": "Get Luminous State",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "sync_cluster_api_robustness_luminous_nexus_sync_post",
+    "path": "/api/robustness/luminous-nexus/sync",
+    "method": "POST",
+    "summary": "Sync Cluster",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "verify_security_stack_api_security_verify_get",
+    "path": "/api/security/verify",
+    "method": "GET",
+    "summary": "Verify Security Stack",
+    "tags": [
+      "Security"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_refresh_log_api_security_refresh_log_get",
+    "path": "/api/security/refresh-log",
+    "method": "GET",
+    "summary": "Get Refresh Log",
+    "tags": [
+      "Security"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "trigger_security_refresh_api_security_refresh_run_post",
+    "path": "/api/security/refresh-run",
+    "method": "POST",
+    "summary": "Trigger Security Refresh",
+    "tags": [
+      "Security"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "restore_timeline_api_timeline_restore_get",
+    "path": "/api/timeline/restore",
+    "method": "GET",
+    "summary": "Restore Timeline",
+    "tags": [
+      "Timeline"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "rollback_context_api_context_rollback_post",
+    "path": "/api/context/rollback",
+    "method": "POST",
+    "summary": "Rollback Context",
+    "tags": [
+      "Context"
+    ],
+    "input_schema": {
+      "properties": {
+        "timestamp": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Timestamp",
+          "description": "ISO8601 timestamp to target."
+        },
+        "reason": {
+          "type": "string",
+          "title": "Reason",
+          "default": "manual rollback"
+        }
+      },
+      "type": "object",
+      "title": "RollbackRequest"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "trace_api_causal_trace_get",
+    "path": "/api/causal/trace",
+    "method": "GET",
+    "summary": "Trace",
+    "tags": [
+      "Causal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "verify_api_causal_verify_post",
+    "path": "/api/causal/verify",
+    "method": "POST",
+    "summary": "Verify",
+    "tags": [
+      "Causal"
+    ],
+    "input_schema": {
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "title": "Event Id"
+        }
+      },
+      "type": "object",
+      "required": [
+        "event_id"
+      ],
+      "title": "VerifyRequest"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "ingest_causal_events_api_causal_ingest_post",
+    "path": "/api/causal/ingest",
+    "method": "POST",
+    "summary": "Ingest Causal Events",
+    "tags": [
+      "Causal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_causal_graph_api_causal_graph_get",
+    "path": "/api/causal/graph",
+    "method": "GET",
+    "summary": "Get Causal Graph",
+    "tags": [
+      "Causal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "causal_insight_api_causal_insight_get",
+    "path": "/api/causal/insight",
+    "method": "GET",
+    "summary": "Causal Insight",
+    "tags": [
+      "Causal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "causal_report_api_causal_report_get",
+    "path": "/api/causal/report",
+    "method": "GET",
+    "summary": "Causal Report",
+    "tags": [
+      "Causal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_meta_causal_feedback_api_meta_causal_feedback_get",
+    "path": "/api/meta_causal/feedback",
+    "method": "GET",
+    "summary": "Get Meta Causal Feedback",
+    "tags": [
+      "MetaCausal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "run_meta_feedback_api_meta_causal_feedback_run_post",
+    "path": "/api/meta_causal/feedback/run",
+    "method": "POST",
+    "summary": "Run Meta Feedback",
+    "tags": [
+      "MetaCausal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_bias_api_meta_causal_bias_get",
+    "path": "/api/meta_causal/bias",
+    "method": "GET",
+    "summary": "Get Bias",
+    "tags": [
+      "MetaCausal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_bias_history_api_meta_causal_bias_history_get",
+    "path": "/api/meta_causal/bias/history",
+    "method": "GET",
+    "summary": "Get Bias History",
+    "tags": [
+      "MetaCausal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "meta_causal_report_api_meta_causal_report_get",
+    "path": "/api/meta_causal/report",
+    "method": "GET",
+    "summary": "Meta Causal Report",
+    "tags": [
+      "MetaCausal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_auto_actions_api_meta_causal_actions_get",
+    "path": "/api/meta_causal/actions",
+    "method": "GET",
+    "summary": "Get Auto Actions",
+    "tags": [
+      "MetaCausal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "optimizer_history_api_meta_causal_optimizer_history_get",
+    "path": "/api/meta_causal/optimizer/history",
+    "method": "GET",
+    "summary": "Optimizer History",
+    "tags": [
+      "MetaCausal"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_world_timeline_api_world_timeline_get",
+    "path": "/api/world/timeline",
+    "method": "GET",
+    "summary": "Get World Timeline",
+    "tags": [
+      "World"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "create_timeline_event_api_world_timeline_post",
+    "path": "/api/world/timeline",
+    "method": "POST",
+    "summary": "Create Timeline Event",
+    "tags": [
+      "World"
+    ],
+    "input_schema": {
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "Title"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Description"
+        },
+        "era": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Era"
+        },
+        "faction": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Faction"
+        },
+        "start_year": {
+          "type": "integer",
+          "title": "Start Year"
+        },
+        "end_year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "End Year"
+        },
+        "importance": {
+          "type": "number",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Importance",
+          "default": 0.5
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tags"
+        },
+        "metadata": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Metadata"
+        }
+      },
+      "type": "object",
+      "required": [
+        "title",
+        "start_year"
+      ],
+      "title": "TimelineEventPayload"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "update_timeline_event_api_world_timeline__event_id__put",
+    "path": "/api/world/timeline/{event_id}",
+    "method": "PUT",
+    "summary": "Update Timeline Event",
+    "tags": [
+      "World"
+    ],
+    "input_schema": {
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "Title"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Description"
+        },
+        "era": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Era"
+        },
+        "faction": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Faction"
+        },
+        "start_year": {
+          "type": "integer",
+          "title": "Start Year"
+        },
+        "end_year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "End Year"
+        },
+        "importance": {
+          "type": "number",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Importance",
+          "default": 0.5
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tags"
+        },
+        "metadata": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Metadata"
+        }
+      },
+      "type": "object",
+      "required": [
+        "title",
+        "start_year"
+      ],
+      "title": "TimelineEventPayload"
+    },
+    "output_schema": null
+  },
+  {
+    "id": "delete_timeline_event_api_world_timeline__event_id__delete",
+    "path": "/api/world/timeline/{event_id}",
+    "method": "DELETE",
+    "summary": "Delete Timeline Event",
+    "tags": [
+      "World"
+    ],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "list_meta_contracts_api_meta_contracts_get",
+    "path": "/api/meta/contracts",
+    "method": "GET",
+    "summary": "List Meta Contracts",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_meta_contract_api_meta_contracts__name__get",
+    "path": "/api/meta/contracts/{name}",
+    "method": "GET",
+    "summary": "Get Meta Contract",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "get_meta_contract_history_api_meta_contracts__name__history_get",
+    "path": "/api/meta/contracts/{name}/history",
+    "method": "GET",
+    "summary": "Get Meta Contract History",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "sync_meta_contracts_api_meta_contracts_sync_post",
+    "path": "/api/meta/contracts/sync",
+    "method": "POST",
+    "summary": "Sync Meta Contracts",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  },
+  {
+    "id": "read_root__get",
+    "path": "/",
+    "method": "GET",
+    "summary": "Read Root",
+    "tags": [],
+    "input_schema": null,
+    "output_schema": null
+  }
+]

@@ -1,0 +1,13 @@
+{"timestamp": "2025-11-05 23:04:48,796", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-05 23:04:48,797", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: evaluator"}
+{"timestamp": "2025-11-05 23:04:48,798", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: generator"}
+{"timestamp": "2025-11-05 23:04:48,799", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: persona_manager"}
+{"timestamp": "2025-11-05 23:04:48,800", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: self_optimizer"}
+{"timestamp": "2025-11-05 23:04:48,809", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractReinforcement] Starting contract reinforcement cycle..."}
+{"timestamp": "2025-11-05 23:04:48,810", "name": "modules.log_manager", "levelname": "WARNING", "message": "[ContractReinforcement] Contract 'evaluator' has low stability (0.2). Proposing reinforcement."}
+{"timestamp": "2025-11-05 23:04:48,812", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractReinforcement] 1 contracts reinforced."}
+{"timestamp": "2025-11-05 23:04:48,812", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-05 23:04:48,820", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: evaluator"}
+{"timestamp": "2025-11-05 23:04:48,821", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: generator"}
+{"timestamp": "2025-11-05 23:04:48,822", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: persona_manager"}
+{"timestamp": "2025-11-05 23:04:48,823", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: self_optimizer"}

@@ -1,0 +1,16 @@
+[
+  {
+    "timestamp": "2025-11-09T22:57:43.560387",
+    "character": "Shiroi",
+    "emotion": "joy",
+    "text": "こんにちは、瑞希。今日はシステムのデモを始めるね。",
+    "duration": 4.2
+  },
+  {
+    "timestamp": "2025-11-09T22:57:51.665774",
+    "character": "Mizuki",
+    "emotion": "calm",
+    "text": "よろしくねシロイ、準備はできてる？",
+    "duration": 3.5
+  }
+]

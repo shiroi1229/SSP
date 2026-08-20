@@ -1,0 +1,22 @@
+{
+  "metrics": [
+    {
+      "key": "self_coherence",
+      "name": "Self-Coherence",
+      "description": "Measures how closely the AI follows its own contextual path without contradiction.",
+      "goal": "HIGH"
+    },
+    {
+      "key": "cognitive_drift",
+      "name": "Cognitive Drift",
+      "description": "Detects shifts in responses and evaluation that signal a loss of consistent intent.",
+      "goal": "LOW"
+    },
+    {
+      "key": "emotional_stability",
+      "name": "Emotional Stability",
+      "description": "Tracks the valence drift within introspection streams to ensure measured affect.",
+      "goal": "HIGH"
+    }
+  ]
+}

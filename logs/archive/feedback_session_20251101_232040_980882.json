@@ -1,0 +1,32 @@
+[
+  {
+    "timestamp": "2025-11-01T23:20:29.200352",
+    "user_input": "ナノ博士が火星で眠ってる理由は？",
+    "context": "ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。",
+    "retry_attempt": 0,
+    "generator_response": "シロイ: 戦争で時間が止まったんだよ。軌道エレベータの修復を待ちながらね。",
+    "evaluation_score": 0.6699999999999999,
+    "evaluation_comment": "Simulated evaluation.",
+    "final_output": null
+  },
+  {
+    "timestamp": "2025-11-01T23:20:34.787961",
+    "user_input": "ナノ博士が火星で眠ってる理由は？",
+    "context": "ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。",
+    "retry_attempt": 1,
+    "generator_response": "シロイ: 戦争で時間が止まったんだよ。軌道エレベータの修復を待ちながらね。",
+    "evaluation_score": 0.6699999999999999,
+    "evaluation_comment": "Simulated evaluation.",
+    "final_output": null
+  },
+  {
+    "timestamp": "2025-11-01T23:20:38.339754",
+    "user_input": "ナノ博士が火星で眠ってる理由は？",
+    "context": "ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。",
+    "retry_attempt": 2,
+    "generator_response": "シロイ: 戦争で時間が止まったんだよ。軌道エレベータの修復を待ちながらね。\",\n  \"workflow_status\": {\n    \"rag_engine\": \"success\",\n    \"generator\": \"success\",\n    \"evaluator\": \"success",
+    "evaluation_score": 0.9,
+    "evaluation_comment": "Simulated evaluation.",
+    "final_output": "シロイ: 戦争で時間が止まったんだよ。軌道エレベータの修復を待ちながらね。\",\n  \"workflow_status\": {\n    \"rag_engine\": \"success\",\n    \"generator\": \"success\",\n    \"evaluator\": \"success"
+  }
+]

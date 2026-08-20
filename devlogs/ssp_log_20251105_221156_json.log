@@ -1,0 +1,16 @@
+{"timestamp": "2025-11-05 22:11:56,326", "name": "modules.log_manager", "levelname": "INFO", "message": "========= Starting SSP v2.5 Impact Simulation ========="}
+{"timestamp": "2025-11-05 22:11:56,326", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-05 22:11:56,327", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: evaluator"}
+{"timestamp": "2025-11-05 22:11:56,328", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: generator"}
+{"timestamp": "2025-11-05 22:11:56,329", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: persona_manager"}
+{"timestamp": "2025-11-05 22:11:56,330", "name": "modules.log_manager", "levelname": "INFO", "message": "[ContractRegistry] Loaded contract: self_optimizer"}
+{"timestamp": "2025-11-05 22:11:56,332", "name": "modules.log_manager", "levelname": "INFO", "message": "[ImpactAnalyzer] Initialized with 16 total modules."}
+{"timestamp": "2025-11-05 22:11:56,333", "name": "modules.log_manager", "levelname": "INFO", "message": "[ImpactAnalyzer] Dependency graph saved to logs/impact_reports/impact_graph.json"}
+{"timestamp": "2025-11-05 22:11:56,333", "name": "modules.log_manager", "levelname": "INFO", "message": "--- Simulating failure in 'modules/llm.py' ---"}
+{"timestamp": "2025-11-05 22:11:56,333", "name": "modules.log_manager", "levelname": "INFO", "message": "[ImpactAnalyzer] Tracing impact for anomaly in 'modules/llm.py'..."}
+{"timestamp": "2025-11-05 22:11:56,334", "name": "modules.log_manager", "levelname": "INFO", "message": "[ImpactAnalyzer] Impact report saved to D:\\gemini\\logs\\impact_reports\\impact_20251105_221156.json"}
+{"timestamp": "2025-11-05 22:11:56,334", "name": "modules.log_manager", "levelname": "INFO", "message": "[ImpactAnalyzer] Markdown report saved to D:\\gemini\\logs\\impact_reports\\impact_20251105_221156.md"}
+{"timestamp": "2025-11-05 22:11:56,334", "name": "modules.log_manager", "levelname": "INFO", "message": "[ImpactAnalyzer] Trace complete. Affected modules: 8. Impact score: 0.50"}
+{"timestamp": "2025-11-05 22:11:56,334", "name": "modules.log_manager", "levelname": "INFO", "message": "========= Impact Simulation Complete ========="}
+{"timestamp": "2025-11-05 22:11:56,334", "name": "modules.log_manager", "levelname": "INFO", "message": "Impact graph saved to: logs/impact_reports/impact_graph.json"}
+{"timestamp": "2025-11-05 22:11:56,334", "name": "modules.log_manager", "levelname": "INFO", "message": "Impact report generated: logs/impact_reports/impact_*.json/md"}

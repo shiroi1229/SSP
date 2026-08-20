@@ -1,0 +1,4 @@
+{
+  "query": "ナノ博士が火星で眠ってる理由は？",
+  "context": "RAG Engine エラー: Unexpected Response: 404 (Not Found)\nRaw response content:\nb'{\"status\":{\"error\":\"Not found: Collection `world_knowledge` doesn\\'t exist!\"},\"time\":5.84e-6}'"
+}

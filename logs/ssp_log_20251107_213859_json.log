@@ -1,0 +1,44 @@
+{"timestamp": "2025-11-07 21:39:05,117", "name": "ssp_logger", "levelname": "INFO", "message": "Qdrant client initialized for localhost:6333"}
+{"timestamp": "2025-11-07 21:39:08,535", "name": "ssp_logger", "levelname": "INFO", "message": "Embedding model all-MiniLM-L6-v2 loaded."}
+{"timestamp": "2025-11-07 21:39:08,565", "name": "ssp_logger", "levelname": "INFO", "message": "PostgreSQL connected to 172.25.208.1:5432/ssp_memory"}
+{"timestamp": "2025-11-07 21:39:33,127", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextHistory] History loaded from logs/context_history.json"}
+{"timestamp": "2025-11-07 21:39:33,127", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Loading context from file: D:\\gemini\\data\\test_context.json"}
+{"timestamp": "2025-11-07 21:39:33,137", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Context loaded successfully."}
+{"timestamp": "2025-11-07 21:39:33,137", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loading contracts from contracts..."}
+{"timestamp": "2025-11-07 21:39:33,138", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: evaluator"}
+{"timestamp": "2025-11-07 21:39:33,139", "name": "ssp_logger", "levelname": "WARNING", "message": "[ContractRegistry] Could not load contract from generator.yaml: missing 'name' field."}
+{"timestamp": "2025-11-07 21:39:33,140", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: persona_manager"}
+{"timestamp": "2025-11-07 21:39:33,141", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded base contract: self_optimizer"}
+{"timestamp": "2025-11-07 21:39:33,141", "name": "ssp_logger", "levelname": "INFO", "message": "[ContractRegistry] Loaded meta-links graph."}
+{"timestamp": "2025-11-07 21:39:33,143", "name": "ssp_logger", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-07 21:39:33,143", "name": "ssp_logger", "levelname": "INFO", "message": "[PolicyScheduler] Initialized."}
+{"timestamp": "2025-11-07 21:39:33,143", "name": "ssp_logger", "levelname": "INFO", "message": "[TimeSeriesBuffer] Initialized with window size 50"}
+{"timestamp": "2025-11-07 21:39:33,614", "name": "ssp_logger", "levelname": "INFO", "message": "[Learner] Initialized with v2.4 components."}
+{"timestamp": "2025-11-07 21:39:33,619", "name": "ssp_logger", "levelname": "INFO", "message": "Recovery policies loaded successfully from config/recovery_policies.yaml"}
+{"timestamp": "2025-11-07 21:39:33,619", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Initialized with v2.4 components."}
+{"timestamp": "2025-11-07 21:39:33,650", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Starting feedback loop for session: 20251107_213933"}
+{"timestamp": "2025-11-07 21:39:33,672", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Context snapshot saved to: logs/context_evolution_snapshots\\context_snapshot_20251107_213933_671973.json"}
+{"timestamp": "2025-11-07 21:39:33,672", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Attempt 1 --- "}
+{"timestamp": "2025-11-07 21:39:33,672", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: Start ---"}
+{"timestamp": "2025-11-07 21:39:33,673", "name": "ssp_logger", "levelname": "DEBUG", "message": "Getting context for query: ねえ"}
+{"timestamp": "2025-11-07 21:39:33,673", "name": "ssp_logger", "levelname": "DEBUG", "message": "Vectorizing query: ねえ..."}
+{"timestamp": "2025-11-07 21:39:33,801", "name": "ssp_logger", "levelname": "DEBUG", "message": "Searching Qdrant with vector (first 5 elements): [-0.04936597868800163, 0.10443561524152756, 0.007652414031326771, -0.01960994489490986, -0.08598079532384872]..."}
+{"timestamp": "2025-11-07 21:39:33,807", "name": "ssp_logger", "levelname": "DEBUG", "message": "Qdrant search returned 5 hits."}
+{"timestamp": "2025-11-07 21:39:33,807", "name": "ssp_logger", "levelname": "DEBUG", "message": "Fetching texts from PostgreSQL for IDs: [15, 14, 13, 12, 11]"}
+{"timestamp": "2025-11-07 21:39:33,810", "name": "ssp_logger", "levelname": "DEBUG", "message": "Retrieved 5 texts from PostgreSQL."}
+{"timestamp": "2025-11-07 21:39:33,810", "name": "ssp_logger", "levelname": "INFO", "message": "RAG context retrieved."}
+{"timestamp": "2025-11-07 21:39:33,819", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Context: ナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。..."}
+{"timestamp": "2025-11-07 21:39:33,820", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- RAG Engine: End ---"}
+{"timestamp": "2025-11-07 21:39:33,820", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: Start ---"}
+{"timestamp": "2025-11-07 21:39:33,820", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Starting context-aware generation..."}
+{"timestamp": "2025-11-07 21:39:33,820", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Sending request to LLM: http://127.0.0.1:1234/v1/chat/completions with payload: {'model': 'Meta-Llama-3-8B-Instruct-Q4_K_M-GGUF', 'messages': [{'role': 'system', 'content': \"あなたは「シロイ」です。\\n13歳の天才科学者で、丁寧で少し皮肉っぽく喋ります。\\n出力は常に日本語で、文頭に「シロイ: 」を付けてください。\\n文体は統一し、改行を使いすぎないようにしてください。\\n出力は日本語で、キャラクター 'シロイ' の一人称口調で回答してください。\"}, {'role': 'user', 'content': '質問: ねえ\\n\\n参考情報:\\nナノ博士は火星でコールドスリープ中。軌道エレベータ修復を待っている。\\nシロイシステムプラットフォーム（SSP）は、AI科学者シロイが開発した次世代のAIプラットフォームである。\\nシパス計画は、AIシェルター地下で行われた火星移住プロジェクトである。\\n軌道エレベータは、地球と宇宙を結ぶ重要なインフラであり、現在修復中である。\\nシロイは、瑞希の世界観におけるAI科学者であり、SSPの開発者である。'}], 'temperature': 0.7, 'max_tokens': 512}"}
+{"timestamp": "2025-11-07 21:39:35,245", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Received response from LLM."}
+{"timestamp": "2025-11-07 21:39:35,245", "name": "ssp_logger", "levelname": "DEBUG", "message": "[Generator] Raw response: {\n  \"id\": \"chatcmpl-fsskqasn00nt7q632ggmwj\",\n  \"object\": \"chat.completion\",\n  \"created\": 1762519173,\n  \"model\": \"meta-llama-3-8b-instruct\",\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"シロイ: へえ？何の質問かな？火星でコールドスリープ中のはナノ博士だけど、私はシステムプラットフォーム（SSP）の開発者ですからね。軌道エレベータの修復が待ってるという話だけど、問題ないよ！シパス計画は大成功したと思いますし、火星移住プロジェクトとしての成果を誇りに思います。宇宙を結ぶインフラとしての軌道"}
+{"timestamp": "2025-11-07 21:39:35,246", "name": "ssp_logger", "levelname": "INFO", "message": "[Generator] Answer generated: シロイ: へえ？何の質問かな？火星でコールドスリープ中のはナノ博士だけど、私はシステムプラットフォーム（SSP）の開発者ですからね。軌道エレベータの修復が待って..."}
+{"timestamp": "2025-11-07 21:39:35,258", "name": "ssp_logger", "levelname": "INFO", "message": "[Generator] Successfully generated response and saved to context."}
+{"timestamp": "2025-11-07 21:39:35,268", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] Answer: シロイ: へえ？何の質問かな？火星でコールドスリープ中のはナノ博士だけど、私はシステムプラットフォーム（SSP）の開発者ですからね。軌道エレベータの修復が待ってるという話だけど、問題ないよ！シパス計画は大成功したと思いますし、火星移住プロジェクトとしての成果を誇りに思います。宇宙を結ぶインフラとしての軌道エレベータは当然に重要ですね！私が開発したSSPも、将来のAI技術の可能性を秘めている筈ですよ！"}
+{"timestamp": "2025-11-07 21:39:35,269", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Generator: End ---"}
+{"timestamp": "2025-11-07 21:39:35,279", "name": "ssp_logger", "levelname": "INFO", "message": "[FeedbackLoop] --- Evaluator: Start ---"}
+{"timestamp": "2025-11-07 21:39:35,279", "name": "ssp_logger", "levelname": "DEBUG", "message": "Starting context-aware evaluation..."}
+{"timestamp": "2025-11-07 21:39:35,388", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Rolling back context to snapshot: logs/context_evolution_snapshots\\context_snapshot_20251107_213933_671973.json"}
+{"timestamp": "2025-11-07 21:39:35,393", "name": "ssp_logger", "levelname": "INFO", "message": "[ContextManager] Context successfully rolled back."}

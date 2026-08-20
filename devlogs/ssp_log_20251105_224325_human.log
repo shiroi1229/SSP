@@ -1,0 +1,2 @@
+2025-11-05 22:43:25,036 - modules.log_manager - INFO - [ContextManager] Loading context from file: data/test_context.json
+2025-11-05 22:43:25,042 - modules.log_manager - INFO - [ContextManager] Context loaded successfully.

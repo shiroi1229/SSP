@@ -1,0 +1,4 @@
+2025-11-03 20:12:21,542 - modules.log_manager - INFO - Qdrant client initialized for localhost:6333
+2025-11-03 20:12:24,723 - modules.log_manager - INFO - Embedding model all-MiniLM-L6-v2 loaded.
+2025-11-03 20:12:24,729 - modules.log_manager - INFO - PostgreSQL connected to 127.0.0.1:5432/ssp_memory
+2025-11-03 20:12:24,786 - modules.log_manager - INFO - PostgreSQL connection successful!
