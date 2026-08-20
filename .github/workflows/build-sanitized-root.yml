@@ -1,0 +1,31 @@
+name: Build Sanitized Root
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/build-sanitized-root.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build-clean-root:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out current safe main
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          persist-credentials: true
+
+      - name: Create history-free root commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "security-sanitizer"
+          git config user.email "security-sanitizer@users.noreply.github.com"
+          git switch --orphan sanitized-root
+          git add -A
+          git commit -m "security: sanitized root"
+          git push --force origin HEAD:refs/heads/security/sanitized-root-candidate
