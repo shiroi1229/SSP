@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import os
 import re
+import shutil
 import stat
 import subprocess
 import sys
@@ -183,12 +184,10 @@ def push_regular_refs(mirror: Path) -> None:
 
 
 def filter_metadata_dir(mirror: Path) -> Path:
-    # A --mirror clone is bare, so GIT_DIR is the repository directory itself.
     direct = mirror / "filter-repo"
     if direct.exists():
         return direct
-    nested = mirror / ".git" / "filter-repo"
-    return nested
+    return mirror / ".git" / "filter-repo"
 
 
 def print_support_handoff(mirror: Path, log_path: Path) -> None:
@@ -246,12 +245,14 @@ def main() -> int:
         log_path = temp_root / "git-filter-repo.log"
         replace_file: Path | None = None
         verify_file: Path | None = None
+        sanitized_ok = False
         try:
             run(["git", "clone", "--mirror", origin, str(mirror)])
             compromised = extract_compromised_password(mirror)
             replace_file, verify_file = write_secret_files(temp_root, compromised)
             rewrite_history(mirror, replace_file, log_path)
             verify_no_secret(mirror, verify_file)
+            sanitized_ok = True
             restore_origin(mirror, origin)
             push_regular_refs(mirror)
             print_support_handoff(mirror, log_path)
@@ -260,8 +261,11 @@ def main() -> int:
                 replace_file.unlink(missing_ok=True)
             if verify_file:
                 verify_file.unlink(missing_ok=True)
-            # Keep the sanitized mirror and non-secret diagnostic files for Support.
-            print(f"Sanitized mirror workspace retained at: {temp_root}")
+            if sanitized_ok:
+                print(f"Sanitized mirror workspace retained at: {temp_root}")
+            else:
+                shutil.rmtree(temp_root, ignore_errors=True)
+                print("Unverified temporary mirror was removed.")
         return 0
 
     except Exception as exc:
